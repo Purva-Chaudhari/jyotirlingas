@@ -1,0 +1,178 @@
+{
+  "id": "rameshwaram",
+  "name": { "en": "Rameshwaram", "hi": "रामेश्वरम्" },
+  "stops": [
+    {
+      "id": "ram-agni",
+      "at": { "zone": "agni", "feature": "agni" },
+      "kind": "legend",
+      "title": { "en": "The Sea at the Temple’s Door", "hi": "मंदिर के द्वार पर सागर" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me, down to the water’s edge. This calm sea is the Gulf of Mannar, and this shore, right in front of the temple’s east gate, is Agni Theertham. Every pilgrim begins here, with a bath in the sea. Now let me take you back to the Ramayana. Valmiki tells how Rama, his war in Lanka won, flew home with Sita in the flying chariot Pushpaka. As they passed over this coast, Rama pointed down and said: here, before the bridge was built, Mahadeva granted me his grace. And he named the place where the bridge began Setubandha, a holy ford that washes away even the gravest sins. Local tradition adds why this water bears the name of Agni, the god of fire: after Sita came unharmed through her ordeal by fire, Agni himself bathed here and prayed to Shiva. Now watch the pilgrims tie a little sand from this shore into a cloth. That sand is going on a long journey, all the way across India to Kashi, to be given to the Ganga. Keep it in mind; we will meet it again. Now turn around. The great gopuram is calling us up the street.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ पानी के किनारे तक चलिए। यह शांत सागर मन्नार की खाड़ी है, और मंदिर के पूर्वी द्वार के ठीक सामने का यह तट अग्नितीर्थ कहलाता है। हर तीर्थयात्री की यात्रा यहीं से, सागर-स्नान से आरंभ होती है। अब ज़रा रामायण के समय में चलिए। वाल्मीकि बताते हैं कि लंका का युद्ध जीतकर श्रीराम सीता जी के साथ पुष्पक विमान में लौट रहे थे। जब विमान इस तट के ऊपर से गुज़रा, तो राम ने नीचे की ओर दिखाकर कहा: यहीं, सेतु बनने से पहले, महादेव ने मुझ पर कृपा की थी। और जहाँ से सेतु आरंभ हुआ, उस स्थान को उन्होंने सेतुबंध कहा, ऐसा पवित्र तीर्थ जो बड़े से बड़े पाप भी धो देता है। स्थानीय परंपरा बताती है कि इस जल का नाम अग्निदेव पर क्यों पड़ा: जब सीता जी अग्निपरीक्षा से अछूती निकलीं, तो स्वयं अग्निदेव ने यहाँ स्नान किया और शिव की प्रार्थना की। अब तीर्थयात्रियों को देखिए, वे इस तट की थोड़ी-सी रेत कपड़े में बाँध रहे हैं। यह रेत एक लंबी यात्रा पर जाने वाली है, पूरे भारत को पार करके काशी तक, माँ गंगा को अर्पित होने। इसे याद रखिए, हम इससे फिर मिलेंगे। अब पीछे मुड़िए। गली के उस पार विशाल गोपुरम हमें बुला रहा है।"
+      },
+      "didYouKnow": {
+        "en": "Some pilgrims take the sand for Kashi at Dhanushkodi, the island’s far tip, where the bridge to Lanka is said to have begun; the Kanchi Kamakoti Peetham did so in 2021.",
+        "hi": "कुछ तीर्थयात्री काशी के लिए रेत द्वीप के सुदूर छोर धनुषकोडि से लेते हैं, जहाँ से कहा जाता है कि लंका का सेतु आरंभ हुआ था; कांची कामकोटि पीठ ने सन दो हज़ार इक्कीस में ऐसा ही किया।"
+      },
+      "sources": [
+        "https://www.valmikiramayan.net/utf8/yuddha/sarga123/yuddhasans123.htm",
+        "https://tntemplesproject.in/Ramanathaswami-Rameswaram-Ramanathapuram",
+        "https://tamilnadutourism.tn.gov.in/destinations/agni-theertham-beach",
+        "https://kamakoti.org/kamakoti/news/2024/pujya-shankaracharya-32243-20240717.html"
+      ]
+    },
+    {
+      "id": "ram-gopuram",
+      "at": { "zone": "gopuram", "feature": "gopuram" },
+      "kind": "history",
+      "title": { "en": "Guardians of the Bridge", "hi": "सेतु के रक्षक" },
+      "text": {
+        "en": "You have walked up Sannidhi Street, past the stalls of conch shells and the cans for carrying holy water home, and now the Rajagopuram rises before you, nine tiers and about fifty-three metres high. Who looked after this temple through the centuries? Let me introduce you to the Sethupathis. Their title means ‘lord of the Setu’, the bridge, and guarding it was their duty. Some four hundred years ago, in the early 1600s, the pilgrim road to Rameshwaram ran through wild country, and travellers were robbed on the way. So Muthu Krishnappa Nayak, the king of Madurai, made a local chief named Sadaikka Thevar the first recorded Sethupathi, to protect the pilgrims and keep the road safe. His family ruled from Ramanathapuram, across the strait on the mainland, and generation after generation they gave this temple land, halls and towers. Others had built here before them: the Pandya kings of Madurai, and a king of Jaffna, in Sri Lanka, who sent stone across the sea for the sanctum. But it was the Sethupathis who shaped the temple you are about to enter, and their greatest gift lies just inside. Step through the gate with me.",
+        "hi": "आप सन्निधि वीथि पर चलते हुए, शंखों की दुकानों और घर ले जाने के लिए पवित्र जल के डिब्बों के पास से होकर, यहाँ तक आ गए हैं, और अब आपके सामने राजगोपुरम खड़ा है, नौ तलों वाला, लगभग तिरपन मीटर ऊँचा। सदियों तक इस मंदिर की देखभाल किसने की? आइए, आपको सेतुपतियों से मिलवाता हूँ। उनकी उपाधि का अर्थ है ‘सेतु के स्वामी’, और उस सेतु की रक्षा करना उनका कर्तव्य था। लगभग चार सौ वर्ष पहले, सत्रहवीं सदी के आरंभ में, रामेश्वरम का तीर्थ-मार्ग जंगली इलाक़ों से होकर जाता था, और रास्ते में यात्रियों को लूट लिया जाता था। तब मदुरै के राजा मुत्तु कृष्णप्प नायक ने सडैक्क तेवर नाम के एक स्थानीय सरदार को पहला ज्ञात सेतुपति बनाया, ताकि वे तीर्थयात्रियों की रक्षा करें और मार्ग सुरक्षित रखें। उनका वंश जलडमरूमध्य के उस पार, मुख्य भूमि पर रामनाथपुरम से राज करता रहा, और पीढ़ी-दर-पीढ़ी इस मंदिर को भूमि, मंडप और गोपुरम दान करता रहा। उनसे पहले भी यहाँ निर्माण हुआ था: मदुरै के पांड्य राजाओं ने, और श्रीलंका के जाफ़ना के एक राजा ने, जिन्होंने गर्भगृह के लिए समुद्र पार से पत्थर भेजे। पर जिस मंदिर में आप प्रवेश करने वाले हैं, उसे आकार सेतुपतियों ने ही दिया, और उनका सबसे बड़ा दान ठीक भीतर है। मेरे साथ द्वार से भीतर चलिए।"
+      },
+      "didYouKnow": {
+        "en": "The temple stands on about fifteen acres, and its outer wall runs roughly 865 feet from east to west.",
+        "hi": "मंदिर लगभग पंद्रह एकड़ में फैला है, और इसकी बाहरी दीवार पूर्व से पश्चिम तक लगभग आठ सौ पैंसठ फ़ुट लंबी है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sethupathi",
+        "https://en.wikipedia.org/wiki/Ramanathaswamy_Temple",
+        "https://rameswaramramanathar.hrce.tn.gov.in/"
+      ]
+    },
+    {
+      "id": "ram-corridor",
+      "at": { "zone": "corridor", "feature": "corridor" },
+      "kind": "history",
+      "title": { "en": "The Longest Corridor", "hi": "सबसे लंबा गलियारा" },
+      "text": {
+        "en": "Stop here, and look to your left, then to your right. You are standing in the third corridor, and it seems to go on for ever: a flagstone walkway between raised platforms, lined with massive pillars, some twelve hundred of them, under a ceiling painted with great medallions. Its four sides together run to about three thousand eight hundred feet, well over a kilometre, and it is counted the longest temple corridor in India. It was the gift of one Sethupathi, Muthuramalinga, who ruled from 1763 until his death in 1795. He did not live to be fifty, yet what he built has outlasted every king of his line. At the far western end of this corridor, stone figures of the king and his two ministers still stand, looking out over their work. And near them, where the corridor meets the path from the western gate, the floor and pillars form a pattern like a chessboard, so people call it the Chokkattan Mandapam, the chessboard hall. Pilgrims walk these flagstones dripping wet, because of what waits inside. Pass under the gopuram and turn left, into the open court. The wells are calling.",
+        "hi": "यहाँ रुकिए, और पहले बाईं ओर देखिए, फिर दाईं ओर। आप तीसरे प्राकार के गलियारे में खड़े हैं, और यह मानो कभी ख़त्म ही नहीं होता: ऊँचे चबूतरों के बीच पत्थर की पटियों का रास्ता, दोनों ओर विशाल स्तंभ, लगभग बारह सौ, और ऊपर बड़े-बड़े चित्रित वृत्तों वाली छत। इसकी चारों भुजाएँ मिलाकर लगभग अड़तीस सौ फ़ुट, यानी एक किलोमीटर से भी अधिक लंबी हैं, और इसे भारत का सबसे लंबा मंदिर-गलियारा माना जाता है। यह एक सेतुपति, मुत्तुरामलिंग, का दान है, जिन्होंने सत्रह सौ तिरसठ से सत्रह सौ पंचानवे में अपनी मृत्यु तक राज किया। वे पचास वर्ष के भी नहीं हुए, फिर भी उनका बनाया यह गलियारा उनके वंश के हर राजा से अधिक टिका है। इस गलियारे के सुदूर पश्चिमी छोर पर आज भी राजा और उनके दो मंत्रियों की पत्थर की मूर्तियाँ खड़ी हैं, मानो अपने काम को निहार रही हों। और उनके पास, जहाँ गलियारा पश्चिमी द्वार से आने वाले मार्ग से मिलता है, फ़र्श और स्तंभ शतरंज की बिसात जैसा नमूना बनाते हैं, इसलिए लोग उसे चोक्कट्टान मंडपम कहते हैं, शतरंज की बिसात वाला मंडप। तीर्थयात्री इन पत्थरों पर भीगे हुए चलते हैं, क्योंकि भीतर कुछ उनकी प्रतीक्षा कर रहा है। गोपुरम के नीचे से निकलकर बाईं ओर, खुले आँगन में मुड़िए। कुएँ बुला रहे हैं।"
+      },
+      "didYouKnow": {
+        "en": "The pillars stand on platforms about five feet high, and many carry a painted yali, a mythical lion, leaning out over the walkway.",
+        "hi": "स्तंभ लगभग पाँच फ़ुट ऊँचे चबूतरों पर खड़े हैं, और कई पर रंगा हुआ याली, एक पौराणिक सिंह, रास्ते की ओर झुका दिखता है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ramanathaswamy_Temple",
+        "https://www.vedadhara.com/rameswaram"
+      ]
+    },
+    {
+      "id": "ram-theertham",
+      "at": { "zone": "theertham", "feature": "theertham" },
+      "kind": "ritual",
+      "title": { "en": "Twenty-Two Wells", "hi": "बाईस तीर्थ-कूप" },
+      "text": {
+        "en": "This is the court of the holy wells. Each little well has its own name board, its pulley and its bucket. Watch what happens: a pilgrim, still soaking from the sea, stands at the kerb, and an attendant draws up water and pours the whole bucket over their head. Then on to the next well, and the next, twenty-two of them within the temple, each believed to cleanse in its own way. Tradition says there are twenty-two because they stand for the arrows in Rama’s quiver. The round of baths ends at Kodi Theertham, and only then do the pilgrims change into dry clothes and go for darshan. Why so much washing? The temple’s own story answers. When Rama came back from Lanka, he carried a heavy burden. Ravana, whom he had slain, was born a Brahmin, the grandson of the sage Pulastya, and the killing of a Brahmin, brahmahatya, is the gravest of sins. To be free of it, Rama resolved to worship Shiva here, by the sea. For that he needed a linga, and he called on the swiftest of his friends. Walk with me toward the great Nandi, and I will tell you what happened next.",
+        "hi": "यह पवित्र कुओं का आँगन है। हर छोटे कुएँ का अपना नाम-पट्ट है, अपनी घिरनी और अपनी बाल्टी। देखिए क्या होता है: सागर से भीगा हुआ एक तीर्थयात्री मुँडेर के पास खड़ा होता है, और एक सेवक पानी खींचकर पूरी बाल्टी उसके सिर पर उड़ेल देता है। फिर अगला कुआँ, और उसके बाद अगला, मंदिर के भीतर ऐसे बाईस तीर्थ हैं, और माना जाता है कि हर एक अपने ढंग से पवित्र करता है। परंपरा कहती है कि ये बाईस इसलिए हैं क्योंकि ये श्रीराम के तरकश के बाणों के प्रतीक हैं। स्नान का यह क्रम कोटि तीर्थ पर पूरा होता है, और तभी तीर्थयात्री सूखे वस्त्र पहनकर दर्शन को जाते हैं। इतना स्नान क्यों? इसका उत्तर मंदिर की अपनी कथा देती है। जब श्रीराम लंका से लौटे, तो उनके मन पर एक भारी बोझ था। रावण, जिसका उन्होंने वध किया था, जन्म से ब्राह्मण था, महर्षि पुलस्त्य का पौत्र, और ब्राह्मण की हत्या, ब्रह्महत्या, सबसे बड़ा पाप माना जाता है। उससे मुक्त होने के लिए राम ने यहीं, सागर के किनारे, शिव की पूजा करने का संकल्प लिया। इसके लिए उन्हें एक शिवलिंग चाहिए था, और उन्होंने अपने सबसे वेगवान मित्र को पुकारा। मेरे साथ विशाल नंदी की ओर चलिए, मैं बताता हूँ आगे क्या हुआ।"
+      },
+      "didYouKnow": {
+        "en": "The temple opens its wells for bathing from 5:30 AM to 12:30 PM and from 3 to 7 PM.",
+        "hi": "मंदिर में तीर्थ-स्नान सुबह साढ़े पाँच से दोपहर साढ़े बारह बजे तक, और दोपहर तीन से शाम सात बजे तक होता है।"
+      },
+      "sources": [
+        "https://rameswaramramanathar.hrce.tn.gov.in/",
+        "https://en.wikipedia.org/wiki/Ramanathaswamy_Temple",
+        "https://shivatemples.com/pnaadu/pn08.php",
+        "https://tntemplesproject.in/Ramanathaswami-Rameswaram-Ramanathapuram"
+      ]
+    },
+    {
+      "id": "ram-nandi",
+      "at": { "zone": "nandi", "feature": "nandi" },
+      "kind": "legend",
+      "title": { "en": "A Linga Shaped from Sand", "hi": "रेत से बना शिवलिंग" },
+      "text": {
+        "en": "Look up at Nandi, Shiva’s bull, huge and brightly painted, gazing steadily toward the sanctum. Now, the story. Rama chose an auspicious hour for his worship and sent Hanuman, the mightiest of his companions, flying north to Mount Kailash, Shiva’s own mountain, to bring back a linga. Hanuman went. But Kailash is far, and he was delayed. The hour came nearer, and still there was no sign of him in the sky. Rama would not let the sacred moment pass. Then Sita knelt on the sand by the sea, and with her own hands she shaped a linga from it. Rama installed that linga of sand and worshipped it, and Shiva was pleased. That small linga, the temple holds, is the Jyotirlinga you are about to see: Ramanathaswamy, the Lord whom Rama worshipped. The Shiva Purana tells it a little differently. There, Rama shapes an earthen linga himself before the war, as he waits to cross the sea; Shiva appears in radiance, promises him victory, and at Rama’s request stays on for ever as Rameshwara. Either way, this is the Lord of Rama. But where was Hanuman? He was coming, with a linga from Kailash in his arms. Walk on into the shrine. His linga is on your right.",
+        "hi": "ऊपर देखिए, यह हैं नंदी, शिव के वाहन, विशाल और चटक रंगों में रंगे, अपलक गर्भगृह की ओर निहारते हुए। अब कथा सुनिए। श्रीराम ने पूजा के लिए एक शुभ मुहूर्त चुना, और अपने सबसे बलशाली साथी हनुमान जी को उत्तर की ओर, स्वयं शिव के पर्वत कैलास भेजा, एक शिवलिंग लाने के लिए। हनुमान जी उड़ चले। पर कैलास बहुत दूर है, और उन्हें देर हो गई। मुहूर्त पास आता गया, पर आकाश में उनका कोई चिह्न नहीं दिखा। राम पवित्र घड़ी को यूँ ही बीतने नहीं देना चाहते थे। तब सीता जी सागर किनारे रेत पर बैठ गईं, और अपने हाथों से रेत का एक शिवलिंग बनाया। राम ने उस रेत के लिंग की स्थापना की और उसकी पूजा की, और शिव प्रसन्न हुए। मंदिर की मान्यता है कि वही छोटा-सा लिंग वह ज्योतिर्लिंग है जिसके दर्शन आप करने वाले हैं: रामनाथस्वामी, वे प्रभु जिनकी पूजा राम ने की। शिव पुराण यह कथा थोड़ा अलग ढंग से कहता है। वहाँ युद्ध से पहले, सागर पार करने की प्रतीक्षा में, राम स्वयं मिट्टी का लिंग बनाते हैं; शिव तेजोमय रूप में प्रकट होकर उन्हें विजय का वरदान देते हैं, और राम की प्रार्थना पर रामेश्वर के रूप में सदा के लिए यहीं रह जाते हैं। दोनों ही कथाओं में ये राम के प्रभु हैं। पर हनुमान जी कहाँ थे? वे आ रहे थे, कैलास का शिवलिंग अपनी बाँहों में लिए। आगे मंदिर के भीतर चलिए। उनका लिंग आपकी दाईं ओर है।"
+      },
+      "didYouKnow": {
+        "en": "The Nandi here is a stucco figure about twenty-two feet long and seventeen feet high, among the largest in India.",
+        "hi": "यहाँ के नंदी चूने-गारे से बने हैं, लगभग बाईस फ़ुट लंबे और सत्रह फ़ुट ऊँचे, भारत के सबसे बड़े नंदियों में से एक।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226532.html",
+        "https://rameswaramramanathar.hrce.tn.gov.in/",
+        "https://tntemplesproject.in/Ramanathaswami-Rameswaram-Ramanathapuram"
+      ]
+    },
+    {
+      "id": "ram-vishwalingam",
+      "at": { "zone": "vishwanatha", "feature": "vishwanatha" },
+      "kind": "legend",
+      "title": { "en": "Hanuman’s Linga, Worshipped First", "hi": "हनुमान जी का लिंग, जिसकी पूजा पहले होती है" },
+      "text": {
+        "en": "This small shrine holds the linga Hanuman brought. Picture his arrival. He lands with the linga from Kailash in his hands, and finds the worship already done, Sita’s linga of sand already installed. He is heartbroken. All that flight, for nothing? A well-loved telling says he even wrapped his tail around the sand linga to pull it up and set his own in its place, and could not move it at all. Rama understood his friend’s sorrow. He installed Hanuman’s linga here, beside his own, and gave a command: whoever comes to worship at Rameshwaram must first worship this linga. And so it has been ever since. Pilgrims come here first, and only then go on to Ramanathaswamy. Now listen to its name. Hanuman’s linga is the Vishwalingam, and this shrine is Kasi Viswanathar, the Lord of Kashi, the very name of the Lord who lives far away on the Ganga. Remember the sand from the beach? Here the two holy places meet, Kashi in the north and Rameshwaram in the south, bound into one pilgrimage. You have done as Rama asked. Now turn to the inner door. Ramanathaswamy is waiting.",
+        "hi": "इस छोटे मंदिर में वह शिवलिंग है जिसे हनुमान जी लाए थे। उनके आगमन की कल्पना कीजिए। वे कैलास का लिंग हाथों में लिए उतरते हैं, और देखते हैं कि पूजा तो हो चुकी है, सीता जी का रेत का लिंग स्थापित हो चुका है। उनका मन टूट जाता है। इतनी लंबी उड़ान, और सब व्यर्थ? एक प्रिय कथा कहती है कि उन्होंने अपनी पूँछ रेत के लिंग के चारों ओर लपेटकर उसे उखाड़ना चाहा, ताकि उसकी जगह अपना लिंग रख सकें, पर वह टस से मस न हुआ। राम ने अपने मित्र का दुःख समझा। उन्होंने हनुमान जी के लिंग को यहीं, अपने लिंग के पास स्थापित किया, और आज्ञा दी: जो भी रामेश्वरम में पूजा करने आए, वह पहले इस लिंग की पूजा करे। और तब से ऐसा ही होता आया है। तीर्थयात्री पहले यहाँ आते हैं, और उसके बाद ही रामनाथस्वामी के पास जाते हैं। अब इसका नाम सुनिए। हनुमान जी का लिंग विश्वलिंगम कहलाता है, और यह मंदिर काशी विश्वनाथर का है, काशी के स्वामी का, ठीक वही नाम जो दूर गंगा किनारे बसे प्रभु का है। तट की वह रेत याद है? यहाँ दोनों पवित्र धाम मिलते हैं, उत्तर में काशी और दक्षिण में रामेश्वरम, एक ही यात्रा में बँधे हुए। आपने वही किया जो राम ने कहा था। अब भीतर के द्वार की ओर मुड़िए। रामनाथस्वामी प्रतीक्षा कर रहे हैं।"
+      },
+      "didYouKnow": {
+        "en": "Rameshwaram is also one of the four dhams of India, with Badrinath, Puri and Dwarka, and the only one of the twelve Jyotirlingas in Tamil Nadu.",
+        "hi": "रामेश्वरम भारत के चार धामों में से भी एक है, बद्रीनाथ, पुरी और द्वारका के साथ, और तमिलनाडु का एकमात्र ज्योतिर्लिंग है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ramanathaswamy_Temple",
+        "https://shivatemples.com/pnaadu/pn08.php",
+        "https://tntemplesproject.in/Ramanathaswami-Rameswaram-Ramanathapuram"
+      ]
+    },
+    {
+      "id": "ram-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Ramanathaswamy", "hi": "श्री रामनाथस्वामी के दर्शन" },
+      "text": {
+        "en": "You stand at the brass rail, at the threshold of Shri Ramanathaswamy. Look: the linga is small, the linga that Sita shaped from the sand of the shore, adorned today in gold beneath a five-hooded serpent, heavy with jasmine and roses, lit by brass lamps. Come very early, around five in the morning, and you may see the Spatika linga darshan, when a small linga of clear crystal is bathed and worshipped here before the day begins. And this is where the long pilgrimage ends. The sand you saw taken from Agni Theertham goes north to Kashi and is given to the Ganga; the pilgrim fills a vessel with Ganga water, carries it all the way back, and pours it over Ramanathaswamy in abhishekam. By tradition, only then is the Kashi yatra complete. Fold your hands. Adi Shankaracharya sings of this place in the Dwadasha Jyotirlinga Stotram: ‘Sutamraparni jalarashiyoge nibadhya setum vishikhair asankhyaih, Shri Ramachandrena samarpitam tam Rameshvarakhyam niyatam namami.’ ‘Where the Tamraparni meets the ocean, Shri Ramachandra bound a bridge with countless arrows and offered this Lord his worship: to him, named Rameshwara, I bow, always.’ Rameshwaram is the seventh Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the nadaswaram and the bells begin, and let the lamps be raised. Om Namah Shivaya.",
+        "hi": "आप पीतल की रेलिंग के पास, श्री रामनाथस्वामी की देहरी पर खड़े हैं। देखिए: लिंग छोटा-सा है, वही लिंग जिसे सीता जी ने तट की रेत से बनाया था, आज सोने के आवरण में, पाँच फनों वाले नाग के नीचे, चमेली और गुलाब से लदा, पीतल के दीपों से आलोकित। बहुत भोर में, लगभग पाँच बजे आइए, तो आप स्फटिक लिंग के दर्शन कर सकते हैं, जब दिन आरंभ होने से पहले यहाँ निर्मल स्फटिक के एक छोटे लिंग का अभिषेक और पूजा होती है। और लंबी तीर्थयात्रा यहीं पूरी होती है। अग्नितीर्थ से ली गई जो रेत आपने देखी थी, वह उत्तर में काशी जाकर गंगा को अर्पित होती है; तीर्थयात्री एक पात्र में गंगाजल भरता है, उसे इतनी दूर वापस लाता है, और रामनाथस्वामी का उससे अभिषेक करता है। परंपरा से, तभी काशी यात्रा पूर्ण मानी जाती है। हाथ जोड़िए। आदि शंकराचार्य द्वादश ज्योतिर्लिंग स्तोत्र में इस स्थान का गान करते हैं: ‘सुताम्रपर्णीजलराशियोगे निबध्य सेतुं विशिखैरसंख्यैः। श्रीरामचन्द्रेण समर्पितं तं रामेश्वराख्यं नियतं नमामि॥’ ‘जहाँ ताम्रपर्णी सागर से मिलती है, वहाँ अनगिनत बाणों से सेतु बाँधकर श्रीरामचंद्र ने जिनकी पूजा की, उन रामेश्वर नाम वाले प्रभु को मैं सदा नमन करता हूँ।’ रामेश्वरम् स्तोत्र के सातवें ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। नादस्वरम् और घंटियाँ बजें, और दीप उठें। ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "In 2021 the Sringeri Sharada Peetham offered a crystal linga to the temple, and its daily abhishekam around 5 AM began the next day.",
+        "hi": "सन दो हज़ार इक्कीस में शृंगेरी शारदा पीठ ने मंदिर को एक स्फटिक लिंग भेंट किया, और अगले ही दिन से सुबह लगभग पाँच बजे उसका नित्य अभिषेक आरंभ हुआ।"
+      },
+      "sources": [
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://rameswaramramanathar.hrce.tn.gov.in/",
+        "https://sringeri.net/events/sphatika-linga-offered-rameswaram-temple",
+        "https://kamakoti.org/kamakoti/news/2024/pujya-shankaracharya-32243-20240717.html"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Ramanathaswamy Deeparadhanai (Spatika Linga, Sayaratchai and Palliyarai pujas)", "hi": "रामनाथस्वामी दीपाराधना (स्फटिक लिंग, सायरक्षा और पल्लियरै पूजा)" },
+    "schedule": [
+      { "name": { "en": "Palliyarai Deepa Aradhana", "hi": "पल्लियरै दीप आराधना" }, "time": "5:00 AM" },
+      { "name": { "en": "Spatika Linga Darshan and Deepa Aradhana", "hi": "स्फटिक लिंग दर्शन और दीप आराधना" }, "time": "5:00–6:00 AM" },
+      { "name": { "en": "Thiruvananthal Deepa Aradhana", "hi": "तिरुवनंतल दीप आराधना" }, "time": "5:45 AM" },
+      { "name": { "en": "Vila Pooja", "hi": "विला पूजा" }, "time": "7:00 AM" },
+      { "name": { "en": "Kalasandhi Pooja", "hi": "कालसंधि पूजा" }, "time": "10:00 AM" },
+      { "name": { "en": "Uchikala Pooja", "hi": "उच्चिकाल पूजा" }, "time": "12:00 noon" },
+      { "name": { "en": "Sayaratchai Pooja (evening aarti)", "hi": "सायरक्षा पूजा (संध्या आरती)" }, "time": "6:00 PM" },
+      { "name": { "en": "Arthajama Pooja", "hi": "अर्धजाम पूजा" }, "time": "8:30 PM" },
+      { "name": { "en": "Palliyarai Pooja", "hi": "पल्लियरै पूजा" }, "time": "8:45 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Sutamraparni jalarashiyoge\nnibadhya setum vishikhair asankhyaih\nShri Ramachandrena samarpitam tam\nRameshvarakhyam niyatam namami\n\nWhere the Tamraparni meets the ocean, Shri Ramachandra bound a bridge with countless arrows and offered this Lord his worship: to him, named Rameshwara, I bow, always.\n\n(Dwadasha Jyotirlinga Stotram, attributed to Adi Shankaracharya: the Rameshwara verse.)",
+        "hi": "सुताम्रपर्णीजलराशियोगे निबध्य सेतुं विशिखैरसंख्यैः।\nश्रीरामचन्द्रेण समर्पितं तं रामेश्वराख्यं नियतं नमामि॥\n\nजहाँ ताम्रपर्णी सागर से मिलती है, वहाँ अनगिनत बाणों से सेतु बाँधकर श्रीरामचंद्र ने जिनकी पूजा की, उन रामेश्वर नाम वाले प्रभु को मैं सदा नमन करता हूँ।"
+      },
+      "source": "Dwadasha Jyotirlinga Stotram (sanskritdocuments.org, dvAdashaJyotistotra), the Rameshwara verse (numbered 9 in the full 12-verse stotra; Rameshwaram is 7th in the short ‘Saurashtre Somanatham’ list used for the yatra order). Variant: ‘Shri Tamraparnim jalarashiyoge nibadhya setum nishi bilvapatraih … samarchitam tam … satatam namami’. The temple’s own deeparadhanai is accompanied by Vedic chanting, Tamil Thevaram and nadaswaram; no text of it is published by the temple.",
+      "license": "Public domain (traditional text)"
+    },
+    "audio": [
+      {
+        "url": "https://rameswaramramanathar.hrce.tn.gov.in/",
+        "license": "All rights reserved (TN HR&CE / Arulmigu Ramanathaswamy Temple) - needs permission",
+        "notes": "No freely licensed recording of the temple's deeparadhanai was found. The HR&CE site lists a Video Gallery and 'Temple Functions LIVE', but both were empty when checked (2026-10-07)."
+      }
+    ],
+    "youtube": [],
+    "youtubeSources": [
+      "https://rameswaramramanathar.hrce.tn.gov.in/hrcehome/videogallery.php?tid=35671",
+      "https://hrce.tn.gov.in/hrcehome/hrce_scrollevents.php?tid=35671",
+      "https://www.youtube.com/@TNHRCEdepartment",
+      "https://www.youtube.com/@ramanathaswamytemple"
+    ],
+    "notes": "Timings: the HR&CE temple site gives the temple open 4:00 AM–1:00 PM and 3:00–8:00 PM, Spatika Linga darshan 5:00–6:00 AM, Moolasthana darshan 6:00 AM–1:00 PM, and theertham bathing 5:30 AM–12:30 PM and 3:00–7:00 PM; the individual puja times are from secondary guides (yatradham, myoksha) and should be confirmed with the temple (04573-221223). Worship order: the Vishwalingam (Kasi Viswanathar) is worshipped before Ramanathaswamy. YouTube: no aarti from an official source. The HR&CE temple page links no YouTube video (its gallery and live pages were empty), and the department channel (@TNHRCEdepartment, linked from hrce.tn.gov.in) has no Rameswaram aarti. The channel ‘Ramanathaswamy temple, Rameswaram’ (UC9CgVhkj8XZ2g__MWbVWr2g) streams the temple’s official hundiyal counting and Aadi Thirukalyanam and is very likely the administration’s own, but no official page links to it, and it has no aarti recording; so none is used."
+  }
+}

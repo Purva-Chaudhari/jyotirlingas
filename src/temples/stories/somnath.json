@@ -1,0 +1,133 @@
+{
+  "id": "somnath",
+  "name": { "en": "Somnath", "hi": "सोमनाथ" },
+  "stops": [
+    {
+      "id": "somnath-dwar",
+      "at": { "zone": "dwar", "feature": "dwar" },
+      "kind": "history",
+      "title": { "en": "The Promise at the Gate", "hi": "द्वार पर लिया गया संकल्प" },
+      "text": {
+        "en": "Jai Somnath! Come, walk with me. Do you feel the salt wind? We are at Prabhas Patan, at the very edge of India, where the land ends and the Arabian Sea begins. You have just passed through the Digvijay Dwar, the great gateway, named for Jam Saheb Digvijaysinhji of Nawanagar, who led the trust that rebuilt this temple and made its first donation. Now look at the bronze figure standing guard. That is Sardar Vallabhbhai Patel, and our story begins with him. Picture this shore in November 1947. India has been free for only a few months. Sardar Patel walks here among broken stones and fallen pillars, the ruins of a temple that has been destroyed and raised again many times over the centuries. That same evening he stands before a crowd and promises that Somnath will rise once more. Ordinary devotees give what they can, and the promise is kept. But why did this one temple matter so much? To understand, we must first go down to the sea, where the story of Somnath truly begins.",
+        "hi": "जय सोमनाथ! आइए, मेरे साथ चलिए। समुद्र की नमकीन हवा महसूस हो रही है? हम प्रभास पाटन में हैं, भारत के ठीक उस छोर पर, जहाँ धरती समाप्त होती है और अरब सागर शुरू होता है। जिस भव्य द्वार से आप अभी गुज़रे, वह दिग्विजय द्वार है। इसका नाम नवानगर के जाम साहब दिग्विजयसिंहजी पर रखा गया है, जिन्होंने इस मंदिर को फिर से बनाने वाले ट्रस्ट की अध्यक्षता की और पहला दान दिया। अब द्वार पर पहरा देती इस कांस्य प्रतिमा को देखिए। ये सरदार वल्लभभाई पटेल हैं, और हमारी कथा इन्हीं से शुरू होती है। कल्पना कीजिए, सन उन्नीस सौ सैंतालीस का नवंबर है। देश को आज़ाद हुए बस कुछ ही महीने हुए हैं। सरदार पटेल यहाँ टूटे पत्थरों और गिरे हुए खंभों के बीच चल रहे हैं। ये उस मंदिर के खंडहर हैं जो सदियों में कई बार टूटा और कई बार फिर बना। उसी शाम वे लोगों की एक सभा में संकल्प लेते हैं कि सोमनाथ फिर से खड़ा होगा। आम भक्त जो बन पड़ता है, देते हैं, और वह वचन पूरा होता है। पर यह एक मंदिर इतना प्रिय क्यों था? यह जानने के लिए पहले हमें सागर के किनारे चलना होगा, जहाँ से सोमनाथ की असली कथा शुरू होती है।"
+      },
+      "didYouKnow": {
+        "en": "Sardar Patel died on 15 December 1950, five months before the consecration he had set in motion; his statue now greets every pilgrim at the gate.",
+        "hi": "सरदार पटेल का निधन 15 दिसंबर 1950 को हुआ, जिस प्राण-प्रतिष्ठा की नींव उन्होंने रखी थी उससे पाँच महीने पहले; आज उनकी प्रतिमा द्वार पर हर तीर्थयात्री का स्वागत करती है।"
+      },
+      "sources": [
+        "https://www.vifindia.org/article/2018/january/16/re-building-of-somanath-temple-a-tribute-to-sardar-patel-and-k-m-munshi",
+        "https://en.wikipedia.org/wiki/Digvijaysinhji_Ranjitsinhji_Jadeja",
+        "https://en.wikipedia.org/wiki/Somnath_temple"
+      ]
+    },
+    {
+      "id": "somnath-prabhas",
+      "at": { "zone": "sea", "feature": "sea" },
+      "kind": "legend",
+      "title": { "en": "The Moon Who Was Healed", "hi": "चंद्रमा, जिसे यहाँ आरोग्य मिला" },
+      "text": {
+        "en": "Here is the sea. This shore is Prabhas, ‘the place of radiance’, and the Shiva Purana tells how it earned that name. Long, long ago, Daksha, one of the Prajapatis, the first fathers of creation, gave his twenty-seven daughters in marriage to Soma, the Moon. But the Moon loved only one of them, Rohini, and neglected all the rest. Their sorrow reached their father. Daksha warned his son-in-law once, and then again. When nothing changed, he cursed him: the Moon would waste away. Night after night his light grew thinner. The worried gods went to Brahma, and Brahma sent the fading Moon here, to this very shore, to seek Shiva. For six months Soma worshipped a linga made of earth and chanted the Mahamrityunjaya mantra, the great prayer that conquers death. At last Shiva appeared. He did not erase Daksha’s curse; he softened it. For one fortnight the Moon would wane, and in the next he would grow full again. That, the Purana says, is why the moon still waxes and wanes. And at the gods’ request, Shiva stayed here as Somanatha, Lord of the Moon. Now follow the sea wall. A pillar there points somewhere very far away.",
+        "hi": "यह रहा सागर। यह तट प्रभास है, यानी ‘प्रकाश का स्थान’, और शिव पुराण बताता है कि इसे यह नाम कैसे मिला। बहुत पुराने समय की बात है। सृष्टि के आदि पिताओं में से एक, दक्ष प्रजापति ने अपनी सत्ताईस पुत्रियों का विवाह सोम, यानी चंद्रमा से किया। पर चंद्रमा का मन केवल एक पर रीझा, रोहिणी पर, और बाकी सब उपेक्षित रह गईं। बेटियों का दुख पिता तक पहुँचा। दक्ष ने दामाद को समझाया, एक बार, फिर दूसरी बार। जब फिर भी कुछ न बदला, तो उन्होंने शाप दे दिया: तुम क्षीण होते जाओगे। रात-दर-रात चंद्रमा की चाँदनी घटने लगी। चिंतित देवता ब्रह्मा जी के पास गए, और ब्रह्मा ने मलिन होते चंद्रमा को यहीं, इसी तट पर, शिव की शरण में भेजा। छह महीने तक सोम ने मिट्टी के शिवलिंग की पूजा की और मृत्यु को जीतने वाले महामृत्युंजय मंत्र का जप किया। आख़िर शिव प्रकट हुए। उन्होंने दक्ष का शाप मिटाया नहीं, उसे कोमल कर दिया: एक पखवाड़े चंद्रमा घटेंगे, और अगले पखवाड़े फिर पूर्ण हो जाएँगे। पुराण कहता है, इसीलिए आज भी चाँद घटता-बढ़ता है। और देवताओं की विनती पर शिव यहीं सोमनाथ बनकर, चंद्रमा के स्वामी बनकर, विराजमान हो गए। अब समुद्र की दीवार के साथ आगे चलिए; वहाँ एक स्तंभ बहुत दूर की ओर इशारा करता है।"
+      },
+      "didYouKnow": {
+        "en": "Close by, the Hiran, Kapila and Saraswati rivers are said to meet the sea at the Triveni Sangam, where pilgrims take a holy dip.",
+        "hi": "पास ही, कहा जाता है कि हिरण, कपिला और सरस्वती नदियाँ त्रिवेणी संगम पर सागर से मिलती हैं, जहाँ तीर्थयात्री पवित्र स्नान करते हैं।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226515.html",
+        "https://en.wikipedia.org/wiki/Somnath_temple",
+        "https://gujarattourism.com/saurashtra/gir-somnath/somnath-temple.html"
+      ]
+    },
+    {
+      "id": "somnath-baan",
+      "at": { "zone": "baan", "feature": "baan" },
+      "kind": "history",
+      "title": { "en": "The Arrow That Points South", "hi": "दक्षिण की ओर इशारा करता बाण" },
+      "text": {
+        "en": "Here on the sea wall stands the Baan Stambh, the Arrow Pillar. Look at the top: a globe, pierced by an arrow pointing due south, out over the open water. The Sanskrit words on it say ‘Aasamudrant Dakshin Dhruv Paryant Abaadhit Jyotirmarg’: ‘from this shore to the South Pole, an unobstructed path of light’. They carry an old belief, that if you sailed due south from Somnath you would meet no land until the far end of the earth. How old is the idea? Nobody can say for certain. Popular accounts call it centuries old, but no firm record tells us when it was first written, and the pillar you see stands on the temple’s modern sea wall. What it keeps alive is a feeling: Somnath as a lamp at the edge of the land, facing the endless ocean, on the same shore where the Moon once found his light again. Stand here and listen to the waves. They have washed this shore through every chapter of Somnath’s story, the golden days and the broken ones. Now turn around and face the temple, because those chapters are written in its stones.",
+        "hi": "समुद्र की इस दीवार पर खड़ा है बाण स्तंभ। ऊपर देखिए: एक गोला, जिसे भेदता हुआ एक बाण ठीक दक्षिण की ओर, खुले समुद्र के पार इशारा करता है। इस पर संस्कृत में लिखा है: ‘आसमुद्रान्त दक्षिण ध्रुव पर्यन्त अबाधित ज्योतिर्मार्ग’, यानी ‘इस तट से दक्षिणी ध्रुव तक प्रकाश का निर्बाध मार्ग’। इन शब्दों में एक पुरानी मान्यता छिपी है, कि अगर आप सोमनाथ से ठीक दक्षिण की ओर समुद्र में चलते जाएँ, तो पृथ्वी के छोर तक कहीं धरती नहीं मिलेगी। यह विचार कितना पुराना है? कोई निश्चित नहीं कह सकता। लोग इसे सदियों पुराना बताते हैं, पर कोई ठोस अभिलेख नहीं बताता कि यह पहली बार कब लिखा गया, और जो स्तंभ आप देख रहे हैं, वह मंदिर की आधुनिक समुद्री दीवार पर खड़ा है। फिर भी यह एक भाव को जीवित रखता है: सोमनाथ, धरती के छोर पर जलता एक दीप, अनंत सागर के सामने, उसी तट पर जहाँ कभी चंद्रमा ने अपनी खोई चाँदनी फिर पाई थी। यहाँ खड़े होकर लहरों को सुनिए। इन लहरों ने सोमनाथ की कथा का हर अध्याय देखा है, सुनहरे दिन भी और टूटे हुए दिन भी। अब मुड़िए और मंदिर की ओर देखिए, क्योंकि वे अध्याय उसके पत्थरों में लिखे हैं।"
+      },
+      "didYouKnow": {
+        "en": "Somnath is the first name in the Dwadasha Jyotirlinga Stotram: ‘Saurashtre Somanatham cha’, ‘Somanatha in Saurashtra’.",
+        "hi": "द्वादश ज्योतिर्लिंग स्तोत्र में पहला नाम सोमनाथ का है: ‘सौराष्ट्रे सोमनाथं च’, अर्थात ‘सौराष्ट्र में सोमनाथ’।"
+      },
+      "sources": [
+        "https://www.newkerala.com/news/a/somnath-swabhiman-parv-baanstambh-symbolises-indias-scientific-vision-251.htm",
+        "https://www.freepressjournal.in/travel/does-baan-stambh-in-gujarats-somnath-temple-point-towards-antarctica-heres-the-truth",
+        "https://sanskritdocuments.org/doc_shiva/jyotirling.html"
+      ]
+    },
+    {
+      "id": "somnath-rebuilt",
+      "at": { "zone": "temple", "feature": "temple" },
+      "kind": "history",
+      "title": { "en": "Broken, and Raised Again", "hi": "टूटा, और फिर उठ खड़ा हुआ" },
+      "text": {
+        "en": "You have climbed onto the temple platform. Look up: the shikhara rises about one hundred and fifty feet, crowned by a kalash of about ten tonnes. Temple tradition says the very first shrine here was built by the Moon himself, out of gold; after it came temples of silver, of wood, and of stone. A thousand years ago, in January 1026, Mahmud of Ghazni raided Somnath, broke the linga and carried away its wealth. Think of the grief of the priests and townsfolk that winter. Yet an inscription suggests the temple was repaired within twelve years, and about a century and a half later the Chaulukya king Kumarapala rebuilt it in fine stone. In the centuries that followed it was attacked again and again, and each time devotees and rulers brought the worship back. In the late eighteenth century Ahilyabai Holkar, the queen of Indore, built a new temple beside the ruins; it still stands nearby. And then came the promise you heard about at the gate. In 1951, India’s first President, Dr Rajendra Prasad, consecrated the Jyotirlinga in this new temple, on the ancient site. Now walk on through the great halls toward the sanctum.",
+        "hi": "आप मंदिर के ऊँचे चबूतरे पर आ गए हैं। ऊपर देखिए: शिखर लगभग डेढ़ सौ फ़ुट ऊँचा है, और उस पर लगभग दस टन का कलश है। मंदिर की परंपरा कहती है कि यहाँ पहला मंदिर स्वयं चंद्रमा ने बनाया था, सोने का; उसके बाद चाँदी, लकड़ी और पत्थर के मंदिर बने। आज से एक हज़ार वर्ष पहले, जनवरी सन दस सौ छब्बीस में, महमूद ग़ज़नवी ने सोमनाथ पर आक्रमण किया, शिवलिंग तोड़ा और मंदिर का धन ले गया। उस सर्दी में यहाँ के पुजारियों और नगरवासियों का दुख सोचिए। फिर भी एक शिलालेख बताता है कि बारह वर्षों के भीतर मंदिर की मरम्मत हो गई, और लगभग डेढ़ सौ वर्ष बाद चौलुक्य राजा कुमारपाल ने इसे सुंदर पत्थर से फिर बनवाया। आगे की सदियों में इस पर बार-बार आक्रमण हुए, और हर बार भक्तों और शासकों ने पूजा फिर से शुरू की। अठारहवीं सदी के अंत में इंदौर की रानी अहिल्याबाई होलकर ने खंडहरों के पास एक नया मंदिर बनवाया; वह आज भी पास ही खड़ा है। और फिर आया वह वचन, जिसकी कथा आपने द्वार पर सुनी। सन उन्नीस सौ इक्यावन में भारत के पहले राष्ट्रपति डॉ. राजेंद्र प्रसाद ने इसी प्राचीन स्थल पर बने नए मंदिर में ज्योतिर्लिंग की प्राण-प्रतिष्ठा की। अब विशाल मंडपों से होते हुए गर्भगृह की ओर चलिए।"
+      },
+      "didYouKnow": {
+        "en": "Somnath holds three aartis every day, at 7 am, at noon and at 7 pm; outside the monsoon, the ‘Jai Somnath’ light and sound show, in Amitabh Bachchan’s voice, follows in the evening.",
+        "hi": "सोमनाथ में प्रतिदिन तीन आरतियाँ होती हैं, सुबह 7 बजे, दोपहर 12 बजे और शाम 7 बजे; मानसून को छोड़कर, शाम को अमिताभ बच्चन की आवाज़ में ‘जय सोमनाथ’ लाइट एंड साउंड शो होता है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Somnath_temple",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc202658866001.pdf",
+        "https://somnath.org/faq/"
+      ]
+    },
+    {
+      "id": "somnath-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Somnath", "hi": "श्री सोमनाथ के दर्शन" },
+      "text": {
+        "en": "And now, here you are, before Shri Somnath. Think of everything that has brought you to this moment: the fading Moon who prayed on this shore, the temples of gold and stone, the raids, the long wait, and the promise made among the ruins. Through all of it people kept coming, just as you have come today, each carrying something to lay down: a worry, a hope, a prayer for someone far away. Take a breath and fold your hands. In the words of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya: ‘Saurashtradeshe vishade’tiramye jyotirmayam chandrakalavatamsam, bhaktipradanaya kripavatirnam tam Somanatham sharanam prapadye.’ ‘In the bright and lovely land of Saurashtra, radiant, wearing the crescent moon as his crown, who came down in compassion to grant devotion: in that Somanatha I take refuge.’ You have begun where tradition begins: Somnath is the first of the twelve. Pilgrims may visit the others in any order their journey allows; by tradition, the yatra is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Now the drums begin, the conch sounds and the lamps are raised. Let the aarti begin. Har Har Mahadev.",
+        "hi": "और अब, आप श्री सोमनाथ के सम्मुख हैं। सोचिए, किन-किन कथाओं से होकर आप इस क्षण तक पहुँचे हैं: इसी तट पर प्रार्थना करते क्षीण चंद्रमा, सोने और पत्थर के मंदिर, आक्रमण, लंबी प्रतीक्षा, और खंडहरों के बीच लिया गया संकल्प। इस सबके बीच भी लोग आते रहे, ठीक वैसे ही जैसे आज आप आए हैं, हर कोई अपने साथ कुछ अर्पित करने को लाया है: कोई चिंता, कोई आशा, किसी दूर बैठे अपने के लिए प्रार्थना। एक गहरी साँस लीजिए और हाथ जोड़िए। आदि शंकराचार्य को परंपरा से समर्पित द्वादश ज्योतिर्लिंग स्तोत्र के शब्दों में: ‘सौराष्ट्रदेशे विशदेऽतिरम्ये ज्योतिर्मयं चन्द्रकलावतंसम्। भक्तिप्रदानाय कृपावतीर्णं तं सोमनाथं शरणं प्रपद्ये॥’ ‘निर्मल और अति रमणीय सौराष्ट्र देश में, ज्योतिर्मय, चंद्रकला को मुकुट बनाए, भक्ति देने के लिए कृपा करके अवतरित: उन सोमनाथ की मैं शरण लेता हूँ।’ आपने वहीं से आरंभ किया है जहाँ से परंपरा आरंभ होती है: सोमनाथ बारह में प्रथम हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बाकी ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। अब नगाड़े बजने लगे हैं, शंख गूँज रहा है और दीप उठाए जा रहे हैं। आरती आरंभ हो। हर हर महादेव।"
+      },
+      "didYouKnow": {
+        "en": "Mobile phones and cameras are not allowed inside the temple, so this darshan is one every pilgrim carries home only in memory.",
+        "hi": "मंदिर के भीतर मोबाइल फ़ोन और कैमरे ले जाने की अनुमति नहीं है, इसलिए यह दर्शन हर तीर्थयात्री केवल अपनी स्मृति में घर ले जाता है।"
+      },
+      "sources": [
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://somnath.org/faq/",
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226515.html"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Somnath Aarti (three daily aartis)", "hi": "सोमनाथ आरती (प्रतिदिन तीन आरतियाँ)" },
+    "schedule": [
+      { "name": { "en": "Morning aarti", "hi": "प्रातः आरती" }, "time": "7:00 AM" },
+      { "name": { "en": "Midday aarti", "hi": "मध्याह्न आरती" }, "time": "12:00 noon" },
+      { "name": { "en": "Evening aarti", "hi": "सायं आरती" }, "time": "7:00 PM" },
+      { "name": { "en": "Light and sound show ‘Jai Somnath’ (not held in the monsoon)", "hi": "लाइट एंड साउंड शो ‘जय सोमनाथ’ (मानसून में नहीं)" }, "time": "8:00–9:00 PM" },
+      { "name": { "en": "Darshan hours", "hi": "दर्शन का समय" }, "time": "6:00 AM–10:00 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Saurashtradeshe vishade’tiramye\njyotirmayam chandrakalavatamsam\nbhaktipradanaya kripavatirnam\ntam Somanatham sharanam prapadye\n\nKarpuragauram karunavataram\nsamsarasaram bhujagendraharam\nsada vasantam hridayaravinde\nbhavam bhavanisahitam namami\n\n(In bright, lovely Saurashtra, radiant, crowned with the crescent moon, come down in compassion to grant devotion: in that Somanatha I take refuge.\nWhite as camphor, compassion embodied, the essence of the world, garlanded with the serpent king, ever dwelling in the lotus of the heart: to Bhava, with Bhavani, I bow.)",
+        "hi": "सौराष्ट्रदेशे विशदेऽतिरम्ये ज्योतिर्मयं चन्द्रकलावतंसम्।\nभक्तिप्रदानाय कृपावतीर्णं तं सोमनाथं शरणं प्रपद्ये॥\n\nकर्पूरगौरं करुणावतारं संसारसारं भुजगेन्द्रहारम्।\nसदा वसन्तं हृदयारविन्दे भवं भवानीसहितं नमामि॥"
+      },
+      "source": "Dwadasha Jyotirlinga Stotram, verse 1 (traditionally attributed to Adi Shankaracharya) and the traditional ‘Karpuragauram’ shloka recited at Shiva aartis. Not documented as the exact text of Somnath’s own aarti.",
+      "license": "Public domain (traditional Sanskrit text)"
+    },
+    "audio": [
+      {
+        "url": "https://somnath.org/somnath-live-darshan",
+        "license": "All rights reserved (Shree Somnath Trust) - needs permission",
+        "notes": "The trust’s official live darshan and aarti stream. No reuse licence found; write to the trust before using any recording."
+      }
+    ],
+    "youtube": [
+      {"videoId": "r9xf3J2yVWo", "start": 1210, "end": 2000, "title": "Sayam Aarti, Shree Somnath Temple (13 Aug 2020)", "channel": "Somnath Temple - Official Channel", "channelUrl": "https://www.youtube.com/@SomnathTempleOfficialChannel", "official": true, "kind": "recorded", "url": "https://www.youtube.com/watch?v=r9xf3J2yVWo&t=1210s", "verifiedBy": "somnath.org/somnath-live-darshan embeds this channel's live Sayam Aarti (video ZQ3KS2WkLNs)"},
+      {"videoId": "yKznRuohGl0", "start": 0, "end": 84, "title": "Sayam Aarti, Shree Somnath Temple (2 Oct 2026, short clip)", "channel": "Somnath Temple - Official Channel", "channelUrl": "https://www.youtube.com/@SomnathTempleOfficialChannel", "official": true, "kind": "recorded", "url": "https://www.youtube.com/watch?v=yKznRuohGl0", "verifiedBy": "somnath.org/somnath-live-darshan embeds this channel's live Sayam Aarti (video ZQ3KS2WkLNs)"},
+      {"channelId": "UCT1egsvA08YcdMLiEu1DTRg", "title": "Live darshan and aarti, Shree Somnath Temple", "channel": "Somnath Temple - Official Channel", "channelUrl": "https://www.youtube.com/@SomnathTempleOfficialChannel", "official": true, "kind": "live", "url": "https://www.youtube.com/channel/UCT1egsvA08YcdMLiEu1DTRg/live", "verifiedBy": "somnath.org/somnath-live-darshan embeds this channel's live Sayam Aarti (video ZQ3KS2WkLNs)"}
+    ],
+    "youtubeSources": ["https://somnath.org/somnath-live-darshan", "https://www.youtube.com/watch?v=r9xf3J2yVWo", "https://www.youtube.com/watch?v=yKznRuohGl0", "https://www.youtube.com/@SomnathTempleOfficialChannel"],
+    "notes": "Schedule from the Shree Somnath Trust FAQ (somnath.org/faq). Some travel sites give the show at 19:45 or 19:30; the trust gives 20:00–21:00. No freely licensed recording of Somnath’s aarti was found on Wikimedia Commons, archive.org or freesound. Until the trust grants permission, use the synthesized ambience (bells, conch, drums). CC0 sound candidates are listed in docs/content/somnath.md."
+  }
+}

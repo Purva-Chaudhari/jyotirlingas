@@ -1,0 +1,200 @@
+{
+  "id": "grishneshwar",
+  "name": {
+    "en": "Grishneshwar",
+    "hi": "घृष्णेश्वर"
+  },
+  "stops": [
+    {
+      "id": "grish-prangan",
+      "at": {
+        "feature": "prangan"
+      },
+      "kind": "history",
+      "title": {
+        "en": "Ilapura, Beside Ellora",
+        "hi": "इलापुर, एलोरा के पास"
+      },
+      "text": {
+        "en": "Har Har Mahadev! Come, walk with me. You have entered the court of Shri Grishneshwar, in the village of Verul in Maharashtra. Look at the temple: deep red stone, a tiered spire, walls crowded with carvings. Now look past the walls, to the flat-topped hills. About a kilometre and a half away, in those hills, are the caves of Ellora, cut into the rock over centuries by Buddhist, Hindu and Jain hands. The greatest of them, the Kailasa temple, was carved downward out of the living rock in the eighth century, under the Rashtrakuta king Krishna the First. In those days this place was called Elapura, and that is the name Adi Shankaracharya gives it in his Stotram: Ilapura. This is the twelfth Jyotirlinga, and for many pilgrims, the last. If you have walked with me from Somnath by the western sea, all the way to the snows of Kedarnath, this is where the circle closes. But the Lord did not come here because of kings or caves. He came because of one woman’s faith, and her story begins outside, at a great tank across the lane. Come, out through the south gate.",
+        "hi": "हर हर महादेव! आइए, मेरे साथ चलिए। आप श्री घृष्णेश्वर के प्रांगण में आ गए हैं, महाराष्ट्र के वेरूळ गाँव में। मंदिर को देखिए: गहरा लाल पत्थर, परतों में उठता शिखर, और नक्काशी से भरी दीवारें। अब दीवारों के पार, उन सपाट चोटी वाली पहाड़ियों की ओर देखिए। लगभग डेढ़ किलोमीटर दूर, उन्हीं पहाड़ियों में एलोरा की गुफाएँ हैं, जिन्हें सदियों तक बौद्ध, हिंदू और जैन हाथों ने चट्टान में तराशा। उनमें सबसे महान, कैलास मंदिर, आठवीं शताब्दी में राष्ट्रकूट राजा कृष्ण प्रथम के समय, जीवित चट्टान को ऊपर से नीचे काटकर गढ़ा गया। उन दिनों यह स्थान एलापुर कहलाता था, और आदि शंकराचार्य अपने स्तोत्र में इसे यही नाम देते हैं: इलापुर। यह बारहवाँ ज्योतिर्लिंग है, और बहुत से यात्रियों के लिए अंतिम। अगर आप पश्चिमी सागर के तट पर सोमनाथ से लेकर केदारनाथ की बर्फ़ तक मेरे साथ चलते आए हैं, तो यहीं वह चक्र पूरा होता है। पर प्रभु यहाँ राजाओं या गुफाओं के कारण नहीं आए। वे आए एक स्त्री की आस्था के कारण, और उसकी कथा बाहर, गली के पार एक बड़े कुंड से शुरू होती है। आइए, दक्षिणी द्वार से बाहर चलें।"
+      },
+      "didYouKnow": {
+        "en": "The Ellora caves, about 34 of them cut between roughly the 6th and 10th centuries, have been a UNESCO World Heritage Site since 1983.",
+        "hi": "एलोरा की लगभग 34 गुफाएँ, जो मोटे तौर पर छठी से दसवीं शताब्दी के बीच तराशी गईं, 1983 से यूनेस्को विश्व धरोहर हैं।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grishneshwar_Temple",
+        "https://whc.unesco.org/en/list/243/",
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://marathwadatourism.com/grishneshwar-jyotirlinga-temple/"
+      ]
+    },
+    {
+      "id": "grish-lane",
+      "at": {
+        "feature": "lane"
+      },
+      "kind": "legend",
+      "title": {
+        "en": "Two Sisters",
+        "hi": "दो बहनें"
+      },
+      "text": {
+        "en": "Here in the lane, among the flower stalls, listen to the story the Shiva Purana tells. Long ago, in this southern land, near a mountain called Deva, lived a learned Brahmin named Sudharma, with his wife Sudeha. They loved each other, but they had no child, and the years went by. Sudeha grieved, and at last she begged her husband to marry her younger sister, Ghushma, so that the house would have a son. Sudharma agreed. Ghushma was gentle and devout. Every day she made one hundred and one small lingas from earth, worshipped each one, and then carried them to a lake nearby and let them go into the water. Year after year she did this, and in time she bore a son. The boy was loved by all. He grew up, and he was married. But as Ghushma’s joy grew, something grew in Sudeha’s heart too: jealousy. The Purana says it burned in her like fire, and she told herself that only her sister’s tears could put it out. Walk on with me, down the path to the water. What happened there is the heart of this place.",
+        "hi": "यहाँ गली में, फूलों की दुकानों के बीच, वह कथा सुनिए जो शिव पुराण सुनाता है। बहुत पहले, दक्षिण की इस धरती पर, देव नाम के पर्वत के पास, सुधर्मा नाम के एक विद्वान ब्राह्मण अपनी पत्नी सुदेहा के साथ रहते थे। दोनों में बड़ा प्रेम था, पर उनके कोई संतान न थी, और वर्ष बीतते गए। सुदेहा का मन दुखी रहता, और आख़िर उसने पति से विनती की कि वे उसकी छोटी बहन घुश्मा से विवाह कर लें, ताकि घर में पुत्र हो। सुधर्मा मान गए। घुश्मा सरल और भक्तिमयी थी। वह हर दिन मिट्टी के एक सौ एक छोटे-छोटे शिवलिंग बनाती, हर एक की पूजा करती, और फिर उन्हें पास के एक सरोवर में ले जाकर जल में विसर्जित कर देती। वर्षों तक वह ऐसा करती रही, और समय आने पर उसे पुत्र हुआ। बालक सबका दुलारा था। वह बड़ा हुआ, और उसका विवाह हुआ। पर जैसे-जैसे घुश्मा का सुख बढ़ा, सुदेहा के मन में भी कुछ बढ़ने लगा: ईर्ष्या। पुराण कहता है कि वह उसके भीतर आग की तरह जलती थी, और उसने मन में ठाना कि यह आग केवल बहन के आँसुओं से ही बुझेगी। मेरे साथ आगे चलिए, पानी की ओर जाने वाले रास्ते पर। वहाँ जो हुआ, वही इस स्थान का हृदय है।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana says Ghushma went on until she had worshipped a hundred thousand earthen lingas.",
+        "hi": "शिव पुराण कहता है कि घुश्मा ने इसी तरह एक लाख पार्थिव लिंगों की पूजा पूरी की।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226533.html"
+      ]
+    },
+    {
+      "id": "grish-kund",
+      "at": {
+        "zone": "shivalaya",
+        "feature": "kund"
+      },
+      "kind": "legend",
+      "title": {
+        "en": "The Son Who Came Back from the Water",
+        "hi": "जल से लौटा पुत्र"
+      },
+      "text": {
+        "en": "This is Shivalaya, the great stepped tank. Look down the flights of stone to the green water far below. One night, the Purana says, while the house slept, Sudeha killed her sister’s son, and threw his body into this very lake, the lake where Ghushma let her lingas go each day. In the morning the house woke to grief. Only Ghushma did not stop her worship. ‘He who gave me this child,’ she said, ‘will protect him too.’ She made her hundred and one lingas, worshipped them, and came down here to let them go into the water. And as she turned back, there on the bank stood her son, alive. Then Shiva himself appeared in all his radiance, his trident raised against Sudeha. But Ghushma fell at his feet and begged him to spare her sister. Pleased by a heart that could forgive even this, Shiva offered her a boon. She asked him to stay here for ever, for the good of the world. He agreed. He became Ghushmeshwara, the Lord of Ghushma, and this lake took the name Shivalaya, the home of Shiva. Now walk back with me to the temple, to the place where he stayed.",
+        "hi": "यह है शिवालय, सीढ़ियों वाला विशाल कुंड। पत्थर की इन सीढ़ियों के नीचे, गहराई में हरे जल को देखिए। पुराण कहता है कि एक रात, जब घर सो रहा था, सुदेहा ने अपनी बहन के पुत्र की हत्या कर दी, और उसका शरीर इसी सरोवर में फेंक दिया, उसी सरोवर में जहाँ घुश्मा हर दिन अपने शिवलिंग विसर्जित करती थी। सुबह घर में शोक छा गया। केवल घुश्मा ने अपनी पूजा नहीं छोड़ी। उसने कहा, ‘जिसने मुझे यह पुत्र दिया, वही उसकी रक्षा भी करेगा।’ उसने अपने एक सौ एक शिवलिंग बनाए, उनकी पूजा की, और उन्हें जल में विसर्जित करने यहाँ आई। और जैसे ही वह लौटने को मुड़ी, किनारे पर उसका पुत्र खड़ा था, जीवित। तब स्वयं शिव अपने पूरे तेज के साथ प्रकट हुए, सुदेहा पर त्रिशूल उठाए हुए। पर घुश्मा उनके चरणों में गिर पड़ी और बहन को क्षमा करने की विनती की। ऐसे हृदय से प्रसन्न होकर, जो इतना बड़ा अपराध भी क्षमा कर सकता था, शिव ने उसे वर माँगने को कहा। उसने माँगा कि प्रभु संसार के कल्याण के लिए सदा यहीं रहें। शिव मान गए। वे घुश्मेश्वर बने, घुश्मा के स्वामी, और यह सरोवर शिवालय कहलाया, शिव का घर। अब मेरे साथ मंदिर की ओर लौटिए, उस स्थान पर जहाँ वे ठहर गए।"
+      },
+      "didYouKnow": {
+        "en": "The short Jyotirlinga Stotram remembers this lake: it names the twelfth Jyotirlinga ‘Ghushmesham cha Shivalaye’, Ghushmesha at Shivalaya.",
+        "hi": "छोटा ज्योतिर्लिंग स्तोत्र इसी सरोवर को याद करता है: वह बारहवें ज्योतिर्लिंग को कहता है ‘घुश्मेशं च शिवालये’, अर्थात शिवालय में घुश्मेश।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226534.html",
+        "https://sanskritdocuments.org/doc_shiva/jyotirling.html"
+      ]
+    },
+    {
+      "id": "grish-porch",
+      "at": {
+        "feature": "porch"
+      },
+      "kind": "history",
+      "title": {
+        "en": "Raised Again and Again",
+        "hi": "बार-बार उठा मंदिर"
+      },
+      "text": {
+        "en": "Back in the court, stand before the temple’s southern steps and look up. Red basalt, carved from plinth to spire: elephants along the base, gods in their niches, and higher up, the ten avatars of Vishnu among scenes of Shiva’s own stories. The Lord stayed here for Ghushma, but his house has had to be raised more than once. In the wars of the thirteenth and fourteenth centuries the old temple was damaged, and for long years after it was rebuilt and damaged again. Then, in the late sixteenth century, a Maratha commander named Maloji Bhosale restored it. Maloji was the grandfather of Chhatrapati Shivaji Maharaj, and Verul is remembered as the ancestral village of the Bhosale family; their memorials stand near this temple. Tradition says Maloji found a hidden treasure, and spent it on this temple and on a great tank for Shiva at Shikhar Shingnapur. The temple you see is mostly the gift of the next century, and of a queen: Ahilyabai Holkar of Indore, who restored temples from Kashi to Somnath. Most accounts credit her with raising this one in its present form. Now climb the steps into the hall. Nandi is waiting there.",
+        "hi": "प्रांगण में लौटकर, मंदिर की दक्षिणी सीढ़ियों के सामने खड़े होइए और ऊपर देखिए। लाल बेसाल्ट पत्थर, चबूतरे से शिखर तक नक्काशीदार: नीचे हाथियों की पंक्तियाँ, आलों में देवता, और ऊपर शिव की अपनी कथाओं के बीच विष्णु के दस अवतार। प्रभु घुश्मा के लिए यहाँ ठहरे, पर उनके घर को एक से अधिक बार फिर से उठाना पड़ा। तेरहवीं और चौदहवीं शताब्दी के युद्धों में पुराना मंदिर क्षतिग्रस्त हुआ, और उसके बाद लंबे समय तक वह बनता और टूटता रहा। फिर सोलहवीं शताब्दी के अंत में, मालोजी भोसले नाम के एक मराठा सरदार ने इसका जीर्णोद्धार कराया। मालोजी छत्रपति शिवाजी महाराज के दादा थे, और वेरूळ भोसले परिवार का पैतृक गाँव माना जाता है; उनकी समाधियाँ इसी मंदिर के पास हैं। परंपरा कहती है कि मालोजी को एक छिपा हुआ ख़ज़ाना मिला, और उन्होंने उसे इस मंदिर पर, और शिखर शिंगणापुर में शिव के लिए एक बड़े तालाब पर ख़र्च किया। आज जो मंदिर आप देख रहे हैं, वह मुख्यतः अगली शताब्दी की, और एक रानी की देन है: इंदौर की अहिल्याबाई होलकर, जिन्होंने काशी से सोमनाथ तक मंदिरों का जीर्णोद्धार कराया। अधिकतर विवरण इसके वर्तमान रूप का श्रेय उन्हीं को देते हैं। अब सीढ़ियाँ चढ़कर मंडप में चलिए। वहाँ नंदी प्रतीक्षा कर रहे हैं।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana places Ghushmesha near Devagiri; the great hill fort of Devagiri, today’s Daulatabad, stands about fifteen kilometres away.",
+        "hi": "शिव पुराण घुश्मेश को देवगिरि के पास बताता है; देवगिरि का विशाल पहाड़ी किला, आज का दौलताबाद, यहाँ से लगभग पंद्रह किलोमीटर दूर है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grishneshwar_Temple",
+        "https://en.wikipedia.org/wiki/Maloji_Bhosale",
+        "https://durgbharari.in/verul-maloji-bhosle-samadhi/",
+        "https://marathwadatourism.com/grishneshwar-jyotirlinga-temple/"
+      ]
+    },
+    {
+      "id": "grish-sabhamandapa",
+      "at": {
+        "zone": "sabhamandapa",
+        "feature": "sabhamandapa"
+      },
+      "kind": "ritual",
+      "title": {
+        "en": "Come As You Are",
+        "hi": "जैसे हैं, वैसे आइए"
+      },
+      "text": {
+        "en": "You are in the sabha mandapa. Twenty-four carved pillars hold up its roof, and in the middle Nandi lies facing the sanctum, his eyes always on his Lord. Watch the men ahead of you in the line: they are taking off their shirts and vests before they go in. That is the custom here; men enter the sanctum bare-chested. And here is something only a few Jyotirlingas allow: at Grishneshwar, devotees may reach out and touch the linga, and pour water on it with their own hands. Remember Ghushma, who worshipped every day with her own hands, lingas she had shaped from the earth. Perhaps that is why it feels right that here, so little stands between the devotee and the Lord. Notice, too, that the sanctum lies lower than this hall. You will step down to it through a passage in the thick wall, and the linga faces east, toward Nandi and the morning sun. The day here is framed by worship: an aarti at dawn, the midday bhog, and the evening aarti. Go on now, and go down. This is the last step of a long journey.",
+        "hi": "आप सभामंडप में हैं। चौबीस नक्काशीदार स्तंभ इसकी छत को थामे हैं, और बीच में नंदी गर्भगृह की ओर मुख किए बैठे हैं, उनकी दृष्टि सदा अपने प्रभु पर। कतार में अपने आगे के पुरुषों को देखिए: भीतर जाने से पहले वे अपनी कमीज़ और बनियान उतार रहे हैं। यहाँ की यही रीति है; पुरुष गर्भगृह में खुले बदन जाते हैं। और यहाँ कुछ ऐसा है जो कुछ ही ज्योतिर्लिंगों में होता है: घृष्णेश्वर में भक्त हाथ बढ़ाकर शिवलिंग को छू सकते हैं, और अपने हाथों से उस पर जल चढ़ा सकते हैं। घुश्मा को याद कीजिए, जो हर दिन अपने हाथों से, मिट्टी से गढ़े शिवलिंगों की पूजा करती थी। शायद इसीलिए यहाँ यह उचित लगता है कि भक्त और प्रभु के बीच इतनी कम दूरी है। यह भी देखिए कि गर्भगृह इस मंडप से नीचे है। आप मोटी दीवार के बीच के रास्ते से उतरकर वहाँ पहुँचेंगे, और शिवलिंग का मुख पूर्व की ओर है, नंदी और उगते सूर्य की ओर। यहाँ का दिन पूजा से बँधा है: भोर में आरती, दोपहर का भोग, और संध्या की आरती। अब आगे बढ़िए, और नीचे उतरिए। यह एक लंबी यात्रा का अंतिम पड़ाव है।"
+      },
+      "didYouKnow": {
+        "en": "The garbhagriha is about seventeen feet square, and its floor lies below the level of the hall.",
+        "hi": "गर्भगृह लगभग सत्रह फ़ुट लंबा और सत्रह फ़ुट चौड़ा है, और उसका फ़र्श मंडप से नीचे है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grishneshwar_Temple",
+        "https://www.grishneshwartemple.com/",
+        "https://grishneshwarjyotirling.org/"
+      ]
+    },
+    {
+      "id": "grish-garbhagriha",
+      "at": {
+        "zone": "garbhagriha",
+        "feature": "garbhagriha"
+      },
+      "kind": "ritual",
+      "title": {
+        "en": "Darshan of Shri Grishneshwar: the Yatra Complete",
+        "hi": "श्री घृष्णेश्वर के दर्शन: यात्रा पूर्ण"
+      },
+      "text": {
+        "en": "You have reached Shri Grishneshwar, the Lord of Ghushma. Look: a small, dark linga, worn smooth by countless hands, rising from its stone base in this low, lamp-lit room. This is the Lord who gave a mother back her son, and who spared the one who took him, because she asked. Fold your hands. Adi Shankaracharya sings of this place in the Dvadasha Jyotirlinga Stotram: ‘Ilapure ramyavishalake’smin samullasantam cha jagadvarenyam, vande mahodaratarasvabhavam Ghrishneshvarakhyam sharanam prapadye.’ ‘Here in Ilapura, lovely and wide, he shines forth, most worthy of the whole world’s worship. I bow to him, whose nature is boundlessly generous; to him called Ghrishneshwara I go for refuge.’ Grishneshwar is the twelfth and last Jyotirlinga of the Stotram. By tradition, a yatra of the twelve Jyotirlingas is held complete with this darshan. Pilgrims come here by many roads, in whatever order their lives allow. But remember now where the Stotram begins: at Somnath, the first, where the sea breaks on the shore. From that shore, through forest hills and river islands, ancient cities and Himalayan snow, the journey has brought you to this small room in a village beside Ellora. Whatever you have carried here, set it down. The circle is complete. Let the bells ring and the lamps be raised. Har Har Mahadev. Om Namah Shivaya.",
+        "hi": "आप श्री घृष्णेश्वर तक पहुँच गए हैं, घुश्मा के प्रभु तक। देखिए: एक छोटा, साँवला शिवलिंग, अनगिनत हाथों के स्पर्श से चिकना, इस नीचे, दीपों से जगमगाते कक्ष में अपने पत्थर के आधार से उठता हुआ। ये वही प्रभु हैं जिन्होंने एक माँ को उसका पुत्र लौटाया, और जिसने उसे छीना था उसे भी क्षमा किया, क्योंकि माँ ने यही माँगा। हाथ जोड़िए। आदि शंकराचार्य द्वादश ज्योतिर्लिंग स्तोत्र में इस स्थान का गान करते हैं: ‘इलापुरे रम्यविशालकेऽस्मिन् समुल्लसन्तं च जगद्वरेण्यम्। वन्दे महोदारतरस्वभावं घृष्णेश्वराख्यं शरणं प्रपद्ये॥’ ‘इस रमणीय और विशाल इलापुर में जो शोभायमान हैं, जो सारे जगत के पूज्य हैं, जिनका स्वभाव अत्यंत उदार है: उन घृष्णेश्वर को मैं प्रणाम करता हूँ, उनकी शरण लेता हूँ।’ घृष्णेश्वर स्तोत्र के बारहवें और अंतिम ज्योतिर्लिंग हैं। परंपरा से, बारह ज्योतिर्लिंगों की यात्रा इसी दर्शन से पूर्ण मानी जाती है। तीर्थयात्री अनेक रास्तों से, जीवन जिस क्रम में ले आए, उसी क्रम में यहाँ पहुँचते हैं। पर अब याद कीजिए कि स्तोत्र कहाँ से आरंभ होता है: प्रथम ज्योतिर्लिंग सोमनाथ से, जहाँ सागर तट से टकराता है। उस तट से, वन के पहाड़ों और नदी के द्वीपों, प्राचीन नगरों और हिमालय की बर्फ़ से होती हुई, यह यात्रा आपको एलोरा के पास के एक गाँव के इस छोटे-से कक्ष तक ले आई है। जो कुछ भी आप साथ लाए हैं, उसे यहीं रख दीजिए। चक्र पूरा हुआ। घंटियाँ बजें, और दीप उठें। हर हर महादेव। ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana says Shiva also blessed Ghushma’s family line to flourish for a hundred and one generations.",
+        "hi": "शिव पुराण कहता है कि शिव ने घुश्मा के वंश को एक सौ एक पीढ़ियों तक फलने-फूलने का आशीर्वाद भी दिया।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226534.html",
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://en.wikipedia.org/wiki/Grishneshwar_Temple"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": {
+      "en": "Grishneshwar Aarti (morning, Bhog and evening aarti)",
+      "hi": "घृष्णेश्वर आरती (प्रातः, भोग और संध्या आरती)"
+    },
+    "schedule": [
+      {
+        "name": {
+          "en": "Morning Aarti",
+          "hi": "प्रातः आरती"
+        },
+        "time": "about 5:00 AM"
+      },
+      {
+        "name": {
+          "en": "Bhog Aarti",
+          "hi": "भोग आरती"
+        },
+        "time": "about 12:00 noon"
+      },
+      {
+        "name": {
+          "en": "Evening Aarti",
+          "hi": "संध्या आरती"
+        },
+        "time": "about 8:00 PM"
+      },
+      {
+        "name": {
+          "en": "Mahashivratri (open all night)",
+          "hi": "महाशिवरात्रि (पूरी रात खुला)"
+        },
+        "time": "Mahashivratri"
+      }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Lavathavati vikrala brahmandi mala\nvishe kantha kala trinetri jvala\nlavanyasundar mastaki bala\ntethuniya jala nirmala vahe jhuljula\n\nJaya Deva Jaya Deva Jaya Shri Shankara\naarti ovalu tuja Karpuragaura\n\nKarpuragaura bhola nayani vishala\nardhangi Parvati sumananchya mala\nvibhutiche udhalana shitikantha nila\naisa Shankara shobhe Umavelhala\n\nDevi daitya sagaramanthana pai kele\ntyamaji je avachita halahala uthile\nte tva asurapane prashana kele\nNilakantha nama prasiddha jhale\n\nVyaghrambara phanivaradhara sundara Madanari\nPanchanana manamohana munijanasukhakari\nshatakotiche bija vache uchchari\nRaghukulatilaka Ramadasa antari\n\n(The Marathi Shiva aarti of Samarth Ramdas, sung across Maharashtra; refrain: ‘Victory, O God, victory to Shri Shankara; I wave the lamps before you, O you white as camphor.’)",
+        "hi": "लवथवती विक्राळा ब्रह्मांडी माळा।\nवीषें कंठ काळा त्रिनेत्रीं ज्वाळा॥\nलावण्यसुंदर मस्तकीं बाळा।\nतेथुनियां जल निर्मळ वाहे झुळझूळां॥ १॥\n\nजय देव जय देव जय श्रीशंकरा।\nआरती ओवाळूं तुज कर्पूरगौरा॥ ध्रु०॥\n\nकर्पूरगौरा भोळा नयनीं विशाळा।\nअर्धांगीं पार्वती सुमनांच्या माळा॥\nविभुतीचें उधळण शितिकंठ नीळा।\nऐसा शंकर शोभे उमावेल्हाळा॥ जय देव०॥ २॥\n\nदेवीं दैत्य सागरमंथन पै केलें।\nत्यामाजीं जें अवचित हळाहळ उठिलें॥\nतें त्वां असुरपणें प्राशन केलें।\nनीळकंठ नाम प्रसिद्ध झालें॥ जय देव०॥ ३॥\n\nव्याघ्रांबर फणिवरधर सुंदर मदनारी।\nपंचानन मनमोहन मुनिजनसुखकारी॥\nशतकोटीचें बीज वाचे उच्चारी।\nरघुकुळटिळक रामदासा अंतरीं॥ जय देव जय देव०॥ ४॥"
+      },
+      "source": "‘Lavathavati vikrala’, the Marathi aarti of Shankara by Samarth Ramdas (1608–1681), from the traditional aarti collections of Maharashtra (text as at tring.co.in/aarti/lavthavti-vikrala; printings differ slightly in spelling). It is the standard Shiva aarti of Maharashtra, but it is not documented as the exact text sung at Grishneshwar.",
+      "license": "Public domain (traditional text)"
+    },
+    "notes": "No official trust website or YouTube channel could be verified for Shri Grishneshwar Mandir Devasthan Trust, Verul (president Kunal Dandge per Pudhari, Oct 2026). grishneshwarjyotirling.org is run by YatraDham.Org and grishneshwartemple.com states it is a private facilitator not affiliated with the trust, so neither counts as official; YouTube search finds only music labels and fan uploads. `youtube` is therefore left empty and the synthesized aarti plays. Timings (morning ~5:00, bhog ~12:00, evening ~8:00) are from those secondary sites and should be confirmed with the trust. Men enter the sanctum bare-chested; devotees may touch the linga (crowd permitting). News (Pudhari, 1 Oct 2026; eSakal, 2 Oct 2026): darshan may be suspended from 1 Nov 2026 for underground-passage works, with the three daily pujas continuing inside; the district collector promised to keep any closure short."
+  }
+}

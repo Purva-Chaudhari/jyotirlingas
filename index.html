@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>The Twelve Jyotirlingas</title>
+    <meta name="description" content="Walk the twelve Jyotirlingas of Bharat in 3D: Somnath to Grishneshwar, with their stories." />
+    <meta name="theme-color" content="#05030c" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Mukta:wght@300;400;500;600&family=Tiro+Devanagari+Hindi&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="prefetch" href="temples.html" />
+    <!-- first paint: the plain dark of space and nothing else, until the page's own styles and scene are ready -->
+    <style id="boot">html,body{margin:0;height:100%;overflow:hidden;background:#05030c}body>*{visibility:hidden}body *{transition:none!important;animation:none!important}</style>
+  </head>
+  <body class="landing">
+    <canvas id="cosmos" aria-hidden="true"></canvas>
+    <div id="stage-hit" aria-hidden="true"></div>
+
+    <p id="chapter" aria-live="polite"></p>
+    <p id="hint" aria-hidden="true"></p>
+    <p id="scrollcue" aria-hidden="true"></p>
+    <nav id="rail" aria-label="Journey"></nav>
+    <p id="thought" aria-live="polite"><span class="tt"></span><span class="ts"></span></p>
+
+    <div id="mark" aria-hidden="true"><p class="en"></p><p class="hi"></p></div>
+
+    <header id="head">
+      <p id="eyebrow"></p>
+      <h1 id="title"></h1>
+      <p id="subtitle"></p>
+    </header>
+
+    <nav id="list" aria-labelledby="list-title">
+      <h2 id="list-title"></h2>
+      <ol id="list-items"></ol>
+    </nav>
+    <button id="list-toggle" aria-expanded="false" aria-controls="list"></button>
+
+    <aside id="card" aria-hidden="true" aria-live="polite">
+      <div class="img"><img id="card-img" alt="" width="1600" height="900" decoding="async" /></div>
+      <button id="card-close">×</button>
+      <div class="body">
+        <p id="card-num"></p>
+        <h3 id="card-name"></h3>
+        <p id="card-place"></p>
+        <p id="card-line"></p>
+        <div class="foot">
+          <span id="card-progress"></span>
+          <button id="card-enter"></button>
+        </div>
+      </div>
+    </aside>
+
+    <button id="skip"></button>
+    <footer id="foot">
+      <button id="replay" class="link"></button>
+      <span class="credits"><span id="map-credit"></span><span id="music-credit"></span></span>
+    </footer>
+    <nav id="more" aria-label="About this project">
+      <button class="link" data-info="about"></button>
+      <button class="link" data-info="contribute"></button>
+      <a class="link gh" href="https://github.com/Purva-Chaudhari/jyotirlingas" target="_blank" rel="noopener"></a>
+    </nav>
+    <section id="about" aria-labelledby="about-title">
+      <button class="x" aria-label="Close">×</button>
+      <div class="in">
+        <h2 id="about-title"></h2>
+        <div class="paras"></div>
+        <p class="om" lang="sa"></p>
+        <p class="help"><button class="link" data-info="contribute-2"></button> <span>·</span> <a class="link gh2" target="_blank" rel="noopener"></a></p>
+      </div>
+    </section>
+    <dialog id="info" aria-labelledby="info-title">
+      <button class="x" aria-label="Close">×</button>
+      <h2 id="info-title"></h2>
+      <div class="body"></div>
+    </dialog>
+    <button id="sound" aria-pressed="false"></button>
+    <div id="grain" aria-hidden="true"></div>
+    <div id="veil" aria-hidden="true"></div>
+    <script type="module" src="/src/landing/main.ts"></script>
+  </body>
+</html>

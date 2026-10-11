@@ -1,0 +1,131 @@
+{
+  "id": "nageshwar",
+  "name": { "en": "Nageshwar", "hi": "नागेश्वर" },
+  "stops": [
+    {
+      "id": "nagesh-dwar",
+      "at": { "zone": "dwar", "feature": "dwar" },
+      "kind": "history",
+      "title": { "en": "The Forest by the Western Sea", "hi": "पश्चिमी सागर के तट का वन" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me through the gate. Can you feel the salt in the wind? We are on the coast of Saurashtra, on the road that runs from Dwarka, Lord Krishna’s city, out toward the island of Bet Dwarka. Look around you: flat, dry land, thorny babul trees, a wide open sky. The Shiva Purana remembers this country very differently, as Darukavana, a rich forest on the shore of the western ocean, sixteen yojanas across. It also remembers who ruled that forest, and you will hear about them in a moment. First, the temple ahead. Its walls are new, though its Lord is very old. In the 1990s a devotee named Gulshan Kumar came here on a pilgrimage to the twelve Jyotirlingas. Born in Delhi, the son of a fruit-juice seller, he had built the music company T-Series. Accounts of the temple say he found the old shrine in poor repair and paid for a new one, begun around 1996. He did not live to see it finished. He died in 1997, and his family completed the work. Now look up, to the north. Someone very large is waiting for us.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ इस द्वार से भीतर चलिए। हवा में नमक की गंध महसूस हो रही है? हम सौराष्ट्र के तट पर हैं, उस सड़क पर जो भगवान श्रीकृष्ण की नगरी द्वारका से बेट द्वारका के द्वीप की ओर जाती है। चारों ओर देखिए: समतल, सूखी धरती, काँटेदार बबूल, और खुला आसमान। पर शिव पुराण इस धरती को बिल्कुल अलग रूप में याद करता है, दारुकावन के रूप में, पश्चिमी समुद्र के किनारे सोलह योजन में फैला एक समृद्ध वन। पुराण यह भी याद रखता है कि उस वन पर किसका राज था, और उनकी कथा आप अभी थोड़ी देर में सुनेंगे। पहले, सामने के मंदिर की बात। इसकी दीवारें नई हैं, पर इसके प्रभु बहुत पुराने हैं। उन्नीस सौ नब्बे के दशक में गुलशन कुमार नाम के एक भक्त बारह ज्योतिर्लिंगों की यात्रा करते हुए यहाँ आए। दिल्ली में एक फलों का रस बेचने वाले के घर जन्मे गुलशन कुमार ने संगीत कंपनी टी-सीरीज़ खड़ी की थी। मंदिर के बारे में बताया जाता है कि उन्होंने पुराने मंदिर को जर्जर हालत में देखा और नए मंदिर का खर्च उठाया, जिसका काम लगभग उन्नीस सौ छियानवे में शुरू हुआ। वे उसे पूरा होते नहीं देख पाए। उन्नीस सौ सत्तानवे में उनका देहांत हो गया, और उनके परिवार ने यह काम पूरा किया। अब ऊपर, उत्तर की ओर देखिए। कोई बहुत विशाल हमारी प्रतीक्षा कर रहा है।"
+      },
+      "didYouKnow": {
+        "en": "Close by is Gopi Talav, a lake that tradition links with the gopis, the cowherd women devoted to Lord Krishna.",
+        "hi": "पास ही गोपी तालाब है, जिसे परंपरा भगवान श्रीकृष्ण की भक्त गोपियों से जोड़ती है।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226530.html",
+        "https://gujarattourism.com/saurashtra/devbhoomi-dwarka/nageshwar-jyotirlinga.html",
+        "https://en.wikipedia.org/wiki/Gulshan_Kumar",
+        "https://www.thedivineindia.com/nageshvara-jyotirlinga-mandir/5955"
+      ]
+    },
+    {
+      "id": "nagesh-statue",
+      "at": { "zone": "statue", "feature": "statue" },
+      "kind": "legend",
+      "title": { "en": "Daruka and Daruki", "hi": "दारुक और दारुकी" },
+      "text": {
+        "en": "Stand here and look up. Shiva sits above you, about twenty-five metres tall, calm, facing west toward the road and the sea. Keep him in mind: this is a story about why he came. The Shiva Purana tells of a demoness named Daruki and her husband, the demon Daruka. Daruki had worshipped Parvati, and the goddess had given her a boon: this whole forest was placed in her care, and wherever she walked in it, the land grew green and full of trees. But the pair grew proud. With their band of rakshasas they broke up sacrifices and terrorised the people of the forest. The people ran to the sage Aurva for shelter, and he declared: if these demons kill living beings on the earth, they themselves will die. Then the gods came to fight them, and the demons grew afraid. So Daruki called upon her boon. The Purana says she rose and flew like a winged mountain, carrying their city out into the middle of the sea, where the curse could not reach them. But from the water they began to seize the boats that passed. Walk on toward the temple. One of those boats carried a man you should meet.",
+        "hi": "यहाँ खड़े होकर ऊपर देखिए। आपके ऊपर शिव विराजमान हैं, लगभग पच्चीस मीटर ऊँचे, शांत और स्थिर, पश्चिम की ओर, सड़क और समुद्र की दिशा में मुख किए हुए। उन्हें मन में रखिए, क्योंकि यह कथा इसी की है कि वे यहाँ क्यों आए। शिव पुराण दारुकी नाम की एक राक्षसी और उसके पति, राक्षस दारुक की कथा कहता है। दारुकी ने माता पार्वती की आराधना की थी, और देवी ने उसे वरदान दिया था: यह सारा वन उसकी देखरेख में सौंपा गया, और वह वन में जहाँ भी जाती, धरती हरी-भरी और वृक्षों से भर जाती। पर दोनों को घमंड हो गया। अपने राक्षसों के दल के साथ वे यज्ञ भंग करते और वन के लोगों को सताते। लोग शरण के लिए और्व ऋषि के पास दौड़े, और ऋषि ने घोषणा की: यदि ये राक्षस धरती पर प्राणियों को मारेंगे, तो वे स्वयं मर जाएँगे। फिर देवता उनसे युद्ध करने आए, और राक्षस डर गए। तब दारुकी ने अपने वरदान का सहारा लिया। पुराण कहता है कि वह पंखों वाले पर्वत की तरह उड़ी, और उनकी पूरी नगरी को उठाकर समुद्र के बीच ले गई, जहाँ ऋषि का शाप उन तक नहीं पहुँच सकता था। पर अब वे पानी में से गुज़रती नावों को पकड़ने लगे। मंदिर की ओर आगे चलिए। उन्हीं नावों में से एक में एक ऐसा व्यक्ति था, जिनसे आपको मिलना चाहिए।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana places Daruka’s forest on the shore of the western ocean, sixteen yojanas in every direction, one reason devotees here link it with this coast.",
+        "hi": "शिव पुराण दारुक के वन को पश्चिमी समुद्र के तट पर, हर दिशा में सोलह योजन तक फैला बताता है; यहाँ के भक्त इसी कारण उसे इस तट से जोड़ते हैं।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226530.html",
+        "https://en.wikipedia.org/wiki/Daruka"
+      ]
+    },
+    {
+      "id": "nagesh-prangan",
+      "at": { "feature": "prangan" },
+      "kind": "legend",
+      "title": { "en": "Supriya in the Prison", "hi": "कारागार में सुप्रिय" },
+      "text": {
+        "en": "As we cross the forecourt toward the temple steps, picture instead a prison, in a city out in the sea. Boats had come by, full of travellers, and the rakshasas had bound them all and thrown them into chains. Their leader was a merchant named Supriya. He was a devotee of Shiva so steady that, the Purana says, on any day he could not worship Shiva, he would not eat. He did not stop now. There in the prison he shaped a small linga out of earth and worshipped it, and he taught the others how. Some sat in meditation. Some worshipped Shiva in their minds. Those who knew no ritual at all simply repeated the five syllables, Namah Shivaya. And Supriya knew that every offering was being received. Six months passed this way, in chains and in prayer. Then one day one of Daruka’s guards looked in, and saw something he could not explain: a beautiful form of Shiva, standing before the merchant. The guard ran to tell his king. Climb the steps now, into the hall, and listen to what Daruka did next.",
+        "hi": "प्रांगण पार करके मंदिर की सीढ़ियों की ओर चलते हुए, एक कारागार की कल्पना कीजिए, समुद्र के बीच बसी एक नगरी में। कुछ नावें यात्रियों से भरी हुई उधर से गुज़रीं, और राक्षसों ने सबको बाँधकर बेड़ियों में डाल दिया। उनके मुखिया थे सुप्रिय नाम के एक व्यापारी। वे शिव के ऐसे अटल भक्त थे कि, पुराण कहता है, जिस दिन शिव की पूजा न कर पाते, उस दिन भोजन नहीं करते थे। कारागार में भी उन्होंने पूजा नहीं छोड़ी। वहीं उन्होंने मिट्टी का एक छोटा-सा शिवलिंग बनाया, उसकी पूजा की, और दूसरों को भी पूजा की विधि सिखाई। कुछ ध्यान में बैठ गए। कुछ मन ही मन शिव की पूजा करने लगे। और जो कोई विधि नहीं जानते थे, वे बस पंचाक्षर मंत्र जपते रहे, नमः शिवाय। सुप्रिय जानते थे कि उनका हर अर्पण स्वीकार हो रहा है। बेड़ियों और प्रार्थना में छह महीने इसी तरह बीत गए। फिर एक दिन दारुक के एक पहरेदार ने भीतर झाँका, और कुछ ऐसा देखा जिसे वह समझ न सका: व्यापारी के सामने शिव का एक सुंदर रूप खड़ा था। पहरेदार अपने राजा को बताने दौड़ा। अब सीढ़ियाँ चढ़कर मंडप में आइए, और सुनिए कि दारुक ने आगे क्या किया।"
+      },
+      "didYouKnow": {
+        "en": "In the Shiva Purana, Supriya is a vaishya, a merchant, who wore sacred ash and rudraksha as his only ornaments.",
+        "hi": "शिव पुराण में सुप्रिय एक वैश्य, अर्थात व्यापारी हैं, जिनके आभूषण केवल भस्म और रुद्राक्ष थे।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226530.html"
+      ]
+    },
+    {
+      "id": "nagesh-temple",
+      "at": { "zone": "temple", "feature": "temple" },
+      "kind": "legend",
+      "title": { "en": "Shiva Rises from the Earth", "hi": "धरती से प्रकट हुए शिव" },
+      "text": {
+        "en": "You are in the hall now, its pillars running ahead of you toward the sanctum. Picture Daruka storming into the prison. ‘Merchant, what are you meditating on? Tell me the truth, and you will live.’ Supriya answered quietly, ‘I do not know.’ Daruka was enraged, and ordered his rakshasas to kill him. They rushed in with their weapons raised. Frightened, Supriya did the one thing he knew how to do: he called out. ‘O Shiva, save me. Lord of the three worlds, you alone are all I have. I belong to you.’ And the Purana says that Shiva rose up out of a cleft in the ground, with a shining temple of four doors, and stood within it in his radiant form. Supriya worshipped him right there in the prison, and Shiva gave him the Pashupata, his own invincible weapon. In a moment Daruka and his whole army were gone. Then Shiva blessed the forest itself, that good people and sages would live in it once more. But one person was left behind, grieving: Daruki. Walk on toward Nandi, who sits gazing toward the steps that go down to the sanctum.",
+        "hi": "अब आप मंडप में हैं, जिसके स्तंभ आपके आगे गर्भगृह की ओर चले जाते हैं। कल्पना कीजिए, दारुक गुस्से में कारागार में घुसता है। ‘व्यापारी, तू किसका ध्यान करता है? सच बता, तो तेरे प्राण बचेंगे।’ सुप्रिय ने शांति से कहा, ‘मैं नहीं जानता।’ दारुक क्रोध से भर गया, और उसने राक्षसों को उन्हें मार डालने का आदेश दिया। वे हथियार उठाए दौड़े। डरे हुए सुप्रिय ने वही किया जो वे जानते थे: उन्होंने पुकारा। ‘हे शिव, मेरी रक्षा कीजिए। हे त्रिलोकी के स्वामी, आप ही मेरे सब कुछ हैं। मैं आपका हूँ।’ और पुराण कहता है कि शिव धरती की एक दरार में से प्रकट हुए, चार द्वारों वाले एक दिव्य मंदिर के साथ, और उसके भीतर अपने तेजस्वी रूप में खड़े हुए। सुप्रिय ने वहीं कारागार में उनकी पूजा की, और शिव ने उन्हें पाशुपत, अपना अजेय अस्त्र, दे दिया। पल भर में दारुक और उसकी पूरी सेना का अंत हो गया। फिर शिव ने स्वयं वन को आशीर्वाद दिया, कि इसमें फिर से सज्जन और ऋषि बसेंगे। पर एक जीव पीछे रह गई थी, शोक में डूबी: दारुकी। आगे नंदी की ओर चलिए, जो उन सीढ़ियों की ओर निहार रहे हैं जो नीचे गर्भगृह तक जाती हैं।"
+      },
+      "didYouKnow": {
+        "en": "The Pashupata is Shiva’s own weapon; in the Mahabharata, Arjuna wins it from Shiva after his penance in the Himalaya.",
+        "hi": "पाशुपत शिव का अपना अस्त्र है; महाभारत में अर्जुन हिमालय में तपस्या के बाद इसे शिव से प्राप्त करते हैं।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226531.html"
+      ]
+    },
+    {
+      "id": "nagesh-nandi",
+      "at": { "feature": "nandi" },
+      "kind": "legend",
+      "title": { "en": "Nageshwara and Nageshwari", "hi": "नागेश्वर और नागेश्वरी" },
+      "text": {
+        "en": "Nandi waits here, always facing his Lord, and the steps beyond him lead down to the sanctum. Before we go down, the story’s last scene. Daruki, alone now, prayed to Parvati, the goddess who had once blessed her. Parvati listened, and promised: ‘I will protect your race.’ Then, the Purana says, Shiva and Parvati had a gentle quarrel, each of them bound by a promise. Shiva smiled and told her, ‘Do as you please.’ Parvati laughed, and found a way for both promises to hold. Shiva’s word would come true at the end of the age; until then, Daruki would rule over the rakshasas, and their families could live on in the forest. Shiva was pleased. ‘Then I too will stay in this forest,’ he said, ‘to protect my devotees.’ And so the Lord who rose from the earth to save a merchant remained here as a Jyotirlinga called Nageshwara, Lord of the Nagas, the serpents, and the goddess came to be known as Nageshwari. Below, you will see her too, just behind him. Now go down the steps, slowly. The sanctum lies below the hall.",
+        "hi": "नंदी यहाँ प्रतीक्षा में बैठे हैं, सदा अपने प्रभु की ओर मुख किए, और उनके आगे की सीढ़ियाँ नीचे गर्भगृह तक जाती हैं। नीचे उतरने से पहले, कथा का अंतिम दृश्य। अकेली रह गई दारुकी ने माता पार्वती से प्रार्थना की, उन्हीं देवी से जिन्होंने कभी उसे वरदान दिया था। पार्वती ने उसकी सुनी, और वचन दिया: ‘मैं तेरे वंश की रक्षा करूँगी।’ फिर, पुराण कहता है, शिव और पार्वती में एक प्रेम भरी नोकझोंक हुई, क्योंकि दोनों अपने-अपने वचन से बँधे थे। शिव ने मुस्कुराकर कहा, ‘जैसा तुम चाहो।’ पार्वती हँस पड़ीं, और उन्होंने ऐसा मार्ग निकाला कि दोनों वचन सच हों। शिव का वचन युग के अंत में पूरा होगा; तब तक दारुकी राक्षसों पर राज करेगी, और उनके परिवार इस वन में रह सकेंगे। शिव प्रसन्न हुए। ‘तो मैं भी अपने भक्तों की रक्षा के लिए इसी वन में रहूँगा,’ उन्होंने कहा। और इस तरह जो प्रभु एक व्यापारी को बचाने धरती से प्रकट हुए थे, वे यहीं नागेश्वर नाम के ज्योतिर्लिंग के रूप में रह गए, नागों के स्वामी, और देवी नागेश्वरी कहलाईं। नीचे आप उनके भी दर्शन करेंगे, ठीक उनके पीछे। अब धीरे-धीरे सीढ़ियाँ उतरिए। गर्भगृह मंडप के नीचे है।"
+      },
+      "didYouKnow": {
+        "en": "The Purana adds a prophecy: in a later age a devoted king, Virasena, would sail to this forest in a fish-shaped boat to worship Nageshwara.",
+        "hi": "पुराण एक भविष्यवाणी भी जोड़ता है: आगे के युग में वीरसेन नाम के एक भक्त राजा मछली के आकार की नाव में इस वन तक आकर नागेश्वर की पूजा करेंगे।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226531.html"
+      ]
+    },
+    {
+      "id": "nagesh-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Nageshwar", "hi": "श्री नागेश्वर के दर्शन" },
+      "text": {
+        "en": "You have come down to Shri Nageshwar. Look at the linga, low and dark, beneath the silver serpent whose hoods spread above it. Pilgrims are told it is of Dwarka stone, with small marks like chakras. Behind him sits Parvati, as Nageshwari. This is the Lord who heard a merchant’s prayer in chains, and rose from the earth to answer it. Fold your hands. The eighth verse of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya, sings: ‘Yamye sadange nagare’tiramye vibhushitangam vividhaishcha bhogaih, sadbhaktimuktipradam isham ekam Shri Naganatham sharanam prapadye.’ ‘In the south, in the lovely town of Sadanga, his form adorned with many splendours, the one Lord who grants true devotion and liberation: in Shri Naganatha I take refuge.’ The shorter verse of the twelve names him ‘Nagesham Darukavane’, Nagesha in the forest of Daruka. Devotees honour him in more than one place: here near Dwarka, by the western sea; at Aundha Nagnath in Maharashtra; and at Jageshwar in the Kumaon hills. Each is dear to its pilgrims, and the Lord is one. Nageshwar is the eighth Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Now the bells ring and the lamps rise. Let the aarti begin. Om Namah Shivaya.",
+        "hi": "आप नीचे श्री नागेश्वर तक पहुँच गए हैं। शिवलिंग को देखिए, नीचा और श्यामल, चाँदी के उस नाग के नीचे जिसके फन उसके ऊपर फैले हैं। तीर्थयात्रियों को बताया जाता है कि यह द्वारका शिला का है, जिस पर चक्र जैसे छोटे-छोटे चिह्न हैं। उनके पीछे माता पार्वती नागेश्वरी के रूप में विराजमान हैं। ये वही प्रभु हैं जिन्होंने बेड़ियों में जकड़े एक व्यापारी की पुकार सुनी, और उत्तर देने धरती से प्रकट हुए। हाथ जोड़िए। परंपरा से आदि शंकराचार्य को समर्पित द्वादश ज्योतिर्लिंग स्तोत्र का आठवाँ श्लोक गाता है: ‘याम्ये सदङ्गे नगरेऽतिरम्ये विभूषिताङ्गं विविधैश्च भोगैः। सद्भक्तिमुक्तिप्रदमीशमेकं श्रीनागनाथं शरणं प्रपद्ये॥’ ‘दक्षिण में, सदंग नाम की अति सुंदर नगरी में, अनेक प्रकार की शोभा से सजे अंगों वाले, सच्ची भक्ति और मुक्ति देने वाले उन एक प्रभु, श्री नागनाथ की मैं शरण लेता हूँ।’ बारह ज्योतिर्लिंगों का छोटा श्लोक उन्हें ‘नागेशं दारुकावने’ कहता है, दारुका के वन में विराजे नागेश। भक्त उन्हें एक से अधिक स्थानों पर पूजते हैं: यहाँ द्वारका के पास, पश्चिमी सागर के तट पर; महाराष्ट्र में औंढा नागनाथ में; और कुमाऊँ की पहाड़ियों में जागेश्वर में। हर स्थान अपने तीर्थयात्रियों को प्रिय है, और प्रभु एक ही हैं। नागेश्वर स्तोत्र के आठवें ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। अब घंटियाँ बजें और दीप उठें। आरती आरंभ हो। ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "Here the sanctum lies below the level of the hall, so pilgrims step down for darshan, as at Mahakaleshwar in Ujjain.",
+        "hi": "यहाँ गर्भगृह मंडप के तल से नीचे है, इसलिए उज्जैन के महाकालेश्वर की तरह यहाँ भी दर्शन के लिए सीढ़ियाँ उतरनी पड़ती हैं।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Nageshwar_Jyotirlinga",
+        "https://gujarattourism.com/saurashtra/devbhoomi-dwarka/nageshwar-jyotirlinga.html",
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226531.html"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Nageshwar Aarti (Shringar and Sandhya Aarti)", "hi": "नागेश्वर आरती (शृंगार और संध्या आरती)" },
+    "schedule": [
+      { "name": { "en": "Darshan", "hi": "दर्शन" }, "time": "about 6:00 AM–9:00 PM" },
+      { "name": { "en": "Shringar Darshan", "hi": "शृंगार दर्शन" }, "time": "about 4:00–4:30 PM" },
+      { "name": { "en": "Sandhya Aarti", "hi": "संध्या आरती" }, "time": "about 7:00 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Om jai Shiv Omkara, Swami jai Shiv Omkara\nBrahma, Vishnu, Sadashiv, ardhangi dhara\n\nEkanan chaturanan panchanan raje\nhamsasan garudasan vrishavahan saje\n\nDo bhuj char chaturbhuj dasabhuj ati sohe\ntrigun rup nirakhate tribhuvan jan mohe\n\nAkshamala vanamala mundamala dhari\nTripurari Kamsari kar mala dhari\n\nShvetambar pitambar baghambar ange\nSanakadik Garudadik bhutadik sange\n\nKar ke madhya kamandalu chakra trishuldhari\nsukhkari dukhhari jagpalan kari\n\nBrahma Vishnu Sadashiv janat aviveka\npranavakshar mein shobhit ye tinon eka\n\nTrigunasvami ji ki aarti jo koi nar gave\nkahat Shivanand Swami manvanchhit phal pave\n\n(The traditional Shiva aarti; in the last line the poet names himself as Shivanand Swami.)",
+        "hi": "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।\nब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥\n\nएकानन चतुरानन पञ्चानन राजे।\nहंसासन गरुड़ासन वृषवाहन साजे॥\n\nदो भुज चार चतुर्भुज दसभुज अति सोहे।\nत्रिगुण रूप निरखते त्रिभुवन जन मोहे॥\n\nअक्षमाला वनमाला मुण्डमाला धारी।\nत्रिपुरारी कंसारी कर माला धारी॥\n\nश्वेताम्बर पीताम्बर बाघम्बर अंगे।\nसनकादिक गरुड़ादिक भूतादिक संगे॥\n\nकर के मध्य कमण्डलु चक्र त्रिशूलधारी।\nसुखकारी दुखहारी जगपालन कारी॥\n\nब्रह्मा विष्णु सदाशिव जानत अविवेका।\nप्रणवाक्षर में शोभित ये तीनों एका॥\n\nत्रिगुणस्वामी जी की आरती जो कोइ नर गावे।\nकहत शिवानन्द स्वामी, मनवांछित फल पावे॥"
+      },
+      "source": "‘Om Jai Shiv Omkara’, the widely sung traditional Shiva aarti whose closing line names ‘Shivanand Swami’ (some sources credit Pandit Shardha Ram Phillauri; either way the author died well over 100 years ago). Many printed versions add or reorder stanzas; this is a common core text. It is not documented as the exact text sung at Nageshwar.",
+      "license": "Public domain (traditional text)"
+    },
+    "notes": "Nageshwar (Dwarka) has no official temple website, so the timings are from travel and devotional sites and vary between them (darshan 5–6 AM to 9 PM; Shringar Darshan 4:00–4:30 PM; the evening aarti given as 6:45–7:45 PM or 7:00–7:30 PM): confirm locally. Official YouTube: none verified. Channels titled ‘Nageshwar Jyotirlinga official’ (@nageshwarjyotirlingofficial, UChehm1WKmChFGvnwhYurctg, live streams of the evening aarti) and ‘Nageshwar Jyotirling 108’ (@nageshwarjyotirling) exist, but neither is linked from any trust, government or tourism site, and nageshwarjyotirling.com is an Aundha Nagnath (Maharashtra) priest’s site, so no `youtube` entry was added. No freely licensed recording of the temple’s aarti was found."
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "id": "omkareshwar",
+  "name": { "en": "Omkareshwar", "hi": "ओंकारेश्वर" },
+  "stops": [
+    {
+      "id": "omkar-jhoola",
+      "at": { "zone": "jhoola", "feature": "jhoola" },
+      "kind": "history",
+      "title": { "en": "Two Banks, One Lord", "hi": "दो तट, एक प्रभु" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me across the river. Stop for a moment in the middle of the bridge and look down. That is the Narmada, one of India’s holiest rivers, flowing deep beneath your feet. Ahead of you she parts to flow around the hill-island of Mandhata, about four kilometres long, whose outline, people say, resembles the sacred syllable Om. That is why the Lord who lives there is called Omkareshwar, Lord of Om. Now look back, to the south bank behind you. There stands another temple, Mamleshwar, whose older name is Amareshwar, and pilgrims hold that the journey needs darshan of both. Its stones remember a great deal. Nearly a thousand years ago, in 1055, a Paramara king gave a whole village to Brahmins at ‘the holy Amareshvara’, and a few years later hymns to Shiva were carved on its walls. Centuries afterwards, Ahilyabai Holkar, the great queen of Indore, worshipped there, and priests of the Holkar family have performed its daily puja ever since. But why should one Lord dwell on two banks of the same river? For that we need the story of a proud mountain. Walk on, onto the island.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ नदी पार चलिए। पुल के बीच में एक पल रुकिए और नीचे देखिए। ये हैं माँ नर्मदा, भारत की सबसे पवित्र नदियों में से एक, आपके पैरों के नीचे गहरी बहती हुई। आपके सामने वे बँटकर मांधाता नाम के पहाड़ी द्वीप के चारों ओर बहती हैं। यह द्वीप लगभग चार किलोमीटर लंबा है, और लोग कहते हैं कि इसका आकार पवित्र अक्षर ॐ जैसा है। इसीलिए वहाँ विराजमान प्रभु ओंकारेश्वर कहलाते हैं, ॐ के स्वामी। अब पीछे मुड़कर दक्षिणी तट की ओर देखिए। वहाँ एक और मंदिर है, ममलेश्वर, जिसका पुराना नाम अमरेश्वर है, और तीर्थयात्री मानते हैं कि यात्रा में दोनों के दर्शन ज़रूरी हैं। उसके पत्थरों में बहुत-सी यादें हैं। लगभग एक हज़ार वर्ष पहले, सन दस सौ पचपन में, एक परमार राजा ने ‘पवित्र अमरेश्वर’ में ब्राह्मणों को पूरा एक गाँव दान दिया, और कुछ ही वर्ष बाद उसकी दीवारों पर शिव के स्तोत्र उकेरे गए। सदियों बाद इंदौर की महान रानी अहिल्याबाई होलकर ने वहाँ पूजा की, और तब से होलकर परिवार के पुजारी वहाँ प्रतिदिन पूजा करते आए हैं। पर एक ही प्रभु एक नदी के दो किनारों पर क्यों रहते हैं? इसके लिए हमें एक अभिमानी पर्वत की कथा सुननी होगी। आगे चलिए, द्वीप की ओर।"
+      },
+      "didYouKnow": {
+        "en": "For centuries the only way across was by boat. A footbridge was opened in 1979, and the Mamleshwar Setu, 235 metres long, followed in 2004.",
+        "hi": "सदियों तक नदी पार करने का एकमात्र साधन नाव थी। 1979 में एक पैदल पुल खुला, और 2004 में 235 मीटर लंबा ममलेश्वर सेतु बना।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/MainTemple.aspx",
+        "https://shriomkareshwar.org/OtherTemples.aspx",
+        "https://puratattva.in/omkareshwar-a-shapeless-manifestation-of-the-non-manifest/"
+      ]
+    },
+    {
+      "id": "omkar-vindhya",
+      "at": { "zone": "darshan", "feature": "darshan" },
+      "kind": "legend",
+      "title": { "en": "The Mountain Who Wanted to Be Great", "hi": "महान बनना चाहने वाला पर्वत" },
+      "text": {
+        "en": "As you walk along this lane, listen to the story the Shiva Purana tells of how the Lord came to live here. Long ago the Vindhya mountains, the great range that runs across the middle of India, were proud. When the wandering sage Narada came to visit, Vindhya welcomed him with honour, and then boasted that he lacked nothing at all. Narada replied gently that Mount Meru was loftier still, and was counted among the gods. The words stung. Vindhya resolved to win Shiva’s grace. He came here, to Omkara, shaped a linga out of earth, and for six months worshipped Shiva without leaving his place. At last Shiva appeared, pleased, and granted his wish. Then the gods and sages begged Shiva to stay here for the good of all the worlds, and he agreed. The Purana says he remained in two forms: as Omkara, present in the sacred syllable itself, and as Parameshvara, risen from that earthen linga. The temple’s tradition knows these two as Omkareshwar on the island and Amareshwar, or Mamleshwar, across the river; the Stotram names them together, ‘Omkaram Amaleshwaram’. Now the path goes down toward the water. Can you hear the river?",
+        "hi": "इस गली में चलते हुए वह कथा सुनिए जो शिव पुराण बताता है, कि प्रभु यहाँ कैसे आ बसे। बहुत पहले विंध्य पर्वत को, जो भारत के बीचों-बीच फैली महान पर्वतमाला है, अपने ऊपर बड़ा गर्व था। एक बार घूमते-घूमते नारद मुनि उसके पास आए। विंध्य ने आदर से उनका स्वागत किया, और फिर गर्व से कहा कि उसमें कोई कमी नहीं है। नारद ने शांति से उत्तर दिया कि मेरु पर्वत उससे भी ऊँचा है, और देवताओं में गिना जाता है। यह बात विंध्य को चुभ गई। उसने शिव की कृपा पाने का संकल्प लिया। वह यहाँ, ओंकार आया, मिट्टी का शिवलिंग बनाया, और छह महीने तक अपनी जगह से हिले बिना शिव की पूजा करता रहा। आख़िर शिव प्रसन्न होकर प्रकट हुए और उसकी इच्छा पूरी की। तब देवताओं और ऋषियों ने विनती की कि प्रभु सब लोकों के कल्याण के लिए यहीं रहें, और शिव मान गए। पुराण कहता है कि वे दो रूपों में रहे: ओंकार के रूप में, जो स्वयं पवित्र अक्षर में बसे हैं, और परमेश्वर के रूप में, जो उस मिट्टी के लिंग से प्रकट हुए। मंदिर की परंपरा इन दोनों को द्वीप पर ओंकारेश्वर और नदी पार अमरेश्वर या ममलेश्वर के नाम से जानती है; स्तोत्र दोनों का नाम साथ लेता है, ‘ॐकारममलेश्वरम्’। अब रास्ता पानी की ओर उतरता है। नदी की आवाज़ सुनाई दे रही है?"
+      },
+      "didYouKnow": {
+        "en": "An inscription of 1063 at Amareshvara lists five great lingas: Amareshvara, Omkara, Avimukta of Varanasi, Kedara, and Mahakala of Ujjain.",
+        "hi": "अमरेश्वर के 1063 के एक शिलालेख में पाँच महान लिंगों का उल्लेख है: अमरेश्वर, ओंकार, वाराणसी के अविमुक्त, केदार और उज्जैन के महाकाल।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226519.html",
+        "https://shriomkareshwar.org/MainTemple.aspx",
+        "https://puratattva.in/omkareshwar-a-shapeless-manifestation-of-the-non-manifest/"
+      ]
+    },
+    {
+      "id": "omkar-ghat",
+      "at": { "zone": "ghat", "feature": "ghat" },
+      "kind": "ritual",
+      "title": { "en": "Where the River Is Worshipped", "hi": "जहाँ नदी की आरती होती है" },
+      "text": {
+        "en": "Here the steps lead down to Koti Tirth Ghat, right below the temple. Watch the pilgrims: they step into the river, dip, and rise again. A bath here, it is believed, brings the merit of a crore, ten million, pilgrimages. Then they fill their vessels with Narmada water and carry it up the steps to offer to Omkareshwar. Every evening the river herself is worshipped here. The Narmada aarti is performed on this ghat, and little lamps are set floating on the current, especially at Narmada Jayanti. And on Mondays the Lord himself comes down to the water. At four in the afternoon the Somwar Sawari sets out: Omkareshwar’s golden palanquin, carrying his three-faced image, comes to this ghat for worship, goes out onto the river by boat, and returns through the town to drums and cymbals, as devotees chant ‘Om Shambhu Bholenath’. Many pilgrims also walk the parikrama of the whole island, about seven kilometres, past old temples, the meeting of two streams, and the great statue of Adi Shankaracharya on the hilltop. Now, like the pilgrims, carry the river upward. The temple is waiting at the top of the steps.",
+        "hi": "यहाँ सीढ़ियाँ मंदिर के ठीक नीचे कोटितीर्थ घाट तक उतरती हैं। तीर्थयात्रियों को देखिए: वे नदी में उतरते हैं, डुबकी लगाते हैं, और फिर उठते हैं। माना जाता है कि यहाँ स्नान करने से एक करोड़ तीर्थों का पुण्य मिलता है। फिर वे अपने पात्रों में नर्मदा का जल भरते हैं और सीढ़ियाँ चढ़कर ओंकारेश्वर को अर्पित करने ले जाते हैं। हर शाम यहाँ स्वयं माँ नर्मदा की पूजा होती है। इसी घाट पर नर्मदा आरती होती है, और धारा पर छोटे-छोटे दीप तैराए जाते हैं, ख़ासकर नर्मदा जयंती पर। और सोमवार को स्वयं प्रभु जल तक उतर आते हैं। दोपहर चार बजे सोमवार की सवारी निकलती है: ओंकारेश्वर की सोने की पालकी, उनकी त्रिमुखी प्रतिमा के साथ, पूजा के लिए इस घाट पर आती है, नाव से नदी में भ्रमण करती है, और ढोल-मंजीरों के साथ नगर से होकर लौटती है, जबकि भक्त ‘ॐ शंभु भोलेनाथ’ का जयघोष करते हैं। बहुत से तीर्थयात्री पूरे द्वीप की लगभग सात किलोमीटर की परिक्रमा भी करते हैं, पुराने मंदिरों, दो धाराओं के संगम, और पहाड़ी पर आदि शंकराचार्य की विशाल प्रतिमा के पास से होते हुए। अब आप भी तीर्थयात्रियों की तरह नदी को ऊपर ले चलिए। सीढ़ियों के ऊपर मंदिर प्रतीक्षा कर रहा है।"
+      },
+      "didYouKnow": {
+        "en": "Locally, the wide, shallow channel north of the island is called the Kaveri and the narrow, deep one to the south the Narmada; Shankara’s verse sings of their meeting.",
+        "hi": "स्थानीय रूप से द्वीप के उत्तर की चौड़ी, उथली धारा को कावेरी और दक्षिण की संकरी, गहरी धारा को नर्मदा कहा जाता है; शंकराचार्य का श्लोक इन्हीं के संगम का गान करता है।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/Ghats.aspx",
+        "https://shriomkareshwar.org/SomwarSawari.aspx",
+        "https://shriomkareshwar.org/Parikrama.aspx"
+      ]
+    },
+    {
+      "id": "omkar-temple",
+      "at": { "zone": "temple", "feature": "temple" },
+      "kind": "history",
+      "title": { "en": "The Hall of Sixty Pillars", "hi": "साठ स्तंभों का मंडप" },
+      "text": {
+        "en": "You have climbed into the temple’s great hall, about fourteen feet high and carried on sixty massive pillars. Above you the temple rises through five storeys, each with its own shrine. Who built it, and when? The temple trust says honestly that no authentic record tells us. Notice something unusual: the old sanctum faces one way and the newer hall another, which is why the Jyotirlinga sits neither beneath the spire nor in line with the main door. The worship, though, tells a story of its own. Every day the morning puja is performed by the temple trust, the afternoon puja by priests of the Scindia family, and the evening puja by priests of the Holkar family, two old royal houses of this land, still serving the Lord each day. Near the entrance is the Govindeshwar cave. Here, tradition says, the young Shankara found his guru, Govinda Bhagavatpada, and received initiation. That young seeker became Adi Shankaracharya, and today the Statue of Oneness, one hundred and eight feet tall, shows him as a boy on Mandhata hill. Now climb with me to the upper storey. Someone you may already know is waiting there.",
+        "hi": "आप सीढ़ियाँ चढ़कर मंदिर के विशाल मंडप में आ गए हैं, जो लगभग चौदह फ़ुट ऊँचा है और साठ विशाल स्तंभों पर टिका है। आपके ऊपर मंदिर पाँच तलों में उठता है, हर तल का अपना मंदिर। इसे किसने बनाया, और कब? मंदिर ट्रस्ट सच्चाई से कहता है कि इसका कोई प्रामाणिक अभिलेख नहीं है। एक अनोखी बात देखिए: पुराना गर्भगृह एक दिशा में है और नया मंडप दूसरी दिशा में, इसीलिए ज्योतिर्लिंग न शिखर के ठीक नीचे है, न मुख्य द्वार की सीध में। पर यहाँ की पूजा अपनी एक अलग कहानी कहती है। हर दिन सुबह की पूजा मंदिर ट्रस्ट करता है, दोपहर की पूजा सिंधिया परिवार के पुजारी, और शाम की पूजा होलकर परिवार के पुजारी, इस धरती के दो पुराने राजघराने, जो आज भी हर दिन प्रभु की सेवा करते हैं। प्रवेश के पास गोविंदेश्वर गुफा है। परंपरा कहती है कि यहीं युवा शंकर को अपने गुरु गोविंद भगवत्पाद मिले, और उन्होंने दीक्षा पाई। वही युवा साधक आगे चलकर आदि शंकराचार्य बने, और आज मांधाता पहाड़ी पर एक सौ आठ फ़ुट ऊँची एकात्मता की प्रतिमा उन्हें बालक रूप में दिखाती है। अब मेरे साथ ऊपर वाले तल पर चलिए। वहाँ कोई ऐसा प्रतीक्षा कर रहा है, जिन्हें शायद आप पहले से जानते हैं।"
+      },
+      "didYouKnow": {
+        "en": "Pilgrims first visit the Panchmukhi Ganesh before the main temple; his five-faced image is believed to have emerged from the same rock as Omkareshwar.",
+        "hi": "तीर्थयात्री मुख्य मंदिर से पहले पंचमुखी गणेश के दर्शन करते हैं; माना जाता है कि उनकी पंचमुखी प्रतिमा उसी शिला से प्रकट हुई जिससे ओंकारेश्वर।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/MainTemple.aspx",
+        "https://shriomkareshwar.org/OtherTemples.aspx",
+        "https://shriomkareshwar.org/Parikrama.aspx"
+      ]
+    },
+    {
+      "id": "omkar-upper",
+      "at": { "zone": "upper", "feature": "upper" },
+      "kind": "legend",
+      "title": { "en": "Mahakal Upstairs, and King Mandhata", "hi": "ऊपर महाकाल, और राजा मांधाता" },
+      "text": {
+        "en": "On this upper storey you meet Shri Mahakaleshwar. If you have been to Ujjain, you may smile: there, Mahakal sits at the bottom, below the earth, with Omkareshwar above him. Here it is the reverse, Mahakal above and Omkareshwar below, and darshan on this floor is counted part of a complete pilgrimage. Higher still are the shrines of Siddhnath and Gupteshwar, and at the very top, the lord of the temple’s flag. Now think of the island itself, because it carries a king’s name. Temple tradition tells of Mandhata, a king of the Ikshvaku line, the same solar dynasty into which Lord Rama would later be born. He came to this hill and sat in meditation, and Shiva appeared and blessed him. And so the Lord dwells here, and the island has been called Mandhata ever since. The Skanda Purana, in its chapters praising the holy places along the Narmada, knows this island by an even older name: Vaidurya Mani Parvat, the mountain of the vaidurya gem. Now it is time to go down, to the heart of it all. The sanctum is below.",
+        "hi": "इस ऊपरी तल पर आप श्री महाकालेश्वर से मिलते हैं। अगर आप उज्जैन गए हैं, तो शायद मुस्कुरा उठेंगे: वहाँ महाकाल सबसे नीचे, धरती के भीतर हैं, और ओंकारेश्वर उनके ऊपर। यहाँ ठीक उलटा है, महाकाल ऊपर और ओंकारेश्वर नीचे, और इस तल के दर्शन पूरी तीर्थयात्रा का अंग माने जाते हैं। इससे भी ऊपर सिद्धनाथ और गुप्तेश्वर के मंदिर हैं, और सबसे ऊपर मंदिर के ध्वज के देवता। अब इस द्वीप के बारे में सोचिए, क्योंकि यह एक राजा का नाम धारण करता है। मंदिर की परंपरा राजा मांधाता की कथा कहती है, जो इक्ष्वाकु वंश के थे, उसी सूर्यवंश के जिसमें आगे चलकर भगवान राम का जन्म हुआ। वे इस पहाड़ी पर आए और ध्यान में बैठ गए, और शिव ने प्रकट होकर उन्हें आशीर्वाद दिया। इसीलिए प्रभु यहाँ विराजते हैं, और तब से यह द्वीप मांधाता कहलाता है। स्कंद पुराण, नर्मदा के किनारे के तीर्थों की महिमा गाते हुए, इस द्वीप को एक और भी पुराने नाम से जानता है: वैदूर्य मणि पर्वत, वैदूर्य रत्न का पर्वत। अब नीचे चलने का समय है, सबके केंद्र की ओर। गर्भगृह नीचे है।"
+      },
+      "didYouKnow": {
+        "en": "The Narmada parikrama, a walk of about 2,600 km along both banks of the river, passes only one Jyotirlinga: Omkareshwar.",
+        "hi": "नर्मदा परिक्रमा, नदी के दोनों तटों के साथ लगभग 2,600 किलोमीटर की पदयात्रा, केवल एक ज्योतिर्लिंग से होकर गुज़रती है: ओंकारेश्वर।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/MainTemple.aspx",
+        "https://shriomkareshwar.org/OtherTemples.aspx",
+        "https://shriomkareshwar.org/Narmada.aspx"
+      ]
+    },
+    {
+      "id": "omkar-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Omkareshwar", "hi": "श्री ओंकारेश्वर के दर्शन" },
+      "text": {
+        "en": "You have reached Shri Omkareshwar. Look closely: the Jyotirlinga is a small, natural stone, set low, and it is said to be always surrounded by water. Devotees offer only water here, like the Narmada water you watched the pilgrims carry up from the ghat, and they do not touch it. This is the Lord who stayed for a mountain’s devotion and blessed a king, on an island shaped like Om. Fold your hands. Adi Shankaracharya, who by tradition found his own guru on this very island, sings of this place in the Dwadasha Jyotirlinga Stotram: ‘Kaverikanarmadayoh pavitre samagame sajjanataranaya, sadaiva Mandhatripure vasantam Omkaram isham Shivam ekam ide.’ ‘At the holy meeting of the Kaveri and the Narmada, to carry good souls across, he dwells for ever in the city of Mandhata: I praise that One, the Lord Omkara, Shiva.’ Omkareshwar is the fourth Jyotirlinga of the Stotram. Tradition holds that darshan here is complete only with darshan of Mamleshwar, Amaleshwar, across the Narmada; the Stotram itself names them together, Omkaram Amaleshwaram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the drums and bells begin, and let the lamps be raised. Om Namah Shivaya.",
+        "hi": "आप श्री ओंकारेश्वर तक पहुँच गए हैं। ध्यान से देखिए: ज्योतिर्लिंग एक छोटी-सी, प्राकृतिक शिला है, नीचे स्थित, और कहा जाता है कि इसके चारों ओर सदा जल रहता है। भक्त यहाँ केवल जल अर्पित करते हैं, वैसा ही नर्मदा जल जिसे आपने तीर्थयात्रियों को घाट से ऊपर लाते देखा, और इसे छूते नहीं। ये वही प्रभु हैं जो एक पर्वत की भक्ति के लिए यहाँ रुक गए, और जिन्होंने एक राजा को आशीर्वाद दिया, ॐ के आकार वाले इस द्वीप पर। हाथ जोड़िए। आदि शंकराचार्य, जिन्होंने परंपरा के अनुसार इसी द्वीप पर अपने गुरु को पाया, द्वादश ज्योतिर्लिंग स्तोत्र में इस स्थान का गान करते हैं: ‘कावेरिकानर्मदयोः पवित्रे समागमे सज्जनतारणाय। सदैव मान्धातृपुरे वसन्तमोङ्कारमीशं शिवमेकमीडे॥’ ‘कावेरी और नर्मदा के पवित्र संगम पर, सज्जनों को पार लगाने के लिए, जो मांधाता की नगरी में सदा निवास करते हैं: उन एक, प्रभु ओंकार, शिव की मैं स्तुति करता हूँ।’ ओंकारेश्वर स्तोत्र के चौथे ज्योतिर्लिंग हैं। परंपरा है कि यहाँ के दर्शन नर्मदा पार ममलेश्वर, अर्थात अमलेश्वर, के दर्शन के साथ ही पूर्ण होते हैं; स्तोत्र स्वयं दोनों का नाम साथ लेता है, ओंकारम् अमलेश्वरम्। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। नगाड़े और घंटियाँ बजें, और दीप उठें। ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "Each night after the Shayan Aarti, a silver swing, a bed and a chaupad game are set out in the sanctum, for Shiva and Parvati are believed to come here to rest.",
+        "hi": "हर रात शयन आरती के बाद गर्भगृह में चाँदी का झूला, शय्या और चौपड़ सजाई जाती है, क्योंकि माना जाता है कि शिव और पार्वती यहाँ विश्राम करने आते हैं।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/MainTemple.aspx",
+        "https://shriomkareshwar.org/ShayanDaan.aspx",
+        "https://shriomkareshwar.org/Rules.aspx"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Omkareshwar Aarti (Mangal, Bhog and Shayan Aarti)", "hi": "ओंकारेश्वर आरती (मंगल, भोग और शयन आरती)" },
+    "schedule": [
+      { "name": { "en": "Mangal Aarti and Bhog", "hi": "मंगल आरती और भोग" }, "time": "4:30–5:00 AM" },
+      { "name": { "en": "Madhyanha Bhog", "hi": "मध्याह्न भोग" }, "time": "12:20–1:15 PM" },
+      { "name": { "en": "Shayan Shringar and Aarti", "hi": "शयन शृंगार और आरती" }, "time": "9:30–10:00 PM" },
+      { "name": { "en": "Sayamkalin Shringar", "hi": "सायंकालीन शृंगार" }, "time": "4:00–4:30 PM" },
+      { "name": { "en": "Narmada Aarti at Koti Tirth Ghat", "hi": "कोटितीर्थ घाट पर नर्मदा आरती" }, "time": "every evening" },
+      { "name": { "en": "Somwar Sawari (Monday procession)", "hi": "सोमवार सवारी" }, "time": "Mondays 4:00 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Om jai Shiv Omkara, Swami jai Shiv Omkara\nBrahma, Vishnu, Sadashiv, ardhangi dhara\n\nEkanan chaturanan panchanan raje\nhamsasan garudasan vrishavahan saje\n\nDo bhuj char chaturbhuj dasabhuj ati sohe\ntrigun rup nirakhate tribhuvan jan mohe\n\nAkshamala vanamala mundamala dhari\nTripurari Kamsari kar mala dhari\n\nShvetambar pitambar baghambar ange\nSanakadik Garudadik bhutadik sange\n\nKar ke madhya kamandalu chakra trishuldhari\nsukhkari dukhhari jagpalan kari\n\nBrahma Vishnu Sadashiv janat aviveka\npranavakshar mein shobhit ye tinon eka\n\nTrigunasvami ji ki aarti jo koi nar gave\nkahat Shivanand Swami manvanchhit phal pave\n\n(The traditional Shiva aarti; in the last line the poet names himself as Shivanand Swami.)",
+        "hi": "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।\nब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥\n\nएकानन चतुरानन पञ्चानन राजे।\nहंसासन गरुड़ासन वृषवाहन साजे॥\n\nदो भुज चार चतुर्भुज दसभुज अति सोहे।\nत्रिगुण रूप निरखते त्रिभुवन जन मोहे॥\n\nअक्षमाला वनमाला मुण्डमाला धारी।\nत्रिपुरारी कंसारी कर माला धारी॥\n\nश्वेताम्बर पीताम्बर बाघम्बर अंगे।\nसनकादिक गरुड़ादिक भूतादिक संगे॥\n\nकर के मध्य कमण्डलु चक्र त्रिशूलधारी।\nसुखकारी दुखहारी जगपालन कारी॥\n\nब्रह्मा विष्णु सदाशिव जानत अविवेका।\nप्रणवाक्षर में शोभित ये तीनों एका॥\n\nत्रिगुणस्वामी जी की आरती जो कोइ नर गावे।\nकहत शिवानन्द स्वामी, मनवांछित फल पावे॥"
+      },
+      "source": "‘Om Jai Shiv Omkara’, the widely sung traditional Shiva aarti whose closing line names ‘Shivanand Swami’ (some sources credit Pandit Shardha Ram Phillauri; either way the author died well over 100 years ago). Many printed versions add or reorder stanzas; this is a common core text. Its refrain ‘Shiv Omkara’ suits Omkareshwar, but it is not documented as the exact text of the temple’s own Shayan Aarti.",
+      "license": "Public domain (traditional text)"
+    },
+    "audio": [
+      {
+        "url": "https://shriomkareshwar.org/LiveDarshan.aspx",
+        "license": "All rights reserved (Shri Omkareshwar Mandir Trust) - needs permission",
+        "notes": "The trust’s official live darshan. No reuse licence found; contact shriomkareshwar@gmail.com / +91 8989998686 for permission."
+      }
+    ],
+    "youtube": [
+      {"videoId": "XQdR9tCk4Wk", "start": 88, "end": 194, "title": "Shri Omkareshwar Shayan Aarti", "channel": "Shri Omkareshwar Jyotirlinga Official", "channelUrl": "https://www.youtube.com/@ShriOmkarOfficial", "official": true, "kind": "recorded", "url": "https://www.youtube.com/watch?v=XQdR9tCk4Wk&t=88s", "verifiedBy": "shriomkareshwar.org embeds and links this video; its LiveDarshan page embeds this channel's live stream (UCsIZ3yYwCW4316fPX3V-4lg)"},
+      {"videoId": "G02l-gIerF0", "start": 8, "end": 136, "title": "Mangala Aarti at Shri Omkareshwar Jyotirlinga", "channel": "Shri Omkareshwar Jyotirlinga Official", "channelUrl": "https://www.youtube.com/@ShriOmkarOfficial", "official": true, "kind": "recorded", "url": "https://www.youtube.com/watch?v=G02l-gIerF0&t=8s", "verifiedBy": "same channel as the Shayan Aarti (linked from shriomkareshwar.org)"},
+      {"channelId": "UCsIZ3yYwCW4316fPX3V-4lg", "title": "Shri Omkareshwar Jyotirlinga official live stream", "channel": "Shri Omkareshwar Jyotirlinga Official", "channelUrl": "https://www.youtube.com/@ShriOmkarOfficial", "official": true, "kind": "live", "url": "https://www.youtube.com/channel/UCsIZ3yYwCW4316fPX3V-4lg/live", "verifiedBy": "embedded on shriomkareshwar.org/LiveDarshan.aspx"}
+    ],
+    "youtubeSources": ["https://shriomkareshwar.org/", "https://shriomkareshwar.org/LiveDarshan.aspx", "https://www.youtube.com/watch?v=XQdR9tCk4Wk", "https://www.youtube.com/watch?v=G02l-gIerF0", "https://www.youtube.com/@ShriOmkarOfficial"],
+    "notes": "Timetable from shriomkareshwar.org (MainTemple and Schedules pages). The trust’s Shayan Shringar page gives the Shayan Aarti as 9:00–9:30 PM while its timetable says 9:30–10:00 PM, so confirm with the trust. Touching the linga is not allowed; only water is offered in the sanctum. Three daily pujas: the morning by the Trust, the afternoon by Scindia-family priests, the evening by Holkar-family priests. No freely licensed recording of Omkareshwar’s aarti was found."
+  }
+}

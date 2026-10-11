@@ -1,0 +1,696 @@
+:root {
+  --night: #0b0714;
+  --gold: #f5c46b;
+  --gold-deep: #c98a2b;
+  --saffron: #ff8a1f;
+  --kumkum: #b3122e;
+  --ivory: #fbf3e4;
+  --glass: rgba(14, 8, 22, 0.66);
+  --serif: 'Cinzel', 'Cormorant Garamond', serif;
+  /* sentence-length italic subtitles stay in Cormorant (Cinzel has no italic and reads as capitals) */
+  --serif-italic: 'Cormorant Garamond', serif;
+  --deva: 'Martel', serif;
+  --sans: 'Mukta', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--night); color: var(--ivory); font-family: var(--sans); }
+#globe, #stage { position: fixed; inset: 0; width: 100%; height: 100%; }
+#stage { display: none; }
+#stage.on { display: block; }
+.cesium-viewer-bottom { opacity: 0.55; transform: scale(0.85); transform-origin: left bottom; }
+
+button { font: inherit; cursor: pointer; }
+.ghost {
+  color: var(--ivory); background: rgba(11, 7, 20, 0.45); border: 1px solid rgba(245, 196, 107, 0.45);
+  border-radius: 999px; padding: 7px 16px; font-size: 14px; backdrop-filter: blur(6px); transition: background 0.25s, border-color 0.25s;
+}
+.ghost:hover { background: rgba(245, 196, 107, 0.18); border-color: var(--gold); }
+.gold {
+  color: var(--night); background: linear-gradient(180deg, #ffe3a3, var(--gold) 45%, var(--gold-deep));
+  border: 0; border-radius: 999px; padding: 14px 34px; font-weight: 600; letter-spacing: 0.04em; font-size: 16px;
+  box-shadow: 0 0 0 1px rgba(255, 227, 163, 0.5), 0 10px 40px rgba(255, 138, 31, 0.35); transition: transform 0.2s, box-shadow 0.2s;
+}
+.gold:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px #ffe3a3, 0 14px 50px rgba(255, 138, 31, 0.55); }
+
+/* ---------- chrome ---------- */
+#chrome {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 32px; pointer-events: none; opacity: 0; transition: opacity 1s;
+}
+#chrome.on { opacity: 1; }
+#chrome > * { pointer-events: auto; }
+.brand { font-family: var(--deva); font-weight: 800; color: var(--gold); font-size: 20px; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.brand span { font-family: var(--serif); font-weight: 600; color: var(--ivory); opacity: 0.75; font-size: 18px; margin-left: 10px; letter-spacing: 0.08em; }
+.actions { display: flex; gap: 10px; }
+
+/* ---------- cinematic bars, flash, captions ---------- */
+#bars i { position: fixed; left: 0; right: 0; height: 0; background: #000; z-index: 20; transition: height 1.6s cubic-bezier(.7,0,.2,1); }
+#bars .top { top: 0; }
+#bars .bottom { bottom: 0; }
+#bars.on i { height: 11vh; }
+
+#flash {
+  position: fixed; inset: 0; z-index: 25; pointer-events: none; opacity: 0; transition: opacity 1.1s ease;
+  background: radial-gradient(circle at 50% 45%, #fffaf0 0%, #ffe3a3 30%, #f59e0b 65%, #7c2d12 100%);
+}
+#flash.on { opacity: 1; }
+
+#caption {
+  /* place titles sit near the top, leaving the bottom of the screen to the story captions */
+  position: fixed; left: 0; right: 0; top: max(122px, 14vh); z-index: 22; text-align: center; pointer-events: none;
+  opacity: 0; transform: translateY(12px); transition: opacity 1.4s ease, transform 1.4s ease;
+  text-shadow: 0 2px 30px rgba(0,0,0,.85);
+}
+#caption.on { opacity: 1; transform: none; }
+#caption .hi { display: block; font-family: var(--deva); font-weight: 800; color: var(--gold); font-size: clamp(30px, 4vw, 56px); line-height: 1.3; }
+#caption .en { display: block; font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.6vw, 38px); letter-spacing: 0.32em; text-transform: uppercase; margin-top: 2px; }
+#caption .sub { display: block; font-family: var(--serif-italic); font-style: italic; font-size: clamp(16px, 1.5vw, 22px); opacity: 0.85; margin-top: 8px; }
+
+#pin {
+  position: fixed; z-index: 21; left: 0; top: 0; pointer-events: none; display: flex; flex-direction: column; align-items: center;
+  transform: translate(-50%, -100%); opacity: 0; transition: opacity 1.2s; background: none; border: 0; padding: 0; color: inherit;
+}
+#pin.on { opacity: 1; }
+#pin.ready { pointer-events: auto; cursor: pointer; }
+#pin .enter {
+  order: 3; margin-top: 12px; font-size: 14px; letter-spacing: 0.06em; color: var(--ivory); padding: 7px 16px; border-radius: 999px;
+  background: rgba(11, 7, 20, 0.6); border: 1px solid rgba(245, 196, 107, 0.6); opacity: 0; transform: translateY(6px);
+  transition: opacity 0.8s, transform 0.8s; white-space: nowrap;
+}
+#pin.ready .enter { opacity: 1; transform: none; animation: pulse 2.2s infinite ease-in-out; }
+#pin.ready .flame { transform: scale(1.4); }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,196,107,.5); } 50% { box-shadow: 0 0 0 10px rgba(245,196,107,0); } }
+#pin .label {
+  order: -1; font-family: var(--deva); font-weight: 800; color: var(--gold); font-size: 22px; margin-bottom: 6px;
+  text-shadow: 0 0 18px rgba(255, 138, 31, 0.9), 0 2px 8px #000;
+}
+#pin .flame {
+  width: 16px; height: 26px; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  background: radial-gradient(circle at 50% 70%, #fff 0%, #ffe3a3 35%, #ff8a1f 70%, rgba(255,138,31,0) 100%);
+  box-shadow: 0 0 30px 12px rgba(255, 150, 40, 0.55); animation: flicker 1.6s infinite ease-in-out;
+}
+
+@keyframes flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  30% { transform: scale(1.08, 0.94) rotate(2deg); }
+  60% { transform: scale(0.95, 1.06) rotate(-1deg); }
+}
+
+/* ---------- intro ---------- */
+#intro {
+  position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background: radial-gradient(ellipse at 50% 60%, #2a1030 0%, #120a1e 45%, #05030a 100%); transition: opacity 1.8s ease;
+}
+#intro.gone { opacity: 0; pointer-events: none; }
+#intro h1 { margin: 26px 0 0; line-height: 1.1; }
+#intro h1 .hi { display: block; font-family: var(--deva); font-weight: 800; font-size: clamp(48px, 7vw, 96px); color: var(--gold);
+  text-shadow: 0 0 40px rgba(255, 138, 31, 0.45); }
+#intro h1 .en { display: block; font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2vw, 28px); letter-spacing: 0.5em; text-transform: uppercase; opacity: 0.8; margin-top: 10px; }
+#intro .sub { font-family: var(--serif-italic); font-size: clamp(18px, 1.6vw, 24px); opacity: 0.85; margin: 18px 0 34px; }
+#intro .sub em { color: var(--gold); }
+#intro .hint { font-size: 13px; opacity: 0.5; margin-top: 18px; letter-spacing: 0.08em; }
+
+.diya { position: relative; width: 120px; height: 120px; }
+.diya .glow { position: absolute; inset: -60px; border-radius: 50%; background: radial-gradient(circle, rgba(255,160,50,.45), rgba(255,120,20,0) 65%); animation: breathe 3s infinite ease-in-out; }
+.diya .fire {
+  position: absolute; left: 50%; top: 14px; width: 26px; height: 46px; margin-left: -13px; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  background: radial-gradient(circle at 50% 72%, #fff 0%, #ffe9b0 30%, #ff9a2e 65%, rgba(255,120,20,0) 100%); animation: flicker 1.4s infinite ease-in-out; transform-origin: 50% 90%;
+}
+.diya .bowl {
+  position: absolute; left: 50%; bottom: 20px; width: 92px; height: 34px; margin-left: -46px; border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: linear-gradient(180deg, #d9772b, #8a3a12); box-shadow: inset 0 4px 0 rgba(255, 210, 140, 0.5);
+}
+@keyframes breathe { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+
+
+/* ---------- walking ---------- */
+kbd {
+  display: inline-block; min-width: 1.7em; padding: 2px 6px; margin: 0 2px; border-radius: 6px; text-align: center;
+  border: 1px solid rgba(245, 196, 107, 0.5); background: rgba(245, 196, 107, 0.1); font: 600 12px var(--sans); color: var(--gold);
+}
+#walk {
+  position: fixed; inset: 0; z-index: 35; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background: radial-gradient(ellipse at center, rgba(11, 7, 20, 0.35), rgba(11, 7, 20, 0.75)); cursor: pointer;
+}
+#walk.on { display: flex; }
+#walk .hi { margin: 0; font-family: var(--deva); font-weight: 800; font-size: clamp(36px, 5vw, 64px); color: var(--gold); text-shadow: 0 0 30px rgba(255,138,31,.5); }
+#walk .en { margin: 6px 0 22px; font-family: var(--serif); font-size: 26px; letter-spacing: 0.3em; text-transform: uppercase; }
+#walk .keys { font-size: 14px; opacity: 0.85; }
+#walk #back { margin-top: 28px; }
+#hud {
+  position: fixed; z-index: 22; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: 13px; opacity: 0; transition: opacity 1s;
+  padding: 8px 14px; border-radius: 999px; background: rgba(11, 7, 20, 0.45); pointer-events: none;
+}
+/* the key hints show when you walk in, then fade so they never sit over the story captions */
+#hud.on { animation: hud-hint 10s ease forwards; }
+@keyframes hud-hint { 0%, 75% { opacity: 0.8; } 100% { opacity: 0; } }
+#stage::after { content: ''; }
+
+/* ---------- stories: card, progress, aarti ---------- */
+/* story captions: film-style subtitles at the bottom, one spoken phrase at a time */
+#story-card {
+  position: fixed; left: 50%; bottom: 64px; z-index: 30; width: min(720px, calc(100vw - 32px));
+  transform: translate(-50%, 10px); opacity: 0; pointer-events: none; text-align: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#story-card.on { opacity: 1; transform: translate(-50%, 0); }
+#story-card.on.done { opacity: 0; }
+#story-card .cap-head { display: flex; width: fit-content; margin: 0 auto 8px; gap: 10px; align-items: baseline; padding: 4px 14px; border-radius: 999px;
+  background: rgba(11, 7, 20, 0.55); opacity: 0; transition: opacity 0.6s; }
+#story-card .cap-head.show { opacity: 1; }
+#story-card .kind { font: 600 10.5px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); opacity: 0.85; }
+#story-card[lang='hi'] .kind { font-family: var(--deva); letter-spacing: 0; text-transform: none; font-size: 12px; }
+#story-card .title { font: 600 15px var(--serif); color: var(--ivory); }
+#story-card[lang='hi'] .title { font: 700 15px var(--deva); color: var(--gold); }
+#story-card .cap { display: inline; margin: 0; padding: 6px 14px; line-height: 1.9; font: 500 clamp(17px, 1.55vw, 23px)/1.75 var(--sans);
+  color: rgba(251, 243, 228, 0.92); background: rgba(8, 5, 14, 0.62); border-radius: 8px;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+#story-card .cap:empty { display: none; }
+#story-card[lang='hi'] .cap { font-family: var(--deva); font-size: clamp(18px, 1.6vw, 24px); }
+#story-card .w { transition: color 0.12s; }
+#story-card .w.said { color: var(--ivory); }
+#story-card .w.now { color: var(--gold); }
+#story-card.nocap .cap, #story-card.nocap .cap-head { display: none; }
+#story-card .cap-tools { display: flex; justify-content: center; gap: 6px; margin-top: 10px; opacity: 0.55; transition: opacity 0.3s; pointer-events: auto; }
+#story-card .cap-tools:hover { opacity: 1; }
+#story-card.nocap .cap-tools { opacity: 0.8; }
+#story-card button { color: var(--ivory); background: rgba(11, 7, 20, 0.6); border: 1px solid rgba(245, 196, 107, 0.35); border-radius: 999px;
+  padding: 3px 10px; font-size: 12px; line-height: 1.4; }
+#story-card button:hover { background: rgba(245, 196, 107, 0.2); }
+#story-card button:focus-visible, #progress-chip:focus-visible, #sound-ctl button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#story-card button:disabled { opacity: 0.35; cursor: default; }
+#story-card .lang b { font-weight: 500; opacity: 0.55; padding: 0 2px; }
+#story-card .lang b.on { opacity: 1; color: var(--gold); font-weight: 700; }
+#story-card .cc { font-weight: 700; letter-spacing: 0.05em; opacity: 0.6; }
+#story-card .cc.on { opacity: 1; color: var(--gold); border-color: var(--gold); }
+#story-card .speed { min-width: 44px; font-variant-numeric: tabular-nums; opacity: 0.8; }
+#story-card .speed.on { opacity: 1; color: var(--gold); }
+#story-card .x { font-size: 15px; line-height: 1; padding: 2px 9px 3px; }
+#story-card kbd, #story-toast kbd, #progress-panel kbd { font-size: 10.5px; padding: 1px 5px; }
+
+#progress-chip {
+  position: fixed; z-index: 31; left: 32px; top: 64px; padding: 6px 13px; border-radius: 999px; font-size: 13px; color: var(--ivory);
+  background: rgba(11, 7, 20, 0.5); border: 1px solid rgba(245, 196, 107, 0.35); backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.8s;
+}
+#progress-chip.on { opacity: 0.92; pointer-events: auto; }
+#progress-chip b { color: var(--gold); font-weight: 600; }
+#progress-chip .om { font-family: var(--deva); color: var(--gold); margin-right: 4px; }
+
+#progress-panel {
+  position: fixed; z-index: 38; left: 50%; top: 50%; transform: translate(-50%, -48%); width: min(620px, calc(100vw - 32px)); max-height: calc(100vh - 80px);
+  overflow-y: auto; padding: 20px 22px; border-radius: 20px; background: rgba(14, 8, 22, 0.9); border: 1px solid rgba(245, 196, 107, 0.4);
+  backdrop-filter: blur(12px); box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55); opacity: 0; pointer-events: none; transition: opacity 0.35s, transform 0.35s;
+}
+#progress-panel.on { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+#progress-panel header { display: flex; justify-content: space-between; align-items: center; }
+#progress-panel h2 { margin: 0; font: 700 28px var(--serif); color: var(--gold); }
+#progress-panel h2 small { font: 400 13px var(--sans); color: var(--ivory); opacity: 0.75; margin-left: 10px; }
+#progress-panel .hint { margin: 4px 0 12px; font-size: 12px; opacity: 0.6; }
+#progress-panel ol { list-style: none; margin: 0; padding: 0; }
+#progress-panel li { display: grid; grid-template-columns: 26px 1fr 190px 22px; align-items: center; gap: 10px; padding: 8px 6px; border-top: 1px solid rgba(245, 196, 107, 0.12); }
+#progress-panel li.here { background: rgba(245, 196, 107, 0.07); border-radius: 10px; }
+#progress-panel .n { font: 600 13px var(--serif); color: var(--gold); opacity: 0.8; text-align: center; }
+#progress-panel .name { font-size: 14px; line-height: 1.3; }
+#progress-panel .name b { font-family: var(--deva); color: var(--gold); font-weight: 600; margin-right: 4px; }
+#progress-panel .name small { display: block; font-size: 11px; opacity: 0.55; }
+#progress-panel .name .note { display: block; font-size: 11px; font-style: italic; color: var(--gold); opacity: 0.75; margin-top: 2px; }
+#progress-panel .yatra-next { margin: 6px 0 0; font-size: 14px; }
+#progress-panel .yatra-next b { color: var(--gold); }
+#progress-panel li.next { box-shadow: inset 3px 0 0 var(--gold); }
+#progress-panel .bars { display: grid; grid-template-columns: 1fr auto; gap: 3px 8px; align-items: center; }
+#progress-panel .bars small { font-size: 10.5px; opacity: 0.7; white-space: nowrap; }
+#progress-panel .bars.none { display: block; text-align: right; opacity: 0.6; }
+#progress-panel .b { height: 5px; border-radius: 5px; background: rgba(245, 196, 107, 0.15); overflow: hidden; }
+#progress-panel .b i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); }
+#progress-panel .b.r i { background: linear-gradient(90deg, #8a3a12, var(--saffron)); }
+#progress-panel .v { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(245, 196, 107, 0.4); display: grid; place-items: center; font-size: 12px; color: var(--night); }
+#progress-panel li.visited .v { background: var(--gold); border-color: var(--gold); }
+#progress-panel footer { margin-top: 14px; text-align: right; }
+#progress-panel .ghost { font-size: 12px; padding: 5px 12px; }
+
+#story-toast {
+  position: fixed; z-index: 33; left: 50%; top: 22px; transform: translate(-50%, -8px); padding: 8px 16px; border-radius: 999px; font-size: 14px;
+  background: rgba(14, 8, 22, 0.72); border: 1px solid rgba(245, 196, 107, 0.4); backdrop-filter: blur(6px); opacity: 0; pointer-events: none;
+  transition: opacity 0.5s, transform 0.5s; white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis;
+}
+#story-toast.on { opacity: 1; transform: translate(-50%, 0); }
+#story-toast .lotus { color: var(--gold); margin-right: 4px; font-family: var(--deva); }
+
+#aarti-chip {
+  position: fixed; z-index: 31; left: 24px; bottom: 22px; max-width: min(380px, calc(100vw - 32px)); padding: 9px 14px; border-radius: 16px; font-size: 13px;
+  background: rgba(14, 8, 22, 0.66); border: 1px solid rgba(245, 196, 107, 0.35); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 1s;
+}
+#aarti-chip.on { opacity: 0.95; pointer-events: auto; }
+#aarti-chip .np { display: flex; align-items: center; gap: 8px; }
+#aarti-chip b { color: var(--gold); font-weight: 600; }
+#aarti-chip .note { display: block; margin-top: 2px; opacity: 0.6; font-size: 11px; }
+#aarti-chip .credit { display: block; margin-top: 3px; font-size: 11px; opacity: 0.8; overflow-wrap: anywhere; }
+#aarti-chip .credit a { color: var(--gold); }
+/* compact (title and channel) until hovered or tapped open: then the schedule and the full credit */
+#aarti-chip:not(.has-media) .head { cursor: default; }
+#aarti-chip:not(:hover):not(:focus-within):not(.open) .more { display: none; }
+body.touch #aarti-chip:not(.open) .more { display: none; }
+#aarti-chip .lyrics { display: none; margin-top: 8px; max-height: 32vh; overflow-y: auto; }
+#aarti-chip.lyrics-on .lyrics { display: block; }
+#aarti-chip pre { margin: 0; white-space: pre-wrap; font: 400 14px/1.7 var(--deva); color: var(--ivory); }
+#aarti-chip .lyrics small { display: block; margin-top: 4px; font-size: 10.5px; opacity: 0.55; }
+#aarti-chip .eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
+#aarti-chip .eq i { width: 3px; background: var(--gold); border-radius: 1px; animation: eq 1.1s infinite ease-in-out; height: 40%; }
+#aarti-chip .eq i:nth-child(2) { animation-delay: -0.4s; }
+#aarti-chip .eq i:nth-child(3) { animation-delay: -0.75s; }
+@keyframes eq { 0%, 100% { height: 30%; } 50% { height: 100%; } }
+/* the temple's own aarti on YouTube: the video stays hidden until "watch" */
+/* compact aarti dock: the video at YouTube's minimum player size (200×200, never hidden), one line of
+   what is playing, and the credit; lyrics only on L */
+#aarti-chip.has-media { max-width: 232px; padding: 8px 10px; }
+#aarti-chip.has-media .np span:last-child { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 12px; }
+#aarti-chip.has-media .note { display: none; }
+#aarti-chip .yt { position: relative; margin-top: 6px; }
+#aarti-chip .yt-frame { position: absolute; left: 0; bottom: 100%; width: 356px; height: 200px; opacity: 0; pointer-events: none; overflow: hidden; }
+#aarti-chip .yt.show .yt-frame { position: relative; bottom: auto; width: 200px; height: 200px; opacity: 1; pointer-events: auto; border-radius: 10px; margin-bottom: 6px; background: #000; }
+#aarti-chip .yt-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+#aarti-chip .yt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+#aarti-chip .yt-bar button { padding: 4px 10px; font-size: 12px; }
+#aarti-chip .yt-bar .tap { background: var(--gold); color: #1a0f05; border: 0; border-radius: 999px; font-weight: 600; }
+#aarti-chip .yt-bar .live { font-size: 12px; color: #ff8a80; text-decoration: none; }
+#aarti-chip .yt-bar .live:hover, #aarti-chip .yt-bar .live:focus-visible { text-decoration: underline; }
+#aarti-chip .via { display: block; margin-top: 4px; font-size: 11px; opacity: 0.7; }
+#aarti-chip .via a { color: inherit; }
+
+#sound-ctl { position: fixed; z-index: 31; right: 24px; bottom: 22px; display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; transition: opacity 0.8s; }
+#sound-ctl.on { opacity: 0.9; pointer-events: auto; }
+#sound-ctl .mute { padding: 6px 9px; display: grid; place-items: center; }
+#sound-ctl input { width: 90px; accent-color: var(--gold); }
+
+@media (max-width: 720px) {
+  #story-card { bottom: 76px; }
+  #story-card .cap { font-size: 16px; }
+  #progress-chip { left: 16px; top: 62px; }
+  #progress-panel li { grid-template-columns: 22px 1fr 22px; }
+  #progress-panel .bars { grid-column: 2 / 3; }
+  #aarti-chip { left: 16px; bottom: 70px; }
+  #sound-ctl { right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #progress-panel, #story-toast { transition: opacity 0.2s; transform: none; }
+  #story-card { transition: opacity 0.2s; }
+  #progress-panel.on { transform: none; }
+  #story-card.on { transform: translate(-50%, 0); }
+  #progress-panel, #progress-panel.on { transform: translate(-50%, -50%); }
+  #aarti-chip .eq i { animation: none; height: 70%; }
+  #story-card .w { transition: none; }
+}
+
+/* the guide: which way to the next story / darshan */
+#guide {
+  position: fixed; top: 70px; left: 50%; transform: translateX(-50%); z-index: 30; display: none; align-items: center; gap: 8px;
+  padding: 6px 12px 6px 10px; border-radius: 999px; font-size: 13px; color: var(--ivory);
+  background: rgba(14, 8, 22, 0.62); border: 1px solid rgba(245, 196, 107, 0.4); backdrop-filter: blur(6px); pointer-events: none;
+  max-width: calc(100vw - 32px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#guide.on { display: flex; }
+#guide.on.none { display: none; }
+#guide .arrow { display: inline-block; color: var(--gold); font-size: 15px; transition: transform 0.25s ease; }
+#guide kbd { font-size: 10px; padding: 0 4px; opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) { #guide .arrow { transition: none; } }
+
+/* doorway prompt (BuiltSite.portals) and its fade */
+#portal-prompt {
+  position: fixed; left: 50%; bottom: 150px; transform: translate(-50%, 8px); z-index: 32; opacity: 0; pointer-events: none;
+  padding: 9px 16px; border-radius: 999px; font: 500 14px var(--sans); color: #1a0f05; background: var(--gold);
+  border: 0; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); transition: opacity 0.3s, transform 0.3s; cursor: pointer;
+}
+#portal-prompt.on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+#portal-prompt span[lang='hi'] { font-family: var(--deva); font-weight: 700; }
+#portal-prompt kbd { background: rgba(26, 15, 5, 0.15); color: #1a0f05; border-color: rgba(26, 15, 5, 0.35); }
+#portal-fade { position: fixed; inset: 0; z-index: 33; background: #0b0710; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+#portal-fade.on { opacity: 1; }
+
+/* OpenStreetMap attribution (ODbL): the towns round the temples are built from OSM data */
+/* kept small: a faint ⓘ that opens the credit line */
+#osm-credit {
+  position: fixed; left: 10px; bottom: 6px; z-index: 40; display: flex; align-items: center; gap: 6px;
+  font: 500 10px/1.2 Inter, system-ui, sans-serif; letter-spacing: 0.02em;
+}
+#osm-credit summary {
+  list-style: none; cursor: pointer; display: grid; place-items: center; width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35); color: rgba(255, 255, 255, 0.5);
+  font: italic 600 9px/1 Georgia, serif; opacity: 0.6; transition: opacity 0.2s;
+}
+#osm-credit summary::-webkit-details-marker { display: none; }
+#osm-credit summary:hover, #osm-credit[open] summary, #osm-credit summary:focus-visible { opacity: 1; }
+#osm-credit a {
+  color: rgba(255, 255, 255, 0.75); text-decoration: none; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  background: rgba(11, 7, 20, 0.55); padding: 3px 7px; border-radius: 8px;
+}
+#osm-credit a:hover { color: #fff; text-decoration: underline; }
+/* phones: a bigger tap target, the line opening towards the middle */
+body.touch #osm-credit summary { width: 22px; height: 22px; font-size: 11px; }
+body.touch #osm-credit[open] { flex-direction: row-reverse; }
+
+/* Places (engine/places.ts): the button under the top-right actions, its list, and the fast-forward cue */
+#places-btn {
+  position: fixed; z-index: 36; right: 32px; top: 64px; display: none; align-items: center; gap: 6px; padding: 6px 12px 6px 13px;
+  border-radius: 999px; font-size: 13px; color: var(--ivory); background: rgba(11, 7, 20, 0.5); border: 1px solid rgba(245, 196, 107, 0.45);
+  backdrop-filter: blur(6px); transition: background 0.25s, border-color 0.25s;
+}
+#places-btn.on { display: inline-flex; }
+#places-btn:hover, #places-btn[aria-expanded='true'] { background: rgba(245, 196, 107, 0.18); border-color: var(--gold); }
+#places-btn .pin { color: var(--gold); }
+#places-btn kbd { font-size: 10px; padding: 0 4px; opacity: 0.7; }
+#places-btn:focus-visible, #places-panel button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#places-panel {
+  position: fixed; z-index: 37; right: 32px; top: 102px; width: min(340px, calc(100vw - 32px)); max-height: calc(100vh - 130px); overflow-y: auto;
+  padding: 12px 10px 10px; border-radius: 16px; background: rgba(14, 8, 22, 0.9); border: 1px solid rgba(245, 196, 107, 0.4);
+  backdrop-filter: blur(12px); box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5); opacity: 0; pointer-events: none; transform: translateY(-6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+#places-panel.on { opacity: 1; pointer-events: auto; transform: none; }
+#places-panel header { display: flex; justify-content: space-between; align-items: center; padding: 0 6px 6px; }
+#places-panel header .t { font: 700 18px var(--serif); color: var(--gold); }
+#places-panel .x { color: var(--ivory); background: none; border: 0; font-size: 20px; line-height: 1; padding: 2px 6px; opacity: 0.7; }
+#places-panel .x:hover { opacity: 1; }
+#places-panel ul { list-style: none; margin: 0; padding: 0; }
+#places-panel li button {
+  display: block; width: 100%; text-align: left; padding: 6px 10px; border-radius: 10px; color: var(--ivory); background: none; border: 0;
+  border-top: 1px solid rgba(245, 196, 107, 0.1);
+}
+#places-panel li:first-child button { border-top: 0; }
+#places-panel li button:hover { background: rgba(245, 196, 107, 0.12); }
+#places-panel .a { display: block; font-size: 14px; line-height: 1.3; }
+#places-panel .a[lang='hi'] { font: 600 14px var(--deva); color: var(--gold); }
+#places-panel small { display: block; font-size: 11.5px; opacity: 0.6; margin-top: 1px; }
+#places-panel small[lang='hi'] { font-family: var(--deva); }
+#places-panel .hint { margin: 8px 8px 0; font-size: 11px; opacity: 0.55; }
+#places-panel kbd { font-size: 10px; padding: 0 4px; }
+#travel-cue {
+  position: fixed; z-index: 32; left: 50%; top: 108px; transform: translate(-50%, -6px); padding: 7px 15px; border-radius: 999px; font-size: 13px;
+  color: var(--ivory); background: rgba(14, 8, 22, 0.72); border: 1px solid rgba(245, 196, 107, 0.5); backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.35s, transform 0.35s; white-space: nowrap; max-width: calc(100vw - 32px);
+  overflow: hidden; text-overflow: ellipsis;
+}
+#travel-cue.on { opacity: 1; transform: translate(-50%, 0); }
+/* (the place titles shown on the way sit a little lower, under the cue) */
+body.travelling #caption { top: max(150px, 17vh); }
+#travel-cue .ff { color: var(--gold); margin-right: 2px; }
+#travel-cue kbd { font-size: 10px; padding: 0 4px; }
+/* a faint motion vignette while fast-forwarding */
+#travel-ff {
+  position: fixed; inset: 0; z-index: 21; pointer-events: none; opacity: 0; transition: opacity 0.6s ease;
+  background: radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0, 0, 0, 0) 55%, rgba(20, 10, 4, 0.42) 100%);
+}
+#travel-ff.on { opacity: 1; animation: ff-breathe 1.6s ease-in-out infinite; }
+@keyframes ff-breathe { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; } }
+@media (max-width: 720px) {
+  /* (below the progress chip and the guide, which share the row above on a phone) */
+  #places-btn { right: 16px; top: 104px; }
+  #places-panel { right: 16px; top: 142px; max-height: calc(100vh - 160px); }
+  #travel-cue { top: 142px; font-size: 12px; }
+  body.travelling #caption { top: 184px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #places-panel, #travel-cue { transition: opacity 0.2s; transform: none; }
+  #travel-cue.on { transform: translate(-50%, 0); }
+  #travel-cue { transform: translate(-50%, 0); }
+  #travel-ff.on { animation: none; }
+}
+
+#progress-chip .st { display: none; }
+
+/* =====================================================================================================
+   Phones and tablets (body.touch, set by engine/touch.ts on a finger-first device). Desktop is untouched:
+   every rule below is scoped to body.touch.
+   ===================================================================================================== */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  /* the larger side inset (landscape notch), for things centred between the thumbs */
+  --sax: max(var(--sal), var(--sar));
+}
+body.touch {
+  height: 100vh; height: 100dvh; overscroll-behavior: none;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+}
+body.touch button, body.touch a, body.touch #walk { touch-action: manipulation; }
+body.touch #stage, body.touch #touch-pad { touch-action: none; }
+body.touch #hud, body.touch #walk .keys, body.touch #places-btn, body.touch #chrome .actions { display: none !important; }
+body.touch #guide kbd, body.touch #portal-prompt kbd, body.touch #places-panel .hint kbd { display: none; }
+
+/* --- the joystick zone (right ~40 %) and its ring --- */
+#touch-pad { display: none; position: fixed; right: 0; top: 0; bottom: 0; width: 40vw; z-index: 12; }
+#touch-pad.on { display: block; }
+#touch-pad .stick-base {
+  position: absolute; left: calc(100% - var(--sar) - 92px); top: calc(100% - var(--sab) - 100px); width: 124px; height: 124px;
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(14, 8, 22, 0.18) 0%, rgba(14, 8, 22, 0.42) 70%);
+  border: 1.5px solid rgba(245, 196, 107, 0.4); box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.25);
+  opacity: 0.38; transition: opacity 0.25s, border-color 0.2s, box-shadow 0.2s;
+}
+#touch-pad .stick-base.live { opacity: 0.92; transition: opacity 0.1s; }
+#touch-pad .stick-base.run { border-color: var(--gold); box-shadow: 0 0 22px rgba(245, 196, 107, 0.45), inset 0 0 18px rgba(0, 0, 0, 0.25); }
+#touch-pad .stick-knob {
+  position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 40% 35%, rgba(255, 227, 163, 0.85), rgba(201, 138, 43, 0.75));
+  border: 1px solid rgba(255, 227, 163, 0.8); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* --- thumb buttons, bottom left --- */
+#touch-buttons {
+  display: none; position: fixed; z-index: 31; left: calc(var(--sal) + 14px); bottom: calc(var(--sab) + 18px);
+  flex-direction: column; align-items: center; gap: 10px;
+}
+#touch-buttons.on { display: flex; }
+#touch-buttons .tb {
+  position: relative; width: 58px; height: 58px; padding: 0; border-radius: 50%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1px; color: var(--ivory);
+  background: rgba(14, 8, 22, 0.55); border: 1px solid rgba(245, 196, 107, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); transition: transform 0.12s, background 0.12s;
+}
+#touch-buttons .tb[hidden] { display: none; }
+#touch-buttons .tb svg { width: 22px; height: 22px; }
+#touch-buttons .tb span { font: 600 9.5px/1 var(--sans); letter-spacing: 0.04em; opacity: 0.85; }
+#touch-buttons .tb.down { transform: scale(0.93); background: rgba(245, 196, 107, 0.32); }
+#touch-buttons .tb.playing { color: var(--gold); border-color: var(--gold); }
+#touch-buttons .tb:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* --- first-time gesture hint --- */
+#touch-hint { position: fixed; inset: 0; z-index: 29; pointer-events: none; opacity: 0; transition: opacity 0.8s; display: flex; flex-direction: row-reverse; }
+#touch-hint.on { opacity: 1; }
+#touch-hint .half { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; text-align: center;
+  padding-bottom: calc(var(--sab) + 150px); }
+#touch-hint .l { width: 40vw; background: linear-gradient(270deg, rgba(245, 196, 107, 0.08), rgba(245, 196, 107, 0)); }
+#touch-hint .r { flex: 1; justify-content: center; padding-bottom: 0; }
+#touch-hint span { font: 500 15px var(--sans); padding: 6px 12px; border-radius: 999px; background: rgba(11, 7, 20, 0.66); max-width: 90%; }
+#touch-hint small { font-size: 12px; opacity: 0.75; padding: 3px 10px; border-radius: 999px; background: rgba(11, 7, 20, 0.5); }
+#touch-hint .ring { position: relative; width: 70px; height: 70px; border-radius: 50%; border: 1.5px solid rgba(245, 196, 107, 0.7); }
+#touch-hint .ring b { position: absolute; left: 50%; top: 50%; width: 28px; height: 28px; margin: -14px; border-radius: 50%; background: var(--gold);
+  animation: hint-stick 1.8s ease-in-out infinite; }
+#touch-hint .swipe { width: 90px; height: 28px; border-radius: 14px; background: linear-gradient(90deg, rgba(245, 196, 107, 0), rgba(245, 196, 107, 0.8));
+  animation: hint-swipe 1.8s ease-in-out infinite; }
+@keyframes hint-stick { 0%, 100% { transform: translate(0, 0); } 40% { transform: translate(0, -18px); } 70% { transform: translate(14px, -10px); } }
+@keyframes hint-swipe { 0% { transform: translateX(-30px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateX(40px); opacity: 0; } }
+
+/* --- walk-in overlay --- */
+body.touch #walk .en { font-size: 20px; }
+body.touch #walk #back { min-height: 44px; }
+#walk .rotate-tip { display: none; }
+@media (orientation: portrait) {
+  body.touch #walk .rotate-tip {
+    display: inline-flex; align-items: center; gap: 8px; margin: 18px 16px 0; padding: 4px 4px 4px 14px; border-radius: 999px; font-size: 14px;
+    background: rgba(11, 7, 20, 0.6); border: 1px solid rgba(245, 196, 107, 0.4);
+  }
+}
+#walk .rotate-tip .ico { color: var(--gold); font-size: 18px; }
+#walk .rotate-tip .x { width: 40px; height: 40px; border-radius: 50%; border: 0; background: none; color: var(--ivory); font-size: 20px; }
+
+/* --- context lost (world.ts watchContext) --- */
+#gl-lost {
+  position: fixed; inset: 0; z-index: 60; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding: 24px; text-align: center; background: rgba(11, 7, 20, 0.92);
+}
+#gl-lost.on { display: flex; }
+#gl-lost .t { margin: 0; font: 700 24px var(--serif); color: var(--gold); }
+#gl-lost p { margin: 0 0 8px; max-width: 420px; opacity: 0.85; }
+#gl-lost .small { font-size: 12px; opacity: 0.6; margin-top: 10px; }
+
+/* --- every touch device (tablets too) --- */
+body.touch #sound-ctl { top: calc(var(--sat) + 20px); right: calc(var(--sar) + 24px); bottom: auto; }
+body.touch #sound-ctl input { display: none; }
+body.touch #sound-ctl .mute { width: 44px; height: 40px; padding: 0; }
+body.touch #story-card { width: min(720px, calc(100vw - 2 * (var(--sax) + 168px))); }
+body.touch #story-card .cap-tools { opacity: 0.85; gap: 8px; }
+body.touch #story-card button { min-height: 44px; min-width: 44px; padding: 0 12px; font-size: 13px; }
+body.touch #story-card .x { font-size: 18px; }
+body.touch #aarti-chip { top: calc(var(--sat) + 110px); bottom: auto; left: calc(var(--sal) + 24px); }
+body.touch #aarti-chip .yt-bar button { min-height: 40px; min-width: 40px; }
+body.touch #portal-prompt { min-height: 46px; padding: 10px 20px; font-size: 15px; }
+body.touch.portal-on #story-card { bottom: 120px; }
+body.touch #places-panel li button { min-height: 48px; padding: 9px 14px; }
+body.touch #places-panel .x, body.touch #progress-panel .x { min-width: 44px; min-height: 44px; }
+body.touch #progress-chip { min-height: 36px; }
+
+/* places as a bottom sheet */
+body.touch #places-panel {
+  left: 50%; right: auto; top: auto; bottom: 0; width: min(520px, 100vw); max-height: 62vh; max-height: 62dvh;
+  padding: 10px calc(var(--sar) + 10px) calc(var(--sab) + 12px) calc(var(--sal) + 10px); border-radius: 18px 18px 0 0; border-bottom: 0;
+  transform: translate(-50%, 24px); overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+}
+body.touch #places-panel.on { transform: translate(-50%, 0); }
+body.touch #places-panel header { padding: 0 4px 6px 10px; }
+body.touch #places-panel::before {
+  content: ''; display: block; width: 40px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: rgba(245, 196, 107, 0.35);
+}
+
+/* --- phones: portrait (narrow) and landscape (short) --- */
+@media (max-width: 720px), (max-height: 500px) {
+  body.touch #chrome { padding: calc(var(--sat) + 8px) calc(var(--sar) + 12px) 0 calc(var(--sal) + 12px); }
+  body.touch .brand { font-size: 15px; line-height: 36px; }
+  body.touch .brand span { display: none; }
+  body.touch #sound-ctl { top: calc(var(--sat) + 8px); right: calc(var(--sar) + 12px); }
+  body.touch #sound-ctl .mute { height: 36px; }
+  body.touch #progress-chip {
+    top: calc(var(--sat) + 8px); left: auto; right: calc(var(--sar) + 66px); padding: 0 12px; font-size: 13px; line-height: 34px;
+  }
+  body.touch #progress-chip .lbl { display: none; }
+  body.touch #progress-chip .st { display: inline; color: var(--gold); margin-right: 3px; }
+  body.touch #guide { top: calc(var(--sat) + 52px); max-width: calc(100vw - 24px - var(--sal) - var(--sar)); font-size: 13px; padding: 7px 12px 7px 10px; }
+  body.touch #story-toast, body.touch #travel-cue {
+    top: calc(var(--sat) + 94px); font-size: 13px; max-width: calc(100vw - 24px - var(--sal) - var(--sar));
+  }
+  /* place titles: only as wide as their words, under the toast row */
+  body.touch #caption, body.touch.travelling #caption {
+    left: 50%; right: auto; top: calc(var(--sat) + 136px); width: max-content; max-width: calc(100vw - 32px - var(--sal) - var(--sar)); translate: -50% 0;
+  }
+  body.touch #caption .hi { font-size: 28px; }
+  body.touch #caption .en { font-size: 16px; letter-spacing: 0.2em; }
+  body.touch #caption .sub { font-size: 14px; margin-top: 4px; }
+  /* story captions sit above the thumb buttons, full width */
+  body.touch #story-card { bottom: calc(var(--sab) + 226px); width: calc(100vw - 24px - var(--sal) - var(--sar)); }
+  body.touch.portal-on #story-card { bottom: calc(var(--sab) + 282px); }
+  body.touch #story-card .cap { font-size: 17px; line-height: 1.65; padding: 4px 10px; }
+  body.touch #story-card[lang='hi'] .cap { font-size: 18px; }
+  body.touch #story-card .cap-head { margin-bottom: 6px; }
+  body.touch #story-card .cap-tools { margin-top: 8px; }
+  body.touch #portal-prompt { bottom: calc(var(--sab) + 226px); max-width: calc(100vw - 24px); }
+  /* the aarti dock: a small player (✕ pauses and folds it away), its credit always shown */
+  body.touch #aarti-chip { top: calc(var(--sat) + 250px); left: calc(var(--sal) + 10px); max-width: 152px; padding: 6px; border-radius: 12px; }
+  body.touch #aarti-chip.has-media .np { display: none; }
+  body.touch #aarti-chip .yt { margin-top: 0; }
+  body.touch #aarti-chip .yt.show .yt-frame { width: 200px; height: 200px; margin-bottom: 4px; }
+  body.touch #aarti-chip .via { font-size: 10px; line-height: 1.3; }
+  body.touch #aarti-chip .yt-bar { gap: 6px; }
+  body.touch #aarti-chip .yt-bar .tap { font-size: 11px; }
+  body.touch #osm-credit { left: auto; right: calc(var(--sar) + 8px); bottom: calc(var(--sab) + 4px); }
+  /* your yatra: nearly full screen */
+  body.touch #progress-panel {
+    width: calc(100vw - 16px - var(--sal) - var(--sar)); max-height: calc(100dvh - 16px - var(--sat) - var(--sab)); padding: 14px 14px;
+    overscroll-behavior: contain;
+  }
+  body.touch #progress-panel h2 { font-size: 21px; }
+  body.touch #progress-panel li { grid-template-columns: 22px 1fr 22px; }
+  body.touch #progress-panel .bars { grid-column: 2 / 3; }
+  body.touch #touch-hint .half.l { padding-bottom: calc(var(--sab) + 170px); }
+}
+@media (max-width: 720px) and (orientation: portrait) {
+  body.touch #aarti-chip .yt.show .yt-frame { width: 200px; height: 200px; }
+  body.touch #aarti-chip { max-width: 212px; }
+}
+/* landscape phones: one row on top (brand · guide · chip · sound), the captions between the thumbs */
+@media (max-height: 500px) and (orientation: landscape) {
+  body.touch #guide { top: calc(var(--sat) + 8px); max-width: calc(100vw - 2 * (var(--sax) + 236px)); }
+  body.touch #story-toast, body.touch #travel-cue { top: calc(var(--sat) + 52px); max-width: calc(100vw - 2 * (var(--sax) + 180px)); }
+  body.touch #caption, body.touch.travelling #caption { top: calc(var(--sat) + 92px); max-width: calc(100vw - 2 * (var(--sax) + 180px)); }
+  body.touch #caption .hi { font-size: 24px; line-height: 1.25; }
+  body.touch #caption .en { font-size: 14px; }
+  body.touch #caption .sub { font-size: 13px; }
+  body.touch #story-card { bottom: calc(var(--sab) + 6px); width: calc(100vw - 2 * (var(--sax) + 168px)); }
+  body.touch.portal-on #story-card { bottom: calc(var(--sab) + 60px); }
+  body.touch #portal-prompt { bottom: calc(var(--sab) + 8px); max-width: calc(100vw - 2 * (var(--sax) + 168px)); }
+  body.touch #aarti-chip { top: calc(var(--sat) + 52px); }
+  body.touch #places-panel { max-height: 88vh; max-height: 88dvh; }
+  body.touch #touch-hint .half.l { padding-bottom: calc(var(--sab) + 160px); }
+  body.touch #touch-hint .r { padding-bottom: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #touch-hint .ring b, #touch-hint .swipe { animation: none; }
+}
+/* phones: the aarti dock's ✕ / tap-to-play sit over the video's top edge (a shorter dock); the OSM credit wraps
+   into the corner, under the places sheet */
+@media (max-width: 720px), (max-height: 500px) {
+  body.touch #aarti-chip .yt { position: relative; }
+  body.touch #aarti-chip .yt-bar { position: absolute; top: 4px; left: 4px; right: 4px; justify-content: flex-end; z-index: 1; }
+  body.touch #aarti-chip .yt:not(.show) .yt-bar { position: static; justify-content: flex-start; }
+  body.touch #aarti-chip .yt-bar button { min-height: 36px; min-width: 36px; background: rgba(11, 7, 20, 0.7); }
+  body.touch #osm-credit { z-index: 13; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  body.touch #touch-pad .stick-base { top: calc(100% - var(--sab) - 70px); left: calc(100% - var(--sar) - 80px); width: 112px; height: 112px; }
+}
+/* layout fixes from the device runs (scripts/mobile.mjs) */
+@media (max-width: 720px), (max-height: 500px) {
+  body.touch #story-toast, body.touch #travel-cue { top: calc(var(--sat) + 100px); }
+  body.touch #caption, body.touch.travelling #caption { top: calc(var(--sat) + 142px); }
+  body.touch #touch-pad .stick-base { top: calc(100% - var(--sab) - 112px); }
+}
+@media (max-width: 720px) and (orientation: portrait) {
+  /* the aarti dock sits top-left under the toast row; a place title shown meanwhile moves right of it */
+  body.touch #aarti-chip { top: calc(var(--sat) + 142px); }
+  body.touch.aarti-on:has(#aarti-chip .yt.show) #caption { top: calc(var(--sat) + 142px + 268px); }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  body.touch #story-toast, body.touch #travel-cue { top: calc(var(--sat) + 52px); }
+  body.touch #caption, body.touch.travelling #caption { top: calc(var(--sat) + 92px); }
+  body.touch #touch-pad .stick-base { top: calc(100% - var(--sab) - 70px); }
+  /* the OSM credit under the brand (the bottom corner belongs to the joystick), the dock below it */
+  body.touch #osm-credit { top: calc(var(--sat) + 44px); bottom: auto; left: calc(var(--sal) + 12px); right: auto; }
+  body.touch #aarti-chip { top: calc(var(--sat) + 72px); }
+  body.touch #aarti-chip .via { margin-top: 1px; line-height: 1.2; }
+  body.touch #aarti-chip .yt.show .yt-frame { margin-bottom: 2px; }
+  body.touch #aarti-chip .yt.show .yt-frame { width: 200px; height: 200px; }
+  body.touch #aarti-chip { max-width: 212px; }
+  /* while the 200×200 player (YouTube's minimum) fills the left column, the thumb buttons lie in a row under it
+     (and the story captions narrow to clear the row) */
+  body.touch.aarti-on:has(#aarti-chip .yt.show) #touch-buttons { flex-direction: row; bottom: calc(var(--sab) + 10px); }
+  body.touch.aarti-on:has(#aarti-chip .yt.show) #story-card { width: calc(100vw - 2 * (var(--sax) + 222px)); }
+}
+/* tablets: the toast under the top bar, clear of the brand and the aarti dock */
+@media (min-width: 721px) and (min-height: 501px) {
+  body.touch #story-toast { top: calc(var(--sat) + 112px); max-width: calc(100vw - 2 * (var(--sax) + 280px)); }
+}
+@media (max-width: 720px), (max-height: 500px) {
+  /* the aarti ambience chip (no video): two lines of what is playing, one of what it is */
+  body.touch #aarti-chip:not(.has-media) { max-width: min(250px, calc(100vw - 24px)); padding: 7px 11px; font-size: 12px; }
+  body.touch #aarti-chip:not(.has-media) .np span:last-child { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  body.touch #aarti-chip:not(.has-media) .note { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  body.touch #aarti-chip:not(.has-media) { max-width: 200px; }
+}
+@media (max-width: 720px) and (orientation: portrait) {
+  /* the wider ambience chip (no video): a place title goes under it instead of beside it */
+  body.touch.aarti-on:has(#aarti-chip:not(.has-media)) #caption { left: 50%; translate: -50% 0; text-align: center; top: calc(var(--sat) + 226px);
+    max-width: calc(100vw - 32px - var(--sal) - var(--sar)); }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  body.touch #story-toast, body.touch #travel-cue, body.touch #caption, body.touch.travelling #caption { max-width: calc(100vw - 2 * (var(--sax) + 218px)); }
+}
+
+/* every temple opens straight in the temple: no intro screen, no globe */
+#intro[hidden], #globe:empty, #replay, #skip, #back { display: none !important; }
+
+/* phones, portrait: story captions sit at the very bottom; while one is on screen the joystick ring and the
+   thumb buttons step up above it */
+@media (max-width: 720px) and (orientation: portrait) {
+  body.touch #story-card { bottom: calc(var(--sab) + 10px); }
+  body.touch.portal-on #story-card { bottom: calc(var(--sab) + 10px); }
+  body.touch #story-card .cap-tools { margin-top: 6px; }
+  body.touch #story-card button { min-height: 40px; min-width: 40px; }
+  body.touch:has(#story-card.on:not(.done)) #touch-buttons { bottom: calc(var(--sab) + 178px); }
+  body.touch:has(#story-card.on:not(.done)) #touch-pad .stick-base { top: calc(100% - var(--sab) - 112px - 166px); }
+  body.touch:has(#story-card.on:not(.done)) #portal-prompt { bottom: calc(var(--sab) + 178px); }
+  body.touch:has(#story-card.on:not(.done)) #osm-credit { bottom: calc(var(--sab) + 172px); }
+}

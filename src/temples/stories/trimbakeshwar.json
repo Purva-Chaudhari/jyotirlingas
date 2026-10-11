@@ -1,0 +1,139 @@
+{
+  "id": "trimbakeshwar",
+  "name": { "en": "Trimbakeshwar", "hi": "त्र्यंबकेश्वर" },
+  "stops": [
+    {
+      "id": "trimbak-court",
+      "at": { "feature": "courtyard" },
+      "kind": "history",
+      "title": { "en": "The Peshwa’s Temple of Black Stone", "hi": "पेशवा का काले पत्थर का मंदिर" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me into the courtyard. In front of you rises Trimbakeshwar, built of dark basalt, its spire climbing tier upon tier. Now look higher, behind it, at the long wall of Brahmagiri, the mountain where the river Godavari is born. Hold on to that mountain, because our story begins there. But first, the man who raised these stones. Balaji Bajirao, remembered as Nanasaheb, was the Peshwa, the chief minister who led the Maratha state from 1740, and the son of the great general Bajirao. The temple trust records that he built this temple on the site of an older one, and that on Mahashivratri, in February 1756, it was opened to the sound of shehnai, drums and trumpets. A story, which historians say cannot be confirmed, tells that a great diamond was set in the Lord’s crown here. What the records do show is that the last Peshwa, Bajirao the Second, had that diamond taken to Pune, and that after his defeat by the British in 1818 it went to London, where it became known as the Nassak Diamond. Now walk with me round the temple, to the old water tank.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ प्रांगण में चलिए। आपके सामने त्र्यंबकेश्वर का मंदिर खड़ा है, काले बेसाल्ट पत्थर से बना, जिसका शिखर परत दर परत ऊपर उठता है। अब उसके पीछे, और ऊपर देखिए, ब्रह्मगिरि की लंबी दीवार की ओर, वह पर्वत जहाँ गोदावरी नदी का जन्म होता है। इस पर्वत को याद रखिए, क्योंकि हमारी कथा वहीं से शुरू होती है। पर पहले, उस व्यक्ति की बात जिसने ये पत्थर खड़े किए। बालाजी बाजीराव, जिन्हें नानासाहेब के नाम से याद किया जाता है, पेशवा थे, यानी वे प्रधान जिन्होंने सत्रह सौ चालीस से मराठा राज्य का नेतृत्व किया, और महान सेनापति बाजीराव के पुत्र थे। मंदिर ट्रस्ट के अभिलेख बताते हैं कि उन्होंने यह मंदिर एक पुराने मंदिर के स्थान पर बनवाया, और सत्रह सौ छप्पन की फ़रवरी में, महाशिवरात्रि के दिन, शहनाई, नगाड़ों और तुरही की ध्वनि के बीच इसका लोकार्पण हुआ। एक कथा, जिसकी इतिहासकार पुष्टि नहीं कर पाते, कहती है कि यहाँ प्रभु के मुकुट में एक बड़ा हीरा जड़ा गया था। अभिलेख इतना अवश्य बताते हैं कि अंतिम पेशवा, बाजीराव द्वितीय, ने वह हीरा पुणे मँगवा लिया, और अठारह सौ अठारह में अंग्रेज़ों से उनकी हार के बाद वह लंदन पहुँचा, जहाँ वह नासक हीरा कहलाया। अब मेरे साथ मंदिर का चक्कर लगाकर पुराने जलकुंड तक चलिए।"
+      },
+      "didYouKnow": {
+        "en": "Sant Nivruttinath, elder brother and guru of Sant Dnyaneshwar, took samadhi at Trimbakeshwar; lakhs of Varkaris gather here every year on his death anniversary.",
+        "hi": "संत ज्ञानेश्वर के बड़े भाई और गुरु, संत निवृत्तिनाथ ने त्र्यंबकेश्वर में समाधि ली; हर वर्ष उनकी पुण्यतिथि पर लाखों वारकरी यहाँ एकत्र होते हैं।"
+      },
+      "sources": [
+        "https://trimbakeshwartrust.com/history",
+        "https://trimbakeshwartrust.com/about",
+        "https://livehistoryindia.com/story/art-history/nassak-diamond-from-the-crown-of-shiva",
+        "https://en.wikipedia.org/wiki/Trimbakeshwar_Temple"
+      ]
+    },
+    {
+      "id": "trimbak-kund",
+      "at": { "zone": "kund", "feature": "kund" },
+      "kind": "legend",
+      "title": { "en": "The Sage and the Drought", "hi": "ऋषि और अकाल" },
+      "text": {
+        "en": "Here is the Amrit Kund, the temple’s old stone tank, still and deep. Water is the heart of this place, so let me tell you the story the Shiva Purana tells, of a time when there was none. Long ago the sage Gautama lived on Brahmagiri with his wife Ahalya, a woman of great virtue. Then came a drought that lasted, the Purana says, a hundred years. Not one green shoot was left on the earth. People, animals and birds fled. Gautama sat for six months in penance, worshipping Varuna, lord of the waters, until Varuna appeared before him. Gautama asked for rain. ‘I cannot overrule the will of the gods,’ said Varuna. ‘Ask for something else.’ So Gautama asked for water that would never fail. ‘Dig a pit,’ said Varuna. Gautama dug one, just a hand deep, and Varuna filled it with divine water that would never run dry. Fields grew up around it. Grain, flowers and fruit returned, and thousands of sages came to live there with their families, thanks to Gautama. But not everyone was grateful. One morning, at that very water, a quarrel began. Walk with me to Nandi, and I will tell you where it led.",
+        "hi": "यह है अमृत कुंड, मंदिर का पुराना पत्थर का जलकुंड, शांत और गहरा। इस स्थान का हृदय जल है, इसलिए आइए, वह कथा सुनिए जो शिव पुराण कहता है, उस समय की जब जल था ही नहीं। बहुत पहले ब्रह्मगिरि पर गौतम ऋषि अपनी पत्नी अहल्या के साथ रहते थे, जो बड़ी सदाचारी स्त्री थीं। फिर ऐसा अकाल पड़ा जो, पुराण कहता है, सौ वर्ष तक चला। धरती पर एक भी हरी कोंपल नहीं बची। मनुष्य, पशु और पक्षी सब वहाँ से चले गए। गौतम छह महीने तक तप में बैठे, जल के स्वामी वरुण देव की आराधना करते रहे, और आख़िर वरुण उनके सामने प्रकट हुए। गौतम ने वर्षा माँगी। वरुण बोले, ‘मैं देवताओं की इच्छा के विरुद्ध नहीं जा सकता। कुछ और माँगिए।’ तब गौतम ने ऐसा जल माँगा जो कभी समाप्त न हो। वरुण ने कहा, ‘एक गड्ढा खोदिए।’ गौतम ने केवल एक हाथ गहरा गड्ढा खोदा, और वरुण ने उसे ऐसे दिव्य जल से भर दिया जो कभी नहीं सूखेगा। उसके चारों ओर खेत लहलहा उठे। अनाज, फूल और फल लौट आए, और गौतम के कारण हज़ारों ऋषि अपने परिवारों के साथ वहाँ आकर बस गए। पर सब कृतज्ञ नहीं थे। एक सुबह, उसी जल पर, एक झगड़ा शुरू हुआ। मेरे साथ नंदी तक चलिए, मैं बताता हूँ कि वह झगड़ा कहाँ तक पहुँचा।"
+      },
+      "didYouKnow": {
+        "en": "In 2026, while the Archaeological Survey of India was desilting the Amrit Kund, also called Amritavarshini, an old Shiva linga was found at its bottom, about 65 feet down.",
+        "hi": "2026 में, जब भारतीय पुरातत्व सर्वेक्षण अमृत कुंड, जिसे अमृतवर्षिणी भी कहते हैं, की गाद निकाल रहा था, तब उसकी तली में, लगभग 65 फ़ुट नीचे, एक पुराना शिवलिंग मिला।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226525.html",
+        "https://theprint.in/feature/who-placed-the-mystery-trimbak-shivling-at-amrit-kund-nashik-historian-has-2-theories/2977159/"
+      ]
+    },
+    {
+      "id": "trimbak-nandi",
+      "at": { "zone": "nandi", "feature": "nandi" },
+      "kind": "legend",
+      "title": { "en": "A Cow and a Blade of Grass", "hi": "एक गाय और घास का तिनका" },
+      "text": {
+        "en": "Nandi sits here, patient, facing his Lord. Patience is what this part of the story needs. Gautama’s disciples went to the water with their pots, but the other sages’ wives turned them away: ‘We draw first.’ So Ahalya went herself, calmly made peace, and brought the water home. The wives were offended, and told their husbands a twisted tale. The angry sages prayed to Ganesha to drive Gautama out. Ganesha warned them: ‘He saved you from starving. To harm him is wrong, and it will turn against you.’ They insisted, and Ganesha, who cannot refuse his devotees, agreed. He took the form of a weak, staggering cow and wandered into Gautama’s field of grain. Gautama, gentle by nature, shooed it away with a few blades of grass, and the cow fell dead. At once the hidden sages cried out, ‘Gautama has killed a cow!’ They drove him out with stones. Gautama asked humbly how he could atone. Walk around Brahmagiri, they told him, bring the Ganga here, and worship a crore of earthen lingas. And so, with Ahalya beside him, he began. Now climb up into the hall, to see what that devotion brought.",
+        "hi": "नंदी यहाँ धैर्य से बैठे हैं, अपने प्रभु की ओर मुख किए। कथा के इस भाग को धैर्य की ही आवश्यकता है। गौतम के शिष्य घड़े लेकर जल लेने गए, पर दूसरे ऋषियों की पत्नियों ने उन्हें लौटा दिया: ‘पहले हम भरेंगी।’ तब अहल्या स्वयं गईं, शांति से बात सुलझाई, और जल घर ले आईं। पत्नियों को यह अपमान लगा, और उन्होंने अपने पतियों को बात तोड़-मरोड़कर सुनाई। क्रोधित ऋषियों ने गौतम को निकलवाने के लिए गणेश जी की आराधना की। गणेश जी ने उन्हें चेताया: ‘उन्होंने आपको भूख से बचाया। उन्हें हानि पहुँचाना अधर्म है, और इसका फल आप पर ही लौटेगा।’ वे फिर भी अड़े रहे, और गणेश जी, जो अपने भक्तों को मना नहीं कर पाते, मान गए। उन्होंने एक दुर्बल, लड़खड़ाती गाय का रूप लिया और गौतम के अनाज के खेत में चले गए। स्वभाव से कोमल गौतम ने घास के कुछ तिनकों से उसे हटाया, और गाय गिरकर मर गई। तुरंत छिपे हुए ऋषि चिल्ला उठे, ‘गौतम ने गौ हत्या की है!’ उन्होंने पत्थर मारकर उन्हें निकाल दिया। गौतम ने विनम्रता से पूछा कि वे प्रायश्चित कैसे करें। ऋषियों ने कहा, ब्रह्मगिरि की परिक्रमा कीजिए, गंगा को यहाँ लाइए, और मिट्टी के एक करोड़ शिवलिंगों की पूजा कीजिए। और इस तरह, अहल्या को साथ लेकर, गौतम ने यह तप आरंभ किया। अब ऊपर मंडप में चलिए, और देखिए कि उस भक्ति का क्या फल मिला।"
+      },
+      "didYouKnow": {
+        "en": "Circling Brahmagiri on foot is still a pilgrimage here; the old temple establishment even kept two men whose duty was to walk the mountain’s parikrama.",
+        "hi": "ब्रह्मगिरि की पैदल परिक्रमा आज भी यहाँ की एक तीर्थयात्रा है; मंदिर की पुरानी व्यवस्था में तो दो लोग केवल इस पर्वत की परिक्रमा करने के लिए नियुक्त थे।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226526.html",
+        "https://trimbakeshwartrust.com/about"
+      ]
+    },
+    {
+      "id": "trimbak-mandapa",
+      "at": { "zone": "mandapa", "feature": "mandapa" },
+      "kind": "legend",
+      "title": { "en": "Ganga Comes Down, and Shiva Stays", "hi": "गंगा का अवतरण, शिव का निवास" },
+      "text": {
+        "en": "Stand here in the hall, beneath its dome, and imagine the moment Gautama’s long penance came to an end. Shiva appeared before him, pleased. ‘You have done no wrong,’ he said. ‘You were deceived. Those who harmed you are the sinners.’ And Gautama answered with a surprising gratitude: ‘Then they have done me a great kindness, Lord. Without them, how would I ever have seen you?’ Shiva offered him any boon he wished. Gautama asked nothing for himself. ‘Give us the Ganga, for the good of the world.’ And Ganga appeared, in the form of a woman. She would purify the sage, she said, and then return home. Shiva asked her to stay. Ganga replied that she would stay only if Shiva stayed here too, with Parvati. Then the gods made a promise of their own: every time Jupiter enters Leo, the sign of Simha, they would all come here to bathe in her. So Ganga stayed, and here she is called Gautami, the Godavari. And Shiva stayed, as Tryambaka, the three-eyed Lord. Now walk to the head of the steps that go down. The river, the Purana says, did not flow quietly at first.",
+        "hi": "यहाँ मंडप में, इसके गुंबद के नीचे खड़े होइए, और उस क्षण की कल्पना कीजिए जब गौतम का लंबा तप पूरा हुआ। शिव प्रसन्न होकर उनके सामने प्रकट हुए। ‘आपने कोई पाप नहीं किया,’ उन्होंने कहा। ‘आपको छला गया है। पापी तो वे हैं जिन्होंने आपको कष्ट दिया।’ और गौतम ने एक अनोखी कृतज्ञता से उत्तर दिया: ‘तब तो उन्होंने मुझ पर बड़ा उपकार किया है, प्रभु। उनके बिना मुझे आपके दर्शन कैसे होते?’ शिव ने उन्हें मनचाहा वर माँगने को कहा। गौतम ने अपने लिए कुछ नहीं माँगा। ‘संसार के कल्याण के लिए हमें गंगा दीजिए।’ और गंगा एक स्त्री के रूप में प्रकट हुईं। उन्होंने कहा कि वे ऋषि को पवित्र करके अपने धाम लौट जाएँगी। शिव ने उनसे रुकने को कहा। गंगा ने उत्तर दिया कि वे तभी रुकेंगी जब शिव भी पार्वती के साथ यहीं रहें। फिर देवताओं ने भी एक वचन दिया: जब-जब बृहस्पति सिंह राशि में प्रवेश करेंगे, वे सब यहाँ आकर उनमें स्नान करेंगे। इस तरह गंगा यहीं रुक गईं, और यहाँ वे गौतमी, यानी गोदावरी कहलाती हैं। और शिव भी यहीं रुक गए, त्र्यंबक के रूप में, तीन नेत्रों वाले प्रभु। अब नीचे जाने वाली सीढ़ियों के सिरे तक चलिए। पुराण कहता है कि नदी शुरू में शांति से नहीं बही।"
+      },
+      "didYouKnow": {
+        "en": "Tryambaka, the ‘three-eyed one’, is the name of Shiva in the Mahamrityunjaya mantra: ‘Om Tryambakam yajamahe…’",
+        "hi": "त्र्यंबक, यानी ‘तीन नेत्रों वाले’, महामृत्युंजय मंत्र में शिव का नाम है: ‘ॐ त्र्यम्बकं यजामहे…’"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226527.html"
+      ]
+    },
+    {
+      "id": "trimbak-antarala",
+      "at": { "feature": "antarala" },
+      "kind": "ritual",
+      "title": { "en": "Kushavarta, and Rites for the Ancestors", "hi": "कुशावर्त, और पितरों के संस्कार" },
+      "text": {
+        "en": "Pause at the head of these steps. Ganga came down from Brahmagiri, the Purana says, at a place called Gangadwar, flowing from the branches of a fig tree. But when Gautama’s old accusers came to bathe, she vanished. Gautama pleaded with her to forgive them, and in the end they walked around the mountain to atone. Then Gautama made a tank below Gangadwar, where the river would gather. That tank is Kushavarta, a short walk from here in the town; many say its name comes from the kusha grass with which the sage held the river back. Every Monday a palanquin carries the Lord’s mask from this temple to Kushavarta for worship. And every twelve years, when Jupiter enters Leo, the gods’ promise is kept as the Simhastha Kumbh, and the sadhus’ holiest bath is taken at Kushavarta; the next Simhastha opens at the end of October 2026. Families also come here all year for rites for their ancestors, such as the Narayan Nagbali, which tradition holds belongs to this place. Remember Varuna’s words: rites for the ancestors offered here would never perish. Now step down. The Lord is just below.",
+        "hi": "इन सीढ़ियों के सिरे पर एक पल रुकिए। पुराण कहता है कि गंगा ब्रह्मगिरि से गंगाद्वार नाम के स्थान पर उतरीं, एक गूलर के पेड़ की डालियों से बहती हुई। पर जब गौतम पर आरोप लगाने वाले वही ऋषि स्नान करने आए, तो वे लुप्त हो गईं। गौतम ने उनसे उन ऋषियों को क्षमा करने की विनती की, और अंत में उन ऋषियों ने प्रायश्चित के लिए पर्वत की परिक्रमा की। तब गौतम ने गंगाद्वार के नीचे एक कुंड बनाया, जहाँ नदी का जल ठहर सके। वही कुंड है कुशावर्त, यहाँ से नगर में थोड़ी ही दूर; बहुत से लोग कहते हैं कि इसका नाम उस कुश घास से पड़ा जिससे ऋषि ने नदी को रोका था। हर सोमवार एक पालकी प्रभु का मुखौटा इस मंदिर से कुशावर्त तक पूजा के लिए ले जाती है। और हर बारह वर्ष में, जब बृहस्पति सिंह राशि में आते हैं, देवताओं का वह वचन सिंहस्थ कुंभ के रूप में निभाया जाता है, और साधुओं का सबसे पवित्र स्नान कुशावर्त में होता है; अगला सिंहस्थ दो हज़ार छब्बीस के अक्टूबर के अंत में आरंभ होता है। परिवार साल भर यहाँ अपने पितरों के संस्कारों के लिए भी आते हैं, जैसे नारायण नागबलि, जिसे परंपरा इसी स्थान से जुड़ा मानती है। वरुण देव के वचन याद कीजिए: यहाँ पितरों के लिए किए गए संस्कार कभी नष्ट नहीं होंगे। अब नीचे उतरिए। प्रभु ठीक नीचे हैं।"
+      },
+      "didYouKnow": {
+        "en": "Kalsarp shanti and Tripindi shraddha are also performed at Trimbakeshwar, by hereditary tirtha purohits of the town.",
+        "hi": "त्र्यंबकेश्वर में कालसर्प शांति और त्रिपिंडी श्राद्ध भी नगर के वंशपरंपरागत तीर्थ पुरोहित करवाते हैं।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226528.html",
+        "https://trimbakeshwartrust.com/festivals",
+        "https://trimbakeshwartrust.com/about",
+        "https://en.wikipedia.org/wiki/Narayan_nagbali",
+        "https://www.theweek.in/wire-updates/national/2025/06/01/bom14-mh-ld-kumbh-mela.html"
+      ]
+    },
+    {
+      "id": "trimbak-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Trimbakeshwar", "hi": "श्री त्र्यंबकेश्वर के दर्शन" },
+      "text": {
+        "en": "Look into the sanctum, and, if the mirror above the doorway helps you, down into the small hollow in its floor. There is no tall linga here. In that hollow rise three tiny lingas, worn smooth, honoured as Brahma, Vishnu and Mahesh, and water wells up around them, held to be the Godavari herself. Even the day keeps this trinity: by the trust’s programme, the morning puja is of Brahma, the midday puja of Mahadev, and the evening puja of Vishnu. On Mondays and festivals they are covered with a golden mask and a jewelled crown that tradition says comes from the time of the Pandavas. This is the Lord who stayed because a river asked him to, for a sage who thanked even those who wronged him. Fold your hands. The tenth verse of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya, sings: ‘Sahyadrishirshe vimale vasantam Godavaritirapavitradeshe, yaddarshanat patakam ashu nasham prayati tam Tryambakam isham ide.’ ‘He who dwells on the pure heights of the Sahyadri, in the holy land on the Godavari’s bank, whose darshan swiftly destroys all sin: I praise that Lord, Tryambaka.’ Trimbakeshwar is the tenth Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Now the conch sounds and the lamps rise. Let the aarti begin. Har Har Mahadev.",
+        "hi": "गर्भगृह में देखिए, और यदि द्वार के ऊपर लगा दर्पण सहायता करे, तो उसके फ़र्श के छोटे-से गड्ढे में झाँकिए। यहाँ कोई ऊँचा शिवलिंग नहीं है। उस गड्ढे में तीन छोटे-छोटे, घिसकर चिकने हुए लिंग हैं, जिन्हें ब्रह्मा, विष्णु और महेश के रूप में पूजा जाता है, और उनके चारों ओर जल ऊपर आता रहता है, जिसे स्वयं गोदावरी माना जाता है। दिन भी इसी त्रिमूर्ति को निभाता है: ट्रस्ट के कार्यक्रम के अनुसार सुबह की पूजा ब्रह्मा की, दोपहर की पूजा महादेव की, और संध्या की पूजा विष्णु की होती है। सोमवार और पर्वों पर इन पर सोने का मुखौटा और रत्नजड़ित मुकुट सजाया जाता है, जिसे परंपरा पांडवों के समय का बताती है। ये वही प्रभु हैं जो एक नदी के कहने पर यहाँ रुक गए, उस ऋषि के लिए जिन्होंने अपने साथ अन्याय करने वालों का भी उपकार माना। हाथ जोड़िए। परंपरा से आदि शंकराचार्य को समर्पित द्वादश ज्योतिर्लिंग स्तोत्र का दसवाँ श्लोक गाता है: ‘सह्याद्रिशीर्षे विमले वसन्तं गोदावरीतीरपवित्रदेशे। यद्दर्शनात्पातकमाशु नाशं प्रयाति तं त्र्यम्बकमीशमीडे॥’ ‘जो सह्याद्रि के निर्मल शिखर पर, गोदावरी के तट के पवित्र प्रदेश में निवास करते हैं, जिनके दर्शन से पाप शीघ्र नष्ट हो जाते हैं, उन प्रभु त्र्यंबक की मैं स्तुति करता हूँ।’ त्र्यंबकेश्वर स्तोत्र के दसवें ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। अब शंख बजे और दीप उठें। आरती आरंभ हो। हर हर महादेव।"
+      },
+      "didYouKnow": {
+        "en": "Because the lingas sit in a hollow below floor level, most pilgrims take darshan from the doorway, many of them through the mirror set above it.",
+        "hi": "लिंग फ़र्श से नीचे एक गड्ढे में होने के कारण अधिकतर तीर्थयात्री द्वार से ही दर्शन करते हैं, और बहुत से लोग उसके ऊपर लगे दर्पण के सहारे।"
+      },
+      "sources": [
+        "https://trimbakeshwartrust.com/about",
+        "https://trimbakeshwartrust.com/daily_programme",
+        "https://trimbakeshwartrust.com/gallery",
+        "https://en.wikipedia.org/wiki/Trimbakeshwar_Temple"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Trimbakeshwar Aarti and the three daily pujas", "hi": "त्र्यंबकेश्वर आरती और तीन समय की पूजा" },
+    "schedule": [
+      { "name": { "en": "Darshan", "hi": "दर्शन" }, "time": "about 5:30 AM–9:00 PM" },
+      { "name": { "en": "Morning Puja (of Brahma)", "hi": "प्रातः पूजा (ब्रह्मा)" }, "time": "7:00–8:30 AM" },
+      { "name": { "en": "Midday Puja (of Mahadev)", "hi": "मध्याह्न पूजा (महादेव)" }, "time": "10:45 AM–12:30 PM" },
+      { "name": { "en": "Evening Puja (of Vishnu)", "hi": "सायं पूजा (विष्णु)" }, "time": "evening (see notes)" },
+      { "name": { "en": "Palkhi to Kushavarta", "hi": "कुशावर्त तक पालकी" }, "time": "every Monday, afternoon" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Karpuragauram karunavataram\nsamsarasaram bhujagendraharam\nsada vasantam hridayaravinde\nbhavam bhavanisahitam namami\n\n(White as camphor, compassion incarnate, the essence of all that is, wearing the king of serpents as a garland, ever dwelling in the lotus of the heart: I bow to Bhava, Shiva, with Bhavani.)",
+        "hi": "कर्पूरगौरं करुणावतारं\nसंसारसारं भुजगेन्द्रहारम्।\nसदा वसन्तं हृदयारविन्दे\nभवं भवानीसहितं नमामि॥\n\n(कपूर जैसे गौर, करुणा के अवतार, संसार के सार, नागराज का हार धारण करने वाले, सदा हृदय-कमल में निवास करने वाले, भवानी सहित भव, अर्थात शिव को मैं नमन करता हूँ।)"
+      },
+      "source": "‘Karpuragauram’, the traditional Sanskrit verse sung at the close of Shiva aartis across India (author unknown, centuries old). Trimbakeshwar also has its own Marathi aarti, ‘Jaya Jaya Trimbakaraja Girijanatha Gangadhara’, but no reliable text or author could be verified, so it is not reproduced.",
+      "license": "Public domain (traditional text)"
+    },
+    "notes": "Puja times from the Shri Trimbakeshwar Devasthan Trust’s Daily Program page (trimbakeshwartrust.com/daily_programme), which gives the morning puja (of Brahma) 7:00–8:30 AM and the midday puja (of Mahadev) 10:45 AM–12:30 PM, but repeats ‘7.00 AM to 8.30 AM’ for the evening puja (of Vishnu), evidently a typo: confirm with the trust. The trust’s Festivals page says the palanquin goes to Kushavarta every Monday; travel sites give 4–5 PM. Darshan hours (about 5:30 AM–9 PM) are from travel sites. Official YouTube: none usable. The trust’s site and the Ministry of Tourism’s Utsav page link the channel @trimbakeshwartrust4963 (UCX08UrvqI86jJpTvRMQhGQg), which has no videos or streams (checked 2026-10-07); the trust’s own live darshan is an ipcamlive.com player, not YouTube. A channel ‘Shri Trimbakeshwar Jyotirling’ (@Trimbakeshwar111, UC8OCSBoeLe1GuppaKdkQ-qA) streams as ‘Trimbakeshwar Devsthan Trust Live Stream’, but it is not linked from the trust and has no description or links, so it was not added. No freely licensed recording of the temple’s aarti was found."
+  }
+}

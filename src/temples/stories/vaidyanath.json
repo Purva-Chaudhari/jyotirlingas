@@ -1,0 +1,156 @@
+{
+  "id": "vaidyanath",
+  "name": { "en": "Vaidyanath", "hi": "वैद्यनाथ" },
+  "stops": [
+    {
+      "id": "vaid-lane",
+      "at": { "zone": "lane", "feature": "lane" },
+      "kind": "ritual",
+      "title": { "en": "The Road of Bol Bam", "hi": "बोल बम की राह" },
+      "text": {
+        "en": "Bol Bam! Come, walk with me down this narrow lane to Baba’s gate. Listen to the shopkeepers calling, smell the pera, Deoghar’s milk sweet, cooking in the stalls, and look at what leans against the walls: kanwars, bamboo yokes with a basket hanging from each end, dressed in saffron and hung with little bells. Every year, in the monsoon month of Shravan, pilgrims come down this lane in their lakhs with a kanwar on the shoulder. They have walked from Sultanganj on the Ganga, about a hundred and five kilometres away, most of them barefoot, carrying Ganga water filled at the start. By custom, that water is never set down on the ground along the way. They call one another ‘Bam’, and all night the road rings with ‘Bol Bam!’ Some, the Dak Bam, try to finish the whole walk within a single day. In 2025, about fifty-three lakh pilgrims came in that one month. Why carry water so far, to this one town? And why must it never touch the ground? Because of something that was set down here, long ago, and never lifted again. Come through the gate. The story begins with the king of Lanka.",
+        "hi": "बोल बम! आइए, मेरे साथ इस सँकरी गली से बाबा के द्वार तक चलिए। दुकानदारों की पुकार सुनिए, देवघर के मशहूर पेड़े की मीठी ख़ुशबू लीजिए, और देखिए दीवारों से क्या टिका है: काँवर, बाँस की बहँगी, जिसके दोनों सिरों पर एक-एक टोकरी लटकी है, भगवा कपड़े और छोटी-छोटी घंटियों से सजी हुई। हर साल सावन के महीने में लाखों तीर्थयात्री कंधे पर काँवर लिए इसी गली से आते हैं। वे गंगा किनारे सुल्तानगंज से लगभग एक सौ पाँच किलोमीटर पैदल चलकर आते हैं, ज़्यादातर नंगे पाँव, और साथ लाते हैं वहीं भरा गंगाजल। परंपरा है कि रास्ते भर यह जल धरती पर नहीं रखा जाता। वे एक-दूसरे को ‘बम’ कहकर पुकारते हैं, और सारी रात रास्ता ‘बोल बम’ से गूँजता रहता है। कुछ भक्त, जिन्हें डाक बम कहते हैं, पूरी यात्रा एक ही दिन में पूरी करने का प्रण लेते हैं। सन दो हज़ार पच्चीस में उस एक महीने में लगभग तिरपन लाख श्रद्धालु आए। इतनी दूर से जल क्यों लाना, और इसी नगर तक क्यों? और वह धरती को क्यों न छुए? क्योंकि बहुत पहले यहाँ कुछ ऐसा धरती पर रखा गया था, जो फिर कभी उठ न सका। द्वार के भीतर चलिए। कथा लंका के राजा से शुरू होती है।"
+      },
+      "didYouKnow": {
+        "en": "At Kartik Purnima devotees bathe in Shivganga, the great tank near the temple, and set lamps afloat on its water.",
+        "hi": "कार्तिक पूर्णिमा पर भक्त मंदिर के पास के विशाल सरोवर शिवगंगा में स्नान करते हैं और उसके जल पर दीप तैराते हैं।"
+      },
+      "sources": [
+        "https://deoghar.nic.in/history/",
+        "https://babadham.org/festivals/",
+        "https://www.amarujala.com/jharkhand/ranchi/devotees-reach-baba-baidyanath-dham-after-105-km-pilgrimage-deoghar-echoes-with-bol-bam-chants-2026-08-04",
+        "https://www.theweek.in/wire-updates/national/2025/08/07/ces35-jh-shravani-mela-devotees.html"
+      ]
+    },
+    {
+      "id": "vaid-ravana",
+      "at": { "zone": "prangan", "feature": "prangan" },
+      "kind": "legend",
+      "title": { "en": "The King Who Could Not Set It Down", "hi": "जो राजा उसे रख न सका" },
+      "text": {
+        "en": "You are inside the walls now, and before you rises Baba’s white tower. But how did he come to be here? The Shiva Purana tells of Ravana, the ten-headed king of Lanka, a great devotee of Shiva, and a proud one. In the forests below the Himalaya he dug a pit, lit the sacred fire, and worshipped Shiva through heat, rain and cold. Still Shiva did not come. So Ravana began to cut off his own heads, one by one, and offer them to the Lord. Nine heads fell. As he raised the sword to the tenth, Shiva appeared and set every head back in its place, without pain. Tradition says Shiva healed him as a physician heals, and so here he is Vaidyanath, Lord of Physicians. Ravana asked to carry Shiva’s linga home to Lanka. Shiva agreed, with one warning: wherever it is set on the ground, there it will stay. On the way Ravana had to stop, and gave the linga to a cowherd to hold. The cowherd waited, grew tired, and set it down. It never moved again. Many here say that cowherd was Vishnu himself, and call him Baiju. Now look up, at the red threads crossing the sky.",
+        "hi": "अब आप परकोटे के भीतर हैं, और सामने बाबा का श्वेत शिखर उठ रहा है। पास जाने से पहले सुनिए कि बाबा यहाँ कैसे आए। शिव पुराण रावण की कथा कहता है, लंका के दस सिर वाले राजा की, जो शिव के परम भक्त थे, पर बड़े अभिमानी भी। हिमालय के नीचे के वनों में उसने गड्ढा खोदा, अग्नि जलाई, और गर्मी की तपन, बरसात और जाड़े की ठिठुरन में शिव की आराधना करता रहा। फिर भी शिव प्रकट नहीं हुए। तब रावण अपने ही सिर एक-एक कर काटकर प्रभु को अर्पित करने लगा। नौ सिर चढ़ गए। जैसे ही उसने दसवें सिर पर तलवार उठाई, शिव प्रकट हो गए और बिना किसी पीड़ा के हर सिर को फिर से जोड़ दिया। परंपरा कहती है कि शिव ने एक वैद्य की तरह उसका उपचार किया, इसीलिए यहाँ वे वैद्यनाथ हैं, वैद्यों के स्वामी। रावण ने शिवलिंग को लंका ले जाने की इच्छा जताई। शिव मान गए, पर एक चेतावनी के साथ: जहाँ इसे धरती पर रखोगे, वहीं यह स्थिर हो जाएगा। रास्ते में रावण को रुकना पड़ा, और उसने लिंग एक ग्वाले को थमा दिया। ग्वाला प्रतीक्षा करता रहा, थक गया, और उसने लिंग धरती पर रख दिया। फिर वह कभी नहीं हिला। यहाँ बहुत-से लोग मानते हैं कि वह ग्वाला स्वयं विष्णु थे, और उन्हें बैजू कहते हैं। अब ऊपर देखिए, आकाश में फैले लाल धागों की ओर।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana says that once the linga was fixed, Brahma, Vishnu and the other gods came to worship it, and named it Vaidyanatha.",
+        "hi": "शिव पुराण कहता है कि लिंग के स्थिर हो जाने के बाद ब्रह्मा, विष्णु और अन्य देवता उसकी पूजा करने आए, और उसका नाम वैद्यनाथ रखा।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226529.html",
+        "https://babadham.org/story/",
+        "https://en.wikipedia.org/wiki/Baidyanath_Temple",
+        "https://www.rkmvdeoghar.org/baidyanath-dham"
+      ]
+    },
+    {
+      "id": "vaid-parvati",
+      "at": { "zone": "parvati", "feature": "parvati" },
+      "kind": "ritual",
+      "title": { "en": "Bound by Red Thread", "hi": "लाल धागों का गठबंधन" },
+      "text": {
+        "en": "Look up. From the crown of Baba’s tower to the crown of this temple, Maa Parvati’s, long red threads are strung across the sky. This is the gathbandhan, the knot that ties bride and groom together at a Hindu wedding, tied here between Shiva and Shakti. Devotees offer the threads with their prayers, and men climb the towers to tie them, crown to crown. Why does the Goddess matter so much here? Remember Sati, Shiva’s first wife, who gave up her life at her father’s sacrifice. Shiva wandered the worlds in grief, carrying her body, until Vishnu’s discus divided it, and wherever a part fell became a Shakti Peetha. Tradition holds that her heart fell here. So Deoghar is the Hridaya Peetha, the seat of the heart, and the Mother is worshipped here as Jaya Durga. The Shiva Purana, naming the twelve Jyotirlingas, places Vaidyanath ‘in the cremation ground’, and people here have long linked those words with Sati’s story. A Jyotirlinga and a Shakti Peetha side by side: few places hold both. Now walk with me round the back of Baba’s temple. Its stones have a story of their own.",
+        "hi": "ऊपर देखिए। बाबा के शिखर से लेकर इस मंदिर, माँ पार्वती के मंदिर, के शिखर तक आकाश में लंबे लाल धागे बँधे हैं। यह गठबंधन है, वही गाँठ जो हिंदू विवाह में वर और वधू को बाँधती है, यहाँ शिव और शक्ति के बीच बँधी हुई। भक्त अपनी प्रार्थना के साथ ये धागे अर्पित करते हैं, और लोग शिखरों पर चढ़कर इन्हें एक शिखर से दूसरे शिखर तक बाँधते हैं। देवी का यहाँ इतना महत्व क्यों है? सती को याद कीजिए, शिव की पहली पत्नी, जिन्होंने अपने पिता के यज्ञ में प्राण त्याग दिए। शिव उनका शरीर उठाए शोक में लोक-लोक भटकते रहे, तब विष्णु के सुदर्शन चक्र ने उसे विभाजित किया, और जहाँ-जहाँ अंग गिरे, वहाँ शक्तिपीठ बने। परंपरा मानती है कि सती का हृदय यहीं गिरा। इसलिए देवघर हृदयपीठ है, और माँ यहाँ जय दुर्गा के रूप में पूजी जाती हैं। शिव पुराण बारह ज्योतिर्लिंगों को गिनाते हुए वैद्यनाथ को ‘चिताभूमि’ में बताता है, और यहाँ के लोग इन शब्दों को लंबे समय से सती की कथा से जोड़ते आए हैं। एक ज्योतिर्लिंग और एक शक्तिपीठ, साथ-साथ: ऐसे स्थान बहुत कम हैं। अब मेरे साथ बाबा के मंदिर के पीछे की ओर चलिए। इसके पत्थरों की भी अपनी कहानी है।"
+      },
+      "didYouKnow": {
+        "en": "The walled courtyard holds about twenty-two temples: Baba’s, and twenty-one others around it.",
+        "hi": "परकोटे वाले इस प्रांगण में लगभग बाईस मंदिर हैं: बाबा का मंदिर, और उसके चारों ओर इक्कीस अन्य।"
+      },
+      "sources": [
+        "https://www.incredibleindia.gov.in/en/jharkhand/deoghar/baba-baidyanath-dham",
+        "https://babadham.org/about/",
+        "https://deoghar.nic.in/history/",
+        "https://ianslive.in/mahashivaratri-deoghar-is-the-supreme-jyotirlinga-for-a-reason--20250225205704"
+      ]
+    },
+    {
+      "id": "vaid-tower",
+      "at": { "feature": "tower" },
+      "kind": "history",
+      "title": { "en": "A Tower Without a Known Builder", "hi": "जिस शिखर का निर्माता अज्ञात है" },
+      "text": {
+        "en": "From back here you can take in the whole tower: plain, massive stone under whitewash, seventy-two feet high, its rounded courses closing toward the top like a lotus bud. On its summit sit three golden kalashas, given, the district records say, by the Maharaja of Gidhaur, and above them stands not a trident but a Panchshool, a five-pointed one, which is rare. Before Mahashivratri the Panchshools are taken down for worship, and then raised again for the festival. And who built all this? No one knows for certain. The oldest name the records give is Puran Mal, an ancestor of those same Gidhaur Maharajas, who is said to have built parts of the front of the temple in 1596, in the reign of the Emperor Akbar. Nearly two centuries later came a very different visitor. In 1788 Mr Keating, the East India Company’s collector at Birbhum, sent his assistant to take charge of the temple’s offerings. But when Keating came to Deoghar himself, he gave up interfering, and left the temple in the hands of its high priest. And so the worship went on, as it always had. Now come round to the porch, where Baba’s day begins before dawn.",
+        "hi": "यहाँ पीछे से पूरा शिखर दिखता है: सादा, विशाल पत्थर, ऊपर से चूने की सफ़ेदी, बहत्तर फ़ुट ऊँचा, और उसकी गोल परतें ऊपर जाकर कमल की कली की तरह सिमटती हैं। शिखर पर सोने के तीन कलश हैं, जो ज़िले के अभिलेखों के अनुसार गिद्धौर के महाराजा ने चढ़ाए, और उनके ऊपर त्रिशूल नहीं, पंचशूल है, पाँच नोकों वाला, जो बहुत दुर्लभ है। महाशिवरात्रि से पहले पंचशूल उतारकर उनकी पूजा होती है, और फिर उत्सव के लिए उन्हें दोबारा चढ़ाया जाता है। और यह सब बनाया किसने? कोई ठीक-ठीक नहीं जानता। अभिलेखों में सबसे पुराना नाम पूरनमल का मिलता है, उन्हीं गिद्धौर महाराजाओं के पूर्वज, जिनके बारे में कहा जाता है कि उन्होंने सन पंद्रह सौ छियानवे में, सम्राट अकबर के समय, मंदिर के अगले हिस्से के कुछ भाग बनवाए। लगभग दो सौ वर्ष बाद एक बिल्कुल अलग मेहमान आया। सन सत्रह सौ अट्ठासी में ईस्ट इंडिया कंपनी के बीरभूम के कलेक्टर मिस्टर कीटिंग ने मंदिर का चढ़ावा अपने हाथ में लेने के लिए अपने सहायक को भेजा। पर जब कीटिंग स्वयं देवघर आए, तो उन्होंने दख़ल देना छोड़ दिया, और मंदिर उसके प्रधान पुजारी के हाथों में सौंप दिया। और पूजा वैसे ही चलती रही, जैसे सदा चलती आई थी। अब घूमकर बरामदे की ओर चलिए, जहाँ बाबा का दिन भोर से पहले शुरू होता है।"
+      },
+      "didYouKnow": {
+        "en": "Inside the top of the tower is an eight-petalled lotus jewel called the Chandrakanta Mani.",
+        "hi": "शिखर के भीतर ऊपर आठ पंखुड़ियों वाला एक कमल-रत्न है, जिसे चंद्रकांत मणि कहते हैं।"
+      },
+      "sources": [
+        "https://deoghar.nic.in/history/",
+        "https://en.wikipedia.org/wiki/Baidyanath_Temple",
+        "https://behindeverytemple.org/hindu-temples/shiva/baidyanath-temple/",
+        "https://ianslive.in/mahashivaratri-deoghar-is-the-supreme-jyotirlinga-for-a-reason--20250225205704"
+      ]
+    },
+    {
+      "id": "vaid-porch",
+      "at": { "zone": "temple", "feature": "porch" },
+      "kind": "ritual",
+      "title": { "en": "Baba’s Day, and His Wedding", "hi": "बाबा का दिन, और उनका विवाह" },
+      "text": {
+        "en": "You are on the porch now, before the low door of the sanctum. Feel how wet the floor is under your feet: everyone who comes here pours water, and Baba’s whole day is counted out in offerings. At four in the morning the doors open, and the first offering is the Kancha Jal, the first water of the day. Through the day pilgrims pour Ganga water and milk, and lay down bel leaves and flowers. In the evening the doors open again for the Shringar Puja, when the linga is adorned and the aarti is sung. Twice a year this temple becomes a wedding house. On Basant Panchami, devotees from Mithila, in north Bihar, arrive with their kanwars to offer the Tilak, the ceremony that begins a Hindu wedding, and so the season of Shiva’s marriage opens. Then on Mahashivratri, through the four watches of the night, sindoor, vermilion, is offered to Baba, marking the completion of his marriage to Parvati. That is why the red threads hang outside. Now bow your head; the doorway is low. Step inside with me, and carry your water the last few steps.",
+        "hi": "अब आप बरामदे में हैं, गर्भगृह के नीचे दरवाज़े के सामने। पैरों तले फ़र्श कितना गीला है: यहाँ आने वाला हर कोई जल चढ़ाता है, और बाबा का पूरा दिन चढ़ावों से गिना जाता है। भोर में चार बजे पट खुलते हैं, और पहला अर्पण होता है कांचा जल, दिन का पहला जल। दिन भर तीर्थयात्री गंगाजल और दूध चढ़ाते हैं, बेलपत्र और फूल अर्पित करते हैं। शाम को पट फिर खुलते हैं शृंगार पूजा के लिए, जब लिंग का शृंगार होता है और आरती गाई जाती है। साल में दो बार यह मंदिर विवाह का घर बन जाता है। बसंत पंचमी को उत्तर बिहार के मिथिला से भक्त अपने काँवर लेकर तिलक चढ़ाने आते हैं, वही रस्म जिससे हिंदू विवाह की शुरुआत होती है, और इसी से शिव के विवाह का उत्सव आरंभ होता है। फिर महाशिवरात्रि की रात, चारों प्रहर की पूजा में, बाबा को सिंदूर अर्पित किया जाता है, जो पार्वती के साथ उनके विवाह के पूर्ण होने का प्रतीक है। इसीलिए बाहर लाल धागे बँधे हैं। अब सिर झुकाइए; द्वार नीचा है। मेरे साथ भीतर चलिए, और अपना जल आख़िरी कुछ क़दम तक ले चलिए।"
+      },
+      "didYouKnow": {
+        "en": "The temple is open from about four in the morning to nine at night, with a break in the afternoon; during the Shravani Mela the hours are extended.",
+        "hi": "मंदिर सुबह लगभग चार बजे से रात नौ बजे तक खुला रहता है, दोपहर में कुछ समय के लिए बंद होता है; श्रावणी मेले में समय बढ़ा दिया जाता है।"
+      },
+      "sources": [
+        "https://babadham.org/timings/",
+        "https://babadham.org/festivals/",
+        "https://ianslive.in/mahashivaratri-deoghar-is-the-supreme-jyotirlinga-for-a-reason--20250225205704"
+      ]
+    },
+    {
+      "id": "vaid-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Baba Baidyanath", "hi": "बाबा बैद्यनाथ के दर्शन" },
+      "text": {
+        "en": "You have reached Baba Baidyanath. Look down into the black stone basin: the Jyotirlinga rises only a few inches from it, small and dark, and its top is broken and uneven. Tradition says that is where Ravana pressed it with his thumb, when he could not lift it again. Here, at last, the kanwariyas pour the Ganga water they carried from Sultanganj without once setting it down, and here the Lord of Physicians is asked for healing. Fold your hands. The Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya, sings: ‘Purvottare prajvalikanidhane sada vasantam Girijasametam, surasuraradhitapadapadmam Shri Vaidyanatham tam aham namami.’ ‘In the north-east, in the place of the blazing pyre, he dwells for ever with Girija; gods and asuras alike worship his lotus feet: to that Shri Vaidyanath I bow.’ Vaidyanath is the fifth Jyotirlinga of the Stotram. A shorter hymn of the twelve says ‘Paralyam Vaidyanatham’, and so Parli Vaijnath in Maharashtra is also revered as this Jyotirlinga. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the bells ring, and let the lamps be raised. Bol Bam! Om Namah Shivaya.",
+        "hi": "आप बाबा बैद्यनाथ तक पहुँच गए हैं। नीचे काले पत्थर की जलहरी में देखिए: ज्योतिर्लिंग उससे बस कुछ इंच ऊपर उठा है, छोटा और श्यामल, और उसका ऊपरी भाग टूटा हुआ, ऊबड़-खाबड़ है। परंपरा कहती है कि जब रावण उसे फिर उठा न सका, तब उसने यहीं अँगूठे से उसे दबाया था। यहीं आकर काँवरिये वह गंगाजल चढ़ाते हैं, जो वे सुल्तानगंज से एक बार भी धरती पर रखे बिना लाए हैं, और यहीं वैद्यों के स्वामी से आरोग्य माँगा जाता है। हाथ जोड़िए। आदि शंकराचार्य के नाम से प्रसिद्ध द्वादश ज्योतिर्लिंग स्तोत्र गाता है: ‘पूर्वोत्तरे प्रज्वलिकानिधाने सदा वसन्तं गिरिजासमेतम्। सुरासुराराधितपादपद्मं श्रीवैद्यनाथं तमहं नमामि॥’ ‘पूर्वोत्तर दिशा में, प्रज्वलित चिता के स्थान पर, जो गिरिजा के साथ सदा निवास करते हैं, जिनके चरण-कमल देवता और असुर दोनों पूजते हैं, उन श्री वैद्यनाथ को मैं नमन करता हूँ।’ वैद्यनाथ स्तोत्र के पाँचवें ज्योतिर्लिंग हैं। बारह ज्योतिर्लिंगों का एक छोटा स्तोत्र ‘परल्यां वैद्यनाथं च’ कहता है, इसलिए महाराष्ट्र के परली वैजनाथ को भी यही ज्योतिर्लिंग माना जाता है। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। घंटियाँ बजें, और दीप उठें। बोल बम! ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "The Jyotirlinga is about five inches across and rises about four inches from its stone slab.",
+        "hi": "ज्योतिर्लिंग लगभग पाँच इंच चौड़ा है, और अपनी शिला से लगभग चार इंच ऊपर उठा हुआ है।"
+      },
+      "sources": [
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://en.wikipedia.org/wiki/Baidyanath_Temple",
+        "https://behindeverytemple.org/hindu-temples/shiva/baidyanath-temple/"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Baba Baidyanath Aarti (Shringar Puja and evening aarti)", "hi": "बाबा बैद्यनाथ की आरती (शृंगार पूजा और संध्या आरती)" },
+    "schedule": [
+      { "name": { "en": "Doors (pat) open", "hi": "पट खुलना" }, "time": "4:00 AM" },
+      { "name": { "en": "Kancha Jal (first offering)", "hi": "कांचा जल" }, "time": "4:10 AM" },
+      { "name": { "en": "Doors close after the morning worship", "hi": "प्रातः पूजा के बाद पट बंद" }, "time": "4:00 PM" },
+      { "name": { "en": "Doors reopen", "hi": "पट पुनः खुलना" }, "time": "6:00 PM" },
+      { "name": { "en": "Shringar Puja and aarti", "hi": "शृंगार पूजा और आरती" }, "time": "6:10 PM (broadcast 7:30–8:15 PM)" },
+      { "name": { "en": "Shravani Mela (Sultanganj–Deoghar kanwar yatra)", "hi": "श्रावणी मेला (सुल्तानगंज–देवघर काँवर यात्रा)" }, "time": "the month of Shravan (July–August)" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Om jai Shiv Omkara, Swami jai Shiv Omkara\nBrahma, Vishnu, Sadashiv, ardhangi dhara\n\nEkanan chaturanan panchanan raje\nhamsasan garudasan vrishavahan saje\n\nDo bhuj char chaturbhuj dasabhuj ati sohe\ntrigun rup nirakhate tribhuvan jan mohe\n\nAkshamala vanamala mundamala dhari\nTripurari Kamsari kar mala dhari\n\nShvetambar pitambar baghambar ange\nSanakadik Garudadik bhutadik sange\n\nKar ke madhya kamandalu chakra trishuldhari\nsukhkari dukhhari jagpalan kari\n\nBrahma Vishnu Sadashiv janat aviveka\npranavakshar mein shobhit ye tinon eka\n\nTrigunasvami ji ki aarti jo koi nar gave\nkahat Shivanand Swami manvanchhit phal pave\n\n(The traditional Shiva aarti; in the last line the poet names himself as Shivanand Swami.)",
+        "hi": "ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा।\nब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥\n\nएकानन चतुरानन पञ्चानन राजे।\nहंसासन गरुड़ासन वृषवाहन साजे॥\n\nदो भुज चार चतुर्भुज दसभुज अति सोहे।\nत्रिगुण रूप निरखते त्रिभुवन जन मोहे॥\n\nअक्षमाला वनमाला मुण्डमाला धारी।\nत्रिपुरारी कंसारी कर माला धारी॥\n\nश्वेताम्बर पीताम्बर बाघम्बर अंगे।\nसनकादिक गरुड़ादिक भूतादिक संगे॥\n\nकर के मध्य कमण्डलु चक्र त्रिशूलधारी।\nसुखकारी दुखहारी जगपालन कारी॥\n\nब्रह्मा विष्णु सदाशिव जानत अविवेका।\nप्रणवाक्षर में शोभित ये तीनों एका॥\n\nत्रिगुणस्वामी जी की आरती जो कोइ नर गावे।\nकहत शिवानन्द स्वामी, मनवांछित फल पावे॥"
+      },
+      "source": "‘Om Jai Shiv Omkara’, the widely sung traditional Shiva aarti whose closing line names ‘Shivanand Swami’ (some sources credit Pandit Shardha Ram Phillauri; either way the author died well over 100 years ago). It is given as a common Shiva aarti only: it is not documented as the exact text sung at Baba Baidyanath’s Shringar Puja.",
+      "license": "Public domain (traditional text)"
+    },
+    "audio": [
+      {
+        "url": "https://deoghar.nic.in/",
+        "license": "All rights reserved (Deoghar district administration / JharGov TV) - needs permission",
+        "notes": "The live puja and aarti from the sanctum are broadcast by JharGov TV (Jharkhand government) and linked from the district site. No reuse licence found."
+      }
+    ],
+    "youtube": [
+      {"videoId": "5xLkWfStYkw", "start": 1249, "end": 1449, "title": "देवघर स्थित बाबा वैद्यनाथ मंदिर के गर्भगृह से संध्या आरती - 29-07-21", "channel": "JharGov TV", "channelUrl": "https://www.youtube.com/@JharGovTV", "official": false, "kind": "recorded", "url": "https://www.youtube.com/watch?v=5xLkWfStYkw&t=1249s", "verifiedBy": "JharGov TV is the Jharkhand government's channel; the Deoghar district site (deoghar.nic.in, which the district administration runs) embeds this channel's Baidyanath sanctum broadcast 8br8t_ulbkA. The sung aarti with lamps runs 20:49–24:09 (checked frame by frame and by loudness)."},
+      {"videoId": "0vn8hwYz60w", "start": 1350, "end": 1620, "title": "बाबा बैद्यनाथ की संध्या पूजा-आरती | LIVE", "channel": "JharGov TV", "channelUrl": "https://www.youtube.com/@JharGovTV", "official": false, "kind": "recorded", "url": "https://www.youtube.com/watch?v=0vn8hwYz60w&t=1350s", "verifiedBy": "same channel (UCSXD7-uvfR7bizvymaxR-9Q); lamp offered in the sanctum at 22:30, then the priests' aarti at the door to the end"}
+    ],
+    "youtubeSources": ["https://deoghar.nic.in/", "https://www.youtube.com/watch?v=8br8t_ulbkA", "https://www.youtube.com/watch?v=5xLkWfStYkw", "https://www.youtube.com/watch?v=0vn8hwYz60w", "https://www.youtube.com/@JharGovTV"],
+    "notes": "Timings from babadham.org (which presents itself as the Baba Baidyanath Dham Temple Trust site; it links no social channels). The Shringar Puja is given there as 6:10 PM, while JharGov TV's broadcasts say the evening Shringar Puja and aarti run 7:30–8:15 PM; confirm locally, and expect longer hours in Shravan and on Mahashivratri. No temple-trust YouTube channel could be verified, so the recordings are the Jharkhand government's broadcasts (marked official: false, shown as a broadcaster); there is no live entry because JharGov TV streams many unrelated events. No freely licensed recording of Baidyanath’s aarti was found."
+  }
+}

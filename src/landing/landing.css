@@ -1,0 +1,352 @@
+/* Landing — the cosmos: deep violet-black, ivory-silver type, white light; a touch of gold for "visited". */
+:root {
+  --space: #05030c;
+  --ivory: #f2f0ea;
+  --ivory-2: rgba(236, 238, 245, 0.66);
+  --ivory-3: rgba(225, 230, 245, 0.45);
+  --line: rgba(235, 240, 255, 0.16);
+  --gold: rgba(240, 212, 154, 0.9);
+  --sindoor: #c8321e;
+  --title: 'Cinzel', 'Cormorant Garamond', serif;
+  --ui: 'Mukta', system-ui, sans-serif;
+  --gut: 16px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body {
+  background: radial-gradient(120% 90% at 50% 45%, #0b0716 0%, var(--space) 60%, #020107 100%) fixed, var(--space);
+  color: var(--ivory);
+  font-family: var(--ui);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 1px solid rgba(240, 244, 255, 0.7); outline-offset: 3px; }
+
+/* film grain: a fine noise tile, shifted a few times a second on the compositor */
+#grain {
+  position: fixed; inset: -120px; pointer-events: none; opacity: 0.06; z-index: 9; mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.96 0 0 0 0 0.92 0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); } 17% { transform: translate(-37px, 21px); } 33% { transform: translate(52px, -44px); }
+  50% { transform: translate(-18px, 63px); } 67% { transform: translate(71px, 12px); } 83% { transform: translate(-60px, -30px); }
+}
+
+/* ---------- the canvas: shown only once the current scene is ready (journey) or the glass hub is (hub) ---------- */
+#cosmos { position: fixed; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
+body.journey.cosmos-ready #cosmos, body.hub.glass-hub #cosmos { opacity: 1; }
+body.swap #cosmos { opacity: 0 !important; transition-duration: 0.35s; }
+body.swap #chapter, body.swap #rail, body.swap #skip, body.swap #hint { opacity: 0 !important; transition: opacity 0.3s !important; }
+#stage-hit { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+body.hub #stage-hit { pointer-events: auto; }
+
+/* ---------- the journey: Through the Third Eye ---------- */
+#chapter {
+  position: fixed; left: var(--gut); right: var(--gut); bottom: 13vh; margin: 0; text-align: center; z-index: 3; pointer-events: none;
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; font-size: clamp(22px, 2.6vw, 36px); letter-spacing: 0.02em;
+  color: rgba(246, 240, 255, 0.92); text-shadow: 0 0 24px rgba(5, 3, 12, 0.9), 0 0 2px rgba(5, 3, 12, 0.8);
+  opacity: 0; transform: translateY(8px); transition: opacity 1.2s ease, transform 1.6s ease;
+}
+#chapter.on { opacity: 1; transform: none; }
+body:not(.journey) #chapter { opacity: 0; }
+#hint {
+  position: fixed; left: 0; right: 0; bottom: 34px; margin: 0; text-align: center; z-index: 3; pointer-events: none;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(236, 228, 255, 0.55); opacity: 0; transition: opacity 1s ease 2s;
+}
+#hint::after { content: ''; display: block; width: 1px; height: 26px; margin: 10px auto 0; background: linear-gradient(rgba(236, 228, 255, 0.6), transparent); animation: hint 2.4s ease-in-out infinite; }
+@keyframes hint { 0%, 100% { transform: translateY(-4px); opacity: 0.4; } 50% { transform: translateY(4px); opacity: 1; } }
+body.journey.cosmos-ready:not(.moved) #hint { opacity: 1; }
+/* the hub's cue: India continues below */
+#scrollcue {
+  position: fixed; left: 0; right: 300px; bottom: 26px; margin: 0; text-align: center; z-index: 3; pointer-events: none;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(236, 238, 255, 0.6); opacity: 0; transition: opacity 0.8s ease;
+}
+#scrollcue::after { content: ''; display: block; width: 1px; height: 26px; margin: 10px auto 0; background: linear-gradient(rgba(236, 238, 255, 0.6), transparent); animation: hint 2.4s ease-in-out infinite; }
+body.hub.glass-hub.can-scroll #scrollcue { opacity: 1; transition-delay: 1.5s; }
+#rail {
+  position: fixed; right: max(var(--gut), 30px); top: 50%; translate: 0 -50%; z-index: 4; display: flex; flex-direction: column; gap: 22px;
+  padding: 4px 0; opacity: 0; pointer-events: none; transition: opacity 1s ease;
+}
+body.journey.cosmos-ready #rail { opacity: 1; pointer-events: auto; }
+#rail::before { content: ''; position: absolute; right: 3.5px; top: 8px; bottom: 8px; width: 1px; background: rgba(236, 228, 255, 0.18); }
+#rail::after { content: ''; position: absolute; right: 3.5px; top: 8px; width: 1px; height: calc((100% - 16px) * var(--p, 0)); background: rgba(232, 199, 122, 0.85); }
+#rail .step { display: flex; align-items: center; justify-content: flex-end; gap: 12px; background: none; border: 0; padding: 0; color: rgba(236, 228, 255, 0.45); font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase; }
+#rail .step i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(236, 228, 255, 0.45); background: var(--space); position: relative; z-index: 1; order: 2; transition: background 0.3s, border-color 0.3s; }
+#rail .step.past i { background: rgba(232, 199, 122, 0.85); border-color: rgba(232, 199, 122, 0.85); }
+#rail .step.on { color: rgba(246, 240, 255, 0.95); }
+#rail .step.on i { background: var(--sindoor); border-color: #ff9a7a; box-shadow: 0 0 10px rgba(255, 110, 80, 0.8); }
+#rail .step span { opacity: 0; transition: opacity 0.4s; }
+#rail:hover .step span, #rail .step.on span { opacity: 1; }
+#skip {
+  position: fixed; right: max(var(--gut), 28px); top: max(var(--gut), 24px); z-index: 10;
+  background: none; border: 0; padding: 8px 2px; font-size: 11.5px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(236, 228, 255, 0.6); opacity: 0; pointer-events: none; transition: opacity 0.8s ease 1.2s, color 0.2s;
+}
+body.journey.cosmos-ready #skip { opacity: 1; pointer-events: auto; }
+#skip:hover { color: #fff; }
+
+/* ---------- the hub: India in glass, Shiva in glass, the twelve points of light ---------- */
+/* nothing of the hub shows until the glass is ready (body.glass-hub), or — without WebGL — the list alone (body.nogl) */
+#head { position: fixed; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers */
+#list, #foot, #list-toggle, #thought, #medals { opacity: 0; pointer-events: none; transition: opacity 1.2s ease; }
+body.hub.glass-hub #list, body.hub.glass-hub #foot, body.hub.glass-hub #list-toggle,
+body.hub.nogl #list, body.hub.nogl #foot, body.hub.nogl #list-toggle { opacity: 1; pointer-events: auto; }
+#medals { position: fixed; inset: 0; z-index: 3; }
+body.hub.glass-hub #medals { opacity: 1; }
+#leaders { position: absolute; inset: 0; overflow: visible; }
+#leaders line { stroke: rgba(235, 240, 255, 0.8); stroke-width: 0.75; }
+.pin {
+  position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; opacity: 0;
+  background: radial-gradient(circle, #fff 0, #fff 9%, rgba(225, 235, 255, 0.85) 16%, rgba(200, 215, 255, 0.25) 34%, rgba(200, 215, 255, 0) 62%);
+  transition: scale 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.35s;
+}
+.pin.visited::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; border: 1px solid var(--gold); }
+.pin.sel, .pin:hover { scale: 1.9; filter: drop-shadow(0 0 8px rgba(230, 238, 255, 0.9)); }
+.jl {
+  position: absolute; left: 0; top: 0; padding: 2px 4px; border: 0; background: none; text-align: left; white-space: nowrap; opacity: 0;
+  color: rgba(244, 241, 234, 0.9); line-height: 1.12; text-shadow: 0 0 10px rgba(4, 4, 6, 0.95), 0 0 2px rgba(4, 4, 6, 0.9); transition: color 0.3s;
+}
+body.hub.glass-hub .pin, body.hub.glass-hub .jl { pointer-events: auto; }
+.jl.l { text-align: right; }
+.jl .nm { display: block; font-family: var(--title); font-weight: 400; font-size: 12.5px; letter-spacing: 0.08em; }
+.jl .jy { display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 12px; letter-spacing: 0.04em; color: rgba(225, 230, 245, 0.55); }
+.jl.visited .nm::after { content: ' ·'; color: var(--gold); }
+.jl:hover, .jl.sel { color: #fff; }
+.jl.sel .jy, .jl:hover .jy { color: rgba(240, 244, 255, 0.85); }
+
+/* thoughts, bottom left of the glass */
+#thought {
+  position: fixed; margin: 0; z-index: 3; translate: 0 -50%;
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; font-size: clamp(16px, 1.45vw, 21px); line-height: 1.4;
+  color: rgba(236, 238, 245, 0.72); text-shadow: 0 0 16px rgba(4, 4, 6, 0.95);
+}
+body.hub.glass-hub #thought.on { opacity: 1; }
+#thought .tt { display: block; }
+#thought .ts { display: block; margin-top: 8px; font-family: var(--ui); font-style: normal; font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ivory-3); }
+
+/* glass panels: the list, the card, the pills — colourless */
+#list {
+  position: fixed; right: 20px; top: 50%; translate: 0 -50%; z-index: 5; width: 256px; padding: 16px 14px 12px 16px; border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(18px) saturate(1.1); -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+#list h2 { margin: 0 0 10px 2px; font-family: var(--title); font-weight: 400; font-size: 12px; letter-spacing: 0.34em; text-transform: uppercase; color: rgba(225, 230, 245, 0.7); }
+#list ol { list-style: none; margin: 0; padding: 0; }
+#list li + li .row { border-top: 1px solid rgba(235, 240, 255, 0.07); }
+.row {
+  display: grid; grid-template-columns: 30px 1fr; grid-template-rows: auto auto; width: 100%;
+  text-align: left; background: none; border: 0; border-radius: 6px; padding: 7px 4px 7px 2px; transition: background 0.25s;
+}
+.row .n { grid-row: span 2; align-self: center; font-family: var(--title); font-size: 11px; letter-spacing: 0.06em; color: var(--ivory-3); }
+.row .nm { font-family: var(--title); font-size: 14px; font-weight: 400; letter-spacing: 0.06em; color: var(--ivory); line-height: 1.3; }
+.row .pl { font-size: 12px; font-weight: 300; color: var(--ivory-3); line-height: 1.3; letter-spacing: 0.01em; }
+.row .hi, #card-name .hi { font-family: var(--ui); font-weight: 400; font-size: 0.85em; color: var(--ivory-2); margin-left: 6px; letter-spacing: 0; }
+.row.visited .nm::after { content: ''; display: inline-block; width: 5px; height: 5px; margin: 0 0 2px 8px; border-radius: 50%; background: var(--gold); vertical-align: middle; }
+.row:hover, .row.sel, .row:focus-visible { background: linear-gradient(90deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)); }
+.row.sel .nm, .row.sel .n { color: #fff; }
+#list-toggle { display: none; }
+
+#foot {
+  position: fixed; left: max(var(--gut), 4vw); bottom: 22px; right: 300px; z-index: 5;
+  display: flex; gap: 24px; align-items: baseline; font-size: 11.5px; color: rgba(225, 230, 245, 0.38); letter-spacing: 0.02em;
+}
+.link { background: none; border: 0; padding: 3px 0; color: rgba(235, 240, 255, 0.65); font-size: 12.5px; letter-spacing: 0.06em; border-bottom: 1px solid rgba(235, 240, 255, 0.2); }
+.link:hover { color: #fff; }
+.credits { display: flex; gap: 16px; }
+#sound {
+  position: fixed; right: max(var(--gut), 36px); bottom: 18px; z-index: 10;
+  padding: 6px 14px; border-radius: 999px; font-size: 12px; letter-spacing: 0.08em; color: rgba(235, 240, 255, 0.75);
+  background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(235, 240, 255, 0.22);
+  transition: border-color 0.2s, color 0.2s;
+}
+#sound.on { color: #fff; border-color: rgba(235, 240, 255, 0.5); }
+#sound:hover { border-color: rgba(235, 240, 255, 0.6); }
+
+/* ---------- card ---------- */
+#card {
+  position: fixed; left: 0; top: 0; z-index: 6; width: 336px; overflow: hidden; border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(22px) saturate(1.1); -webkit-backdrop-filter: blur(22px) saturate(1.1);
+  border: 1px solid rgba(235, 240, 255, 0.2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 70px rgba(0, 0, 0, 0.6);
+  opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0s linear 0.35s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+#card.on { opacity: 1; visibility: visible; transition: opacity 0.35s ease, visibility 0s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+#card .img { aspect-ratio: 16 / 9; background: rgba(255, 255, 255, 0.04); overflow: hidden; margin: 10px 10px 0; border-radius: 8px; }
+#card img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transform: scale(1.04); filter: saturate(0.85) contrast(1.03); transition: opacity 0.5s, transform 1.6s ease; }
+#card img.loaded { opacity: 1; transform: none; }
+#card-close {
+  position: absolute; right: 18px; top: 18px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(235, 240, 255, 0.35);
+  background: rgba(5, 3, 12, 0.5); color: var(--ivory); font-size: 16px; line-height: 1;
+}
+#card .body { padding: 16px 22px 20px; position: relative; z-index: 2; }
+#card-num { margin: 0; font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(225, 230, 245, 0.6); }
+#card-name { margin: 8px 0 3px; font-family: var(--title); font-weight: 400; font-size: 23px; letter-spacing: 0.06em; line-height: 1.15; color: var(--ivory); }
+#card-place { margin: 0; font-size: 13px; color: var(--ivory-3); }
+#card-line { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid rgba(235, 240, 255, 0.12); font-size: 14.5px; font-weight: 300; line-height: 1.55; color: var(--ivory); }
+#card .foot { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#card-progress { font-size: 12px; letter-spacing: 0.02em; color: var(--ivory-3); display: flex; align-items: center; gap: 8px; }
+#card-progress::before { content: ''; width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ivory-3); }
+#card-progress.visited { color: var(--gold); }
+#card-progress.visited::before { background: var(--gold); border-color: var(--gold); }
+#card-enter {
+  border: 0; border-radius: 999px; padding: 10px 24px 9px; font-family: var(--title); font-weight: 500; font-size: 13px; letter-spacing: 0.24em;
+  color: #0b0b10; background: rgba(255, 255, 255, 0.92); transition: background 0.2s;
+}
+#card-enter:hover { background: #fff; }
+
+#veil { position: fixed; inset: 0; z-index: 20; background: #000; opacity: 0; pointer-events: none; transition: opacity 0.9s ease; }
+body.leaving #veil { opacity: 1; pointer-events: auto; }
+
+/* ---------- phones / narrow ---------- */
+@media (max-width: 899px) {
+  #rail { right: 12px; gap: 16px; }
+  #rail .step span { display: none; }
+  #chapter { bottom: 16vh; font-size: 21px; }
+  #thought { font-size: 14px; }
+  #thought .ts { font-size: 9.5px; margin-top: 5px; }
+  #list {
+    right: 0; left: 0; top: auto; bottom: 0; translate: 0 100%; width: auto; max-height: 72vh; overflow-y: auto; border-radius: 16px 16px 0 0;
+    padding: 22px var(--gut) 90px; background: rgba(12, 10, 20, 0.9); transition: opacity 1s, translate 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  body.list-open #list { translate: 0 0; }
+  #list-toggle {
+    display: block; position: fixed; left: var(--gut); bottom: 18px; z-index: 10; padding: 9px 18px 8px; border-radius: 999px;
+    font-family: var(--title); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(235, 240, 255, 0.85);
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(235, 240, 255, 0.22);
+  }
+  #foot { left: var(--gut); right: auto; bottom: 66px; flex-direction: column; gap: 4px; font-size: 11px; }
+  #sound { right: var(--gut); }
+  #skip { right: var(--gut); top: 14px; }
+  #scrollcue { right: 0; bottom: 110px; }
+  #card {
+    left: var(--gut); right: var(--gut); top: auto; bottom: 16px; width: auto; max-width: 480px; margin: 0 auto;
+    transform: translateY(16px) !important; z-index: 12;
+  }
+  #card.on { transform: none !important; }
+  #card .img { aspect-ratio: 2 / 1; }
+  #card-name { font-size: 21px; }
+  #card-line { font-size: 14px; margin-top: 10px; padding-top: 10px; }
+  /* phones: the points only; a tapped point names itself (and opens the card) */
+  .jl { visibility: hidden; }
+  .jl.sel { visibility: visible; }
+  .jl .nm { font-size: 11px; letter-spacing: 0.05em; }
+  .jl .jy { display: none; }
+  .pin { scale: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01s !important; transition-delay: 0s !important; animation: none !important; }
+}
+
+/* landscape phones: the opening lines sit clear of the "scroll to journey" cue */
+@media (max-height: 500px) and (orientation: landscape) {
+  #chapter { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  #hint { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  #hint::after { height: 16px; margin-top: 6px; }
+}
+
+/* the journey and the map run without words: no chapter lines, rail, scroll prompts or thoughts */
+#chapter, #rail, #scrollcue, #thought { display: none !important; }
+
+/* the hub's heading: "THE TWELVE JYOTIRLINGAS" in Cinzel capitals, widely spaced, in a gold gradient; the
+   Devanagari name beneath in Tiro Devanagari Hindi; top-left, in the empty sky west of Ladakh */
+#mark {
+  position: fixed; left: max(var(--gut), 4vw); top: max(var(--gut), 5vh); z-index: 4; margin: 0; pointer-events: none;
+  filter: drop-shadow(0 0 14px rgba(4, 3, 10, 0.9));
+  opacity: 0; transition: opacity 1.6s ease 0.6s;
+}
+/* shown from the start: over the Shiva linga as the journey opens, and on through to the map */
+body.journey.cosmos-ready #mark, body.hub #mark { opacity: 1; }
+#mark p { margin: 0; }
+#mark .en {
+  font-family: 'Cinzel', serif; font-weight: 500; text-transform: uppercase;
+  font-size: clamp(20px, 2vw, 30px); letter-spacing: 0.3em; line-height: 1.3;
+  background: linear-gradient(180deg, #fff1c8 0%, #f0d49a 45%, #c9993f 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+#mark .hi { margin-top: 0.35em; font-family: 'Tiro Devanagari Hindi', serif; font-size: clamp(16px, 1.35vw, 20px); letter-spacing: 0.06em; color: rgba(240, 212, 154, 0.7); }
+@media (max-width: 899px) {
+  #mark { left: 0; right: 0; text-align: center; top: calc(max(var(--gut), env(safe-area-inset-top, 0px)) + 6px); }
+  /* during the journey the Skip button holds the top-right corner: the heading sits just below it */
+  body.journey #mark { top: calc(max(var(--gut), env(safe-area-inset-top, 0px)) + 46px); }
+  #mark .en { font-size: clamp(14px, 4.3vw, 20px); letter-spacing: 0.22em; }
+  #mark .hi { font-size: 15px; }
+}
+
+/* temples not open yet: no card, no entering — hovering (or tapping) says they are coming this week */
+.jl.soon, .pin.soon, .row.soon { cursor: default; }
+.jl .sn { display: block; max-height: 0; overflow: hidden; opacity: 0; font-family: var(--title); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); transition: opacity 0.25s, max-height 0.25s; }
+.jl.tip .sn { max-height: 2em; opacity: 1; margin-top: 3px; }
+.jl.tip { color: #fff; visibility: visible !important; }
+.row.soon .nm, .row.soon .n, .row.soon .where { opacity: 0.55; }
+.row.soon .sn { display: none; font-family: var(--title); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.row.soon:hover .where, .row.soon.tip .where, .row.soon:focus-visible .where { display: none; }
+.row.soon:hover .sn, .row.soon.tip .sn, .row.soon:focus-visible .sn { display: inline; }
+
+/* About · Contribute · GitHub: top-right, in gold, on the India map only */
+#more {
+  position: fixed; right: max(var(--gut), 28px); top: max(var(--gut), 24px); z-index: 6; display: flex; gap: 22px;
+  opacity: 0; pointer-events: none; transition: opacity 1.2s ease 0.4s;
+}
+body.hub #more { opacity: 1; pointer-events: auto; }
+#more .link {
+  font-family: var(--title); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  color: var(--gold); border-bottom-color: rgba(240, 212, 154, 0.3); text-shadow: 0 0 12px rgba(4, 3, 10, 0.9);
+}
+#more .link:hover { color: #fff3d6; border-bottom-color: rgba(255, 243, 214, 0.7); }
+/* their panel */
+#info {
+  width: min(520px, calc(100vw - 2 * var(--gut))); max-height: min(78vh, 640px); overflow-y: auto; padding: 30px 30px 26px; border-radius: 16px;
+  color: var(--ivory); background: linear-gradient(160deg, rgba(40, 32, 66, 0.92), rgba(16, 12, 28, 0.94));
+  border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 30px 80px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+#info::backdrop { background: rgba(5, 3, 12, 0.55); backdrop-filter: blur(3px); }
+#info h2 { margin: 0 0 16px; font-family: var(--title); font-weight: 500; font-size: 17px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+#info p, #info dd { margin: 0 0 12px; font-size: 15px; font-weight: 300; line-height: 1.6; color: var(--ivory-2); }
+#info dl { margin: 16px 0 6px; }
+#info dt { font-family: var(--title); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ivory); margin-top: 12px; }
+#info dd { margin: 4px 0 0; }
+#info .cta { margin: 20px 0 0; }
+#info .cta a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(240, 212, 154, 0.35); letter-spacing: 0.04em; }
+#info .cta a:hover { color: #fff; }
+#info .x { position: absolute; top: 10px; right: 14px; background: none; border: 0; font-size: 26px; line-height: 1; color: var(--ivory-3); cursor: pointer; }
+#info .x:hover { color: #fff; }
+@media (max-width: 899px) {
+  #more { right: var(--gut); top: calc(max(var(--gut), env(safe-area-inset-top, 0px))); gap: 16px; }
+  #more .link { font-size: 10.5px; letter-spacing: 0.14em; }
+  /* on the map the links take the top row; the centred heading sits just below them */
+  body.hub #mark { top: calc(max(var(--gut), env(safe-area-inset-top, 0px)) + 34px); }
+  #info { padding: 26px 20px 22px; }
+  #info p, #info dd { font-size: 14px; }
+}
+
+/* the About section: rises over the India map when the About link is clicked; ×, Esc or scrolling up lowers it */
+#about {
+  position: fixed; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; padding: 70px var(--gut) 40px;
+  transform: translateY(100%); pointer-events: none; overflow-y: auto;
+  background: linear-gradient(180deg, rgba(10, 7, 22, 0) 0%, rgba(10, 7, 22, 0.86) 14%, rgba(10, 7, 22, 0.95) 100%);
+}
+body.hub #about { pointer-events: auto; }
+body:not(.hub) #about { visibility: hidden; }
+#about .x { position: absolute; top: 64px; right: max(var(--gut), 28px); background: none; border: 0; font-size: 30px; line-height: 1; color: var(--gold); cursor: pointer; opacity: 0.8; }
+#about .x:hover { opacity: 1; }
+#about .in { max-width: 640px; text-align: center; }
+#about h2 { margin: 0; font-family: var(--title); font-weight: 500; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: 0.26em; text-transform: uppercase;
+  background: linear-gradient(180deg, #fff1c8 0%, #f0d49a 45%, #c9993f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+#about h2 { margin-bottom: 26px; }
+#about .paras p { margin: 0 0 16px; font-size: clamp(15px, 1.15vw, 17px); font-weight: 300; line-height: 1.75; color: var(--ivory-2); }
+#about .om { margin: 26px 0 18px; font-family: 'Tiro Devanagari Hindi', serif; font-size: 22px; color: var(--gold); }
+#about .help { margin: 0; font-size: 13px; color: var(--ivory-3); }
+#about .help .link { font-family: var(--title); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom-color: rgba(240, 212, 154, 0.3); }
+#about .help span { margin: 0 10px; }
+/* while About is up, the map's own furniture steps back */
+body.about-open #mark, body.about-open #list, body.about-open #medals, body.about-open #card, body.about-open #list-toggle { opacity: 0 !important; pointer-events: none !important; }
+@media (max-width: 899px) {
+  #about { align-items: flex-start; padding-top: 64px; }
+  #about .paras p { font-size: 14px; line-height: 1.65; margin-bottom: 12px; }
+  #about h2 { margin-bottom: 18px; }
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0714" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Mahakaleshwar Jyotirlinga</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Mukta:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Martel:wght@400;600;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- a plain dark screen until the temple is ready: no unstyled text or old globe pin flashing while it loads -->
+    <style>
+      html, body { margin: 0; background: #0b0714; }
+      body:not([data-ready]) > *:not(#stage) { visibility: hidden !important; }
+      #pin { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <div id="globe"></div>
+    <canvas id="stage"></canvas>
+
+    <!-- cinematic layers -->
+    <div id="bars"><i class="top"></i><i class="bottom"></i></div>
+    <div id="flash"></div>
+    <div id="caption"><span class="hi"></span><span class="en"></span><span class="sub"></span></div>
+    <button id="pin" aria-label="Enter Mahakaleshwar temple">
+      <span class="flame"></span>
+      <span class="label">महाकाल</span>
+      <span class="enter">Click to enter · प्रवेश करें</span>
+    </button>
+
+    <!-- walking -->
+    <div id="walk">
+      <p class="hi">श्री महाकालेश्वर</p>
+      <p class="en">Click to walk in</p>
+      <p class="keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk · <kbd>←</kbd><kbd>→</kbd> turn · drag to look · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump · <kbd>N</kbd> story · <kbd>C</kbd> captions · <kbd>[</kbd><kbd>]</kbd> story speed · <kbd>T</kbd> places · <kbd>G</kbd> guide · <kbd>P</kbd> your yatra · <kbd>Esc</kbd> pause</p>
+      <button id="back" class="ghost">← Back to the sky</button>
+    </div>
+    <div id="hud"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk · <kbd>←</kbd><kbd>→</kbd> turn · drag to look · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump · <kbd>N</kbd> story · <kbd>C</kbd> captions · <kbd>[</kbd><kbd>]</kbd> story speed · <kbd>T</kbd> places · <kbd>G</kbd> guide · <kbd>P</kbd> yatra · <kbd>Esc</kbd> pause</div>
+
+    <!-- chrome -->
+    <header id="chrome">
+      <div class="brand">महाकालेश्वर <span>Mahakaleshwar</span></div>
+      <div class="actions">
+        <button id="replay" class="ghost">↺ Replay</button>
+        <button id="skip" class="ghost">Skip ›</button>
+      </div>
+    </header>
+
+    <!-- intro -->
+    <section id="intro" class="gone" hidden>
+      <div class="diya" aria-hidden="true"><span class="glow"></span><span class="fire"></span><span class="bowl"></span></div>
+      <h1><span class="hi"></span><span class="en"></span></h1>
+      <p class="sub">From the edge of space to the doorstep of <em>Mahākāl</em>, Ujjain</p>
+      <button id="begin" class="gold">Begin the yatra</button>
+      <p class="hint">Sound on · best on a big screen</p>
+    </section>
+
+
+    <!-- the towns round the temples are built from OpenStreetMap data (ODbL) -->
+    <details id="osm-credit">
+      <summary aria-label="Map data credit" title="Map data credit">i</summary>
+      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map data © OpenStreetMap contributors</a>
+    </details>
+
+    <script type="module" src="/src/temples/main.ts"></script>
+  </body>
+</html>

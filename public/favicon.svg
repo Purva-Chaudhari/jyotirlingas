@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff1c8"/>
+      <stop offset="0.45" stop-color="#f0d49a"/>
+      <stop offset="1" stop-color="#c9993f"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#160d28"/>
+  <g fill="url(#gold)">
+    <!-- the middle prong: a spearhead -->
+    <path d="M32 4 L37 17 L34 21 L34 26 L30 26 L30 21 L27 17 Z"/>
+    <!-- the two side prongs, curving out and up from the crossbar -->
+    <path d="M30 34 C21 34 14.5 28 14.5 19 C14.5 15 16 11.5 18 9 C18.2 13.5 19.4 17.5 21.5 20.5 C23.6 23.6 26.6 26 30 26.6 Z"/>
+    <path d="M34 34 C43 34 49.5 28 49.5 19 C49.5 15 48 11.5 46 9 C45.8 13.5 44.6 17.5 42.5 20.5 C40.4 23.6 37.4 26 34 26.6 Z"/>
+    <!-- the shaft, with a band below the crossbar -->
+    <rect x="30" y="24" width="4" height="36" rx="1.5"/>
+    <rect x="26.5" y="38" width="11" height="3.2" rx="1.6"/>
+  </g>
+</svg>

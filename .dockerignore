@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.venv
+.env.local
+.env
+public/assets
+public/cesium
+public/scenes
+docs
+*.log
+
+# a third-party track used for local preview only — never deploy it without a licence
+public/audio/landing/theme.*

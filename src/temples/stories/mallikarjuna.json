@@ -1,0 +1,167 @@
+{
+  "id": "mallikarjuna",
+  "name": { "en": "Mallikarjuna", "hi": "मल्लिकार्जुन" },
+  "stops": [
+    {
+      "id": "srisailam-gopuram",
+      "at": { "zone": "gopuram", "feature": "gopuram" },
+      "kind": "history",
+      "title": { "en": "Up Into the Holy Hills", "hi": "पवित्र पहाड़ियों की ओर" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me into Srisailam. We have climbed high into the Nallamala hills, thick with forest, with the river Krishna winding far below. The Puranas call this place Bhukailasa, Kailasa on earth, and the temple trust says honestly that no record survives of how it all began. Above you rises the great eastern gopuram, one of four gateways in the temple’s tall stone walls. Kings and queens have climbed these hills before you. More than six hundred years ago, Vittalamba, a queen of the Vijayanagara empire, had a long flight of stone steps built down to the river at Patalaganga. Her husband, King Harihara the Second, gave the pillared hall that stands before the sanctum; we will rest there later. And in 1677 the great Maratha king, Chhatrapati Shivaji Maharaj, came here as a pilgrim; the northern gateway is remembered as his gift. But what drew kings and queens, and countless ordinary families, up into these forests? The answer is carved on the walls ahead. Walk with me.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ श्रीशैलम् में चलिए। हम नल्लमला की घने जंगलों वाली पहाड़ियों में ऊपर चढ़ आए हैं, और बहुत नीचे कृष्णा नदी बल खाती बह रही है। पुराण इस स्थान को भूकैलास कहते हैं, यानी धरती पर कैलास, और मंदिर ट्रस्ट सच्चाई से कहता है कि यहाँ की शुरुआत का कोई अभिलेख शेष नहीं है। आपके ऊपर विशाल पूर्वी गोपुरम उठा है, मंदिर की ऊँची पत्थर की दीवारों के चार द्वारों में से एक। आपसे पहले भी राजा और रानियाँ इन पहाड़ियों पर चढ़कर आए हैं। छह सौ से अधिक वर्ष पहले विजयनगर साम्राज्य की रानी विट्ठलांबा ने पातालगंगा में नदी तक उतरती पत्थर की लंबी सीढ़ियाँ बनवाईं। उनके पति, राजा हरिहर द्वितीय ने गर्भगृह के सामने का स्तंभों वाला मंडप अर्पित किया; आगे हम वहाँ ठहरेंगे। और सन सोलह सौ सतहत्तर में महान मराठा राजा छत्रपति शिवाजी महाराज एक तीर्थयात्री बनकर यहाँ आए; उत्तरी द्वार को उन्हीं की देन के रूप में याद किया जाता है। पर राजाओं, रानियों और अनगिनत साधारण परिवारों को इन जंगलों में ऊपर तक क्या खींच लाया? इसका उत्तर आगे की दीवारों पर उकेरा हुआ है। मेरे साथ चलिए।"
+      },
+      "didYouKnow": {
+        "en": "The temple’s outer wall encloses an area of about 183 by 152 metres and stands about 8.5 metres high.",
+        "hi": "मंदिर की बाहरी दीवार लगभग 183 गुणा 152 मीटर के क्षेत्र को घेरती है और लगभग 8.5 मीटर ऊँची है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam",
+        "https://www.srisailadevasthanam.org/",
+        "https://hindutemples-india.blogspot.com/2018/10/mallikarjuna-temple-srisailam-history.html"
+      ]
+    },
+    {
+      "id": "srisailam-chandravati",
+      "at": { "zone": "prakara", "feature": "prakara" },
+      "kind": "legend",
+      "title": { "en": "The Princess and the Jasmine", "hi": "राजकुमारी और चमेली" },
+      "text": {
+        "en": "Walk slowly along these high walls. See the carvings: elephants, horsemen, hunters, scenes from Shiva’s stories. Let me tell you a story the temple itself loves to tell, from the Srisaila Khanda of the Skanda Purana. Long ago, across the river Krishna, there ruled a king named Chandragupta, and he had a daughter, Chandravati. From childhood her heart belonged to Shiva. In a valley nearby, a waterfall tumbled down carrying countless white jasmine flowers, so many that the pool below looked covered in snow. There she worshipped a linga, and the place came to be called Mallika Theertham, the jasmine pool. With her parents’ blessing she came here to Srisailam to worship. The Chenchu people of these forests loved her like a daughter; they built her a little hut and brought her honey and fruit. Pleased by her devotion, Shiva offered her a boon. She asked for only one thing: that he should always wear the jasmine garland she made for him. And so, the story says, he became Mallikarjuna, the lord adorned with mallika, the jasmine. But there is another story behind that name, a story of a mother, a father and a son. Come into the court.",
+        "hi": "इन ऊँची दीवारों के साथ धीरे-धीरे चलिए। इन पर उकेरे चित्र देखिए: हाथी, घुड़सवार, शिकारी, और शिव की कथाओं के दृश्य। अब एक कथा सुनिए, जो यह मंदिर स्वयं बड़े प्रेम से सुनाता है, स्कंद पुराण के श्रीशैल खंड से। बहुत पहले, कृष्णा नदी के उस पार, चंद्रगुप्त नाम के एक राजा राज करते थे, और उनकी एक बेटी थी, चंद्रावती। बचपन से ही उसका मन शिव में रमा था। पास की एक घाटी में एक झरना अनगिनत सफ़ेद चमेली के फूल बहा लाता था, इतने कि नीचे का कुंड बर्फ़ से ढका-सा लगता था। वहीं वह एक शिवलिंग की पूजा करती थी, और वह स्थान मल्लिका तीर्थम कहलाया, यानी चमेली का कुंड। माता-पिता के आशीर्वाद से वह पूजा करने यहाँ श्रीशैलम् आई। इन जंगलों के चेंचू लोगों ने उसे बेटी की तरह अपनाया; उसके लिए छोटी-सी कुटिया बनाई और उसे शहद और फल लाकर दिए। उसकी भक्ति से प्रसन्न होकर शिव ने उससे वर माँगने को कहा। उसने बस एक ही बात माँगी: कि प्रभु सदा उसकी बनाई चमेली की माला पहनें। और इसी तरह, कथा कहती है, वे मल्लिकार्जुन कहलाए, मल्लिका यानी चमेली से सजे प्रभु। पर इस नाम के पीछे एक और कथा भी है, एक माँ, एक पिता और एक बेटे की। आँगन में चलिए।"
+      },
+      "didYouKnow": {
+        "en": "Mallika Theertham, the jasmine pool of the story, is a real waterfall-fed pool about 54 km from Srisailam.",
+        "hi": "कथा का चमेली वाला कुंड, मल्लिका तीर्थम, एक वास्तविक झरने से भरने वाला कुंड है, जो श्रीशैलम् से लगभग 54 किलोमीटर दूर है।"
+      },
+      "sources": [
+        "https://www.srisailadevasthanam.org/",
+        "https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam"
+      ]
+    },
+    {
+      "id": "srisailam-kartikeya",
+      "at": { "zone": "court", "feature": "court" },
+      "kind": "legend",
+      "title": { "en": "The Son Who Went Away", "hi": "जो बेटा दूर चला गया" },
+      "text": {
+        "en": "Here in the court, hear Srisailam’s best-loved legend, from the Shiva Purana. Shiva and Parvati had two sons, Ganesha and Kartikeya. When the time came for them to marry, the parents set a contest: whoever went around the whole earth first would be married first. Kartikeya set off at once. Ganesha stayed. He walked seven times around his mother and father and bowed to them, for to him they were the whole world. So Ganesha was married first. When Kartikeya returned, the sage Narada told him what had happened. He was deeply hurt. He left home and went away to the Krauncha mountain to live alone. Parvati grieved. Shiva sent sages to bring their son back, but he would not come. So the parents went themselves, and still he moved further away. What can parents do when a child will not come home? They stay close. The Purana says Shiva visits him on the new-moon day, and Parvati on the full moon. The linga that arose here became famous in all three worlds as Mallikarjuna; many explain the name as Mallika for Parvati and Arjuna for Shiva. And the Mother has her own shrine here. Let us go to the western terrace to meet her.",
+        "hi": "इस आँगन में सुनिए श्रीशैलम् की सबसे प्यारी कथा, शिव पुराण से। शिव और पार्वती के दो पुत्र थे, गणेश और कार्तिकेय। जब दोनों के विवाह का समय आया, तो माता-पिता ने एक होड़ रखी: जो पहले पूरी पृथ्वी की परिक्रमा करके लौटेगा, उसका विवाह पहले होगा। कार्तिकेय उसी क्षण निकल पड़े। गणेश वहीं रहे। उन्होंने अपने माता-पिता की सात बार परिक्रमा की और उन्हें प्रणाम किया, क्योंकि उनके लिए माता-पिता ही पूरा संसार थे। और इस तरह गणेश का विवाह पहले हुआ। जब कार्तिकेय लौटे, तो नारद मुनि ने उन्हें सारी बात बताई। उनका मन बहुत आहत हुआ। वे घर छोड़कर अकेले रहने क्रौंच पर्वत चले गए। पार्वती दुख में डूब गईं। शिव ने बेटे को लौटा लाने के लिए ऋषियों को भेजा, पर वे नहीं लौटे। तब माता-पिता स्वयं गए, और वे और भी दूर चले गए। जब बेटा घर न लौटे, तो माता-पिता क्या करें? वे उसके पास ही रह जाते हैं। पुराण कहता है कि अमावस्या को शिव उनसे मिलने आते हैं, और पूर्णिमा को पार्वती। यहाँ प्रकट हुआ लिंग तीनों लोकों में मल्लिकार्जुन के नाम से प्रसिद्ध हुआ; बहुत से लोग इस नाम का अर्थ बताते हैं, मल्लिका यानी पार्वती और अर्जुन यानी शिव। और माँ का भी यहाँ अपना मंदिर है। चलिए, पश्चिमी चबूतरे पर उनसे मिलें।"
+      },
+      "didYouKnow": {
+        "en": "The Shiva Purana adds that Ganesha’s two sons were Kshema and Labha, ‘well-being’ and ‘gain’.",
+        "hi": "शिव पुराण आगे बताता है कि गणेश के दो पुत्र थे, क्षेम और लाभ, अर्थात ‘कल्याण’ और ‘लाभ’।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226516.html",
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226140.html",
+        "https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam"
+      ]
+    },
+    {
+      "id": "srisailam-bhramaramba",
+      "at": { "zone": "bhramaramba", "feature": "bhramaramba" },
+      "kind": "legend",
+      "title": { "en": "Mother of the Bees", "hi": "भ्रमरों की माँ" },
+      "text": {
+        "en": "On this western terrace sits the Goddess, Sri Bhramaramba Devi. Here at Srisailam, a Jyotirlinga of Shiva and a Shakti Peetha of the Goddess stand inside the same walls, a rare meeting. Tradition counts this among the eighteen great Shakti Peethas, the holy places where, the old stories say, parts of the body of Sati, Shiva’s first wife, fell to earth; here, it is said, it was her neck. Her name, Bhramaramba, means ‘Mother of the bees’, and the Devi Bhagavata Purana tells why. There was once a demon named Arunasura, who won a clever boon: no creature with two legs or four could ever kill him. He thought himself safe. But the Goddess took the form of Bhramari, and from her poured a vast, humming swarm of bees, creatures with six legs. They fell upon the demon and destroyed him, and then flew back to her. In her temple is a Sri Chakra which, the trust says, was set up by Adi Shankaracharya. Stand still for a moment. Devotees say that if you listen closely, you can hear a faint humming of bees. Now turn back east. Nandi sits waiting before the Lord’s shrine.",
+        "hi": "इस पश्चिमी चबूतरे पर विराजती हैं देवी, श्री भ्रमरांबा। यहाँ श्रीशैलम् में शिव का ज्योतिर्लिंग और देवी का शक्तिपीठ एक ही दीवारों के भीतर हैं, एक दुर्लभ संगम। परंपरा इसे अठारह महाशक्तिपीठों में गिनती है, वे पवित्र स्थान जहाँ, पुरानी कथाएँ कहती हैं, शिव की पहली पत्नी सती के शरीर के अंग धरती पर गिरे थे; कहा जाता है कि यहाँ उनकी ग्रीवा गिरी थी। भ्रमरांबा का अर्थ है ‘भ्रमरों की माँ’, और देवी भागवत पुराण बताता है क्यों। एक समय अरुणासुर नाम का एक दैत्य था, जिसने एक चतुर वरदान पाया था: दो पैरों या चार पैरों वाला कोई भी प्राणी उसे कभी मार नहीं सकेगा। वह स्वयं को सुरक्षित समझता था। पर देवी ने भ्रामरी का रूप धारण किया, और उनसे गुंजन करते भ्रमरों का एक विशाल झुंड निकला, छह पैरों वाले जीव। वे दैत्य पर टूट पड़े और उसका अंत कर दिया, और फिर उड़कर देवी के पास लौट आए। उनके मंदिर में एक श्रीचक्र है, जिसे ट्रस्ट के अनुसार आदि शंकराचार्य ने स्थापित किया था। एक पल शांत खड़े रहिए। भक्त कहते हैं कि ध्यान से सुनें, तो भ्रमरों की हल्की गुंजन सुनाई देती है। अब पूर्व की ओर लौटिए। प्रभु के मंदिर के सामने नंदी प्रतीक्षा कर रहे हैं।"
+      },
+      "didYouKnow": {
+        "en": "Every Ugadi, devotees from Karnataka walk hundreds of kilometres through the Nallamala forest to bring a sari to Bhramaramba, whom they honour as their own daughter.",
+        "hi": "हर उगादि पर कर्नाटक के भक्त नल्लमला के वन से होकर सैकड़ों किलोमीटर पैदल चलकर भ्रमरांबा के लिए साड़ी लाते हैं, जिन्हें वे अपनी बेटी मानते हैं।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bhramari",
+        "https://www.srisailadevasthanam.org/",
+        "https://www.deccanchronicle.com/southern-states/andhra-pradesh/srisailam-sees-massive-kannada-padayatra-for-ugadi-1869579"
+      ]
+    },
+    {
+      "id": "srisailam-nandi",
+      "at": { "zone": "nandi", "feature": "nandi" },
+      "kind": "ritual",
+      "title": { "en": "Nandi and the Temple’s Day", "hi": "नंदी और मंदिर का दिन" },
+      "text": {
+        "en": "Here sits Nandi, Shiva’s bull, his eyes fixed always on his Lord. The people of Srisailam call him, with affection, Sanagala Basavanna. Stand beside him a while and imagine the temple’s day, for he has watched it unfold countless times. Long before dawn, at about half past three, the Suprabhatam is sung to wake the Lord and the Goddess. At about half past four comes the Maha Mangala Harathi, the great offering of lamps. Lamps of nine different kinds are waved, among them the Nandi, the Naga, the Nakshatra and the Kumbha harathis, until only a single flame remains, the Eka Harathi. In the evening, at the Pradosha hour, the lamps are lit again, and at night the Ekantha Seva lays the deities to rest. Srisailam also keeps something rare among the Jyotirlingas: sparsha darshan, when devotees, at set times and in traditional dress, men in pancha and kanduva and women in saris, may touch the Jyotirlinga itself. Now follow Nandi’s gaze. It leads into the pillared hall ahead, where so many devotees have walked before you.",
+        "hi": "यहाँ विराजे हैं नंदी, शिव के वाहन, जिनकी दृष्टि सदा अपने प्रभु पर टिकी रहती है। श्रीशैलम् के लोग उन्हें प्यार से सनगला बसवन्ना कहते हैं। थोड़ी देर उनके पास खड़े होकर मंदिर के दिन की कल्पना कीजिए, क्योंकि उन्होंने इसे अनगिनत बार देखा है। भोर से बहुत पहले, लगभग साढ़े तीन बजे, सुप्रभातम गाकर प्रभु और देवी को जगाया जाता है। लगभग साढ़े चार बजे महा मंगल हारती होती है, दीपों की महान आरती। नौ प्रकार के दीप घुमाए जाते हैं, जिनमें नंदी, नाग, नक्षत्र और कुंभ हारती भी हैं, जब तक अंत में केवल एक ज्योति न रह जाए, एक हारती। शाम को, प्रदोष काल में, दीप फिर जलते हैं, और रात को एकांत सेवा में देवताओं को विश्राम कराया जाता है। श्रीशैलम् में ज्योतिर्लिंगों के बीच एक दुर्लभ परंपरा भी है: स्पर्श दर्शन, जब भक्त निर्धारित समय पर, पारंपरिक वस्त्रों में, पुरुष पंचा और कंडुवा और महिलाएँ साड़ी पहनकर, स्वयं ज्योतिर्लिंग को छू सकते हैं। अब नंदी की दृष्टि के पीछे चलिए। वह आगे स्तंभों वाले मंडप तक जाती है, जहाँ आपसे पहले अनगिनत भक्त चले हैं।"
+      },
+      "didYouKnow": {
+        "en": "On the busiest days, such as Sundays and Mondays in the month of Kartika, the temple has paused sparsha darshan so that the long queues keep moving.",
+        "hi": "सबसे भीड़ वाले दिनों में, जैसे कार्तिक मास के रविवार और सोमवार, मंदिर ने स्पर्श दर्शन रोका है ताकि लंबी कतारें चलती रहें।"
+      },
+      "sources": [
+        "https://www.srisailadevasthanam.org/",
+        "https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam"
+      ]
+    },
+    {
+      "id": "srisailam-mandapa",
+      "at": { "zone": "mandapa", "feature": "mandapa" },
+      "kind": "history",
+      "title": { "en": "Footsteps Among the Pillars", "hi": "स्तंभों के बीच पदचिह्न" },
+      "text": {
+        "en": "You are now in the mukha mandapa, the pillared hall given in 1405 by King Harihara the Second, husband of the queen Vittalamba whose steps you heard about at the gate. Rest a hand on one of these pillars, and think of who else has passed this way. Adi Shankaracharya, the great teacher, is said to have stayed at Srisailam and composed his Shivanandalahari here, a garland of verses in praise of Shiva. In the twelfth century came the poet-saint Akka Mahadevi. She called Shiva Chennamallikarjuna, ‘the lord white as jasmine’, and by tradition she did penance in the caves of these hills; the temple keeps her image still. Ascetics of many Shaiva orders made their homes in the mathas here, and later the Vijayanagara emperor Krishnadevaraya is credited with the long pillared halls in front of the temple. Kings and poets, wandering sadhus and ordinary families: all of them walked toward the same small doorway that lies just ahead of you. Now it is your turn. Step forward to the sanctum.",
+        "hi": "अब आप मुख मंडप में हैं, स्तंभों वाला यह मंडप सन चौदह सौ पाँच में राजा हरिहर द्वितीय ने अर्पित किया था, उन्हीं रानी विट्ठलांबा के पति, जिनकी बनवाई सीढ़ियों की बात आपने द्वार पर सुनी। किसी एक स्तंभ पर हाथ रखिए, और सोचिए कि आपसे पहले यहाँ से कौन-कौन गुज़रा। कहा जाता है कि महान आचार्य आदि शंकराचार्य श्रीशैलम् में रहे और यहीं उन्होंने शिवानंदलहरी रची, शिव की स्तुति में श्लोकों की एक माला। बारहवीं सदी में कवयित्री संत अक्क महादेवी यहाँ आईं। वे शिव को चेन्नमल्लिकार्जुन कहती थीं, ‘चमेली-से उजले प्रभु’, और परंपरा के अनुसार उन्होंने इन पहाड़ियों की गुफाओं में तपस्या की; मंदिर में आज भी उनकी प्रतिमा है। अनेक शैव परंपराओं के साधुओं ने यहाँ के मठों में अपना घर बसाया, और आगे चलकर विजयनगर सम्राट कृष्णदेवराय को मंदिर के सामने के लंबे स्तंभयुक्त मंडपों का श्रेय दिया जाता है। राजा और कवि, घुमक्कड़ साधु और साधारण परिवार: सब उसी छोटे-से द्वार की ओर चले, जो अब आपके ठीक सामने है। अब आपकी बारी है। गर्भगृह की ओर बढ़िए।"
+      },
+      "didYouKnow": {
+        "en": "Verse 50 of the Shivanandalahari ends: ‘seve Shrigiri-Mallikarjuna-mahalingam’, ‘I worship the great linga of Mallikarjuna on Sri Giri’.",
+        "hi": "शिवानंदलहरी का पचासवाँ श्लोक इन शब्दों पर समाप्त होता है: ‘सेवे श्रीगिरिमल्लिकार्जुनमहालिङ्गं’, अर्थात ‘मैं श्रीगिरि पर मल्लिकार्जुन के महालिंग की सेवा करता हूँ’।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Shivananda_Lahari",
+        "https://www.srisailadevasthanam.org/",
+        "https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam"
+      ]
+    },
+    {
+      "id": "srisailam-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Mallikarjuna", "hi": "श्री मल्लिकार्जुन के दर्शन" },
+      "text": {
+        "en": "And now you stand before Shri Mallikarjuna. Remember the parents who would not leave their son, the princess with her jasmine, the Mother of the bees. Here, tradition says, Shiva and Parvati dwell side by side, as Mallikarjuna and Bhramaramba, out of love for their son and for all who come to them. Fold your hands. The second verse of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya, sings of this place: ‘Shrishailashringe vibudhatisange tuladritunge’pi muda vasantam, tam Arjunam Mallikapurvam ekam namami samsarasamudrasetum.’ ‘On the peak of Srishaila, where the gods gather, on that lofty mountain he dwells in joy: to that One, Arjuna with Mallika before his name, I bow, the bridge across the ocean of worldly life.’ Srisailam is the second Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. The lamps are being lit, one form after another, until a single flame remains. Let the Maha Mangala Harathi begin. Om Namah Shivaya.",
+        "hi": "और अब आप श्री मल्लिकार्जुन के सम्मुख खड़े हैं। याद कीजिए, वे माता-पिता जो अपने बेटे को छोड़ न सके, चमेली वाली राजकुमारी, और भ्रमरों की माँ। परंपरा कहती है कि यहाँ शिव और पार्वती, अपने बेटे और अपने पास आने वाले हर भक्त के प्रेम में, मल्लिकार्जुन और भ्रमरांबा बनकर साथ-साथ निवास करते हैं। हाथ जोड़िए। आदि शंकराचार्य को परंपरा से समर्पित द्वादश ज्योतिर्लिंग स्तोत्र का दूसरा श्लोक इस स्थान का गान करता है: ‘श्रीशैलशृङ्गे विबुधातिसङ्गे तुलाद्रितुङ्गेऽपि मुदा वसन्तम्। तमर्जुनं मल्लिकपूर्वमेकं नमामि संसारसमुद्रसेतुम्॥’ ‘श्रीशैल के शिखर पर, जहाँ देवता एकत्र होते हैं, उस ऊँचे पर्वत पर जो आनंद से निवास करते हैं: उन एक, मल्लिका-पूर्व अर्जुन को, संसार-सागर के सेतु को, मैं नमन करता हूँ।’ श्रीशैलम स्तोत्र का दूसरा ज्योतिर्लिंग है। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। दीप जलाए जा रहे हैं, एक रूप के बाद दूसरा, जब तक केवल एक ज्योति न रह जाए। महा मंगल हारती आरंभ हो। ॐ नमः शिवाय।"
+      },
+      "didYouKnow": {
+        "en": "Srisailam’s full temple name honours both: Sri Bhramaramba Mallikarjuna Swamy Varla Devasthanam.",
+        "hi": "श्रीशैलम् मंदिर का पूरा नाम दोनों का सम्मान करता है: श्री भ्रमरांबा मल्लिकार्जुन स्वामी वारला देवस्थानम्।"
+      },
+      "sources": [
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://www.srisailadevasthanam.org/"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Maha Mangala Harathi", "hi": "महा मंगल हारती" },
+    "schedule": [
+      { "name": { "en": "Maha Mangala Harathi", "hi": "महा मंगल हारती" }, "time": "4:30 AM" },
+      { "name": { "en": "Pradoshakala Maha Mangala Harathi", "hi": "प्रदोषकाल महा मंगल हारती" }, "time": "5:30 PM" },
+      { "name": { "en": "Ekantha Seva", "hi": "एकांत सेवा" }, "time": "night (9:30 / 10:30 PM per trust pages)" },
+      { "name": { "en": "Suprabhatam", "hi": "सुप्रभातम्" }, "time": "3:30 AM" },
+      { "name": { "en": "Panchamrutha Abhishekam", "hi": "पंचामृत अभिषेकम्" }, "time": "5:00 AM and 6:00 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Shrishailashringe vibudhatisange\ntuladritunge’pi muda vasantam\ntam Arjunam Mallikapurvam ekam\nnamami samsarasamudrasetum\n\nSandhyarambhavijrimbhitam shrutishirahsthanantaradhishthitam\nsapremabhramarabhiramam asakrit sadvasanashobhitam\nbhogindrabharanam samastasumanahpujyam gunavishkritam\nseve Shrigiri-Mallikarjuna-mahalingam Shivalingitam\n\n(Dwadasha Jyotirlinga Stotram, verse 2; Shivanandalahari, verse 50: ‘…I worship the great linga of Mallikarjuna on Sri Giri, embraced by Shivā, the Goddess.’)",
+        "hi": "श्रीशैलशृङ्गे विबुधातिसङ्गे तुलाद्रितुङ्गेऽपि मुदा वसन्तम्।\nतमर्जुनं मल्लिकपूर्वमेकं नमामि संसारसमुद्रसेतुम्॥\n\nसन्ध्यारम्भविजृम्भितं श्रुतिशिरःस्थानान्तराधिष्ठितं\nसप्रेमभ्रमराभिराममसकृत्सद्वासनाशोभितम्।\nभोगीन्द्राभरणं समस्तसुमनःपूज्यं गुणाविष्कृतं\nसेवे श्रीगिरिमल्लिकार्जुनमहालिङ्गं शिवालिङ्गितम्॥"
+      },
+      "source": "Dwadasha Jyotirlinga Stotram, verse 2, and Shivanandalahari, verse 50 (both traditionally attributed to Adi Shankaracharya). Not documented as the exact text recited at Srisailam’s harathi, which the trust describes as Vedic chanting with nine kinds of lamps.",
+      "license": "Public domain (traditional Sanskrit text)"
+    },
+    "audio": [
+      {
+        "url": "https://www.srisailadevasthanam.org/",
+        "license": "All rights reserved (Srisaila Devasthanam; site terms say content may not be reused without express written permission) - needs permission",
+        "notes": "The trust streams pujas and homams live via ‘Srisaila TV’ on YouTube and Facebook. Request permission from the Devasthanam before using any recording."
+      }
+    ],
+    "youtube": [
+      {"videoId": "vBgu4U4TX0E", "start": 4410, "end": 5910, "title": "Dashavidha Harathi at Srisailam, Karthika Pournami (18 Nov 2021)", "channel": "Srisaila Tv", "channelUrl": "https://www.youtube.com/@SrisailaTv", "official": true, "kind": "recorded", "url": "https://www.youtube.com/watch?v=vBgu4U4TX0E&t=4410s", "verifiedBy": "srisailadevasthanam.org links youtube.com/channel/UCNIzL2dT2gZxQae2LHXvl0A and embeds its live stream; the channel describes itself as the Srisaila Devasthanam official channel"},
+      {"channelId": "UCNIzL2dT2gZxQae2LHXvl0A", "title": "Srisaila TV live, Srisaila Devasthanam", "channel": "Srisaila Tv", "channelUrl": "https://www.youtube.com/@SrisailaTv", "official": true, "kind": "live", "url": "https://www.youtube.com/channel/UCNIzL2dT2gZxQae2LHXvl0A/live", "verifiedBy": "srisailadevasthanam.org links youtube.com/channel/UCNIzL2dT2gZxQae2LHXvl0A and embeds its live stream; the channel describes itself as the Srisaila Devasthanam official channel"}
+    ],
+    "youtubeSources": ["https://www.srisailadevasthanam.org/", "https://www.youtube.com/watch?v=vBgu4U4TX0E", "https://www.youtube.com/@SrisailaTv"],
+    "notes": "Timings are from the trust’s seva descriptions on srisailadevasthanam.org (Udayasthamana and Pradoshakala sevas). The nine harathis named by the trust are Nandi, Pancha, Hamsa, Saptha, Dwadasa, Naga, Nakshatra, Kumbha and Eka (Maha Mangala) Harathi. No freely licensed recording of Srisailam’s harathi was found. Use the synthesized ambience until the trust grants permission; CC0 candidates are listed in docs/content/mallikarjuna.md."
+  }
+}

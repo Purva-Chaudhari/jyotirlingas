@@ -1,0 +1,167 @@
+{
+  "id": "bhimashankar",
+  "name": { "en": "Bhimashankar", "hi": "भीमाशंकर" },
+  "stops": [
+    {
+      "id": "bhima-village",
+      "at": { "zone": "village", "feature": "village" },
+      "kind": "history",
+      "title": { "en": "On the Crest of the Sahyadri", "hi": "सह्याद्रि की चोटी पर" },
+      "text": {
+        "en": "Om Namah Shivaya. Come, walk with me. Stand here a moment at the top of the steps, and breathe. You are on the crest of the Sahyadri, the Western Ghats, about nine hundred metres up, and all around you is forest, thick and green and often wrapped in mist. Since 1985 these hills have been the Bhimashankar Wildlife Sanctuary, about a hundred and thirty square kilometres, set aside above all for one shy animal: the Indian giant squirrel, the shekru, Maharashtra’s state animal. Look up into the high branches; a long, dark tail might be hanging down. Before the monsoon, the temple trust says, thousands of fireflies light up the village at night. Now look down, past the shops. Far below, in a green hollow, stands a small black-stone temple. That hollow is where the river Bhima is born, the river that crosses the Deccan and, at Pandharpur, is called the Chandrabhaga. The Lord who lives there shares her name: Bhimashankar. And the Shiva Purana says these mountains were once home to a very different Bhima. Let us go down the steps together, and I will tell you about him.",
+        "hi": "ॐ नमः शिवाय। आइए, मेरे साथ चलिए। सीढ़ियों के ऊपर एक पल रुकिए, और गहरी साँस लीजिए। आप सह्याद्रि की चोटी पर हैं, पश्चिमी घाट पर, लगभग नौ सौ मीटर की ऊँचाई पर, और चारों ओर घना हरा जंगल है, जो अक्सर धुंध में लिपटा रहता है। सन उन्नीस सौ पचासी से ये पहाड़ियाँ भीमाशंकर वन्यजीव अभयारण्य हैं, लगभग एक सौ तीस वर्ग किलोमीटर, जो सबसे बढ़कर एक शर्मीले जीव के लिए सुरक्षित रखी गई हैं: भारतीय विशाल गिलहरी, शेकरू, महाराष्ट्र का राज्य पशु। ऊँची डालियों में ऊपर देखिए; शायद कोई लंबी, गहरे रंग की पूँछ लटकती दिख जाए। मंदिर ट्रस्ट बताता है कि मानसून से पहले रात में हज़ारों जुगनू पूरे गाँव को जगमगा देते हैं। अब नीचे देखिए, दुकानों के पार। बहुत नीचे, एक हरी घाटी में, काले पत्थर का एक छोटा-सा मंदिर है। उसी घाटी में भीमा नदी का जन्म होता है, वह नदी जो दक्कन के पार बहती है और पंढरपुर में चंद्रभागा कहलाती है। वहाँ विराजमान प्रभु उसी का नाम धारण करते हैं: भीमाशंकर। और शिव पुराण कहता है कि ये पर्वत कभी एक बिल्कुल दूसरे भीम का घर थे। चलिए, साथ-साथ सीढ़ियाँ उतरें, मैं आपको उसकी कथा सुनाती हूँ।"
+      },
+      "didYouKnow": {
+        "en": "From Kokan Kada, a cliff near the village, the land drops about three thousand feet to the Konkan plain below.",
+        "hi": "गाँव के पास की कोकण कड़ा चट्टान से धरती लगभग तीन हज़ार फ़ुट नीचे कोकण के मैदान तक उतरती है।"
+      },
+      "sources": [
+        "https://shreebhimashankar.com/en/about-temple/",
+        "https://shreebhimashankar.com/en/places-around-bhimashankar/",
+        "https://en.wikipedia.org/wiki/Bhimashankar_Wildlife_Sanctuary"
+      ]
+    },
+    {
+      "id": "bhima-stairs",
+      "at": { "zone": "stairs", "feature": "stairs" },
+      "kind": "legend",
+      "title": { "en": "The Son of Kumbhakarna", "hi": "कुंभकर्ण का पुत्र" },
+      "text": {
+        "en": "As you go down, listen. The Shiva Purana tells of a boy named Bhima, who grew up on these Sahya mountains with his mother, a rakshasi. One day he asked her, ‘Who was my father? Why are we alone?’ She told him: your father was Kumbhakarna, the giant brother of Lanka’s king, and he was killed by Rama in the war of Lanka. Bhima’s grief turned to rage. He went into the forest and, the Purana says, stood for a thousand years on one foot with his arms raised in penance, until Brahma, the Creator, granted him strength beyond all others. Then Bhima swept across the world. He defeated the gods. He seized the kingdom of Kamarupa, far to the east, and threw its king, Sudakshina, into chains. But in his prison the king did a quiet, stubborn thing. He shaped a linga out of earth and, with his queen beside him, worshipped Shiva every day. When Bhima heard of it, he came with his sword drawn. What happened next is why this place is holy. Keep going, all the way down. The tank behind the temple is waiting.",
+        "hi": "सीढ़ियाँ उतरते हुए सुनिए। शिव पुराण भीम नाम के एक बालक की कथा कहता है, जो इन्हीं सह्य पर्वतों में अपनी माँ, एक राक्षसी, के साथ पला। एक दिन उसने माँ से पूछा, ‘मेरे पिता कौन थे? हम अकेले क्यों हैं?’ माँ ने बताया: तुम्हारे पिता कुंभकर्ण थे, लंका के राजा के महाबली भाई, जिन्हें लंका के युद्ध में श्रीराम ने मारा। भीम का दुःख क्रोध में बदल गया। वह वन में चला गया, और पुराण कहता है कि एक हज़ार वर्ष तक एक पैर पर खड़े होकर, भुजाएँ उठाए, तप करता रहा, जब तक सृष्टिकर्ता ब्रह्मा ने उसे अतुलनीय बल का वर नहीं दे दिया। फिर भीम ने संसार भर में उत्पात मचाया। उसने देवताओं को हराया। उसने दूर पूर्व में कामरूप का राज्य छीन लिया, और वहाँ के राजा सुदक्षिण को बेड़ियों में डाल दिया। पर कारागार में राजा ने एक शांत, अडिग काम किया। उसने मिट्टी का शिवलिंग बनाया, और अपनी रानी के साथ हर दिन शिव की पूजा करने लगा। जब भीम को यह पता चला, तो वह तलवार खींचकर आ पहुँचा। आगे जो हुआ, उसी से यह स्थान पवित्र है। चलते रहिए, बिल्कुल नीचे तक। मंदिर के पीछे का कुंड प्रतीक्षा कर रहा है।"
+      },
+      "didYouKnow": {
+        "en": "About two kilometres into the forest is Gupt Bhimashankar, where a small waterfall of the young Bhima pours without pause onto a Shivalinga.",
+        "hi": "जंगल में लगभग दो किलोमीटर भीतर गुप्त भीमाशंकर है, जहाँ नवजात भीमा का एक छोटा-सा झरना एक शिवलिंग पर लगातार गिरता रहता है।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226521.html",
+        "https://shreebhimashankar.com/en/places-around-bhimashankar/"
+      ]
+    },
+    {
+      "id": "bhima-mokshakund",
+      "at": { "zone": "mokshakund", "feature": "mokshakund" },
+      "kind": "legend",
+      "title": { "en": "The Lord Who Rose from the Clay", "hi": "मिट्टी से प्रकट हुए प्रभु" },
+      "text": {
+        "en": "You have come down into the hollow, behind the temple, beside the Mokshakund, the sacred tank. Remember the king in chains, and Bhima with his sword raised. Bhima roared at him to give up his worship and throw away his god of clay. The king would not. So Bhima swung his sword at the earthen linga. And out of it Shiva rose. ‘See,’ he said, ‘I am Bhimeshvara. I have come to protect my devotee.’ With one stroke he split the sword in two, then shattered Bhima’s spear and club. The battle that followed shook the earth, until the sage Narada begged Shiva to end it. Then Shiva uttered a single sound, ‘Hum’, and Bhima fell to ash. The Purana says that ash spread through the forest and became healing herbs. The gods asked Shiva to stay, for the good of all, and he agreed, to be worshipped as Bhimashankar. Where did all this happen? The Purana places the king in Kamarupa, and a temple near Guwahati in Assam also claims this Jyotirlinga; but here in the Sahyadri, where Bhima lived, he has been worshipped for centuries. Now walk along the side of the temple, to the spring.",
+        "hi": "आप घाटी में उतर आए हैं, मंदिर के पीछे, पवित्र मोक्षकुंड के पास। बेड़ियों में बँधे राजा को याद कीजिए, और तलवार उठाए भीम को। भीम ने गरजकर कहा, अपनी पूजा छोड़ो, इस मिट्टी के देवता को फेंक दो। राजा नहीं माना। तब भीम ने मिट्टी के लिंग पर तलवार चलाई। और उसी में से शिव प्रकट हुए। ‘देखो,’ उन्होंने कहा, ‘मैं भीमेश्वर हूँ। अपने भक्त की रक्षा के लिए आया हूँ।’ एक ही वार में उन्होंने तलवार के दो टुकड़े कर दिए, फिर भीम का भाला और गदा भी तोड़ डाली। फिर ऐसा युद्ध हुआ कि धरती काँप उठी, और अंत में नारद मुनि ने शिव से इसे समाप्त करने की विनती की। तब शिव ने केवल एक हुंकार भरी, ‘हुं’, और भीम भस्म हो गया। पुराण कहता है कि वह भस्म पूरे वन में फैल गई और औषधियों में बदल गई। देवताओं ने शिव से सबके कल्याण के लिए यहीं रहने की प्रार्थना की, और वे भीमाशंकर के रूप में यहीं बस गए। यह सब कहाँ हुआ? पुराण राजा को कामरूप में बताता है, और असम में गुवाहाटी के पास का एक मंदिर भी इस ज्योतिर्लिंग का दावा करता है; पर यहाँ सह्याद्रि में, जहाँ भीम रहता था, सदियों से उनकी पूजा होती आई है। अब मंदिर के किनारे-किनारे झरने की ओर चलिए।"
+      },
+      "didYouKnow": {
+        "en": "The temple trust associates the Mokshakund with the sage Kaushika.",
+        "hi": "मंदिर ट्रस्ट मोक्षकुंड को कौशिक ऋषि से जोड़ता है।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226522.html",
+        "https://shreebhimashankar.com/en/about-temple/",
+        "https://www.outlookindia.com/amp/story/national/-bhimashankar-jyotirlinga-located-in-assam-s-kamrup-himanta-news-263538"
+      ]
+    },
+    {
+      "id": "bhima-kusharanya",
+      "at": { "zone": "kusharanya", "feature": "kusharanya" },
+      "kind": "legend",
+      "title": { "en": "Where the River Begins", "hi": "जहाँ नदी जन्म लेती है" },
+      "text": {
+        "en": "Here, beside this small spring, the temple trust tells the story in its own way, the way this village has told it for generations. Long ago, it says, the demon Tripurasura did penance in this very forest, and won from Shiva the gift of near-immortality, on condition that he use it for the good of the world. He forgot his promise and began to torment everyone. So Shiva asked Parvati to stand with him. She is worshipped up on the ridge as Kamalaja Devi, because she was honoured with lotus flowers. Together they took one form, half Shiva and half Shakti, Ardhanarishvara, and on the full moon of Kartik they destroyed Tripurasura. Afterwards, as Shiva sat here to rest, sweat streamed from his body, and from those streams, the trust says, the river Bhima began. This is Kusharanya Tirtha, where she sets out eastward on her long journey. And the demon’s wives, Dakini and Shakini, came to Shiva for refuge. He blessed them, and promised that their names would come before his own. So the hymn calls this place ‘Dakinyam Bhimashankaram’. Now walk round to the front of the temple. A great bell is waiting there.",
+        "hi": "यहाँ, इस छोटे-से झरने के पास, मंदिर ट्रस्ट यह कथा अपने ढंग से कहता है, जैसे यह गाँव पीढ़ियों से कहता आया है। बहुत पहले, वह बताता है, त्रिपुरासुर नाम के दैत्य ने इसी वन में तप किया और शिव से लगभग अमरता का वर पाया, इस शर्त पर कि वह उसे लोक-कल्याण में लगाएगा। वह अपना वचन भूल गया और सबको सताने लगा। तब शिव ने पार्वती से साथ देने को कहा। वे ऊपर पहाड़ी पर कमलजा देवी के रूप में पूजी जाती हैं, क्योंकि उनकी पूजा कमल के फूलों से हुई थी। दोनों ने मिलकर एक रूप धारण किया, आधे शिव और आधी शक्ति, अर्धनारीश्वर, और कार्तिक पूर्णिमा के दिन त्रिपुरासुर का अंत किया। उसके बाद जब शिव यहाँ विश्राम करने बैठे, तो उनके शरीर से पसीने की धाराएँ बहीं, और ट्रस्ट कहता है कि उन्हीं धाराओं से भीमा नदी का जन्म हुआ। यह कुशारण्य तीर्थ है, जहाँ से वह पूर्व की ओर अपनी लंबी यात्रा पर निकलती है। और दैत्य की पत्नियाँ, डाकिनी और शाकिनी, शिव की शरण में आईं। शिव ने उन्हें आशीर्वाद दिया, और वचन दिया कि उनका नाम उनके अपने नाम से पहले आएगा। इसीलिए स्तोत्र इस स्थान को ‘डाकिन्यां भीमशंकरम्’ कहता है। अब घूमकर मंदिर के सामने चलिए। वहाँ एक बड़ा घंटा प्रतीक्षा कर रहा है।"
+      },
+      "didYouKnow": {
+        "en": "Kartik Purnima is kept here as Tripurari Purnima, the night Tripurasura fell, with a maha-aarti and the palanquins of Bhimashankar and Kamalaja Devi carried in procession.",
+        "hi": "यहाँ कार्तिक पूर्णिमा त्रिपुरारी पूर्णिमा के रूप में मनाई जाती है, जिस रात त्रिपुरासुर का अंत हुआ, महाआरती और भीमाशंकर तथा कमलजा देवी की पालकियों के साथ।"
+      },
+      "sources": [
+        "https://shreebhimashankar.com/en/bhimashankar-temple-history/",
+        "https://shreebhimashankar.com/en/",
+        "https://shreebhimashankar.com/en/about-temple/",
+        "https://shreebhimashankar.com/en/temple-schedule/"
+      ]
+    },
+    {
+      "id": "bhima-bell",
+      "at": { "zone": "bell", "feature": "bell" },
+      "kind": "history",
+      "title": { "en": "A Bell from Vasai, a Tower from Pune", "hi": "वसई का घंटा, पुणे का शिखर" },
+      "text": {
+        "en": "Look up at this great bell, hanging in its stone frame before the temple. Now look closely at its face. You may see a cross, and the date 1729. This bell was cast for a church. In 1739 the Maratha army, led by Chimaji Appa, the Peshwa’s younger brother, took the sea fort of Vasai, near Mumbai, from the Portuguese after a long siege. Chimaji brought great bells back from Vasai and gave them to temples, and this one he offered to Bhimashankar. Ring it, and the whole hollow answers. The temple itself is older. A shrine here is mentioned in writings as early as the thirteenth century, and the trust says the Maratha kings, from Chhatrapati Shivaji Maharaj on, gave for its worship. Then, in the eighteenth century, came Nana Phadnavis, the shrewd minister who held the Peshwas’ government together in Pune. He built the shikhara you see rising over the sanctum, and the old pillared hall, giving this black-stone temple much of the shape it has today. A church bell, a minister’s tower, a king’s gift: everything here has been offered to the Lord, one way or another. Now climb the steps into the hall.",
+        "hi": "पत्थर के ढाँचे में टँगे इस बड़े घंटे को देखिए, मंदिर के ठीक सामने। अब ध्यान से उसके मुख पर देखिए। आपको एक क्रॉस दिख सकता है, और तारीख़ सत्रह सौ उनतीस। यह घंटा एक गिरजाघर के लिए ढाला गया था। सन सत्रह सौ उनतालीस में पेशवा के छोटे भाई चिमाजी अप्पा के नेतृत्व में मराठा सेना ने लंबी घेराबंदी के बाद मुंबई के पास वसई का समुद्री किला पुर्तगालियों से जीता। चिमाजी वसई से बड़े-बड़े घंटे लाए और उन्हें मंदिरों को अर्पित किया, और यह घंटा उन्होंने भीमाशंकर को चढ़ाया। इसे बजाइए, और पूरी घाटी उत्तर देती है। मंदिर स्वयं इससे पुराना है। तेरहवीं शताब्दी तक के लेखों में यहाँ के मंदिर का उल्लेख मिलता है, और ट्रस्ट बताता है कि छत्रपति शिवाजी महाराज से लेकर मराठा राजाओं ने यहाँ की पूजा के लिए दान दिए। फिर अठारहवीं शताब्दी में आए नाना फडणवीस, वह चतुर मंत्री जिन्होंने पुणे में पेशवाओं का शासन सँभाले रखा। उन्होंने गर्भगृह के ऊपर उठता यह शिखर और पुराना स्तंभों वाला सभामंडप बनवाया, और काले पत्थर के इस मंदिर को वह रूप दिया जो आज दिखता है। एक गिरजाघर का घंटा, एक मंत्री का शिखर, एक राजा का दान: यहाँ सब कुछ किसी न किसी रूप में प्रभु को अर्पित है। अब सीढ़ियाँ चढ़कर मंडप में चलिए।"
+      },
+      "didYouKnow": {
+        "en": "The trust says the bell weighs five maunds, roughly two hundred kilograms. Other Vasai bells hang in temples across Maharashtra.",
+        "hi": "ट्रस्ट के अनुसार यह घंटा पाँच मन, यानी मोटे तौर पर दो सौ किलो का है। वसई के और भी घंटे महाराष्ट्र के कई मंदिरों में टँगे हैं।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bhimashankar_Temple",
+        "https://shreebhimashankar.com/en/about-temple/",
+        "https://gulfnews.com/entertainment/arts-culture/portuguese-era-church-bells-adorn-maharashtra-temples-1.1943512"
+      ]
+    },
+    {
+      "id": "bhima-mandapa",
+      "at": { "zone": "mandapa", "feature": "mandapa" },
+      "kind": "ritual",
+      "title": { "en": "The New Hall and the Five Steps", "hi": "नया मंडप और पाँच सीढ़ियाँ" },
+      "text": {
+        "en": "You are in the sabhamandapa, the hall before the sanctum, among its carved stone pillars. This hall is the newest thing here. In January 2026 the temple closed its doors for five months while the old hall gave way to a new, larger one, built for the crowds who come today, and darshan began again that June. The sanctum beyond has not changed. Notice something: from here you cannot see the Jyotirlinga. As in many Shiva temples, the sanctum lies below the level of the hall, and you must go down five steps to reach it. At its doorway, the trust tells us, Ganesha waits on the left, and on the right Kalabhairava, the guardian. Every day the temple opens at five in the morning with puja, and at half past seven in the evening the worship is performed again. On the great nights, Mahashivratri and Tripurari Purnima, there is a maha-aarti, and later the Lord’s palanquin goes out in procession. Now, step by step, come down with me. Bhimashankar is waiting below.",
+        "hi": "आप सभामंडप में हैं, गर्भगृह के आगे का मंडप, नक्काशीदार पत्थर के स्तंभों के बीच। यह मंडप यहाँ की सबसे नई चीज़ है। जनवरी दो हज़ार छब्बीस में मंदिर पाँच महीनों के लिए बंद हुआ, ताकि पुराने मंडप की जगह आज की भीड़ के लिए एक नया, बड़ा मंडप बन सके, और उसी जून में दर्शन फिर शुरू हुए। उसके आगे का गर्भगृह वैसा ही है। एक बात पर ध्यान दीजिए: यहाँ से ज्योतिर्लिंग दिखाई नहीं देता। बहुत-से शिव मंदिरों की तरह यहाँ का गर्भगृह मंडप के तल से नीचे है, और वहाँ पहुँचने के लिए पाँच सीढ़ियाँ उतरनी पड़ती हैं। ट्रस्ट बताता है कि उसके द्वार पर बाईं ओर गणेश जी विराजते हैं, और दाईं ओर रक्षक श्री कालभैरव। हर दिन सुबह पाँच बजे पूजा के साथ मंदिर खुलता है, और शाम साढ़े सात बजे फिर पूजा होती है। बड़े पर्वों की रातों में, महाशिवरात्रि और त्रिपुरारी पूर्णिमा को, महाआरती होती है, और बाद में प्रभु की पालकी शोभायात्रा में निकलती है। अब सीढ़ी-सीढ़ी मेरे साथ नीचे चलिए। भीमाशंकर नीचे प्रतीक्षा कर रहे हैं।"
+      },
+      "didYouKnow": {
+        "en": "The trust asks pilgrims to keep silence inside the temple and simply chant ‘Om Namah Shivaya’.",
+        "hi": "ट्रस्ट तीर्थयात्रियों से अनुरोध करता है कि मंदिर के भीतर मौन रखें, और केवल ‘ॐ नमः शिवाय’ का जप करें।"
+      },
+      "sources": [
+        "https://www.punekarnews.in/bhimashankar-darshan-resumes-from-june-15-online-registration-now-compulsory/",
+        "https://shreebhimashankar.com/en/",
+        "https://shreebhimashankar.com/en/temple-schedule/"
+      ]
+    },
+    {
+      "id": "bhima-garbhagriha",
+      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "kind": "ritual",
+      "title": { "en": "Darshan of Shri Bhimashankar", "hi": "श्री भीमाशंकर के दर्शन" },
+      "text": {
+        "en": "You have reached Shri Bhimashankar. Look into the silver basin. The Jyotirlinga is low and broad, barely rising from the stone, and it is not whole: a deep cleft runs through it, so that it seems to be two, Shiva on one side and Shakti on the other. Remember the clay linga in the prison, struck by a demon’s sword, and the Lord who rose from it; remember Shiva and Parvati joined in one form against Tripurasura. Both stories meet in this divided stone, at the head of a river. Fold your hands. The Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya, sings: ‘Yam Dakini-Shakinika-samaje nishevyamanam pishitashanaish cha, sadaiva Bhimadi-pada-prasiddham tam Shankaram bhaktahitam namami.’ ‘He who is served among the Dakinis and Shakinis, and by fierce spirits, and is ever renowned by the name that begins with Bhima: to that Shankara, who cares for his devotees, I bow.’ The shorter hymn of the twelve names him sixth, ‘Dakinyam Bhimashankaram’. Bhimashankar is the sixth Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the bells ring, and let the lamps be raised. Har Har Mahadev.",
+        "hi": "आप श्री भीमाशंकर तक पहुँच गए हैं। चाँदी की जलहरी में देखिए। ज्योतिर्लिंग नीचा और चौड़ा है, पत्थर से बस ज़रा-सा उठा हुआ, और वह अखंड नहीं है: बीच से एक गहरी दरार गुज़रती है, मानो उसके दो भाग हों, एक ओर शिव और दूसरी ओर शक्ति। कारागार के उस मिट्टी के लिंग को याद कीजिए, जिस पर दैत्य की तलवार चली और जिसमें से प्रभु प्रकट हुए; याद कीजिए शिव और पार्वती को, जो त्रिपुरासुर के विरुद्ध एक रूप हो गए। दोनों कथाएँ इस विभाजित शिला में, एक नदी के उद्गम पर, आकर मिलती हैं। हाथ जोड़िए। आदि शंकराचार्य के नाम से प्रसिद्ध द्वादश ज्योतिर्लिंग स्तोत्र गाता है: ‘यं डाकिनिशाकिनिकासमाजे निषेव्यमाणं पिशिताशनैश्च। सदैव भीमादिपदप्रसिद्धं तं शङ्करं भक्तहितं नमामि॥’ ‘डाकिनियों और शाकिनियों के समाज में, और उग्र भूत-गणों द्वारा जो सेवित हैं, जो सदा भीम से आरंभ होने वाले नाम से प्रसिद्ध हैं, भक्तों का हित करने वाले उन शंकर को मैं नमन करता हूँ।’ बारह ज्योतिर्लिंगों का छोटा स्तोत्र उन्हें छठे स्थान पर गिनता है, ‘डाकिन्यां भीमशंकरम्’। भीमाशंकर स्तोत्र के छठे ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। घंटियाँ बजें, और दीप उठें। हर हर महादेव।"
+      },
+      "didYouKnow": {
+        "en": "Facing the Jyotirlinga, an image of Parvati stands in the sanctum, looking toward her Lord.",
+        "hi": "ज्योतिर्लिंग के सामने गर्भगृह में पार्वती देवी की प्रतिमा है, जो अपने प्रभु की ओर निहारती है।"
+      },
+      "sources": [
+        "https://shreebhimashankar.com/en/",
+        "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226522.html"
+      ]
+    }
+  ],
+  "aarti": {
+    "name": { "en": "Bhimashankar Aarti (morning puja and evening worship)", "hi": "भीमाशंकर आरती (प्रातः पूजा और संध्या पूजा)" },
+    "schedule": [
+      { "name": { "en": "Temple opens; morning worship", "hi": "मंदिर खुलना; प्रातः पूजा" }, "time": "5:00–5:30 AM" },
+      { "name": { "en": "Darshan and abhishek", "hi": "दर्शन और अभिषेक" }, "time": "5:30 AM–12:00 noon" },
+      { "name": { "en": "Naivedya (midday offering)", "hi": "नैवेद्य पूजा" }, "time": "12:00–12:20 PM" },
+      { "name": { "en": "Afternoon worship", "hi": "दोपहर की पूजा" }, "time": "2:45–3:20 PM" },
+      { "name": { "en": "Evening worship (aarti)", "hi": "संध्या पूजा (आरती)" }, "time": "7:30–8:00 PM" },
+      { "name": { "en": "Temple closes", "hi": "मंदिर बंद" }, "time": "9:30 PM" },
+      { "name": { "en": "Maha-aarti on festivals (Mahashivratri, Tripurari Purnima and others)", "hi": "पर्वों पर महाआरती (महाशिवरात्रि, त्रिपुरारी पूर्णिमा आदि)" }, "time": "7:30 PM" }
+    ],
+    "lyrics": {
+      "text": {
+        "en": "Lavathavati vikrala brahmandi mala\nvishe kantha kala trinetri jvala\nlavanyasundar mastaki bala\ntethuniya jal nirmal vahe jhuljula\n\nJay dev jay dev jay Shrishankara\naarti ovalu tuj karpuragaura\n\nKarpuragaura bhola nayani vishala\nardhangi Parvati sumananchya mala\nvibhutiche udhalan shitikantha nila\naisa Shankar shobhe Umavelhala\n\nDevi daitya sagaramanthan pai kele\ntyamaji je avachit halahal uthile\nte tva asurapane prashan kele\nNilakantha nam prasiddha jhale\n\nVyaghrambar phanivaradhar sundar Madanari\nPanchanan manmohan munijanasukhakari\nshatakotiche bij vache uchchari\nRaghukulatilak Ramdasa antari\n\n(The Marathi Shiva aarti of Samarth Ramdas, who names himself in the last line.)",
+        "hi": "लवथवती विक्राळा ब्रह्मांडी माळा।\nवीषें कंठ काळा त्रिनेत्रीं ज्वाळा॥\nलावण्यसुंदर मस्तकीं बाळा।\nतेथुनियां जल निर्मळ वाहे झुळझुळां॥\n\nजय देव जय देव जय श्रीशंकरा।\nआरती ओवाळूं तुज कर्पूरगौरा॥\n\nकर्पूरगौरा भोळा नयनीं विशाळा।\nअर्धांगीं पार्वती सुमनांच्या माळा॥\nविभुतीचें उधळण शितिकंठ नीळा।\nऐसा शंकर शोभे उमावेल्हाळा॥\n\nदेवीं दैत्य सागरमंथन पै केलें।\nत्यामाजीं जें अवचित हळाहळ उठिलें॥\nतें त्वां असुरपणें प्राशन केलें।\nनीळकंठ नाम प्रसिद्ध झालें॥\n\nव्याघ्रांबर फणिवरधर सुंदर मदनारी।\nपंचानन मनमोहन मुनिजनसुखकारी॥\nशतकोटीचें बीज वाचे उच्चारी।\nरघुकुळटिळक रामदासा अंतरीं॥"
+      },
+      "source": "‘Lavathavati Vikrala’, the Marathi aarti to Shiva by Samarth Ramdas (1608–1681), sung across Maharashtra. It is given as the region’s common Shiva aarti only: it is not documented as the exact text of Bhimashankar’s own evening worship. Text checked against tring.co.in/aarti/lavthavti-vikrala; printed versions differ in small spellings.",
+      "license": "Public domain (traditional text)"
+    },
+    "audio": [
+      {
+        "url": "https://shreebhimashankar.com/",
+        "license": "All rights reserved (Shree Kshetra Bhimashankar Trust) - needs permission",
+        "notes": "No official recording or live stream of the aarti was found. Contact office@shreebhimashankar.com / 02135 222880 for permission."
+      }
+    ],
+    "notes": "Timetable from shreebhimashankar.com/en/temple-schedule (the trust lists ‘worship’ at 5:00 and 7:30 PM; travel sites call these the morning and evening aarti). Since 15 June 2026 an online pass is required for darshan, with a daily limit (punekarnews). No YouTube channel of the trust could be found (its site links none; the only video it uses is a wildlife documentary by another channel), so no YouTube aarti is set and the synthesized ambience plays. No freely licensed recording of Bhimashankar’s aarti was found."
+  }
+}

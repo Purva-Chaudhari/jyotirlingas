@@ -1,0 +1,12 @@
+node_modules
+dist
+public/cesium
+.env.local
+.venv
+__pycache__
+.DS_Store
+public/scenes/*/source.*
+public/assets
+
+# a third-party track used for local preview only — never commit or deploy it without a licence
+public/audio/landing/theme.*
