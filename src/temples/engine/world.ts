@@ -276,6 +276,9 @@ export class TempleWorld {
   constructor(private canvas: HTMLCanvasElement, private site: SiteDef) {
     this.sunAzimuth = site.sunAzimuth ?? DEFAULT_SUN_AZIMUTH;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+    // the live site skips reading every shader's error log: that read waits for each compile to finish (~0.7 s
+    // of stalls on Mahakal); in development the errors are still reported
+    this.renderer.debug.checkShaderErrors = import.meta.env.DEV;
     const device = detectDevice(this.renderer.getContext());
     this.profile = profileFor(pickTier(device, new URLSearchParams(location.search).get('quality')), device.dpr);
     setQuality(this.profile);
@@ -398,6 +401,16 @@ export class TempleWorld {
       for (const o of hidden) o.visible = false;
       for (const [l, on] of lights) l.visible = on;
     }
+    // upload every texture now, before the first frame, so walking in doesn't stall on it
+    const textures = new Set<THREE.Texture>();
+    this.scene.traverse((o) => {
+      const mats = (o as THREE.Mesh).material;
+      if (!mats) return;
+      for (const m of Array.isArray(mats) ? mats : [mats]) {
+        for (const v of Object.values(m)) if ((v as THREE.Texture)?.isTexture) textures.add(v as THREE.Texture);
+      }
+    });
+    for (const t of textures) this.renderer.initTexture(t);
   }
 
   /** phones: cheaper texture filtering (set before the textures are first uploaded, in precompile) */
@@ -549,6 +562,15 @@ export class TempleWorld {
       return src;
     };
     const hiSrc = prep(hi.scene, true), loSrc = prep(lo.scene, true);
+    // the distant model is the same tree simplified: give it the near model's materials (same names), so
+    // their textures are held in graphics memory once, not twice
+    const byName = new Map<string, THREE.Material>();
+    hiSrc.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material; if ((o as THREE.Mesh).isMesh && m.name) byName.set(m.name, m); });
+    loSrc.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      const same = mesh.isMesh ? byName.get((mesh.material as THREE.Material).name) : undefined;
+      if (same) mesh.material = same;
+    });
     const box = new THREE.Box3().setFromObject(hiSrc);
     const h = box.max.y - box.min.y;
     let seed = 3;

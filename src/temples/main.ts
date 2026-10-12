@@ -9,7 +9,9 @@ import { Travel } from './engine/travel';
 import { PlacesPanel } from './engine/places';
 import { detectTouch } from './engine/profile';
 import { TouchControls } from './engine/touch';
-import { OPEN_TEMPLES } from '../open';
+import { DefaultLoadingManager } from 'three';
+import { OPEN_TEMPLES, TEMPLE_FILES, TEMPLE_INTRO } from '../open';
+import { warm } from '../preload';
 
 const $ = (id: string) => document.getElementById(id)!;
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -32,11 +34,61 @@ if (!OPEN_TEMPLES.has(siteId) && !params.has('preview')) {
   const q = params.toString();
   history.replaceState(null, '', new URL(`./${siteId}${q ? `?${q}` : ''}${location.hash}`, location.href).href);
 }
+// start the heavy downloads now, while the scene's code loads and builds (the loaders then find them cached)
+void warm(TEMPLE_FILES[siteId] ?? [], 8);
+
+// ---------- loading screen: the temple's name, a fact about it at a time, and how far along it is ----------
+const loading = (() => {
+  const el = $('loading');
+  const intro = TEMPLE_INTRO[siteId];
+  const fact = el.querySelector('.fact') as HTMLElement;
+  const bar = el.querySelector('.bar') as HTMLElement;
+  const status = el.querySelector('.status') as HTMLElement;
+  let timer = 0;
+  if (intro) {
+    el.querySelector('h1 .hi')!.textContent = intro.hi;
+    el.querySelector('h1 .en')!.textContent = intro.en;
+    el.querySelector('.place')!.textContent = intro.place;
+    // a different first fact each visit, then the next one every 6 s
+    let i = Math.floor(Math.random() * intro.facts.length);
+    fact.textContent = intro.facts[i];
+    timer = window.setInterval(() => {
+      fact.classList.add('out');
+      setTimeout(() => {
+        i = (i + 1) % intro.facts.length;
+        fact.textContent = intro.facts[i];
+        fact.classList.remove('out');
+      }, 600);
+    }, 6000);
+  }
+  let shown = 0.04;
+  const set = (k: number, text?: string) => {
+    shown = Math.max(shown, Math.min(1, k));
+    (bar.firstElementChild as HTMLElement).style.transform = `scaleX(${shown})`;
+    bar.setAttribute('aria-valuenow', String(Math.round(shown * 100)));
+    if (text) status.textContent = text;
+  };
+  // the scene's textures, models and sky go through three.js's default loading manager: they fill 90 % of the
+  // bar; the rest is building the scene and preparing its shaders
+  DefaultLoadingManager.onProgress = (_url, loaded, total) => {
+    set(0.1 + 0.8 * (loaded / Math.max(total, 1)), loaded < total ? 'Bringing in the stone and the sky…' : 'Lighting the lamps…');
+  };
+  return {
+    set,
+    done() {
+      set(1);
+      clearInterval(timer);
+      DefaultLoadingManager.onProgress = () => {};
+      setTimeout(() => el.classList.add('gone'), 350);
+    },
+  };
+})();
 const [site, story] = await Promise.all([
   (SITES[siteId] ?? SITES[DEFAULT_SITE])().then((m) => m.default),
   // dev: ?stories=off runs the temple without its stories (A/B performance checks)
   import.meta.env.DEV && params.get('stories') === 'off' ? null : loadStory(SITES[siteId] ? siteId : DEFAULT_SITE),
 ]);
+loading.set(0.1, 'Raising the temple…');
 const TEMPLE: Target = { lon: site.lon, lat: site.lat };
 document.title = `${site.name.en} Jyotirlinga`;
 // the top-left title is the temple's own name, in the chosen language first (EN / हिं)
@@ -215,6 +267,7 @@ async function enterDirect() {
   $('chrome').classList.add('on');
   globe?.setVisible(false);
   await world.ready;
+  loading.done();
   world.reset();
   world.start();
   stories.start();
@@ -236,7 +289,7 @@ if (at) {
   Object.assign(window, { world, stories, sound, travel, places, touch });
   stories.start();
   places.show(true);
-  void world.ready.then(() => (document.body.dataset.ready = '1'));
+  void world.ready.then(() => { loading.done(); document.body.dataset.ready = '1'; });
 } else if (!useFlight) {
   void enterDirect();
 }

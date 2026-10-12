@@ -30,6 +30,8 @@ export const copy = {
   scrollMap: 'Scroll through Bharat',
 
   skip: 'Skip',
+  /** the opening screen: its click is the gesture browsers need before any sound may play */
+  gateEnter: 'Om Namah Shivaya',
   soundOn: 'Sound on',
   soundOff: 'Sound off',
   // the sound button's hover credit, for a recording whose licence asks for one (none: the drums are synthesized)

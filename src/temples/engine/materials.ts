@@ -221,6 +221,59 @@ export { mix };
 
 // ---------- scanned materials (Poly Haven, CC0) ----------
 
+/** one download and one GPU upload per image, however many materials tile it */
+const scanImages = new Map<string, Promise<THREE.Texture>>();
+const scanLoader = new THREE.TextureLoader();
+
+/**
+ * Decode images off the main thread (createImageBitmap) where the browser does it properly, as three.js's
+ * GLTFLoader does: an <img> is decoded on the main thread at its first upload, which froze the first frame for
+ * ~2 s with Mahakal's 2k stone. Not in Safari before 17 or Firefox before 98 (their image bitmaps misbehave).
+ */
+const bitmapLoader = (() => {
+  if (typeof createImageBitmap === 'undefined') return null;
+  const ua = navigator.userAgent;
+  const safari = /^((?!chrome|android).)*safari/i.test(ua) ? +(ua.match(/Version\/(\d+)/)?.[1] ?? 0) : Infinity;
+  const firefox = /firefox/i.test(ua) ? +(ua.match(/Firefox\/(\d+)/)?.[1] ?? 0) : Infinity;
+  if (safari < 17 || firefox < 98) return null;
+  // flipped as it decodes (an ImageBitmap can't be flipped at upload), colours left exactly as stored
+  return new THREE.ImageBitmapLoader().setOptions({ imageOrientation: 'flipY', premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
+})();
+
+function loadImageTexture(url: string): Promise<THREE.Texture> {
+  if (!bitmapLoader) return scanLoader.loadAsync(url);
+  return bitmapLoader.loadAsync(url).then((bitmap) => {
+    const t = new THREE.Texture(bitmap as ImageBitmap);
+    t.flipY = false;
+    t.needsUpdate = true;
+    return t;
+  });
+}
+
+/**
+ * A tiling scan texture at `rep` repeats per metre. Every use of one file shares a single image (its
+ * clones share the source, so three.js uploads it to the GPU once): the same stone tiled by several
+ * materials used to be downloaded and held in graphics memory once per material.
+ */
+function scanTexture(url: string, srgb: boolean, rep: number): Promise<THREE.Texture> {
+  let base = scanImages.get(url);
+  if (!base) {
+    base = loadImageTexture(url).then((t) => {
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      // one setting for every clone: a different anisotropy or colour space would make a separate GPU copy
+      t.anisotropy = 8;
+      if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    });
+    scanImages.set(url, base);
+  }
+  return base.then((t) => {
+    const c = t.clone();
+    c.repeat.set(rep, rep);
+    return c;
+  });
+}
+
 interface Scan {
   id: string;
   /** physical size of one texture tile, metres */
@@ -243,17 +296,8 @@ const SCANS: Record<'sandstone' | 'kundStone' | 'basalt' | 'paving' | 'marble' |
  * Swap the procedural stand-ins for scanned PBR maps (diffuse, OpenGL normal,
  * packed AO/roughness/metalness). Resolves once every texture has loaded.
  */
-export async function applyScans(M: Materials, renderer: THREE.WebGLRenderer, base = 'assets/tex/') {
-  const loader = new THREE.TextureLoader();
-  const aniso = renderer.capabilities.getMaxAnisotropy();
-  const load = (url: string, srgb: boolean, rep: number) =>
-    loader.loadAsync(url).then((t) => {
-      t.wrapS = t.wrapT = THREE.RepeatWrapping;
-      t.repeat.set(rep, rep);
-      t.anisotropy = aniso;
-      if (srgb) t.colorSpace = THREE.SRGBColorSpace;
-      return t;
-    });
+export async function applyScans(M: Materials, _renderer: THREE.WebGLRenderer, base = 'assets/tex/') {
+  const load = (url: string, srgb: boolean, rep: number) => scanTexture(url, srgb, rep);
   await Promise.all(Object.entries(SCANS).map(async ([key, scan]) => {
     const rep = 1 / scan.size;
     const [map, normalMap, arm] = await Promise.all([
@@ -347,16 +391,8 @@ export function scanMaterial(
   opts: { tint?: THREE.ColorRepresentation; normalScale?: number; roughness?: number } = {},
 ): { material: THREE.MeshStandardMaterial; loaded: Promise<void> } {
   const material = new THREE.MeshStandardMaterial({ color: opts.tint ?? 0xbbbbbb, roughness: opts.roughness ?? 0.85 });
-  const loader = new THREE.TextureLoader();
   const rep = 1 / sizeMetres;
-  const load = (suffix: string, srgb: boolean) =>
-    loader.loadAsync(`assets/tex/${id}_${suffix}.webp`).then((t) => {
-      t.wrapS = t.wrapT = THREE.RepeatWrapping;
-      t.repeat.set(rep, rep);
-      t.anisotropy = 8;
-      if (srgb) t.colorSpace = THREE.SRGBColorSpace;
-      return t;
-    });
+  const load = (suffix: string, srgb: boolean) => scanTexture(`assets/tex/${id}_${suffix}.webp`, srgb, rep);
   const loaded = Promise.all([load('diff', true), load('nor', false), load('arm', false)]).then(([map, nor, arm]) => {
     material.map = map;
     material.normalMap = nor;

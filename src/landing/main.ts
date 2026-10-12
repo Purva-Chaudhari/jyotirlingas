@@ -4,6 +4,8 @@ import { TEMPLES, readProgress, type Temple } from './temples';
 import { LandingAudio } from './audio';
 import type { Cosmos } from './cosmos';
 import type { MapData } from './glass';
+import { OPEN_TEMPLES, TEMPLE_FILES } from '../open';
+import { warm } from '../preload';
 
 /**
  * The landing: "Through the Third Eye".
@@ -319,9 +321,10 @@ function closeAbout() {
 
 function setSoundPill() {
   const pill = $('sound');
-  // on unless muted — even while the browser still waits for the first gesture to let it play
-  const on = !audio.muted;
-  pill.textContent = `♪ ${on ? copy.soundOn : copy.soundOff}`;
+  // on only once it is really heard: while the browser still waits for the first gesture it shows off
+  const on = audio.audible;
+  // the label is what a click does: "Sound off" while it plays, "Sound on" while it is silent
+  pill.textContent = `♪ ${on ? copy.soundOff : copy.soundOn}`;
   pill.setAttribute('aria-pressed', String(on));
   pill.classList.toggle('on', on);
   pill.title = soundCredit;
@@ -420,7 +423,7 @@ async function goHub(quick: boolean) {
 
 // input: wheel / trackpad, touch, keys move the journey; Esc or Skip ends it
 const advance = (d: number) => {
-  if (phase !== 'journey') return;
+  if (phase !== 'journey' || gated) return;
   target = Math.min(1, Math.max(0, target + d));
   idleSince = performance.now();
   document.body.classList.add('moved');
@@ -437,6 +440,7 @@ addEventListener('wheel', (e) => {
   }
   if (phase !== 'journey') return;
   e.preventDefault();
+  if (gated) return;
   const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
   advance(Math.max(-0.06, Math.min(0.06, dy * 0.00022)));
 }, { passive: false });
@@ -454,6 +458,33 @@ addEventListener('touchmove', (e) => {
   advance((touchY - y) * 0.0009);
   touchY = y;
 }, { passive: true });
+// ---------- the opening screen: browsers let a page play sound only after a click, so the visit begins with one ----------
+// (only when the landing page opens normally: coming back to the map from a temple (#map) goes straight to it,
+// and the sound starts on the first click there)
+let gated = location.hash !== '#map';
+if (gated) document.body.classList.add('gated');
+else $('gate').classList.add('gone');
+$('gate-enter').textContent = copy.gateEnter;
+function openGate() {
+  if (!gated) return;
+  gated = false;
+  // entering means with sound, even if it was turned off earlier in this visit
+  if (audio.muted) audio.toggle();
+  else void audio.start();
+  setSoundPill();
+  document.body.classList.remove('gated');
+  $('gate').classList.add('gone');
+  // while the journey plays, fetch the open temples' heavy files in the background: entering one is then quick
+  setTimeout(() => void warm([...OPEN_TEMPLES].flatMap((id) => [...(TEMPLE_FILES[id] ?? [])]), 2), 4000);
+  idleSince = performance.now();
+  dirty = true;
+}
+$('gate-enter').addEventListener('click', (e) => {
+  e.stopPropagation();
+  openGate();
+});
+$('gate').addEventListener('pointerdown', (e) => e.stopPropagation());
+if (gated) queueMicrotask(() => $('gate-enter').focus());
 const firstGesture = () => {
   if (!audio.muted) void audio.start();
 };
@@ -464,6 +495,10 @@ addEventListener('click', firstGesture);
 void audio.start();
 addEventListener('keydown', (e) => {
   if (e.key === 'Tab' || e.key === 'Shift') return;
+  if (gated) {
+    if (e.key === 'Enter' || e.key === ' ') e.preventDefault(), openGate();
+    return;
+  }
   firstGesture();
   if (phase === 'journey') {
     if (['ArrowDown', 'PageDown', ' ', 'ArrowRight'].includes(e.key)) advance(0.05), e.preventDefault();
@@ -619,7 +654,7 @@ function frame(now: number) {
 
   if (phase === 'journey' && cosmos) {
     // auto-play after a few idle seconds
-    if (now - idleSince > 3500) target = Math.min(1, target + dt / AUTO_SECONDS);
+    if (!gated && now - idleSince > 3500) target = Math.min(1, target + dt / AUTO_SECONDS);
     jp += (target - jp) * Math.min(1, dt * 2.2);
     // the scroll cue goes once the journey is moving, scrolled or playing itself
     if (jp > 0.03) document.body.classList.add('moved');
@@ -671,8 +706,9 @@ function frame(now: number) {
 
 // ---------- go ----------
 layout();
-// every load opens on the Shiva linga and the journey (straight to the map only for reduced motion)
-if (reduced) {
+// every load opens on the Shiva linga and the journey (straight to the map for reduced motion, and when
+// coming back from a temple: its "← Map" button links to #map)
+if (reduced || location.hash === '#map') {
   phase = 'hub';
   void goHub(true);
 } else startJourney();

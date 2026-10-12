@@ -163,6 +163,21 @@ body.hub.glass-hub #thought.on { opacity: 1; }
   background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(235, 240, 255, 0.22);
   transition: border-color 0.2s, color 0.2s;
 }
+/* the opening screen over the Shiva linga: one click lets the sound play (browsers allow none before it) */
+#gate {
+  position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: radial-gradient(ellipse at center, rgba(5, 3, 12, 0.25), rgba(5, 3, 12, 0.75)); transition: opacity 0.9s ease;
+}
+#gate.gone { opacity: 0; pointer-events: none; }
+#gate-enter {
+  font-family: 'Cinzel', serif; font-weight: 500; font-size: 15px; letter-spacing: 0.32em; text-indent: 0.32em; text-transform: uppercase;
+  color: #f6e2b4; padding: 15px 40px; white-space: nowrap; border-radius: 999px; background: rgba(20, 12, 30, 0.45);
+  border: 1px solid rgba(240, 212, 154, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 28px rgba(240, 190, 110, 0.18); transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+}
+#gate-enter:hover, #gate-enter:focus-visible { color: #fff; border-color: rgba(255, 228, 170, 0.95); box-shadow: 0 0 36px rgba(240, 190, 110, 0.4); outline: none; }
+/* the journey's own hints wait behind it */
+body.gated #hint, body.gated #scrollcue, body.gated #rail, body.gated #skip, body.gated #sound, body.gated #chapter { visibility: hidden; }
 #sound.on { color: #fff; border-color: rgba(235, 240, 255, 0.5); }
 #sound:hover { border-color: rgba(235, 240, 255, 0.6); }
 

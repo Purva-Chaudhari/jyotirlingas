@@ -58,12 +58,17 @@ export class LandingAudio {
     return this.started && !this.muted;
   }
 
+  /** actually heard: set up, not muted, and let run by the browser (the sound button shows this) */
+  get audible() {
+    return this.playing && this.ctx?.state === 'running';
+  }
+
   /** call from a user gesture */
   async start() {
     if (this.muted) return;
     if (this.started) {
-      // already set up but held back by the browser: a gesture lets it run now
-      if (this.ctx?.state === 'suspended') void this.ctx.resume();
+      // already set up but held back by the browser ('suspended', or 'interrupted' in Safari): a gesture lets it run now
+      if (this.ctx && this.ctx.state !== 'running') void this.ctx.resume();
       if (this.music?.paused) void this.music.play().catch(() => {});
       return;
     }
@@ -71,6 +76,7 @@ export class LandingAudio {
     const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return;
     const ctx = (this.ctx = new Ctx());
+    ctx.onstatechange = () => this.onChange();
     void ctx.resume();
     this.master = ctx.createGain();
     this.master.gain.value = 0;
@@ -103,6 +109,11 @@ export class LandingAudio {
   }
 
   toggle() {
+    // on but still held back by the browser (the button shows it off): this click lets it play, it doesn't mute
+    if (this.playing && !this.audible) {
+      void this.start();
+      return;
+    }
     this.muted = !this.muted;
     try {
       sessionStorage.setItem(MUTE_KEY, this.muted ? '1' : '0');

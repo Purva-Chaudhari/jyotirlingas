@@ -1,0 +1,21 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/).
+# Textures, models, skies, audio and map data rarely change: browsers keep them for a week, and for a day after
+# that use the copy they have while checking for a newer one. Without this every visit downloaded them again.
+
+/assets/tex/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/assets/models/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/assets/hdri/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/audio/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/data/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/landing/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
