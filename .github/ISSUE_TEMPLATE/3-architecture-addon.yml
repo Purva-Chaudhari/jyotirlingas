@@ -1,0 +1,46 @@
+name: ✨ Architecture add-on
+description: Propose a new feature, system or capability for the site.
+title: "[Add-on]: "
+labels: ["architecture", "enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to add?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does it matter?
+      description: Who it helps (devotees, first-time visitors, phone users …) and how.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Landing / India map
+        - Temple 3D world
+        - Stories and narration
+        - Sound and music
+        - Languages (Hindi, regional)
+        - Multiplayer / metaverse
+        - Other
+  - type: textarea
+    id: design
+    attributes:
+      label: How could it be built?
+      description: Rough design, new modules, data or libraries it would need.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to help build this.

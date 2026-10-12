@@ -1,0 +1,50 @@
+name: 🛠️ Architecture fix
+description: Improve how existing code is built (refactor, performance, structure, tech debt).
+title: "[Arch fix]: "
+labels: ["architecture", "refactor"]
+body:
+  - type: textarea
+    id: area
+    attributes:
+      label: Which part of the code?
+      description: Files, modules or systems involved.
+      placeholder: e.g. src/landing/cosmos.ts, src/temples/engine/…
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong with it today?
+      description: The limitation, slowness, duplication or fragility, and how it shows up.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: How you would restructure it. Sketches or code snippets welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of fix
+      multiple: true
+      options:
+        - Performance (load time, frame rate, memory)
+        - Mobile / touch
+        - Code structure / refactor
+        - Build, tooling or deploy
+        - Accessibility
+        - Other
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risks and what to test
+      description: What could break, and how to check it still works.
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to send a pull request for this.

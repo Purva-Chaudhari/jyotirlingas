@@ -1,0 +1,48 @@
+name: 📜 Story or tradition
+description: Suggest a legend, ritual or local tradition for a temple, or correct one.
+title: "[Story]: "
+labels: ["story", "content"]
+body:
+  - type: dropdown
+    id: temple
+    attributes:
+      label: Temple
+      options:
+        - Somnath
+        - Mallikarjuna
+        - Mahakaleshwar
+        - Omkareshwar
+        - Kedarnath
+        - Bhimashankar
+        - Kashi Vishwanath
+        - Trimbakeshwar
+        - Vaidyanath
+        - Nageshwar
+        - Rameshwaram
+        - Grishneshwar
+        - All / general
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: This is
+      options:
+        - A new story or tradition
+        - A correction to an existing one
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: The story
+      description: Tell it in your own words (English or Hindi).
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Purana, book, temple trust, priest, or family tradition. Links welcome.
+    validations:
+      required: true

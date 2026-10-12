@@ -1,0 +1,31 @@
+name: 📷 Pictures
+description: Share your own photos of a temple to make its 3D world truer.
+title: "[Pictures]: "
+labels: ["pictures", "content"]
+body:
+  - type: input
+    id: temple
+    attributes:
+      label: Temple and spot
+      placeholder: e.g. Mahakaleshwar, the Kotitirtha kund
+    validations:
+      required: true
+  - type: textarea
+    id: photos
+    attributes:
+      label: Photos
+      description: Drag images here. Please only share pictures you took yourself.
+    validations:
+      required: true
+  - type: input
+    id: credit
+    attributes:
+      label: Credit as
+      description: The name to credit you under, or leave empty to stay anonymous.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Permission
+      options:
+        - label: I took these photos and allow them to be published under CC BY 4.0.
+          required: true

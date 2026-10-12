@@ -1,0 +1,58 @@
+name: 🐞 Bug
+description: Something is broken or behaves wrongly on the site.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping fix the site. The more exact the details, the faster it gets fixed.
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      options:
+        - Landing (the journey, India map, About)
+        - A temple page (which one below)
+        - Sound / music
+        - Narration / stories
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page link
+      placeholder: e.g. https://…/proto.html?temple=mahakaleshwar
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open …
+        2. Scroll / click …
+        3. See …
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      multiple: true
+      options: [Desktop, Phone, Tablet]
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: e.g. Chrome 130 on Android 14, Safari on iOS 18
+  - type: textarea
+    id: shots
+    attributes:
+      label: Screenshots or recording
+      description: Drag images or a video here.
