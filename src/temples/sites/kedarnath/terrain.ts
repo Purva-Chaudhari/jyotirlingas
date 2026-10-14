@@ -249,7 +249,7 @@ export function buildTerrain(root: THREE.Group, pending: Promise<unknown>[]) {
     tDebris: { value: null as THREE.Texture | null },
     tRock: { value: null as THREE.Texture | null },
     tSnow: { value: null as THREE.Texture | null },
-    hazeCol: { value: new THREE.Color(0.62, 0.74, 0.92) },
+    hazeCol: { value: new THREE.Color(0.55, 0.7, 0.95) },
   };
   pending.push(Promise.all([
     diffuse('assets/tex/rocky_terrain_02_diff.webp'), diffuse('assets/tex/gray_rocks_diff.webp'),
@@ -273,34 +273,41 @@ export function buildTerrain(root: THREE.Group, pending: Promise<unknown>[]) {
         float th(vec2 q) { return fract(sin(dot(q, vec2(127.1, 311.7))) * 43758.5453); }
         float tn(vec2 q) { vec2 i = floor(q), f = fract(q); f = f * f * (3.0 - 2.0 * f);
           return mix(mix(th(i), th(i + vec2(1, 0)), f.x), mix(th(i + vec2(0, 1)), th(i + vec2(1, 1)), f.x), f.y); }
-        float kh(vec2 q) { return tn(q / 131.0) * 25.0 + tn(q / 37.0 + 3.1) * 8.0 + tn(q / 11.0 - 1.7) * 2.5 + tn(q / 3.3) * 0.5; }
+        // (q in cells, px = one screen pixel in cells: noise finer than a couple of pixels can't be shown, only
+        // flicker as the camera moves, so it fades to its mean)
+        float tnA(vec2 q, float px) { return mix(tn(q), 0.5, smoothstep(0.25, 0.6, px)); }
+        float kh(vec2 q, float fw) { return tnA(q / 131.0, fw / 131.0) * 25.0 + tnA(q / 37.0 + 3.1, fw / 37.0) * 8.0
+          + tnA(q / 11.0 - 1.7, fw / 11.0) * 2.5 + tnA(q / 3.3, fw / 3.3) * 0.5; }
         vec3 tri(sampler2D t, vec2 p, float s) {
           return texture2D(t, p / s).rgb * 0.65 + texture2D(t, p / (s * 7.3) + 0.37).rgb * 0.35;
         }`)
       .replace('#include <map_fragment>', `
         if (length(vWp.xz - vec2(${f1(SAMADHI.x)}, ${f1(SAMADHI.z)})) < ${f1(SAMADHI.r - 0.02)}) discard; // the sunken Samadhi court
-        vec2 kp;
+        vec2 kp; float kfw;
         {
           // texture in true (uncompressed) metres so distant faces are not smeared
           float rc = length(vWp.xz);
           float rr = rc < ${f1(RC)} ? rc : ${f1(RC)} - ${f1(D)} * log(max(1e-6, 1.0 - (rc - ${f1(RC)}) / ${f1(D)}));
           vec2 p = vWp.xz * (rr / max(rc, 1.0));
           kp = p;
+          // one screen pixel, in metres of ground
+          float fw = max(length(dFdx(p)), length(dFdy(p)));
+          kfw = fw;
           float far = smoothstep(150.0, 900.0, vInfo.x);
           // mottling at several scales: lichen, wet patches, sun-burnt turf
-          float m1 = tn(p / 23.0), m2 = tn(p / 71.0 + 4.0), m3 = tn(p / 260.0 - 2.0);
+          float m1 = tnA(p / 23.0, fw / 23.0), m2 = tnA(p / 71.0 + 4.0, fw / 71.0), m3 = tnA(p / 260.0 - 2.0, fw / 260.0);
           float mott = 0.72 + 0.28 * m1 + 0.3 * (m2 - 0.5) + 0.35 * (m3 - 0.5);
           vec3 grass = tri(tGrass, p, 9.0) * 0.72;
           // late-season turf: mostly russet and straw-brown, green only in damp hollows
           float gl = dot(grass, vec3(0.33));
           // alpine meadow: olive-green turf with russet and straw patches
           // olive-green alpine turf (≈ sRGB 95,105,65 on average), russet only in dry patches
-          vec3 olive = vec3(0.105, 0.125, 0.07) * (0.65 + gl * 1.1); // green-grey alpine meadow
+          vec3 olive = vec3(0.085, 0.15, 0.05) * (0.7 + gl * 1.1); // summer alpine meadow, fresh green
           vec3 russet = vec3(gl) * vec3(1.3, 1.0, 0.6);
-          grass = mix(olive, russet, smoothstep(0.42, 0.62, m2 * 0.55 + vInfo.y * 0.45) * 0.55);
+          grass = mix(olive, russet, smoothstep(0.42, 0.62, m2 * 0.55 + vInfo.y * 0.45) * 0.3);
           grass = mix(grass, vec3(gl) * vec3(0.95, 0.95, 0.9), smoothstep(0.6, 0.85, m1) * 0.4); // grey scree among the turf
           // scattered rocks and stones poking through the meadow
-          float spk = smoothstep(0.74, 0.8, tn(p / 5.0) * 0.6 + tn(p / 1.7 + 7.0) * 0.4);
+          float spk = smoothstep(0.74, 0.8, tnA(p / 5.0, fw / 5.0) * 0.6 + tnA(p / 1.7 + 7.0, fw / 1.7) * 0.4);
           grass = mix(grass, vec3(0.17, 0.17, 0.165) * (0.7 + m1 * 0.6), spk * 0.85 * (1.0 - far));
           vec3 deb = tri(tDebris, p, 6.0);
           deb = mix(deb, vec3(dot(deb, vec3(0.33))), 0.6) * vec3(0.6, 0.62, 0.64);
@@ -309,18 +316,18 @@ export function buildTerrain(root: THREE.Group, pending: Promise<unknown>[]) {
           rock = mix(rock, vec3(lr) * vec3(0.98, 0.9, 0.82), 0.85) * 0.4;
           vec3 snow = mix(vec3(1.0, 1.0, 1.02), tri(tSnow, p, 14.0) * 1.1, 0.25);
           // far away the scans average out: lean on flat albedos
-          grass = mix(grass, mix(vec3(0.1, 0.115, 0.05), vec3(0.15, 0.12, 0.06), smoothstep(0.35, 0.6, m3 * 0.5 + vInfo.y * 0.5)) * (0.75 + vInfo.y * 0.4), far * 0.35);
+          grass = mix(grass, mix(vec3(0.075, 0.13, 0.045), vec3(0.12, 0.13, 0.06), smoothstep(0.35, 0.6, m3 * 0.5 + vInfo.y * 0.5)) * (0.8 + vInfo.y * 0.4), far * 0.35);
           deb = mix(deb, vec3(0.16, 0.15, 0.14), far * 0.3);
           rock = mix(rock, vec3(0.1, 0.088, 0.075) * (0.7 + vInfo.y * 0.6), far * 0.3);
           grass *= mott; deb *= mix(1.0, mott, 0.7); rock *= mix(1.0, mott, 0.8);
           vec4 w = vWt / max(0.001, dot(vWt, vec4(1.0)));
           // snow can't hold on steep faces: dark rock buttresses and ribs stripe the snow wall
           float steep = 1.0 - normalize(vWN).y;
-          float ribs = tn(vec2(p.x / 55.0, p.y / 140.0) + 11.0) * 0.6 + tn(p / 23.0) * 0.4;
+          float ribs = tnA(vec2(p.x / 55.0, p.y / 140.0) + 11.0, fw / 55.0) * 0.6 + tnA(p / 23.0, fw / 23.0) * 0.4;
           // couloirs and rock streaks running down the fall line: long in the slope direction, narrow across it
           vec2 fall = normalize(vWN.xz + vec2(1e-4));
           vec2 acr = vec2(-fall.y, fall.x);
-          float cou = tn(vec2(dot(p, acr) / 45.0, dot(p, fall) / 400.0) + 3.0);
+          float cou = tnA(vec2(dot(p, acr) / 45.0, dot(p, fall) / 400.0) + 3.0, fw / 45.0);
           float cut = smoothstep(0.24, 0.3, steep + (ribs - 0.5) * 0.3) * w.w;
           cut = max(cut, smoothstep(0.62, 0.68, cou) * smoothstep(0.1, 0.2, steep) * w.w);
           vec3 darkRock = vec3(0.042, 0.042, 0.047) * (0.8 + ribs * 0.5); // ≈ #3a3a3e
@@ -332,15 +339,15 @@ export function buildTerrain(root: THREE.Group, pending: Promise<unknown>[]) {
           vec4 w = vWt / max(0.001, dot(vWt, vec4(1.0)));
           float amt = w.x * 0.3 + w.y * 0.6 + w.z * 1.4 + w.w * 0.15 * (1.0 - smoothstep(600.0, 2500.0, vInfo.x));
           float e = 1.5;
-          float dx = (kh(kp + vec2(e, 0.0)) - kh(kp - vec2(e, 0.0))) / (2.0 * e);
-          float dz = (kh(kp + vec2(0.0, e)) - kh(kp - vec2(0.0, e))) / (2.0 * e);
+          float dx = (kh(kp + vec2(e, 0.0), kfw) - kh(kp - vec2(e, 0.0), kfw)) / (2.0 * e);
+          float dz = (kh(kp + vec2(0.0, e), kfw) - kh(kp - vec2(0.0, e), kfw)) / (2.0 * e);
           vec3 gW = vec3(-dx, 0.0, -dz) * amt;
           normal = normalize(normal + (viewMatrix * vec4(gW, 0.0)).xyz);
         }`)
       .replace('#include <opaque_fragment>', `#include <opaque_fragment>
         {
           float haze = 1.0 - exp(-max(0.0, vInfo.x - 500.0) / 40000.0);
-          gl_FragColor.rgb = mix(gl_FragColor.rgb, hazeCol, clamp(haze, 0.0, 0.45));
+          gl_FragColor.rgb = mix(gl_FragColor.rgb, hazeCol, clamp(haze, 0.0, 0.3));
         }`);
   };
   mat.customProgramCacheKey = () => 'kedar-terrain';

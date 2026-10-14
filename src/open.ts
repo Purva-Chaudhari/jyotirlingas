@@ -3,7 +3,7 @@
  * others are "coming soon" on the landing page and their addresses lead back there. Dev tools can still open
  * any temple with ?temple=<id>&preview=1.
  */
-export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar']);
+export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath']);
 
 /** every temple's address (/<id>): the open ones enter, the rest lead back to the landing page */
 export const ALL_TEMPLES: readonly string[] = [
@@ -26,6 +26,13 @@ export const TEMPLE_FILES: Readonly<Record<string, readonly string[]>> = {
       'stone_wall_04', 'pavement_01', 'painted_plaster_wall', 'bark_brown_02', 'marble_01'),
     'data/osm/mahakaleshwar.json',
   ],
+  kedarnath: [
+    'assets/hdri/kloofendal_48d_partly_cloudy_puresky_2k.hdr',
+    'assets/models/shankaracharya.glb',
+    ...scan('large_grey_tiles', 'aerial_rocks_02'),
+    'assets/tex/rocky_terrain_02_diff.webp', 'assets/tex/gray_rocks_diff.webp', 'assets/tex/aerial_rocks_02_diff.webp',
+    'assets/tex/snow_02_diff.webp',
+  ],
 };
 
 /** What the temple page shows while a temple loads: its name, its place, and a few facts (from its stories) in turn. */
@@ -43,6 +50,21 @@ export const TEMPLE_INTRO: Readonly<Record<string, { hi: string; en: string; pla
       'The Nagchandreshwar shrine, on the temple’s top storey, opens only once a year, on Nag Panchami.',
       'Every twelve years Ujjain hosts the Simhastha Kumbh on the Kshipra; the next is due in 2028.',
       'Shri Mahakal Lok, the corridor of carved pillars and Shiva Purana murals beside the temple, opened in October 2022.',
+    ],
+  },
+  kedarnath: {
+    hi: 'श्री केदारनाथ',
+    en: 'Kedarnath Jyotirlinga',
+    place: 'Garhwal Himalaya · at the head of the Mandakini valley',
+    facts: [
+      'At about 3,583 metres, Kedarnath is the highest of the twelve Jyotirlingas.',
+      'The last 16 km to the temple, from Gaurikund, are walked on foot, or by pony, palki or helicopter.',
+      'The Lord here is no carved linga but a broad rock like a bull’s hump: the Pandavas’ story says Shiva sank into the earth here as a bull.',
+      'The temple is open only half the year. On Bhai Dooj the doors close, and Baba Kedar is carried down to Ukhimath for the winter.',
+      'The temple is built of great grey stone slabs on a raised platform; tradition credits Adi Shankaracharya with building it in the 8th century.',
+      'In the June 2013 flood a huge boulder, now worshipped as Bhim Shila, came to rest behind the temple, and the torrent passed it by.',
+      'Behind the temple, Adi Shankaracharya’s 12-foot statue sits in a sunken court; it was unveiled in November 2021.',
+      'Kedarnath is one of the Char Dham of Uttarakhand, and one of the Panch Kedar.',
     ],
   },
 };

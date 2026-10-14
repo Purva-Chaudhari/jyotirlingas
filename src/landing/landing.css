@@ -175,6 +175,11 @@ body.hub.glass-hub #thought.on { opacity: 1; }
   border: 1px solid rgba(240, 212, 154, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 0 28px rgba(240, 190, 110, 0.18); transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
 }
+/* narrow phones (and iPhones with Display Zoom, 320 px wide): tighter, and never wider than the screen */
+#gate-enter { max-width: calc(100vw - 32px); }
+@media (max-width: 400px) {
+  #gate-enter { font-size: 14px; letter-spacing: 0.24em; text-indent: 0.24em; padding: 14px 26px; }
+}
 #gate-enter:hover, #gate-enter:focus-visible { color: #fff; border-color: rgba(255, 228, 170, 0.95); box-shadow: 0 0 36px rgba(240, 190, 110, 0.4); outline: none; }
 /* the journey's own hints wait behind it */
 body.gated #hint, body.gated #scrollcue, body.gated #rail, body.gated #skip, body.gated #sound, body.gated #chapter { visibility: hidden; }

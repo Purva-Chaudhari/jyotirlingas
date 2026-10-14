@@ -67,13 +67,14 @@ const FlameShader = {
 };
 
 const GradeShader = {
-  uniforms: { tDiffuse: { value: null }, time: { value: 0 } },
+  uniforms: { tDiffuse: { value: null }, time: { value: 0 }, sat: { value: 1 }, gain: { value: 1 } },
   vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
   fragmentShader: /* glsl */ `
-    uniform sampler2D tDiffuse; uniform float time; varying vec2 vUv;
+    uniform sampler2D tDiffuse; uniform float time; uniform float sat; uniform float gain; varying vec2 vUv;
     float rand(vec2 co){ return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453); }
     void main(){
       vec3 c = texture2D(tDiffuse, vUv).rgb;
+      c = max(mix(vec3(dot(c, vec3(0.2126, 0.7152, 0.0722))), c, sat), 0.0) * gain;
       vec2 uv = vUv - 0.5;
       c *= 1.0 - dot(uv, uv) * 0.7;
       c += (rand(vUv * vec2(1733.0, 977.0) + fract(time)) - 0.5) * 0.018;
@@ -96,7 +97,8 @@ class ScenePass extends Pass {
   }));
   constructor(private scene: THREE.Scene, private camera: THREE.Camera, samples = 4) {
     super();
-    this.target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples, depthTexture: new THREE.DepthTexture(1, 1) });
+    const depth = new THREE.DepthTexture(1, 1, THREE.FloatType); // (reversed depth needs float depth to gain anything)
+    this.target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples, depthTexture: depth });
   }
   setSize(w: number, h: number) { this.target.setSize(w, h); }
   render(renderer: THREE.WebGLRenderer, writeBuffer: THREE.WebGLRenderTarget) {
@@ -243,7 +245,8 @@ export class TempleWorld {
   /** render resolution: up to 1.5× on retina (1.25 / 1 on phones), lowered in 0.25 steps only while frames run slow */
   private maxPixelRatio: number;
   private pixelRatio: number;
-  private perf = { frames: 0, time: 0, good: 0, slow: 0 };
+  /** cap: the highest resolution that held (set when a step up had to be taken back) */
+  private perf = { frames: 0, time: 0, good: 0, slow: 0, bad: 0, drops: 0, upAt: -1e9, downAt: -1e9, cap: Infinity, from: 0 };
   /** the last measured frame rate (dev/testing) */
   fps = 0;
   /**
@@ -275,7 +278,10 @@ export class TempleWorld {
 
   constructor(private canvas: HTMLCanvasElement, private site: SiteDef) {
     this.sunAzimuth = site.sunAzimuth ?? DEFAULT_SUN_AZIMUTH;
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+    // reversed depth (with the float depth target below): even depth precision from the nearest step to the far
+    // peaks; plain depth packed it near the eye and left mountains kilometres away fighting over ~7 m steps,
+    // their snow facets flickering as you walked (browsers without EXT_clip_control fall back by themselves)
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', reversedDepthBuffer: true });
     // the live site skips reading every shader's error log: that read waits for each compile to finish (~0.7 s
     // of stalls on Mahakal); in development the errors are still reported
     this.renderer.debug.checkShaderErrors = import.meta.env.DEV;
@@ -336,6 +342,8 @@ export class TempleWorld {
     };
     this.composer.addPass(this.bloom);
     this.grade = new ShaderPass(GradeShader);
+    this.grade.uniforms.sat.value = this.site.grade?.saturation ?? 1;
+    this.grade.uniforms.gain.value = this.site.grade?.exposure ?? 1;
     this.composer.addPass(this.grade);
     this.composer.addPass(new OutputPass());
 
@@ -371,7 +379,22 @@ export class TempleWorld {
     ao.setSize = (w: number, h: number) => aoSize(Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(h / 2)));
     ao.blendIntensity = 0.9;
     ao.updateGtaoMaterial({ radius: 0.6, distanceExponent: 1.5, thickness: 1.2, scale: 1.1 });
+    ao.setSceneClipBox(this.aoBox); // (from the start, so its shader is built once; aoNear moves it each frame)
     this.composer.addPass(ao);
+  }
+
+  /**
+   * Ambient occlusion only within ~150 m of the viewer: its 0.6 m shading is sub-pixel beyond that, and far
+   * off the depth buffer is too coarse for it (several metres per step on a mountain kilometres away), so
+   * it turned distant slopes into noise that crawled with every step.
+   */
+  private aoBox = new THREE.Box3();
+  private aoNear() {
+    if (!this.ao?.enabled) return;
+    const r = 150;
+    this.aoBox.min.copy(this.camera.position).subScalar(r);
+    this.aoBox.max.copy(this.camera.position).addScalar(r);
+    this.ao.setSceneClipBox(this.aoBox);
   }
 
   /**
@@ -411,6 +434,12 @@ export class TempleWorld {
       }
     });
     for (const t of textures) this.renderer.initTexture(t);
+    // then let go of the decoded copies the page itself holds: once an image is on the GPU it is never read
+    // again, and on phones (one memory for both) keeping every 2k image twice crashed iOS Safari's tab
+    for (const t of textures) {
+      const img = t.image as ImageBitmap | null;
+      if (typeof ImageBitmap !== 'undefined' && img instanceof ImageBitmap) img.close();
+    }
   }
 
   /** phones: cheaper texture filtering (set before the textures are first uploaded, in precompile) */
@@ -435,7 +464,7 @@ export class TempleWorld {
 
   /**
    * iOS Safari (and Android under memory pressure) can take the WebGL context away. Say so, offer a
-   * reload, and carry on by itself if the browser gives the context back.
+   * reload, and reload by itself if the browser gives the context back.
    */
   private watchContext(canvas: HTMLCanvasElement) {
     let box: HTMLElement | null = null;
@@ -449,17 +478,14 @@ export class TempleWorld {
         box.innerHTML = `<p class="t">The temple paused</p>
           <p>Your browser reclaimed the graphics memory (this happens on phones when memory runs low).</p>
           <button type="button" class="gold">Reload the temple</button>
-          <p class="small">It may also come back by itself in a moment.</p>`;
+          <p class="small">It may also reload by itself in a moment.</p>`;
         box.querySelector('button')!.addEventListener('click', () => location.reload());
         document.body.append(box);
       }
       box.classList.add('on');
     });
-    canvas.addEventListener('webglcontextrestored', () => {
-      box?.classList.remove('on');
-      this.resize();
-      if (this.running) this.renderer.setAnimationLoop((ts) => this.frame(ts));
-    });
+    // (the decoded images are let go once uploaded, so a restored context has nothing to re-upload: start again)
+    canvas.addEventListener('webglcontextrestored', () => location.reload());
   }
 
   private buildLights() {
@@ -568,8 +594,14 @@ export class TempleWorld {
     hiSrc.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material; if ((o as THREE.Mesh).isMesh && m.name) byName.set(m.name, m); });
     loSrc.traverse((o) => {
       const mesh = o as THREE.Mesh;
-      const same = mesh.isMesh ? byName.get((mesh.material as THREE.Material).name) : undefined;
-      if (same) mesh.material = same;
+      const own = mesh.material as THREE.MeshStandardMaterial;
+      const same = mesh.isMesh ? byName.get(own.name) : undefined;
+      if (!same || same === own) return;
+      mesh.material = same;
+      // (its own copies of the images are never drawn: free them now)
+      for (const t of [own.map, own.normalMap, own.roughnessMap, own.metalnessMap, own.aoMap]) {
+        if (typeof ImageBitmap !== 'undefined' && t?.image instanceof ImageBitmap) t.image.close();
+      }
     });
     const box = new THREE.Box3().setFromObject(hiSrc);
     const h = box.max.y - box.min.y;
@@ -995,6 +1027,7 @@ export class TempleWorld {
     this.frameNo++;
     const every = this.profile.shadowEvery;
     if (every > 1 && this.frameNo % every === 0) this.renderer.shadowMap.needsUpdate = true;
+    this.aoNear();
     this.composer.render();
     this.adaptResolution(dt);
   }
@@ -1014,27 +1047,40 @@ export class TempleWorld {
 
   /**
    * Keep walking smooth on slower GPUs: if the frame rate sits below ~48 fps, drop the render
-   * resolution a notch (down to 1×); when it has headroom again, step back up to full sharpness.
+   * resolution a notch (down to 1×), and let it settle there. Every change is seen as the whole picture going
+   * softer or sharper, so: a step down needs two slow readings in a row (3 s, not one heavy view); a step up
+   * needs ~9 s of headroom and 20 s since the last step down; a step up taken back within 8 s caps the
+   * resolution below it; and after a second step down it stays put. (Right on the edge, Kedarnath on a laptop
+   * screen flipped between 1.5× and 1.25× every ~6 s and the picture pulsed.)
    */
   private adaptResolution(dt: number) {
     if (dt >= 0.05) return; // a hitch or a hidden tab, not a measure of steady speed
     const p = this.perf;
+    // the first seconds after the temple appears are still uploading textures and warming shaders: not a measure
+    p.from ||= performance.now() + 6000;
+    if (performance.now() < p.from) return;
     p.frames++; p.time += dt;
     if (p.time < 1.5) return;
     const fps = p.frames / p.time;
     this.fps = fps;
     p.frames = 0; p.time = 0;
     const floor = this.profile.minPixelRatio;
-    if (fps < 48 && this.pixelRatio > floor) {
+    const now = performance.now();
+    p.bad = fps < 48 ? p.bad + 1 : 0;
+    if (p.bad >= 2 && this.pixelRatio > floor) {
+      if (now - p.upAt < 8000) p.cap = this.pixelRatio - 0.25;
       this.pixelRatio = Math.max(floor, this.pixelRatio - 0.25);
-      p.good = 0;
+      p.good = 0; p.bad = 0; p.downAt = now;
+      if (++p.drops >= 2) p.cap = Math.min(p.cap, this.pixelRatio);
       this.resize();
-    } else if (this.profile.tier === 'mobile' && fps < 28 && ++p.slow >= 2) {
+    } else if (fps <= 57) {
+      p.good = 0;
       // fps probe: a phone still slow at its lowest resolution drops to the 'low' profile
-      this.downgrade();
-    } else if (fps > 57 && this.pixelRatio < this.maxPixelRatio && ++p.good >= 3) {
+      if (this.profile.tier === 'mobile' && this.pixelRatio <= floor && fps < 28 && ++p.slow >= 2) this.downgrade();
+    } else if (this.pixelRatio < Math.min(this.maxPixelRatio, p.cap) && ++p.good >= 6 && now - p.downAt > 20000) {
       this.pixelRatio = Math.min(this.maxPixelRatio, this.pixelRatio + 0.25);
       p.good = 0;
+      p.upAt = now;
       this.resize();
     }
   }

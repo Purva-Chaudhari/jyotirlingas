@@ -90,14 +90,16 @@ export const STOPS: Record<string, Record<string, Anchor>> = {
     garbhagriha: [0, 0.45, -6.4, 1.0], // the lower antarala landing, at the sanctum door and its mirror
   },
   kedarnath: {
-    // +z south (the approach), +x east; square 0, temple floor 1.0; walk: plaza → round the back (Bhim Shila,
-    // the Samadhi through the wall gate) → Nandi → mandapa → sanctum
+    // +z south (the approach), +x east; square 0, temple floor 1.0; walk: plaza → the west wall → round the back
+    // (Bhim Shila, the Samadhi through the wall gate) → Nandi → mandapa → sanctum → out to the balustrade
     plaza: [0, 0, 44, 6], // the head of the steps up from the approach street (the spawn), the temple ahead
+    walls: [-10.5, 0, -1, 3.5], // beside the west wall on the way round to Bhim Shila
     bhimshila: [-3, 0, -21, 4], // between the shrine's back wall and the boulder
     samadhi: [16, 0, -44, 4], // the walk from the wall gate to the head of the stair (the court below is zone 'samadhi')
     nandi: [2.2, 0, 16.8, 3.5], // behind Nandi, looking at the door
     mandapa: [1.5, 1.0, 2.5, 3],
-    garbhagriha: [1.6, 1.0, -8.3, 2], // inside the sanctum door, beside the rock's kerb
+    garbhagriha: [0, 1.0, -4.3, 1.4], // the head of the passage to the sanctum, before the door: clear of the aarti inside
+    valley: [-22, 0, 48, 4], // at the square's south balustrade, looking down the valley (after darshan, on the way out)
   },
   grishneshwar: {
     // +z east, +x north; court 0, mandapa 1.5, sanctum floor 0.45; walk: court → out of the south gate → lane →
@@ -161,8 +163,8 @@ export const DARSHAN: Record<string, Darshan> = {
   nageshwar: { at: [13.2, -0.3, 0.9, 2.2], zones: ['garbhagriha'], source: [14.35, 0.05, 0.15] },
   // darshan from the lower antarala at the sanctum door (the queue sees the hollow in the mirror), or inside
   trimbakeshwar: { at: [0, 0.45, -6.4, 1.2], zones: ['garbhagriha'], source: [-0.08, 0.45, -9] },
-  // in front of the rock's kerb, inside the sanctum door
-  kedarnath: { at: [0, 1.0, -8.4, 2.5], zones: ['garbhagriha'], source: [0, 1.5, -10.6] },
+  // in front of the rock's kerb, inside the sanctum door (only: the garbhagriha story is told out in the passage)
+  kedarnath: { at: [0, 1.0, -8.4, 1.4], zones: ['garbhagriha'], source: [0, 1.5, -10.6] },
   // the cell below the mandapa, east of the linga (it faces east, to the door)
   grishneshwar: { at: [0, 0.45, 1.6, 2.0], zones: ['garbhagriha'], source: [0, 0.6, 0] },
   // the brass rail in the garbhagriha door passage, reaching back into the ardha mandapam

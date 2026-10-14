@@ -66,7 +66,11 @@ export class AartiPlayer {
    * `steady`: a slow frame never bunches the beats up (missed beats are skipped, not crammed in at once) and
    * the panning is the cheap equal-power kind (no HRTF convolution competing with the renderer)
    */
-  constructor(ctx: AudioContext, out: AudioNode, private file: AartiAudio | null, private steady = false) {
+  /**
+   * `media`: the element the recording plays through, made (and unlocked by a tap) up front by the story system:
+   * iOS Safari won't let an element first played on walking up to the lingam start by itself
+   */
+  constructor(ctx: AudioContext, out: AudioNode, private file: AartiAudio | null, private steady = false, private media?: HTMLAudioElement) {
     this.ctx = ctx;
     this.bus = ctx.createGain();
     this.bus.gain.value = file ? 0.9 : 0.55;
@@ -133,7 +137,7 @@ export class AartiPlayer {
     this.running = true;
     if (this.usingFile) {
       if (!this.el) {
-        const el = (this.el = new Audio());
+        const el = (this.el = this.media ?? new Audio());
         el.crossOrigin = 'anonymous';
         el.loop = true;
         el.preload = 'auto';

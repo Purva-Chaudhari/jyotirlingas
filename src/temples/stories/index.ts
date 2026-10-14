@@ -4,6 +4,7 @@ import type { Soundscape } from '../sound';
 import type { SiteDef } from '../sites/types';
 import { STOPS, DARSHAN, type Anchor } from './anchors';
 import { AartiPlayer, pickAudio, usableLicense } from './aarti';
+import { unlockMedia } from './unlock';
 import { StoryCard } from './card';
 import { JYOTIRLINGAS, nextOnYatra } from './catalog';
 import { AartiChip, ProgressHud, SoundControls } from './hud';
@@ -91,6 +92,8 @@ export class StorySystem {
   private markers: StoryMarkers | null = null;
   private stops: Live[] = [];
   private aarti: AartiPlayer | null = null;
+  /** the recorded aarti's element, made now so the first tap can unlock it for iOS (see unlock.ts) */
+  private aartiEl = new Audio();
   /** the temple's real aarti on YouTube; null before the darshan spot, and after it failed */
   private yt: YouTubeAarti | null = null;
   /** why YouTube was given up on this visit ('' = not given up): the synthesized aarti plays instead */
@@ -184,9 +187,12 @@ export class StorySystem {
       void this.sound.context?.resume().catch(() => {});
       // a gesture may also unblock the YouTube aarti
       this.yt?.resume();
+      // and lets the narration and the recorded aarti start by themselves later (iOS Safari)
+      this.card.unlock();
+      unlockMedia(this.aartiEl);
     };
-    window.addEventListener('pointerdown', wake);
-    window.addEventListener('keydown', wake);
+    // (iOS counts a tap's touchend/click as the gesture, not its pointerdown)
+    for (const ev of ['pointerdown', 'touchend', 'click', 'keydown']) window.addEventListener(ev, wake, { passive: true });
   }
 
   /** start reacting to the pilgrim (after entering the temple) */
@@ -493,7 +499,7 @@ export class StorySystem {
       return;
     }
     if (!ctx || !out) return;
-    this.aarti = new AartiPlayer(ctx, out, file, this.calm);
+    this.aarti = new AartiPlayer(ctx, out, file, this.calm, this.aartiEl);
     this.aarti.setDuck(this.speaking);
     this.updateChipText();
   }

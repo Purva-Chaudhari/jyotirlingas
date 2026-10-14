@@ -7,6 +7,7 @@ import type { KMats } from './mats';
 import { applyScan } from './mats';
 import type { Offerings } from './flowers';
 import { goldWallMaps, goldCeilingMaps, omPanelMaps } from './goldwork';
+import { buildPriests } from '../mahakaleshwar/priests';
 
 /**
  * The garbhagriha of Kedarnath (6 × 6 m inside).
@@ -110,8 +111,10 @@ export function buildSanctum(
   // (sl10: the kerb is silver-grey white metal ≈0.25 m high and ≈0.2 m wide; the rock rises out of
   // a basin of wet floor strewn with flowers, milk and water; copper hip-roofed boxes stand on the
   // kerb's corners)
-  const RZ = zc; // rock centre
-  const KX = 1.56, KZ = 1.26; // kerb outer half-extents (≈3.1 × 2.5 m)
+  const RZ = zc - 0.1; // rock centre
+  // kerb outer half-extents (≈3.5 × 3.0 m): wide enough for a rock some 12 ft along, with a pilgrim's step of floor
+  // left before the door and clear of the corner pillars
+  const KX = 1.75, KZ = 1.5;
   const KW = 0.2, KTOP = F + 0.25;
   // bright silver-grey white metal: neutral studio reflections only, so the warm lamps don't gild it
   const silverK = new THREE.MeshStandardMaterial({
@@ -139,23 +142,24 @@ export function buildSanctum(
   }
 
   // ---------------- the rock ----------------
-  // a low, broad, lopsided hump: ≈0.42 m high, ≈2.3 × 1.75 m on plan, the hump high towards the
-  // north-west end and running out long and low to the south-east
-  const HT = 0.42, base = F + 0.06, ROT = -0.18;
+  // a broad, lopsided, three-faced hump, as photographed with pilgrims seated round it: crest ≈1.2 m above the basin,
+  // ≈2.7 × 2.1 m on plan (some 12 ft along), rising to a blunt ridge high towards the north-west end and running out
+  // long and lower to the south-east
+  const HT = 0.95, base = F + 0.06, ROT = -0.18;
   const ca = Math.cos(ROT), sa = Math.sin(ROT);
   const bumps = Array.from({ length: 6 }, (_, i) => {
     const a = i * 2.3 + 0.7, rr = 0.15 + r() * 0.45;
     return { x: Math.cos(a) * rr * 0.85, z: Math.sin(a) * rr * 0.6, a: 0.06 + r() * 0.05, w: 0.18 + r() * 0.12 };
   });
-  /** outline radius scale for direction a (lumpy superellipse, ~0.9 × 0.65 m half-axes) */
+  /** outline radius scale for direction a (lumpy superellipse, ~1.35 × 1.05 m half-axes) */
   const outlineR = (a: number) => 1 + (fbm(Math.cos(a) * 1.6 + 3, Math.sin(a) * 1.6 - 2, 3) - 0.5) * 0.28;
   const rockH = (x: number, z: number) => {
     const lx = x * ca - z * sa, lz = x * sa + z * ca;
-    const u = lx / 1.1, v = lz / 0.84;
+    const u = lx / 1.35, v = lz / 1.05;
     const rr = Math.hypot(u, v) / outlineR(Math.atan2(v, u));
     if (rr >= 1) return -0.02;
-    // convex, blunt-crested dome; crest ridge a little behind and to the west
-    let h = HT * Math.pow(1 - Math.pow(rr, 2.6), 0.45);
+    // steep faces up to a blunt ridge (more pyramid than dome); the ridge a little behind and to the west
+    let h = HT * Math.pow(1 - Math.pow(rr, 1.9), 0.62);
     h *= 1 + 0.32 * Math.tanh((-u * 0.75 - v * 0.35) * 1.6) + 0.1 * Math.sin(u * 2.3 + v * 1.7);
     for (const b of bumps) {
       const d2 = ((lx - b.x) ** 2 + (lz - b.z) ** 2) / (b.w * b.w);
@@ -180,7 +184,7 @@ export function buildSanctum(
     for (let i = 0; i < NA; i++) {
       const a = (i / NA) * Math.PI * 2;
       const R = outlineR(a) * Math.min(tt, 1.04) * 0.999;
-      const lx = Math.cos(a) * R * 1.1, lz = Math.sin(a) * R * 0.84;
+      const lx = Math.cos(a) * R * 1.35, lz = Math.sin(a) * R * 1.05;
       const x = lx * ca + lz * sa, z = -lx * sa + lz * ca;
       const h = tt >= 1 ? -0.02 : rockH(x, z);
       pos.push(x, h, z);
@@ -285,7 +289,7 @@ export function buildSanctum(
   // the chhatra's kalash pendant serves as the jaladhari: a thin stream drips from it onto the crest
   const crest = surf(-0.15, 0.05);
   {
-    const cx = crest.p.x * 0.4, y = F + 2.45 - 0.28 - 0.37;
+    const cx = crest.p.x * 0.4, y = F + 2.95 - 0.28 - 0.37; // (the chhatra hangs at F + 2.95)
     const water = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.006, 1, 6),
       new THREE.MeshStandardMaterial({ color: 0xdfe8f0, roughness: 0.05, transparent: true, opacity: 0.5, envMap: env.neutral }));
     const top = new THREE.Vector3(cx, y, RZ), bot = crest.p.clone();
@@ -300,7 +304,7 @@ export function buildSanctum(
   {
     const silver = new THREE.MeshStandardMaterial({ color: 0xdcdee2, metalness: 1, roughness: 0.3, envMap: env.neutral, envMapIntensity: 0.42,
       normalMap: K.goldPlate.normalMap, normalScale: new THREE.Vector2(0.5, 0.5) });
-    const RC = 0.95, cy = F + 2.45, cx = crest.p.x * 0.4;
+    const RC = 0.95, cy = F + 2.95, cx = crest.p.x * 0.4;
     const prof: THREE.Vector2[] = [new THREE.Vector2(0, 0.62)];
     for (let i = 0; i <= 22; i++) {
       const tt = i / 22;
@@ -379,6 +383,22 @@ export function buildSanctum(
     B.geo(M.brass, new THREE.ConeGeometry(0.17, 0.14, 4, 1).rotateY(Math.PI / 4), M4(x, F + 1.25, z), false);
     flames.points.push(new THREE.Vector3(x, F + 0.92, z));
     P.solid(x - 0.25, F, z - 0.25, x + 0.25, F + 1.2, z + 0.25);
+  }
+
+  // ---------------- the pujaris (the Rawal's assistants) seated round the rock, as photographed with pilgrims at it:
+  // two on the far (north) side behind the kerb facing the door, one reading and one raising the aarti lamp; two
+  // along the west side facing it. The east side and the front stay clear for darshan.
+  {
+    const SAF = 0xf07a12, ORG = 0xff8a10, WHT = 0xf3eee2, RED = 0xb8241a;
+    const pr = buildPriests(g, [
+      { x: -0.8, y: F, z: RZ - KZ - 0.55, ry: 0.1, cloth: SAF, head: 'shaved', tilak: true, pose: 'aarti' },
+      { x: 0.75, y: F, z: RZ - KZ - 0.55, ry: -0.15, cloth: WHT, pose: 'read', head: 'hair', tilak: true },
+      { x: -KX - 0.55, y: F, z: RZ - 0.85, ry: Math.PI / 2 - 0.15, cloth: RED, dhoti: 0xece4d0, head: 'hair', tilak: true },
+      { x: -KX - 0.55, y: F, z: RZ + 1.15, ry: Math.PI / 2 + 0.1, cloth: ORG, head: 'shaved', pose: 'read' },
+    ], 29);
+    flames.points.push(...pr.flames);
+    P.solid(-1.4, F, RZ - KZ - 1.0, 1.3, F + 0.95, RZ - KZ - 0.1);
+    P.solid(-KX - 1.0, F, RZ - 1.3, -KX - 0.1, F + 0.95, RZ + 1.6);
   }
 
   const l = new THREE.PointLight(0xffd9a0, 3.6, 8, 1.4);

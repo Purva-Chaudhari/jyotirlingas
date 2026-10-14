@@ -18,6 +18,11 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const params = new URLSearchParams(location.search);
 
+// iOS: this page plays media (like a video), so the ringer's silent switch doesn't mute its Web Audio sound
+// (the drone, the bells, the aarti); Safari 16.4+, ignored elsewhere
+const audioSession = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+if (audioSession) audioSession.type = 'playback';
+
 /** Every temple URL opens straight in the temple: no intro screen and no globe flight. */
 const useFlight = false;
 

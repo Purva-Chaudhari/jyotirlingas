@@ -1,3 +1,4 @@
+import { unlockMedia } from './unlock';
 import type { Lang, Narration, StoryStop } from './types';
 import { stepSpeed, speedLabel } from './progress';
 import { detectTouch } from '../engine/profile';
@@ -71,6 +72,8 @@ export class StoryCard {
   private capEl: HTMLElement;
   private headEl: HTMLElement;
   private audio = new Audio();
+  /** the last play() was refused by the browser (no gesture yet) */
+  private blocked = false;
   private stop: StoryStop | null = null;
   private narr: Narration | null = null;
   private phrases: Phrase[] = [];
@@ -275,10 +278,21 @@ export class StoryCard {
   private async play() {
     try {
       await this.audio.play();
+      this.blocked = false;
     } catch {
-      /* autoplay blocked until the next user gesture: the play button stays available */
+      /* autoplay blocked until the next user gesture (unlock() then starts it): the play button stays available */
+      this.blocked = true;
       this.syncPlay();
     }
+  }
+
+  /**
+   * From a tap, click or key: a story the browser held back starts now; otherwise the narration element is
+   * unlocked so the next story may start by itself as you reach its spot (iOS Safari needs this).
+   */
+  unlock() {
+    if (this.blocked && this.open && this.audio.paused && !this.audio.ended && this.audio.getAttribute('src')) void this.play();
+    else unlockMedia(this.audio);
   }
 
   private async render(autoplay: boolean) {

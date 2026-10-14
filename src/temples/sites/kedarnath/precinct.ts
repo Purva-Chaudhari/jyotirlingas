@@ -8,6 +8,7 @@ import { pathY, scatterBoulders, SAMADHI } from './terrain';
 import { nandiMesh } from './nandi';
 import { offerings, type Offerings } from './flowers';
 import { shankaracharya } from './statue';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { facadeMaterial } from './facade';
 
 /**
@@ -45,9 +46,11 @@ export function buildPrecinct(root: THREE.Group, M: Materials, K: KMats, P: Phys
     B.box(K.stoneDark, 19, 1.6, 0.6, s * 24.5, -1.6, 50.3);
     B.box(K.stone, 19, 0.6, 0.45, s * 24.5, 0, 50.3);
     // stone balustrade along the square's front edge: square posts and a moulded top rail
-    for (let i = 0; i <= 19; i++) B.box(K.stone, 0.32, 0.55, 0.32, s * (15.2 + i), 0.6, 50.3);
-    B.box(K.carved, 19, 0.16, 0.42, s * 24.5, 1.15, 50.3);
-    P.solid(s > 0 ? 15 : -34, -2, 50, s > 0 ? 34 : -15, 1.5, 50.6);
+    // (on the west, the last 5.5 m stay open: the queue's covered corridor comes up into the square there, see queuePath)
+    const nb = s > 0 ? 19 : 13;
+    for (let i = 0; i <= nb; i++) B.box(K.stone, 0.32, 0.55, 0.32, s * (15.2 + i), 0.6, 50.3);
+    B.box(K.carved, nb, 0.16, 0.42, s * (15.2 + nb / 2), 1.15, 50.3);
+    P.solid(s > 0 ? 15 : -28.4, -2, 50, s > 0 ? 34 : -15, 1.5, 50.6);
     B.box(K.carved, 0.6, 1.4, 0.6, s * 15.2, 0, 50.3); // pier at the head of the steps
     // cheeks of the flight
     B.box(K.stone, 0.5, 0.6, 3.8, s * 15.25, -1.44, 51.8);
@@ -84,6 +87,9 @@ export function buildPrecinct(root: THREE.Group, M: Materials, K: KMats, P: Phys
     B.box(K.stone, 1.0, 4.6, 2.0, xa === -34 ? xb - 0.5 : xa + 0.5, 0, PLAZA.z0 - 1.6);
   }
   samadhi(B, K, M, g, P, flames);
+
+  // ---------- the golden trishul behind the temple, east of Bhim Shila ----------
+  trishul(B, K, P, 6.8, -24.5);
 
   // ---------- Bhim Shila: the boulder that shielded the temple in June 2013 ----------
   // an angular, slab-faced block ~8.6 m long and ~3.5 m high, its south face blackened by
@@ -479,18 +485,56 @@ function town(B: Batch, K: KMats, M: Materials, r: () => number, g: THREE.Group)
     }
   };
 
-  // along the approach street, both sides
+  // corrugated tin: world-space ridges every 7.6 cm (Batch gives world-metre UVs)
+  const corr = (() => {
+    const c = document.createElement('canvas');
+    c.width = 64; c.height = 4;
+    const g = c.getContext('2d')!;
+    for (let x = 0; x < 64; x++) { const v = 170 + 70 * Math.sin((x / 64) * Math.PI * 2 * 8); g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect(x, 0, 1, 4); }
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = 4;
+    return t;
+  })();
+  const tinWall = [0xa8332b, 0x2f63a8, 0x4f8fc9, 0x8d949a, 0xd9b23a, 0xb84a3a, 0x7a8a96, 0xe2ded6, 0x3d7a5a].map((c) => new THREE.MeshStandardMaterial({ color: c, map: corr, roughness: 0.6, metalness: 0.25 }));
+  const tinRoof = [0xb03a2e, 0x3a66a0, 0x8a8e90, 0x9a5a3a, 0x6e767c].map((c) => new THREE.MeshStandardMaterial({ color: c, map: corr, roughness: 0.55, metalness: 0.35 }));
+  const dark = new THREE.MeshStandardMaterial({ color: 0x1e1a18, roughness: 0.9 });
+  /** a tin shop on the street: open front with a board over it, a tarp or tin awning, a lean-to roof falling to the street */
+  const shack = (side: number, zc: number, d: number) => {
+    const w = 4.5 + r() * 3, two = r() < 0.22, h = two ? 5.3 : 2.7 + r() * 0.4;
+    const cx = side * (8.6 + w / 2), y = pathY(zc), fx = side * 8.6;
+    const wall = tinWall[Math.floor(r() * tinWall.length)];
+    B.box(K.stoneDark, w + 0.1, 0.5, d, cx, y - 0.5, zc);
+    B.slab(wall, w, h, d - 0.04, cx, y, zc);
+    // the open shop front (dark inside) and shelves of goods
+    B.geo(dark, new THREE.PlaneGeometry(d - 0.7, 2.2).rotateY(-side * Math.PI / 2), M4(fx - side * 0.012, y + 1.1, zc), false);
+    // board over the opening
+    if (r() < 0.8) B.geo(signs[Math.floor(r() * signs.length)], new THREE.PlaneGeometry(d - 0.5, 0.5).rotateY(-side * Math.PI / 2), M4(fx - side * 0.03, y + 2.4, zc), false);
+    if (two) for (const t of [-0.25, 0.25]) B.slab(K.glassDark, 0.06, 0.9, 0.8, fx - side * 0.02, y + 3.4, zc + t * d);
+    // lean-to roof falling to the street, overhanging it
+    const run = w + 0.8, fall = 0.45, len = Math.hypot(run, fall);
+    B.geo(tinRoof[Math.floor(r() * tinRoof.length)], new THREE.BoxGeometry(len, 0.05, d + 0.3), M4(cx - side * 0.4, y + h + fall / 2, zc, 0, 0, side * Math.atan2(fall, run)));
+    // tin awning over the counter
+    if (r() < 0.6) B.slab(tinRoof[Math.floor(r() * tinRoof.length)], 1.1, 0.05, d - 0.2, fx - side * 0.55, y + 2.6, zc);
+  };
+  // along the approach street, both sides: near the steps, tin-walled shops and dhabas, mostly one storey, painted
+  // and patched (red, blue, sky, yellow); farther down, the rebuilt single-storey blocks, white with grey roofs
   for (const side of [-1, 1]) {
-    let z = 58;
+    let z = 57.5;
     while (z < 200) {
-      const d = 9 + r() * 6;
-      const w = 8 + r() * 4;
-      const zc = z + d / 2;
-      house(side * (8.6 + w / 2), zc, w, d, 1 + Math.floor(r() * 4), pathY(zc) - 0.0, -side, r() < 0.25);
-      z += d + 0.6 + r() * 1.5;
+      if (z < 125) {
+        const d = 3.4 + r() * 3.2;
+        shack(side, z + d / 2, d);
+        z += d + (r() < 0.3 ? 0.5 + r() * 0.8 : 0.05);
+      } else {
+        const d = 10 + r() * 6, w = 8 + r() * 3, zc = z + d / 2;
+        house(side * (8.6 + w / 2), zc, w, d, 1, pathY(zc), -side, false);
+        z += d + 1 + r() * 1.5;
+      }
     }
   }
-  // flanking the square: the rebuilt priests' houses — stone-clad, slate roofs
+  // a row of lodges south-west and south-east beyond the steps (see below); flanking the square: the rebuilt priests' houses — stone-clad, slate roofs
   for (const side of [-1, 1]) {
     for (let z = -30; z < 46; z += 15.5) {
       house(side * 41, z + 7, 13, 14, 2 + (z > 10 ? 1 : 0), 0, -side, z < -10);
@@ -499,7 +543,7 @@ function town(B: Batch, K: KMats, M: Materials, r: () => number, g: THREE.Group)
   // a row of lodges south-west and south-east beyond the steps
   for (const side of [-1, 1]) {
     for (let x = 18; x < 34; x += 12.5) {
-      house(side * (x + 5.5), 58, 11, 7.5, 2 + Math.floor(r() * 2), pathY(58) - 0.2, -side, false);
+      house(side * (x + 5.5), 58, 11, 7.5, 1 + Math.floor(r() * 2), pathY(58) - 0.2, -side, false);
     }
   }
   // tin sheds and huts out on the moraine (north-west, north-east)
@@ -521,9 +565,9 @@ function town(B: Batch, K: KMats, M: Materials, r: () => number, g: THREE.Group)
 
 /**
  * Adi Shankaracharya's Samadhi, rebuilt in 2021 behind the temple: a deep circular court sunk
- * ~6 m into the moraine, walled in plain board-marked concrete open to the sky, low concentric
- * steps at the bottom round a shallow pool, and in the pool a column carrying a lotus pedestal
- * with the 12-ft black stone statue seated on it. A straight stair leads down from the gateway
+ * ~6 m into the moraine, walled in plain board-marked concrete open to the sky; in the middle of its
+ * paved floor a sunken pit of angular star-shaped steps, and rising from it a square black column
+ * carrying a broad lotus with the 12-ft black stone statue seated on it. A straight stair leads down from the gateway
  * in the protection wall.
  */
 function samadhi(B: Batch, K: KMats, M: Materials, g: THREE.Group, P: Physics, flames: Flames) {
@@ -595,78 +639,140 @@ function samadhi(B: Batch, K: KMats, M: Materials, g: THREE.Group, P: Physics, f
       P.solid(wx - 0.2, FLOOR, zBot, wx + 0.2, 1.5, zTop + 1.0);
     }
   }
-  // the court floor: concentric low steps rising outwards round the pool
-  const rings: [number, number, number][] = [[3.2, 6.0, FLOOR], [6.0, 8.4, FLOOR + 0.3], [8.4, R, FLOOR + 0.6]];
-  for (const [r0, r1, y] of rings) {
-    const m = new THREE.Mesh(worldUV(new THREE.RingGeometry(r0, r1, 96, 1).rotateX(-Math.PI / 2)), K.paving);
-    m.position.set(cx, y, cz);
-    m.receiveShadow = true;
-    g.add(m);
-    P.floors.push(m);
-    const riser = new THREE.CylinderGeometry(r0, r0, 0.3, 96, 1, true);
-    B.geo(K.stone, riser, M4(cx, y - 0.15, cz));
-  }
-  // the pool
+  // the court floor (photographed 2023-25): flat grey paving out to the wall with a dark band round a sunken pit; the
+  // pit is angular, not round: star-shaped tiers of grey stone stepping down, each turned half a point on the one
+  // above, so the steps break into triangular facets, to a square pillar of black stone that carries the lotus
+  const PIT = 4.6, TIER = 0.32, NT = 4;
   {
-    const rim = new THREE.CylinderGeometry(3.2, 3.2, 0.35, 72, 1, true);
-    B.geo(K.stoneDark, rim, M4(cx, FLOOR - 0.12, cz));
-    const water = new THREE.Mesh(new THREE.CircleGeometry(3.2, 64).rotateX(-Math.PI / 2),
-      new THREE.MeshStandardMaterial({ color: 0x1b2a2c, roughness: 0.06, metalness: 0.2 }));
-    water.position.set(cx, FLOOR - 0.12, cz);
-    g.add(water);
-    P.solid(cx - 2.2, FLOOR - 1, cz - 2.2, cx + 2.2, FLOOR + 6, cz + 2.2);
-    for (let i = 0; i < 24; i++) {
-      const a = (i / 24) * Math.PI * 2;
-      const x = cx + Math.cos(a) * 2.9, z = cz + Math.sin(a) * 2.9;
-      P.solid(x - 0.5, FLOOR - 1, z - 0.5, x + 0.5, FLOOR + 1, z + 0.5);
+    const ring = new THREE.Mesh(worldUV(new THREE.RingGeometry(PIT + 0.35, R, 96, 1).rotateX(-Math.PI / 2)), K.paving);
+    ring.position.set(cx, FLOOR, cz);
+    ring.receiveShadow = true;
+    g.add(ring);
+    P.floors.push(ring);
+    const band = new THREE.MeshStandardMaterial({ color: 0x4a4b4d, roughness: 0.92 });
+    B.geo(band, new THREE.RingGeometry(PIT, PIT + 0.35, 96, 1).rotateX(-Math.PI / 2), M4(cx, FLOOR + 0.005, cz));
+    const star = (r: number, rot: number, pts = 8, inner = 0.8) => {
+      const sh = new THREE.Shape();
+      for (let i = 0; i <= pts * 2; i++) {
+        const a = rot + (i / (pts * 2)) * Math.PI * 2, rr = i % 2 ? r * inner : r;
+        if (i === 0) sh.moveTo(Math.cos(a) * rr, Math.sin(a) * rr); else sh.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+      }
+      return sh;
+    };
+    for (let k = 0; k < NT; k++) {
+      const r0 = PIT * (1 - k / NT) + (k ? 0 : 0.02), r1 = Math.max(PIT * (1 - (k + 1) / NT), PIT / NT + 0.4); // (each opening = the next tier's outline; the last, the pit floor's)
+      const sh = k === 0 ? (() => { const c = new THREE.Shape(); c.absarc(0, 0, r0, 0, Math.PI * 2, false); return c; })() : star(r0, (k * Math.PI) / 8);
+      sh.holes.push(star(r1, ((k + 1) * Math.PI) / 8) as unknown as THREE.Path);
+      const yTop = FLOOR - k * TIER;
+      // (extruded up from below the tread: rotating −90° about x keeps the walls' faces pointing outwards)
+      const geo = new THREE.ExtrudeGeometry(sh, { depth: TIER, bevelEnabled: false, curveSegments: 48 }).rotateX(-Math.PI / 2);
+      B.geo(k % 2 ? K.stone : K.paving, geo, M4(cx, yTop - TIER, cz));
     }
+    // the pit floor
+    B.geo(K.stoneDark, new THREE.ExtrudeGeometry(star(PIT / NT + 0.4, (NT * Math.PI) / 8), { depth: 0.1, bevelEnabled: false }).rotateX(-Math.PI / 2),
+      M4(cx, FLOOR - NT * TIER - 0.1, cz));
+    // walkers stay on the court: the pit is fenced by colliders round its rim
+    for (let i = 0; i < 28; i++) {
+      const a = (i / 28) * Math.PI * 2;
+      const x = cx + Math.cos(a) * (PIT - 0.3), z = cz + Math.sin(a) * (PIT - 0.3);
+      P.solid(x - 0.55, FLOOR - 2, z - 0.55, x + 0.55, FLOOR + 1.0, z + 0.55);
+    }
+    P.solid(cx - 3.2, FLOOR - 2, cz - 3.2, cx + 3.2, FLOOR + 6, cz + 3.2);
   }
-  // column, lotus pedestal and the statue (sam1/sam2): a plain ≈0.6 m column ≈1.2 m tall rising
-  // from the pool, a 16-petalled lotus ≈2.4 m across, and the 3.7 m seated figure on it
-  const stone = new THREE.MeshStandardMaterial({ color: 0x1c1d1f, roughness: 0.35, metalness: 0.05 });
+  // the square pillar, the lotus and the statue (sam1/sam2): a ≈1.1 m square black column rising ≈1.9 m from the pit
+  // floor, the broad lotus (≈3.4 m across, wider than the knees) and the 3.7 m seated figure on it
+  // black chlorite schist, polished to a satin sheen (not a gloss): soft highlights, a faint stony grain
+  const stone = new THREE.MeshStandardMaterial({ color: 0x232426, roughness: 0.58, metalness: 0.0 });
   {
-    const colH = 1.2, y0 = FLOOR - 0.12;
-    B.geo(stone, new THREE.CylinderGeometry(0.3, 0.34, colH, 28), M4(cx, y0 + colH / 2, cz), false);
-    B.geo(stone, new THREE.CylinderGeometry(0.42, 0.42, 0.12, 28), M4(cx, y0 + colH - 0.06, cz), false);
-    // lotus: a bowl of 16 broad petals with up-curled tips, a second inner row, flat seat on top
-    const H = 0.85, top = y0 + colH;
+    const y0 = FLOOR - NT * TIER, colH = 1.9;
+    B.box(stone, 1.1, colH, 1.1, cx, y0, cz);
+    B.box(stone, 1.3, 0.12, 1.3, cx, y0 + colH - 0.12, cz);
+    const H = 1.05, top = y0 + colH;
     const prof: THREE.Vector2[] = [];
-    for (let i = 0; i <= 24; i++) {
-      const tt = i / 24;
-      prof.push(new THREE.Vector2(0.38 + 0.82 * Math.pow(Math.sin(tt * Math.PI * 0.5), 0.8), tt * H));
+    for (let i = 0; i <= 32; i++) {
+      const tt = i / 32;
+      // full belly low down, drawing in towards the seat
+      prof.push(new THREE.Vector2(0.55 + 1.2 * Math.sin(Math.min(1, tt * 1.15) * Math.PI * 0.62) - 0.22 * Math.pow(tt, 4), tt * H));
     }
-    prof.push(new THREE.Vector2(1.12, H), new THREE.Vector2(0, H));
-    const lotus = new THREE.LatheGeometry(prof, 128);
+    prof.push(new THREE.Vector2(1.3, H), new THREE.Vector2(0, H - 0.04));
+    const lotus = new THREE.LatheGeometry(prof, 160);
     const lp = lotus.attributes.position;
     for (let k = 0; k < lp.count; k++) {
       const x = lp.getX(k), y = lp.getY(k), z = lp.getZ(k);
       const a = Math.atan2(z, x), rr = Math.hypot(x, z);
-      if (rr < 0.01 || y >= H - 1e-3) continue;
-      // petal lobes: bulge in the middle of each petal, a crease between them, tips curling out
-      const ph = Math.abs(Math.cos(a * 8)), t = y / H;
-      const k1 = 1 + 0.07 * Math.pow(ph, 0.5) * Math.sin(t * Math.PI) + 0.05 * Math.pow(ph, 4) * Math.pow(t, 3);
-      lp.setXYZ(k, x * k1, y + 0.06 * Math.pow(ph, 6) * Math.pow(t, 2), z * k1);
+      if (rr < 0.01 || y >= H - 0.05) continue;
+      // petals: each a soft bulge with a crease between, its pointed tip rising higher on the upper half
+      const t = y / H, ph = Math.abs(Math.cos(a * 8));
+      const tip = Math.pow(ph, 2.5) * THREE.MathUtils.smoothstep(t, 0.45, 0.9);
+      const k1 = 1 + 0.035 * Math.pow(ph, 0.6) - 0.03 * Math.pow(1 - ph, 8) + 0.015 * tip;
+      lp.setXYZ(k, x * k1, y, z * k1);
     }
     lotus.computeVertexNormals();
     B.geo(stone, lotus, M4(cx, top, cz), false);
-    const inner = new THREE.LatheGeometry([new THREE.Vector2(0.75, 0), new THREE.Vector2(0.95, 0.12), new THREE.Vector2(1.0, 0.2), new THREE.Vector2(0, 0.2)], 64);
-    const ip = inner.attributes.position;
-    for (let k = 0; k < ip.count; k++) {
-      const a = Math.atan2(ip.getZ(k), ip.getX(k));
-      const f = 1 + 0.06 * Math.pow(Math.abs(Math.cos(a * 8 + Math.PI / 2)), 0.6);
-      ip.setXYZ(k, ip.getX(k) * f, ip.getY(k), ip.getZ(k) * f);
-    }
-    inner.computeVertexNormals();
-    B.geo(stone, inner, M4(cx, top + H - 0.05, cz), false);
     const fig = shankaracharya(stone, 4.0);
-    fig.position.set(cx, top + H + 0.12, cz);
+    fig.position.set(cx, top + H - 0.02, cz);
     fig.rotation.y = 0; // faces the stair (south, +z)
     g.add(fig);
+    // the sculpted statue: a mesh reconstructed (TripoSR) from Mayank7078's photograph of it, CC BY-SA 4.0 (see CREDITS.md),
+    // unit height; it replaces the procedural stand-in once loaded (which stays if the file is missing)
+    const SEAT = top + H - 0.04, TALL = 3.6;
+    new GLTFLoader().loadAsync('assets/models/shankaracharya.glb').then((gl) => {
+      // the photograph's light and shade, kept per vertex, as the stone's tone: it carries the face, the bead
+      // strands and the dhoti's folds that the reconstruction's shape alone softens (grey, the sky's blue taken out)
+      const photoStone = stone.clone();
+      photoStone.vertexColors = true;
+      photoStone.onBeforeCompile = (sh) => {
+        sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>',
+          'diffuseColor.rgb *= 0.25 + 4.2 * pow(clamp(dot(vColor.rgb, vec3(0.299, 0.587, 0.114)), 0.001, 1.0), 1.15);');
+      };
+      photoStone.customProgramCacheKey = () => 'shankara-photo-stone';
+      gl.scene.traverse((o) => {
+        const mesh = o as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        mesh.material = photoStone;
+        mesh.geometry.computeVertexNormals();
+        // (a degenerate triangle gives a NaN normal, and one NaN pixel turns the whole post-processed frame black)
+        const nr = mesh.geometry.attributes.normal;
+        for (let i = 0; i < nr.count; i++) if (!Number.isFinite(nr.getX(i) + nr.getY(i) + nr.getZ(i))) nr.setXYZ(i, 0, 1, 0);
+        mesh.castShadow = mesh.receiveShadow = true;
+      });
+      gl.scene.scale.setScalar(TALL);
+      gl.scene.position.set(cx, SEAT, cz);
+      gl.scene.rotation.y = -Math.PI / 2; // (the reconstruction faces +x: turn it to face the stair, +z)
+      g.add(gl.scene);
+      // what a reconstruction from one photograph loses or blurs, added crisp (statue frame: height 1, facing +z):
+      // the danda with its cloth and the book on the left knee
+      const acc = new THREE.Group();
+      const foot = new THREE.Vector3(-0.1, 0.0, 0.3), hand = new THREE.Vector3(-0.17, 0.6, 0.17);
+      const head = hand.clone().add(hand.clone().sub(foot).multiplyScalar(0.62));
+      const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.0075, 0.0085, foot.distanceTo(head), 10), stone);
+      staff.position.copy(foot).lerp(head, 0.5);
+      staff.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), head.clone().sub(foot).normalize());
+      acc.add(staff);
+      const cloth = new THREE.PlaneGeometry(0.07, 0.085, 6, 1);
+      const cp = cloth.attributes.position;
+      for (let i = 0; i < cp.count; i++) cp.setZ(i, Math.sin(cp.getX(i) * 110) * 0.005);
+      cloth.translate(-0.035, -0.04, 0);
+      cloth.computeVertexNormals();
+      const flag = new THREE.Mesh(cloth, stone.clone());
+      (flag.material as THREE.MeshStandardMaterial).side = THREE.DoubleSide;
+      flag.position.copy(head).add(new THREE.Vector3(0, -0.03, 0));
+      acc.add(flag);
+      const book = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.03, 0.08), stone);
+      book.position.set(0.24, 0.31, 0.22);
+      book.rotation.y = 0.35;
+      acc.add(book);
+      acc.traverse((o) => { o.castShadow = o.receiveShadow = true; });
+      acc.scale.setScalar(TALL);
+      acc.position.set(cx, SEAT, cz);
+      g.add(acc);
+      fig.visible = false;
+    }).catch(() => { /* keep the procedural statue */ });
   }
-  // lamps on the lowest step
+  // lamps round the rim of the pit
   for (let i = 0; i < 12; i++) {
     const a = (i / 12) * Math.PI * 2;
-    const x = cx + Math.cos(a) * 4.5, z = cz + Math.sin(a) * 4.5;
+    const x = cx + Math.cos(a) * (PIT + 0.6), z = cz + Math.sin(a) * (PIT + 0.6);
     B.geo(M.brass, new THREE.CylinderGeometry(0.06, 0.035, 0.04, 10), M4(x, FLOOR + 0.02, z), false);
     flames.points.push(new THREE.Vector3(x, FLOOR + 0.1, z));
   }
@@ -726,7 +832,6 @@ function signMaterials() {
 
 /**
  * Canopies typical of the square: blue and orange tarpaulin stalls (prasad, flowers, puja items)
- * and a striped shamiana for pilgrims to rest under.
  */
 function canopies(B: Batch, K: KMats, P: Physics, r: () => number) {
   const tarp = [0x3e6f9e, 0xe4e4e0, 0x5a7c9c, 0xa8aeb2].map((c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.75, side: THREE.DoubleSide }));
@@ -761,41 +866,15 @@ function canopies(B: Batch, K: KMats, P: Physics, r: () => number) {
     P.solid(mx - hw, 0, mz - hd, mx + hw, 2.6, mz + hd);
   };
   // along the west and east edges of the square, facing inwards
-  for (const z of [-4, 4, 26, 34]) stall(-29.5, z, 3.2, 2.6, -Math.PI / 2);
+  for (const z of [-4, 4]) stall(-29.5, z, 3.2, 2.6, -Math.PI / 2);
   for (const z of [0, 8, 30]) stall(29.5, z, 3.2, 2.6, Math.PI / 2);
   // two by the head of the steps
   stall(-19, 46.5, 3.4, 2.4, 0);
   stall(19, 46.5, 3.4, 2.4, 0);
-  // striped shamiana (rest tent) on the west side
-  {
-    const x = -24, z = 17, w = 9, d = 6;
-    const stripes = [new THREE.MeshStandardMaterial({ color: 0xe6e4de, roughness: 0.8, side: THREE.DoubleSide }),
-      new THREE.MeshStandardMaterial({ color: 0xdcdcd6, roughness: 0.8, side: THREE.DoubleSide })];
-    const n = 12;
-    for (let i = 0; i < n; i++) {
-      const lx0 = -w / 2 + (i * w) / n;
-      for (const sgn of [-1, 1]) {
-        const g = new THREE.PlaneGeometry(w / n, Math.hypot(d / 2, 1.0)).rotateX(-Math.PI / 2 + sgn * Math.atan2(1.0, d / 2));
-        B.geo(stripes[i % 2], g, M4(x + lx0 + w / (2 * n), 3.5, z + (sgn * d) / 4), false);
-      }
-    }
-    // valance
-    for (let i = 0; i < 24; i++) {
-      const t = -w / 2 + (i + 0.5) * (w / 24);
-      for (const sgn of [-1, 1]) B.geo(stripes[i % 2], new THREE.PlaneGeometry(w / 24, 0.4), M4(x + t, 2.8, z + (sgn * d) / 2), false);
-    }
-    for (const [lx, lz] of [[-w / 2, -d / 2], [w / 2, -d / 2], [-w / 2, d / 2], [w / 2, d / 2], [0, -d / 2], [0, d / 2]]) {
-      B.geo(pole, new THREE.CylinderGeometry(0.05, 0.05, 3.0, 6), M4(x + lx, 1.5, z + lz), false);
-      P.solid(x + lx - 0.1, 0, z + lz - 0.1, x + lx + 0.1, 3, z + lz + 0.1);
-    }
-    B.geo(pole, new THREE.CylinderGeometry(0.06, 0.06, 4.0, 6), M4(x, 2.0, z), false);
-    // durrie on the ground
-    B.geo(new THREE.MeshStandardMaterial({ color: 0x5e3a34, roughness: 0.95 }), new THREE.PlaneGeometry(w - 1, d - 1).rotateX(-Math.PI / 2), M4(x, 0.02, z), false);
-  }
   // flat tarps on poles at the corners of the square (pilgrims' rest, prasad and help desks):
   // blue and white plastic sheet lashed over a steel frame, sagging between the poles
   const tentCols = [tarp[0], tarp[1], tarp[2], tarp[1]];
-  for (const [cx, cz] of [[-28, -26], [27, -27], [-27, 41], [26, 42]]) {
+  for (const [cx, cz] of [[-28, -26], [27, -27], [26, 42]]) {
     for (let k = 0; k < 3; k++) {
       const x = cx + (k - 1) * 3.8, z = cz + (r() - 0.5) * 1.5, w = 3.4, d = 3.0, h = 2.3 + r() * 0.3;
       const tg = new THREE.PlaneGeometry(w + 0.3, d + 0.3, 6, 6).rotateX(-Math.PI / 2);
@@ -812,14 +891,18 @@ function canopies(B: Batch, K: KMats, P: Physics, r: () => number) {
       P.solid(x - w / 2, 0, z - d / 2, x + w / 2, h, z + d / 2);
     }
   }
-  queueRails(B, K, P);
+  queuePath(B, K, P, r);
 }
 
 /**
- * Crowd control as photographed in 2022-24: steel queue barricades (1.1 m) running up the east side
- * of the square to the temple steps, and a steel railing wrapped in red cloth in front of the facade.
+ * The darshan queue's way in. Since 2024 the line comes up from the Sangam along the Aastha Path and over the new covered
+ * bridge at the Sangam (2025), into the square on the temple's right hand (west, the deity facing south); the middle
+ * of the square stays open, pilgrims all over it. Here: the queue's fenced, canopied pens up the west edge and along
+ * the front, from a gap in the balustrade; and, as photographed in 2022-24, no straight way
+ * in at the door: steel railings hung thick with red and orange chunris (cloth offerings tied on by pilgrims) fence the
+ * front steps and Nandi, open only at the sides: the queue files in from the west, the VIP walk from the east.
  */
-function queueRails(B: Batch, K: KMats, P: Physics) {
+function queuePath(B: Batch, K: KMats, P: Physics, r: () => number) {
   const steel = new THREE.MeshStandardMaterial({ color: 0xb4b8bc, metalness: 0.85, roughness: 0.35 });
   const H = 1.1;
   const run = (ax: number, az: number, bx: number, bz: number, cloth: THREE.Material | null) => {
@@ -835,15 +918,89 @@ function queueRails(B: Batch, K: KMats, P: Physics) {
     const hx = Math.abs(bx - ax) / 2 + 0.06, hz = Math.abs(bz - az) / 2 + 0.06;
     P.solid(mx - hx, 0, mz - hz, mx + hx, H, mz + hz);
   };
-  // the queue lane up the east side: two rails 1.4 m apart, z 44 → 12.6, then west to the steps
-  run(9.0, 44, 9.0, 13.8, null);
-  run(10.4, 44, 10.4, 12.4, null);
-  run(10.4, 12.4, 4.4, 12.4, null);
-  run(9.0, 13.8, 4.4, 13.8, null);
-  // red cloth over the railing along the foot of the facade
+  // the queue pens on the west of the square, as the drone views of 2024-26 show them: blue-grey steel bar
+  // fencing 2.1 m high under rows of white canopies. Two lanes run up the west edge from the balustrade gap
+  // (x -33.9 → -28.5, z 50 → 17.4), then three switchback lanes along the front (z 12.6 → 17.4) to the chunri
+  // railing's west gap.
+  {
+    const bars = new THREE.MeshStandardMaterial({ color: 0x5e7c96, metalness: 0.5, roughness: 0.5 });
+    const FH = 2.1;
+    const fence = (ax: number, az: number, bx: number, bz: number) => {
+      const len = Math.hypot(bx - ax, bz - az), ry = Math.atan2(bx - ax, bz - az), mx = (ax + bx) / 2, mz = (az + bz) / 2;
+      for (const y of [FH - 0.04, 0.12]) B.geo(bars, new THREE.BoxGeometry(0.06, 0.07, len), M4(mx, y, mz, ry), false);
+      for (let d = 0; d <= len + 0.01; d += 0.14) {
+        const t = d / len, post = Math.abs(d % 2.38) < 0.07;
+        const k = post ? 0.07 : 0.032;
+        B.geo(bars, new THREE.BoxGeometry(k, FH, k), M4(ax + (bx - ax) * t, FH / 2, az + (bz - az) * t), false);
+      }
+      P.solid(Math.min(ax, bx) - 0.05, 0, Math.min(az, bz) - 0.05, Math.max(ax, bx) + 0.05, FH, Math.max(az, bz) + 0.05);
+    };
+    // up the west edge
+    fence(-33.9, 12.6, -33.9, 50.2);
+    fence(-31.1, 17.4, -31.1, 50.2);
+    fence(-28.5, 17.4, -28.5, 47.6); // (open at its south end: the queue's mouth, for those coming up the steps)
+    // the switchbacks along the front: lane 3 (z 15.8-17.4) east, lane 2 west, lane 1 (z 12.6-14.2) east to the gap
+    fence(-33.9, 12.6, -8.4, 12.6);
+    fence(-32.4, 14.2, -8.4, 14.2);
+    fence(-33.9, 15.8, -9.6, 15.8);
+    fence(-28.5, 17.4, -8.4, 17.4);
+    fence(-8.4, 14.2, -8.4, 17.4);
+    // pink notice boards wired to the fence (queue rules, oxygen point)
+    {
+      const c = document.createElement('canvas');
+      c.width = 128; c.height = 160;
+      const g = c.getContext('2d')!;
+      g.fillStyle = '#f2b8c6'; g.fillRect(0, 0, 128, 160);
+      g.fillStyle = '#b0182c'; g.font = '700 22px "Noto Sans Devanagari", sans-serif'; g.textAlign = 'center';
+      g.fillText('दर्शन पंक्ति', 64, 36);
+      g.fillStyle = '#3a2a2e';
+      for (let y = 56; y < 150; y += 14) g.fillRect(14, y, 60 + ((y * 7) % 40), 4);
+      const t = new THREE.CanvasTexture(c);
+      t.colorSpace = THREE.SRGBColorSpace;
+      const pink = new THREE.MeshStandardMaterial({ map: t, roughness: 0.7, side: THREE.DoubleSide });
+      for (const [x, z, ry] of [[-26, 17.46, 0], [-17, 17.46, 0], [-11.5, 17.46, 0], [-28.44, 24, Math.PI / 2], [-28.44, 38, Math.PI / 2]] as const) {
+        B.geo(pink, new THREE.PlaneGeometry(0.55, 0.7), M4(x, 1.45, z, ry), false);
+      }
+    }
+    // the white canopies: a pitched tent over each bay, poles on the fence lines, a scalloped valance
+    const white = new THREE.MeshStandardMaterial({ color: 0xeeece6, roughness: 0.8, side: THREE.DoubleSide });
+    const tent = (x0: number, x1: number, z0: number, z1: number) => {
+      const alongX = x1 - x0 > z1 - z0;
+      const L = alongX ? x1 - x0 : z1 - z0, W = alongX ? z1 - z0 : x1 - x0;
+      const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2, ry = alongX ? 0 : Math.PI / 2;
+      const eave = 2.75, rise = 0.6, slope = Math.hypot(W / 2 + 0.15, rise), ang = Math.atan2(rise, W / 2 + 0.15);
+      for (const sgn of [-1, 1]) {
+        const g = new THREE.PlaneGeometry(L + 0.2, slope).rotateX(-Math.PI / 2 + sgn * ang).translate(0, eave + rise / 2, (sgn * (W / 2 + 0.15)) / 2);
+        B.geo(white, g, M4(cx, 0, cz, ry), false);
+        B.geo(white, new THREE.PlaneGeometry(L + 0.2, 0.32).translate(0, eave - 0.16, sgn * (W / 2 + 0.15)), M4(cx, 0, cz, ry), false);
+      }
+      for (const [px, pz] of [[x0, z0], [x1, z0], [x0, z1], [x1, z1]]) B.geo(bars, new THREE.CylinderGeometry(0.04, 0.04, eave, 6), M4(px, eave / 2, pz), false);
+    };
+    for (let z = 17.4; z < 50; z += 6.55) tent(-33.9, -28.5, z, Math.min(50.2, z + 6.55));
+    tent(-33.9, -28.5, 12.6, 17.4);
+    for (let x = -28.5; x < -8.5; x += 6.7) tent(x, x + 6.7, 12.6, 17.4);
+  }
+  // the chunri railing round the front steps and Nandi: x ±6.8 out from the facade corners to z 15.6, across the
+  // front; side gaps z 12.4 → 14.4
   const red = new THREE.MeshStandardMaterial({ color: 0xa8201c, roughness: 0.85 });
-  run(-7.6, 10.7, -4.3, 10.7, red);
-  run(4.3, 10.7, 7.6, 10.7, red);
+  const chunriMats = [0xc0221a, 0xd8361e, 0xa8181c, 0xe86a1a, 0xf0a020, 0x8e1420, 0xd02a50].map((c) =>
+    new THREE.MeshStandardMaterial({ color: c, roughness: 0.85, side: THREE.DoubleSide }));
+  const chunris = (ax: number, az: number, bx: number, bz: number) => {
+    run(ax, az, bx, bz, red);
+    const len = Math.hypot(bx - ax, bz - az), ry = Math.atan2(bx - ax, bz - az) + Math.PI / 2;
+    // strips knotted on the top rail, hanging every ~8 cm, some to the ground
+    for (let d = 0.03; d < len; d += 0.035 + r() * 0.03) {
+      const t = d / len, h = 0.5 + r() * 0.6, w = 0.08 + r() * 0.08;
+      const off = (r() - 0.5) * 0.08;
+      B.geo(chunriMats[Math.floor(r() * chunriMats.length)], new THREE.PlaneGeometry(w, h).translate(0, -h / 2, 0),
+        M4(ax + (bx - ax) * t + Math.cos(ry) * off, H + 0.03, az + (bz - az) * t - Math.sin(ry) * off, ry + (r() - 0.5) * 0.5, (r() - 0.5) * 0.25, (r() - 0.5) * 0.3), false);
+    }
+  };
+  chunris(-6.8, 15.6, 6.8, 15.6);
+  for (const s of [-1, 1]) {
+    chunris(s * 6.8, 7.6, s * 6.8, 12.4);
+    chunris(s * 6.8, 14.4, s * 6.8, 15.6);
+  }
 }
 
 /**
@@ -969,4 +1126,43 @@ function signArrows() {
     t.colorSpace = THREE.SRGBColorSpace;
     return new THREE.MeshStandardMaterial({ map: t, roughness: 0.6 });
   });
+}
+
+/**
+ * The tall golden trishul on its pole behind the temple, east of Bhim Shila (photographed 2024-25 above the crowd
+ * there): a ~5.6 m gilded staff on a stone plinth, three prongs (the side ones curling out and up), a crossbar
+ * collar, a damaru tied on below with red cloth, and a small saffron flag.
+ */
+function trishul(B: Batch, K: KMats, P: Physics, x: number, z: number) {
+  const gold = K.goldLeaf;
+  B.box(K.stoneDark, 0.9, 0.45, 0.9, x, 0, z);
+  B.box(K.stone, 0.7, 0.2, 0.7, x, 0.45, z);
+  const H = 5.6, y0 = 0.65;
+  B.geo(gold, new THREE.CylinderGeometry(0.055, 0.07, H, 12), M4(x, y0 + H / 2, z), false);
+  for (const yy of [1.2, 2.4, 3.6]) B.geo(gold, new THREE.TorusGeometry(0.075, 0.02, 6, 16).rotateX(Math.PI / 2), M4(x, y0 + yy, z), false);
+  const top = y0 + H;
+  // crossbar collar under the prongs, and the bulb
+  B.geo(gold, new THREE.CylinderGeometry(0.11, 0.11, 0.5, 10).rotateZ(Math.PI / 2), M4(x, top - 0.55, z), false);
+  B.geo(gold, new THREE.SphereGeometry(0.15, 14, 10), M4(x, top - 0.25, z), false);
+  // the central prong: a leaf-shaped blade
+  const blade = new THREE.Shape();
+  blade.moveTo(-0.12, 0); blade.quadraticCurveTo(-0.16, 0.45, 0, 0.95); blade.quadraticCurveTo(0.16, 0.45, 0.12, 0); blade.lineTo(-0.12, 0);
+  const bladeGeo = (s: number) => new THREE.ExtrudeGeometry(blade, { depth: 0.05, bevelEnabled: true, bevelThickness: 0.015, bevelSize: 0.015, bevelSegments: 2 }).translate(0, 0, -0.025).scale(s, s, 1);
+  B.geo(gold, bladeGeo(1), M4(x, top - 0.1, z), false);
+  // the side prongs: arms curving out from the bulb and up into smaller blades
+  for (const sgn of [-1, 1]) {
+    const arm = new THREE.TorusGeometry(0.3, 0.045, 8, 20, Math.PI / 2).rotateZ(sgn > 0 ? -Math.PI / 2 : Math.PI).translate(sgn * 0.3, 0.3, 0);
+    B.geo(gold, arm, M4(x, top - 0.28, z), false);
+    B.geo(gold, bladeGeo(0.6).rotateZ(-sgn * 0.12), M4(x + sgn * 0.6, top + 0.0, z), false);
+  }
+  // a white-and-red tilak band on the central blade
+  B.slab(K.red, 0.14, 0.05, 0.08, x, top + 0.25, z);
+  // damaru tied on below, with a red cloth
+  const dy = top - 1.25;
+  for (const sgn of [-1, 1]) B.geo(gold, new THREE.CylinderGeometry(0.16, 0.05, 0.22, 14).translate(0, sgn * 0.11, 0).rotateZ(Math.PI / 2), M4(x + 0.2, dy, z), false);
+  B.geo(K.red, new THREE.TorusGeometry(0.08, 0.025, 6, 12).rotateY(Math.PI / 2), M4(x + 0.2, dy, z), false);
+  B.geo(K.red, new THREE.PlaneGeometry(0.18, 0.7).translate(0, -0.35, 0), M4(x + 0.06, dy + 0.1, z + 0.02, 0, 0, 0.15), false);
+  // a small saffron flag on top of the staff's ring
+  B.geo(K.orange, new THREE.PlaneGeometry(0.5, 0.32).translate(0.25, 0, 0), M4(x + 0.06, y0 + 3.9, z), false);
+  P.solid(x - 0.45, 0, z - 0.45, x + 0.45, top + 1, z + 0.45);
 }

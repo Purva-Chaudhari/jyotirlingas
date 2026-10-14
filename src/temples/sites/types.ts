@@ -122,6 +122,9 @@ export interface SiteDef {
   trees?: [number, number, number][];
   /** sky HDRI path under public/ (Poly Haven .hdr); default a plains sunset */
   hdri?: string;
+  /** colour grade before tone mapping: saturation and brightness (default 1, 1); AgX greys colour, so a site
+   * photographed in clear mountain light may want more */
+  grade?: { saturation?: number; exposure?: number };
   /** distance fog; default warm { color: 0xcdb8a4, near: 120, far: 900 }; null = no fog */
   fog?: { color: THREE.ColorRepresentation; near: number; far: number } | null;
   /** minimum sun elevation in degrees (raises a low HDRI sun to cut glare); default 28 */

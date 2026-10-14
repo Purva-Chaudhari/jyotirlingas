@@ -19,6 +19,11 @@ import { warm } from '../preload';
  */
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// iOS: this page plays media (like a video), so the ringer's silent switch doesn't mute its Web Audio sound
+// (the drone, the bells, the aarti); Safari 16.4+, ignored elsewhere
+const audioSession = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+if (audioSession) audioSession.type = 'playback';
 const mobile = matchMedia('(pointer: coarse)').matches || innerWidth < 700;
 
 /** chapter starts on the journey's progress (mirrors cosmos.ts CH, kept here so the rail needs no Three.js) */

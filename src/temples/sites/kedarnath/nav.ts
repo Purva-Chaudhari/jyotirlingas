@@ -1,6 +1,7 @@
 import type { NavEdge, NavGraph, Place } from '../types';
 import { F, GZ } from './temple';
 import { pathY, SAMADHI } from './terrain';
+import { QUEUE_WALK, VIP_DARSHAN } from './mode';
 
 type V = [number, number, number];
 
@@ -8,7 +9,7 @@ type V = [number, number, number];
  * Kedarnath's walking graph for Places (engine/travel.ts). +z south (the approach), +x east; the square at y 0,
  * the temple floor F (1.0), the Samadhi court 6 m below ground. It follows the pilgrim's way: the last stretch of
  * the trek from Gaurikund through the welcome gate → the approach street → the broad steps into the square →
- * Nandi → the front steps → the Sabha Mandapa → the passage → the garbhagriha; and round the temple's west side
+ * Nandi → round the chunri railing and in at its east gap → the front steps → the Sabha Mandapa → the passage → the garbhagriha; and round the temple's west side
  * to Bhim Shila behind it, then east along the protection wall, through its gateway and down the stair into the
  * Adi Shankaracharya Samadhi. Checked with `node scripts/navcheck.mjs kedarnath`.
  */
@@ -25,10 +26,17 @@ export function kedarNav(): { nav: NavGraph; places: Place[] } {
     'steps-head': [0, 0, 48],
     // the square
     plaza: [0, 0, 44],
+    // in the square beside the queue pens on its west side
+    'queue-path': [-20, 0, 24],
     square: [1.5, 0, 30],
     nandi: [2.2, 0, 16.8],
-    'nandi-e': [2.6, 0, 11.3],
-    'temple-step': [0, 0, 10.6],
+    // round the chunri railing to its east gap (the VIP way; the queue comes in at the west) and inside it to the
+    // foot of the steps: no straight way in
+    'front-e': [8.4, 0, 17],
+    'gap-out': [8.4, 0, 13.4],
+    'gap-in': [4.6, 0, 13.4],
+    'step-e': [2.6, 0, 11.6], // inside the torana's east pillar, beside Nandi
+    'temple-step': [0, 0, 10.2],
     porch: [0, F, 7.6],
     // the Sabha Mandapa, the passage, the garbhagriha
     'hall-door': [0, F, 4.4],
@@ -39,14 +47,17 @@ export function kedarNav(): { nav: NavGraph; places: Place[] } {
     'pass-out': [0, F, GZ + 3.2],
     darshan: [0, F, -8.4],
     garbhagriha: [1.6, F, -8.3],
-    // round the west side of the temple to Bhim Shila
-    'west-front': [-10.5, 0, 14],
+    // round the west side of the temple to Bhim Shila: between the queue pens and the chunri railing
+    'west-pass': [-7.6, 0, 19.5],
+    'west-front': [-7.6, 0, 10.4],
+    'west-side': [-10.5, 0, 4],
     'west-back': [-10.5, 0, -20],
     bhimshila: [-3, 0, -21],
     'east-back': [10.5, 0, -20],
-    // east between the festive gate's pillar and the queue lane's rails, then up the east side
-    'gap-w': [4.1, 0, 11.6],
+    // from the east gap up the east side
     'east-front': [12.2, 0, 11.4],
+    // general darshan: the walk through the queue pens (mode.ts QUEUE_WALK, from the head of the steps)
+    ...Object.fromEntries(QUEUE_WALK.slice(1, -1).map(([x, z], i) => [`q${i + 1}`, [x, 0, z] as V])),
     // along the protection wall to its gateway and the Samadhi walk
     'wall-w': [-6, 0, -33],
     'wall-e': [S.x, 0, -33],
@@ -56,15 +67,21 @@ export function kedarNav(): { nav: NavGraph; places: Place[] } {
   };
   const chain = (...ids: string[]): NavEdge[] => ids.slice(1).map((b, i) => [ids[i], b]);
   const edges: NavEdge[] = [
-    ...chain('trek', 'welcome', 'street', 'spawn', 'steps-foot', 'steps-head', 'plaza', 'square', 'nandi', 'nandi-e', 'temple-step', 'porch', 'hall-door', 'mandapa', 'hall-back', 'hall-exit', 'pass-in', 'pass-out', 'darshan', 'garbhagriha'),
-    ...chain('square', 'west-front', 'west-back', 'bhimshila'),
+    ...chain('trek', 'welcome', 'street', 'spawn', 'steps-foot', 'steps-head', 'plaza', 'square', 'nandi'),
+    // the way in: general darshan along the queue pens; VIP across the square and in at the railing's east gap
+    ...(VIP_DARSHAN ? chain('nandi', 'front-e', 'gap-out', 'gap-in', 'step-e', 'temple-step')
+      : chain('steps-head', ...QUEUE_WALK.slice(1, -1).map((_, i) => `q${i + 1}`), 'temple-step')),
+    ...chain('temple-step', 'porch', 'hall-door', 'mandapa', 'hall-back', 'hall-exit', 'pass-in', 'pass-out', 'darshan', 'garbhagriha'),
+    ...chain('square', 'west-pass', 'west-front', 'west-side', 'west-back', 'bhimshila'),
     ...chain('west-back', 'wall-w', 'wall-e', 'samadhi', 'sam-head', 'sam-foot'),
-    ...chain('nandi-e', 'gap-w', 'east-front', 'east-back', 'bhimshila'),
+    ...chain('nandi', 'front-e', 'east-front', 'east-back', 'bhimshila'),
+    ['square', 'queue-path'],
     ['east-back', 'wall-e'],
   ];
   const places: Place[] = [
     { id: 'trek', node: 'trek', label: { hi: 'गौरीकुंड पैदल मार्ग', en: 'The trek from Gaurikund' }, look: [0, 8, 150] },
     { id: 'kedarpuri', node: 'spawn', label: { hi: 'केदारपुरी मार्ग', en: 'Kedarpuri street' }, look: [0, 9, -6] },
+    { id: 'queue', node: VIP_DARSHAN ? 'queue-path' : 'q2', label: { hi: 'दर्शन की कतार', en: 'The darshan queue' }, look: VIP_DARSHAN ? [-20, 1.2, 15] : [-29, 1.5, 30] },
     { id: 'square', node: 'plaza', label: { hi: 'मंदिर चौक', en: 'The temple square' }, look: [0, 9, -6] },
     { id: 'nandi', node: 'nandi', label: { hi: 'नंदी', en: 'Nandi' }, look: [0, 2.5, 6] },
     { id: 'mandapa', node: 'mandapa', label: { hi: 'सभा मंडप', en: 'Sabha Mandapa' }, look: [0, F + 1.4, -3.1] },

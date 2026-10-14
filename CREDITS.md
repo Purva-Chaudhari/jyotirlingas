@@ -42,11 +42,18 @@ Garamond, Mukta, Martel, Inter and Tiro Devanagari Hindi.
 - **Stone, plaster, ground and roof textures, sky HDRIs and the neem tree** in the temples: from
   [Poly Haven](https://polyhaven.com), CC0. Downloaded by `npm run assets` (`scripts/fetch-assets.mjs`) into
   `public/assets/`, which is not kept in the repository.
+- **The Adi Shankaracharya statue at Kedarnath** (`public/assets/models/shankaracharya.glb`, not kept in the
+  repository): a 3D reconstruction (TripoSR) made from the photograph
+  [Shankaracharya.jpg](https://commons.wikimedia.org/wiki/File:Shankaracharya.jpg) by Mayank7078 (2022),
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); the model is shared under the same licence.
+  The statue itself is the work of Arun Yogiraj and his team (2021).
 - **The glass Shiva** on the landing map (`public/landing/shiva-glass.webp`, built by
   `scripts/build-shiva-glass.mjs`): a placeholder traced from a reference image whose rights are not
   verified. To be replaced with an image we have rights to.
 - **Mahakaleshwar's picture** on its landing card (`public/landing/mahakaleshwar.webp`): captured from this
   site's own 3D temple.
+- **Kedarnath's picture** on its landing card (`public/landing/kedarnath.webp`): captured from this site's own
+  3D temple.
 
 ## Audio
 
@@ -70,6 +77,14 @@ by **Nova Spiritual India** ([youtube.com/@SpiritualIndia](https://www.youtube.c
 Not openly licensed; used at the site owner's choice. It plays at Mahakal's darshan spot in place of the
 embedded YouTube aarti, and while it plays the aarti panel credits it with a link to the video
 (`aarti.audio` in `src/temples/stories/mahakaleshwar.json`). Unchanged copy of the audio (MP3, 9:50).
+
+#### Kedarnath — `public/audio/aarti/kedarnath-om-jai-gangadhar.mp3`
+
+"[आरती ॐ जय गंगाधर Aarti Om Jai Gangadhar | Anuradha Paudwal | Shiv Aarti](https://www.youtube.com/watch?v=VwWp7X4wSbo)"
+sung by **Anuradha Paudwal**, from **T-Series Bhakti Sagar** on YouTube. Not openly licensed; used at the site
+owner's choice. It plays at Kedarnath's darshan spot (the temple committee publishes no aarti recording), and
+while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
+`src/temples/stories/kedarnath.json`). Unchanged copy of the audio (MP3, 9:08).
 
 #### The other temples
 
