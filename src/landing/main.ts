@@ -98,7 +98,8 @@ const railItems: HTMLButtonElement[] = [];
 
 // ---------- which temples open ----------
 /** only these can be entered for now; the others say they are coming, and nothing else */
-const OPEN = new Set(['mahakaleshwar']);
+// the temples that can be entered (src/open.ts): one list for the landing page and the temple pages
+const OPEN = OPEN_TEMPLES;
 const isOpen = (t: Temple) => OPEN.has(t.id);
 /** a locked temple's note, held a moment on a tap (phones have no hover) */
 function flashSoon(el: HTMLElement) {
