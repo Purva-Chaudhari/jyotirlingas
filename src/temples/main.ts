@@ -105,6 +105,7 @@ document.addEventListener('langchange', (e) => brand((e as CustomEvent<string>).
 $('pin').querySelector('.label')!.textContent = site.name.hi;
 $('intro').querySelector('.sub')!.innerHTML = `From the edge of space to the doorstep of <em>${site.name.en}</em>`;
 document.querySelector('#walk .hi')!.textContent = `श्री ${site.name.hi}`;
+document.querySelector('#walk .name')!.textContent = `Shri ${site.name.en}`;
 
 // Cesium (~1 MB gzipped) is only downloaded when the flight is actually used
 const globe = useFlight ? new (await import('./globe')).CinematicGlobe($('globe'), import.meta.env.VITE_CESIUM_TOKEN) : null;

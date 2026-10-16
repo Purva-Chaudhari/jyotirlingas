@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import type { Materials } from '../../engine/materials';
 import { worldUV, waterNormals } from '../../engine/materials';
 import { Water } from 'three/examples/jsm/objects/Water.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Physics, archPanelGeometry, garland, type Flames } from '../../engine/kit';
 import { Batch, Instances, tetrapodGeometry, eave, figureReliefGeometry } from './batch';
@@ -11,14 +13,33 @@ import { Batch, Instances, tetrapodGeometry, eave, figureReliefGeometry } from '
  * from the garbhagriha): the sea wall bending round the south-west, the seaside road and its
  * tetrapod revetment, the Arabian Sea, the paved promenade with lawns, the crenellated inner
  * court, the Digvijay Dwar ~110 m east on the temple's axis with the Sardar Patel statue
- * before it, the Baan Stambh on the sea wall, and the town of Prabhas Patan beyond.
+ * on its line ~40 m out before it, the Baan Stambh on the sea wall, and the town of Prabhas Patan beyond.
  */
 
 /** inner edge of the sea wall, from the north-west round to the south-east */
 export const SEA_WALL: [number, number][] = [[140, -250], [48, -102], [-58, -11], [-64, 42], [-83, 114], [-100, 190], [-160, 320]];
 export const BAAN = { x: -60.4, z: 7.5 };
-export const DWAR = { x: 2, z0: 105, z1: 119, hw: 11, door: 2.4 };
-export const STATUE = { x: 2, z: 152 };
+/** the gate stands on the temple's axis: from the air the covered walkway runs dead straight from its door to the temple's steps */
+export const DWAR = { x: 0, z0: 105, z1: 119, hw: 8.5, door: 1.7 };
+/**
+ * the statue stands on the gate's line ~40 m out from it, facing the temple (OpenStreetMap: 4.3 m north, 40 m east of
+ * the Dwar); photographed from the plaza's south-east it stands near and to the right, the gate and temple to the left
+ */
+export const STATUE = { x: DWAR.x - 0.2, z: 153 };
+/** the covered queue outside the gate: one straight lane w wide, from (ax, az) at the foot of the Dwar's steps out to (bx, bz) */
+/** the red-rimmed square basin in the plaza's south-east, before the statue */
+export const BASIN = { x: DWAR.x - 18, z: 166 };
+/** the covered walkway inside the gate: half-width hw, on the axis, a centre rail between the queue (south) and the way out */
+export const WALK = { hw: 1.6 };
+export const QLANE = { ax: DWAR.x - 1.0, az: DWAR.z1 + 3.0, bx: DWAR.x - 22, bz: 158, w: 1.2 };
+/**
+ * The light-and-sound show's amphitheatre north of the temple: tiers on arcs round (cx, cz), rising away from
+ * the temple and facing it across the Old Parvati temple's ruined plinth (radius r0 + k * step for tier k,
+ * between angles a0..a1 measured from +x).
+ */
+export const AMPHI = { cx: -2, cz: -11, r0: 40, step: 1.15, rise: 0.42, tiers: 13, a0: -0.55, a1: 0.55 };
+/** the Old Parvati temple's plinth (x0, x1, z0, z1) */
+export const PARVATI = { x0: 25, x1: 33, z0: -23, z1: -11 };
 const SEA_Y = -4.4;
 const ROAD_Y = -2.8;
 const PARAPET = 0.45;
@@ -272,7 +293,8 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
     const dx = bx - ax, dz = bz - az, len = Math.hypot(dx, dz);
     const ry = -Math.atan2(dz, dx);
     const cx = (ax + bx) / 2 + (n[0] + n2[0]) * 0.22, cz = (az + bz) / 2 + (n[1] + n2[1]) * 0.22;
-    SB.box(wallWhite, len + 0.9, PARAPET - ROAD_Y, 0.9, cx, ROAD_Y, cz, ry);
+    // the sea wall is the same golden sandstone ashlar as the temple
+    SB.box(S, len + 0.9, PARAPET - ROAD_Y, 0.9, cx, ROAD_Y, cz, ry);
     SB.box(pinkStone, len + 1.0, 0.16, 1.15, cx, PARAPET, cz, ry);
     // a plinth band at road level
     SB.box(concrete, len + 1.0, 0.6, 1.1, cx + n[0] * 0.15, ROAD_Y, cz + n[1] * 0.15, ry);
@@ -359,10 +381,25 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
   const northX = 55;
   B.span(wallPaint, northX, northX + 0.7, 0, 3.6, -112, 114);
   P.solid(northX - 0.1, 0, -112, northX + 0.8, 4, 114);
-  for (const [x0, x1] of [[-83, DWAR.x - DWAR.hw], [DWAR.x + DWAR.hw, northX]]) {
+  // (south of the gate, its big dark iron service gate between two square pillars, as photographed from the plaza)
+  const G0 = DWAR.x - DWAR.hw - 15, G1 = DWAR.x - DWAR.hw - 9;
+  for (const [x0, x1] of [[-83, G0], [G1, DWAR.x - DWAR.hw], [DWAR.x + DWAR.hw, northX]]) {
     B.span(S, x0, x1, 0, 2.2, 113.6, 114.3);
     P.solid(x0, 0, 113.5, x1, 3, 114.4);
     for (let x = x0 + 0.4; x < x1 - 0.3; x += 1.0) B.box(S, 0.5, 0.45, 0.7, x, 2.2, 113.95);
+  }
+  {
+    const iron = new THREE.MeshStandardMaterial({ color: 0x2a2826, metalness: 0.5, roughness: 0.6 });
+    for (const x of [G0, G1]) {
+      B.span(S, x - 0.45, x + 0.45, 0, 3.6, 113.5, 114.4);
+      B.span(S, x - 0.55, x + 0.55, 3.6, 3.8, 113.4, 114.5);
+      B.lathe(S, [[0, 0], [0.3, 0], [0.22, 0.25], [0.08, 0.5], [0, 0.55]], x, 3.8, 113.95, 10);
+    }
+    const a = G0 + 0.45, b = G1 - 0.45;
+    B.span(iron, a, b, 0, 3.0, 113.9, 114.0);
+    for (const y of [0.25, 1.5, 2.8]) B.span(iron, a, b, y, y + 0.1, 113.85, 114.05);
+    for (let x = a + 0.15; x < b; x += 0.15) B.span(iron, x - 0.015, x + 0.015, 0, 3.15, 113.84, 114.06);
+    P.solid(G0, 0, 113.5, G1, 3.6, 114.4);
   }
 
   // ---------- inner court: low crenellated (kangura) wall round the temple ----------
@@ -413,10 +450,17 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
   // at the middle of each side for the white paths), a hedged flower bed at the centre, and a dense mass of
   // broadleaf trees on the north lawns
   const lawnBeds: [number, number, number, number][] = [
-    [27, 50, -40, 12], [27, 50, 34, 70], [27, 50, 78, 104],
+    [27, 50, 34, 70], [27, 50, 78, 104],
     [-52, -27, 16, 50], [-60, -27, 60, 100], [30, 46, -84, -73],
   ];
   const hedge = (x0: number, x1: number, z0: number, z1: number, h = 0.6) => B.span(hedgeMat, x0, x1, 0, h, z0, z1);
+  // either side of the covered walkway from the gate to the temple: open green lawns in brick kerbs, a pale paved
+  // strip along the walkway and a cross path halfway (as seen from the air)
+  for (const sg of [-1, 1]) for (const [z0, z1] of [[68, 83.2], [86, 103]] as const) {
+    const [x0, x1] = sg > 0 ? [3.4, 13.2] : [-13.2, -3.4];
+    B.span(lawn, x0, x1, 0, 0.05, z0, z1);
+    for (const [a, b, c, d] of [[x0 - 0.2, x1 + 0.2, z0 - 0.2, z0], [x0 - 0.2, x1 + 0.2, z1, z1 + 0.2], [x0 - 0.2, x0, z0, z1], [x1, x1 + 0.2, z0, z1]]) B.span(brick, a, b, 0, 0.1, c, d);
+  }
   for (const [x0, x1, z0, z1] of lawnBeds) {
     B.span(lawn, x0, x1, 0, 0.05, z0, z1);
     for (const [a, b, c, d] of [[x0 - 0.25, x1 + 0.25, z0 - 0.25, z0], [x0 - 0.25, x1 + 0.25, z1, z1 + 0.25], [x0 - 0.25, x0, z0, z1], [x1, x1 + 0.25, z0, z1]]) B.span(brick, a, b, 0, 0.1, c, d);
@@ -438,7 +482,7 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
     for (let x = x0 + 3; x < x1 - 2; x += 6) for (const z of [z0 + 1.6, z1 - 1.6]) if (rnd() < 0.5) shrubs.at(x, 0.2, z, 0.6, 0.45, 0.6, rnd() * 6);
   }
   // broadleaf trees (neem, banyan) massed on the north lawns
-  for (const [x, z, h] of [[38, -31, 8.5], [45, -10, 9], [33, 5, 7.5], [43, 44, 8], [34, 62, 9.5], [45, 89, 8.5], [33, 99, 7.5], [-47, 46, 8]] as const) {
+  for (const [x, z, h] of [[43, 44, 8], [34, 62, 9.5], [45, 89, 8.5], [33, 99, 7.5], [-47, 46, 8]] as const) {
     broadleaf(B, palmBark, hedgeMat, x, z, h, x * 1.3 + z);
     P.solid(x - 0.45, 0, z - 0.45, x + 0.45, 4, z + 0.45);
   }
@@ -449,16 +493,116 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
     shrubMesh.setColorAt(i, r < 0.14 ? scol.set(0xb8243c) : r < 0.24 ? scol.set(0xe0a020) : r < 0.3 ? scol.set(0xd85a8a) : scol.setHSL(0.27 + rnd() * 0.05, 0.5, 0.07 + rnd() * 0.05));
   }
 
-  // ---------- the light-and-sound amphitheatre on the north lawn, its tiers facing the temple ----------
+  // ---------- the light-and-sound amphitheatre north of the temple ----------
+  // As in the photographs: a broad fan of raked tiers in ochre concrete, each tier's seat painted in long red
+  // stretches with white panels between, a railing along the top and a high back wall; in front of it, rows of
+  // low benches on the ground, the same red and white; and between them and the temple the Old Parvati
+  // temple's ruined plinth.
   {
-    const x0 = 28, x1 = 46, zf = -58;
-    for (let k = 0; k < 9; k++) {
-      const y = 0.42 * (k + 1), zb = zf - 1.3 * k;
-      B.span(S, x0, x1, 0, y, zb - 1.3, zb);
-      B.span(brick, x0 + 0.3, x1 - 0.3, y, y + 0.06, zb - 0.75, zb - 0.25);
+    const A = AMPHI;
+    const ochre = new THREE.MeshStandardMaterial({ color: 0xd9a64a, roughness: 0.92 });
+    weatherPlaster(ochre);
+    const seatRed = new THREE.MeshStandardMaterial({ color: 0xa8392c, roughness: 0.8 });
+    const seatWhite = new THREE.MeshStandardMaterial({ color: 0xe8e4da, roughness: 0.8 });
+    // (solid: a wall; 'tread': a step to climb, its top walkable; false: neither)
+    const tread = new THREE.MeshBasicMaterial({ visible: false, side: THREE.DoubleSide });
+    const arc = (r0: number, r1: number, y0: number, y1: number, mat: THREE.Material, a0 = A.a0, a1 = A.a1, solid: boolean | 'tread' = true) => {
+      const n = Math.max(2, Math.ceil(((a1 - a0) * r1) / 3.2));
+      for (let i = 0; i < n; i++) {
+        const a = a0 + ((i + 0.5) / n) * (a1 - a0), w = ((a1 - a0) / n) * r1 + 0.05;
+        const rm = (r0 + r1) / 2;
+        const x = A.cx + Math.cos(a) * rm, z = A.cz + Math.sin(a) * rm;
+        B.box(mat, r1 - r0, y1 - y0, w, x, y0, z, -a);
+        if (solid === 'tread') {
+          const top = new THREE.Mesh(new THREE.PlaneGeometry(r1 - r0, w).rotateX(-Math.PI / 2).rotateY(-a).translate(x, y1, z), tread);
+          g.add(top);
+          P.floors.push(top);
+        } else if (solid) P.solid(x - (r1 - r0) / 2 - 0.4, y0, z - w / 2, x + (r1 - r0) / 2 + 0.4, y1 + 0.3, z + w / 2);
+      }
+    };
+    // the painted seat: red stretches with a white panel every few metres
+    const seats = (r: number, y: number, depth: number) => {
+      const n = Math.ceil(((A.a1 - A.a0) * r) / 1.6);
+      for (let i = 0; i < n; i++) {
+        const a0 = A.a0 + (i / n) * (A.a1 - A.a0), a1 = A.a0 + ((i + 1) / n) * (A.a1 - A.a0);
+        arc(r, r + depth, y, y + 0.05, i % 3 === 1 ? seatWhite : seatRed, a0, a1, false);
+      }
+    };
+    for (let k = 0; k < A.tiers; k++) {
+      const r = A.r0 + A.step * k, y = A.rise * (k + 1);
+      arc(r, r + A.step, 0, y, ochre, A.a0, A.a1, 'tread');
+      seats(r + 0.12, y, 0.5);
     }
-    for (const x of [x0 - 0.3, x1 + 0.3]) B.span(S, x - 0.3, x + 0.3, 0, 4.4, zf - 11.7, zf);
-    P.solid(x0 - 0.6, 0, zf - 11.7, x1 + 0.6, 4.4, zf);
+    // the walk along the top, its railing and the back wall
+    const rt = A.r0 + A.step * A.tiers, yt = A.rise * A.tiers;
+    arc(rt, rt + 2.2, 0, yt, ochre, A.a0, A.a1, 'tread');
+    arc(rt + 2.2, rt + 2.6, 0, yt + 3.2, ochre);
+    for (let i = 0; i <= 24; i++) {
+      const a = A.a0 + (i / 24) * (A.a1 - A.a0);
+      B.box(steel, 0.05, 1.0, 0.05, A.cx + Math.cos(a) * (rt + 0.1), yt, A.cz + Math.sin(a) * (rt + 0.1));
+    }
+    for (const y of [0.55, 1.0]) arc(rt + 0.07, rt + 0.13, yt + y - 0.03, yt + y + 0.03, steel, A.a0, A.a1, false);
+    // the end walls of the fan
+    for (const a of [A.a0, A.a1]) {
+      const rm = (A.r0 + rt + 2.6) / 2, len = rt + 2.6 - A.r0;
+      B.box(ochre, len, yt + 0.9, 0.5, A.cx + Math.cos(a) * rm, 0, A.cz + Math.sin(a) * rm, -a);
+      // (walled along its length, so nobody walks off the end of a raised tier)
+      for (let t = 0; t < len; t += 0.8) {
+        const r = A.r0 + t + 0.4, x = A.cx + Math.cos(a) * r, z = A.cz + Math.sin(a) * r;
+        P.solid(x - 0.45, 0, z - 0.45, x + 0.45, yt + 2, z + 0.45);
+      }
+    }
+    // rows of low benches on the ground in front (the side by the Parvati plinth left open)
+    for (let k = 0; k < 4; k++) {
+      const r = 31 + k * 2.1;
+      arc(r, r + 0.55, 0, 0.42, ochre, -0.08, A.a1);
+      const n = Math.ceil(((A.a1 + 0.08) * r) / 1.6);
+      for (let i = 0; i < n; i++) {
+        const a0 = -0.08 + (i / n) * (A.a1 + 0.08), a1 = -0.08 + ((i + 1) / n) * (A.a1 + 0.08);
+        arc(r - 0.02, r + 0.57, 0.42, 0.47, i % 2 ? seatWhite : seatRed, a0, a1, false);
+      }
+    }
+  }
+
+  // ---------- the Old Parvati temple's plinth (pārvatī mandir avaśeṣa) ----------
+  // only the stepped base survives: carved friezes in courses, steps up one side, a bench in its shade
+  {
+    const { x0, x1, z0, z1 } = PARVATI;
+    const course = (i: number, y0: number, y1: number, inset: number) => B.span(S, x0 + inset, x1 - inset, y0, y1, z0 + inset, z1 - inset);
+    course(0, 0, 0.35, -0.3);
+    course(1, 0.35, 0.8, 0);
+    course(2, 0.8, 1.05, 0.2);
+    course(3, 1.05, 1.6, 0.1);
+    course(4, 1.6, 1.85, 0.25);
+    course(5, 1.85, 2.3, 0.15);
+    // offsets (rathas) along the long sides and the carved frieze bands
+    for (const zf of [z0, z1]) {
+      const sgn = zf === z0 ? -1 : 1;
+      for (let x = x0 + 1.2; x < x1 - 0.8; x += 1.6) {
+        B.span(S, x - 0.45, x + 0.45, 0.8, 2.15, zf - sgn * 0.1, zf + sgn * 0.12);
+        B.add(S, figureReliefGeometry().scale(0.42, 0.42, 0.5).rotateY(sgn > 0 ? 0 : Math.PI).translate(x, 1.1, zf + sgn * 0.16));
+      }
+    }
+    // steps up the east side
+    for (let k = 0; k < 6; k++) B.span(S, x0 + 2, x1 - 2, 0, 0.38 * (k + 1), z1 + 2.4 - k * 0.4, z1 + 2.8 - k * 0.4);
+    // the bench at its foot
+    B.span(steel, x0 + 1.2, x0 + 2.8, 0.42, 0.47, z0 - 1.2, z0 - 0.8);
+    for (const x of [x0 + 1.3, x0 + 2.7]) B.span(steel, x - 0.04, x + 0.04, 0, 0.42, z0 - 1.15, z0 - 0.85);
+    P.solid(x0 - 0.3, 0, z0 - 0.3, x1 + 0.3, 2.4, z1 + 0.3);
+    // its signboard: red, lettered in white
+    const c = document.createElement('canvas');
+    c.width = 256; c.height = 128;
+    const x2 = c.getContext('2d')!;
+    x2.fillStyle = '#8e1f1a'; x2.fillRect(0, 0, 256, 128);
+    x2.fillStyle = '#fff'; x2.textAlign = 'center';
+    x2.font = '700 30px Martel, serif'; x2.fillText('पार्वती मंदिर अवशेष', 128, 52);
+    x2.font = '700 24px sans-serif'; x2.fillText('OLD PARVATI TEMPLE', 128, 98);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const sign = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.45), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.7 }));
+    sign.position.set(x0 - 0.33, 1.95, (z0 + z1) / 2 + 2);
+    sign.rotation.y = -Math.PI / 2;
+    g.add(sign);
   }
 
   // ---------- a small shrine by the approach (a Ganesha devkulika with its own little shikhara) ----------
@@ -477,15 +621,24 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
   }
 
   // ---------- Digvijay Dwar ----------
-  buildDwar(g, B, T.dwar, T, M, P);
+  const dwarReady = buildDwar(g, B, T.dwar, T, M, P);
 
+  let patelReady: Promise<void> = Promise.resolve();
   // ---------- Sardar Patel statue: a dark bronze figure on a tall granite pedestal ringed with elephants ----------
   {
     const { x, z } = STATUE;
-    const granite = new THREE.MeshStandardMaterial({ color: 0x6f6a66, roughness: 0.5 });
+    const granite = new THREE.MeshStandardMaterial({ color: 0x9a7d70, roughness: 0.5 });
     weatherPlaster(granite);
-    B.span(granite, x - 3.0, x + 3.0, 0, 0.35, z - 3.0, z + 3.0);
-    B.span(granite, x - 2.3, x + 2.3, 0.35, 0.9, z - 2.3, z + 2.3);
+    // a broad low platform of two steps, its edge painted yellow, and the four yellow-and-red pillars round it
+    const kerb = new THREE.MeshStandardMaterial({ color: 0xe0b23c, roughness: 0.8 });
+    B.span(granite, x - 4.5, x + 4.5, 0, 0.17, z - 4.5, z + 4.5);
+    B.span(kerb, x - 4.53, x + 4.53, 0, 0.1, z - 4.53, z + 4.53);
+    B.span(granite, x - 3.8, x + 3.8, 0.17, 0.34, z - 3.8, z + 3.8);
+    B.span(granite, x - 2.3, x + 2.3, 0.34, 0.9, z - 2.3, z + 2.3);
+    for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+      chowkPillar(B, x + sx * 5.4, z + sz * 5.4);
+      P.solid(x + sx * 5.4 - 0.35, 0, z + sz * 5.4 - 0.35, x + sx * 5.4 + 0.35, 4.3, z + sz * 5.4 + 0.35);
+    }
     B.span(granite, x - 1.5, x + 1.5, 0.9, 3.4, z - 1.5, z + 1.5);
     B.span(granite, x - 1.7, x + 1.7, 3.4, 3.5, z - 1.7, z + 1.7);
     B.span(granite, x - 1.9, x + 1.9, 3.95, 4.55, z - 1.9, z + 1.9);
@@ -499,7 +652,44 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
       B.add(bronze, new THREE.CylinderGeometry(0.035, 0.06, 0.38, 6).translate(ex + Math.cos(a) * 0.4, 3.62, ez + Math.sin(a) * 0.4));
     }
     P.solid(x - 2.4, 0, z - 2.4, x + 2.4, 9, z + 2.4);
-    patelStatue(B, bronze, M, g, x, 4.55, z);
+    // the statue itself, reconstructed (TripoSR) from a front photograph of it supplied by the site owner, with a
+    // head sculpted for it and the closed collar of his kurta (the photograph's face is too small to rebuild); the
+    // photo's light and shade kept per vertex: the bronze is shaded by it and the marigold garland keeps its colours.
+    // Unit height, its front along +x. The simple stand-in only if the file can't be loaded
+    patelReady = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('assets/models/sardar_patel.glb').then((gl) => {
+      // (his face is to the temple, away from the sun: the sky it mirrors is what models his features in that shade)
+      const cast = new THREE.MeshStandardMaterial({ color: 0x2c2620, metalness: 0.55, roughness: 0.42, vertexColors: true, envMapIntensity: 1.9 });
+      cast.onBeforeCompile = (sh) => {
+        sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `
+          vec3 pc = vColor.rgb;
+          float hi = max(max(pc.r, pc.g), pc.b), lo = min(min(pc.r, pc.g), pc.b);
+          float sat = (hi - lo) / (hi + 0.001);
+          // the garland: saturated and warm (orange, yellow, red); everything else is bronze
+          float flower = smoothstep(0.34, 0.5, sat) * step(pc.b + 0.06, pc.r);
+          float l = dot(pc, vec3(0.299, 0.587, 0.114));
+          vec3 bronze = diffuseColor.rgb * (0.35 + 2.4 * pow(clamp(l, 0.001, 1.0), 1.1));
+          diffuseColor.rgb = mix(bronze, pc * 1.15, flower);`);
+      };
+      cast.customProgramCacheKey = () => 'patel-cast';
+      gl.scene.traverse((o) => {
+        const mesh = o as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        mesh.material = cast;
+        // (a degenerate triangle gives a NaN normal, and one NaN pixel turns the whole post-processed frame black)
+        const nr = mesh.geometry.attributes.normal;
+        if (nr) for (let i = 0; i < nr.count; i++) if (!Number.isFinite(nr.getX(i) + nr.getY(i) + nr.getZ(i))) nr.setXYZ(i, 0, 1, 0);
+        mesh.castShadow = mesh.receiveShadow = true;
+      });
+      gl.scene.scale.setScalar(3.6);
+      gl.scene.rotation.y = Math.PI / 2; // the model faces +x: turned to face the temple (west, -z), his back to the market road
+      gl.scene.position.set(x, 4.55, z);
+      gl.scene.name = 'sardar-patel';
+      g.add(gl.scene);
+    }).catch(() => {
+      const SB2 = new Batch();
+      patelStatue(SB2, bronze, M, g, x, 4.55, z);
+      SB2.flush(g);
+    });
   }
 
   // ---------- Baan Stambh on the sea wall ----------
@@ -508,7 +698,8 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
   // ---------- lamp posts, queue rails, benches ----------
   const lampPosts: [number, number][] = [];
   for (let z = 70; z <= 104; z += 8.5) lampPosts.push([-7.5, z], [7.5, z]);
-  for (let z = 122; z <= 170; z += 12) lampPosts.push([-9, z], [13, z]);
+  // (none where the statue's pillars, the mural wall or the basin stand)
+  for (let z = 122; z <= 170; z += 12) for (const x of [DWAR.x - 11, DWAR.x + 11]) if (Math.hypot(x - STATUE.x, z - STATUE.z) > 8 && !(x > DWAR.x && z > 138 && z < 168) && Math.hypot(x - BASIN.x, z - BASIN.z) > 3.5) lampPosts.push([x, z]);
   for (let z = 184; z <= 400; z += 16) lampPosts.push([-9, z], [13, z]);
   for (let i = 0; i < SEA_WALL.length - 1; i++) {
     const [ax, az] = SEA_WALL[i], [bx, bz] = SEA_WALL[i + 1];
@@ -523,35 +714,147 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
     lampPost(B, S, globeMat, x, z);
     P.solid(x - 0.3, 0, z - 0.3, x + 0.3, 4, z + 0.3);
   }
-  // queue rails from the gate to the temple steps
+  // inside the gate: a single covered walkway on the axis, straight from the Dwar to the court's gate before the
+  // temple's steps (as seen from the air): a pale curved roof on steel posts over steel rails, the queue in its
+  // southern half and the way out (and the walk) in its northern half
   const railPost = new Instances(new THREE.CylinderGeometry(0.035, 0.035, 1.0, 6).translate(0, 0.5, 0), steel);
-  for (const x of [-4.2, -2.4, 2.4, 4.2]) {
-    for (let z = 64.5; z <= 101; z += 2.5) railPost.at(x, 0, z);
-    for (const y of [0.55, 0.98]) {
-      const rail = new THREE.CylinderGeometry(0.03, 0.03, 35, 6).rotateX(Math.PI / 2);
-      rail.translate(x, y, 82.0);
-      B.add(steel, rail);
+  const shed = new THREE.MeshStandardMaterial({ color: 0x8c9196, metalness: 0.6, roughness: 0.5, side: THREE.DoubleSide });
+  {
+    const wz0 = 66.5, wz1 = 100.6, HW = WALK.hw;
+    for (const x of [-HW, 0, HW]) {
+      for (let z = wz0; z <= wz1 + 0.01; z += 2.5) railPost.at(x, 0, z);
+      for (const y of [0.55, 0.98]) B.add(steel, new THREE.CylinderGeometry(0.03, 0.03, wz1 - wz0, 6).rotateX(Math.PI / 2).translate(x, y, (wz0 + wz1) / 2));
+      P.solid(x - 0.06, 0, wz0, x + 0.06, 1.0, wz1);
     }
-    P.solid(x - 0.06, 0, 64.5, x + 0.06, 1.0, 99.5);
+    const canopy = new THREE.MeshStandardMaterial({ color: 0xe8ecee, roughness: 0.55, metalness: 0.1, side: THREE.DoubleSide });
+    B.add(canopy, new THREE.CylinderGeometry(HW + 0.5, HW + 0.5, wz1 - wz0, 20, 1, true, -Math.PI / 2, Math.PI).scale(1, 1, 0.28).rotateX(-Math.PI / 2).translate(0, 2.75, (wz0 + wz1) / 2));
+    for (let z = wz0; z <= wz1 + 0.01; z += 3.2) for (const x of [-HW - 0.45, HW + 0.45]) B.span(steel, x - 0.04, x + 0.04, 0, 2.78, z - 0.04, z + 0.04);
+  }
+  // outside the gate: the covered queue, a single straight line between steel rails under a long grey sheet-metal
+  // roof on steel posts, slanting across the plaza from its south-east to the foot of the Dwar's steps (entered at
+  // the far end), where the line climbs in through the southern half of the door
+  {
+    const { ax, az, bx, bz, w } = QLANE;
+    const len = Math.hypot(bx - ax, bz - az), ry = Math.atan2(bx - ax, bz - az);
+    const ux = (bx - ax) / len, uz = (bz - az) / len, px = uz, pz = -ux; // along, and across
+    const at = (t: number, o: number): [number, number] => [ax + ux * t + px * o, az + uz * t + pz * o];
+    const mid = at(len / 2, 0);
+    for (const o of [-w / 2, w / 2]) {
+      for (let t = 0; t <= len + 0.01; t += 2.5) { const [x, z] = at(t, o); railPost.at(x, 0, z); }
+      for (const y of [0.55, 0.98]) {
+        const [x, z] = at(len / 2, o);
+        B.add(steel, new THREE.CylinderGeometry(0.03, 0.03, len, 6).rotateX(Math.PI / 2).rotateY(ry).translate(x, y, z));
+      }
+      // (the colliders follow the slanting rail in short boxes)
+      for (let t = 0; t < len; t += 0.8) {
+        const [x0, z0] = at(t, o), [x1, z1] = at(Math.min(len, t + 0.8), o);
+        P.solid(Math.min(x0, x1) - 0.06, 0, Math.min(z0, z1) - 0.06, Math.max(x0, x1) + 0.06, 1.0, Math.max(z0, z1) + 0.06);
+      }
+    }
+    B.add(shed, new THREE.BoxGeometry(w + 1.1, 0.04, len + 0.4).rotateZ(-0.07).rotateY(ry).translate(mid[0], 2.85, mid[1]));
+    for (let t = 0; t <= len + 0.01; t += 3) for (const o of [-(w / 2 + 0.4), w / 2 + 0.4]) {
+      const [x, z] = at(t, o);
+      B.add(steel, new THREE.BoxGeometry(0.08, 2.8 + (o < 0 ? 0.04 : -0.04), 0.08).translate(x, 1.4, z));
+      if (o < 0) { const [x2, z2] = at(t, -o); B.add(steel, new THREE.CylinderGeometry(0.025, 0.025, w + 0.8, 6).rotateZ(Math.PI / 2).rotateY(ry).translate((x + x2) / 2, 2.8, (z + z2) / 2)); }
+    }
+  }
+  // the plaza's south side by the queue: the compound wall carried on from the gate, crenellated like it
+  {
+    const wx = DWAR.x - 26, wz0 = 114.3, wz1 = 182;
+    B.span(S, wx - 0.35, wx + 0.35, 0, 2.2, wz0, wz1);
+    P.solid(wx - 0.4, 0, wz0, wx + 0.4, 3, wz1);
+    for (let z = wz0 + 0.4; z < wz1 - 0.3; z += 1.0) B.box(S, 0.7, 0.45, 0.5, wx, 2.2, z);
+  }
+  // the plaza's north side: a grey precast concrete fence with scalloped panels, and before it, behind the statue,
+  // a low wall of painted murals in yellow frames; the town's houses rise beyond
+  {
+    const fx = DWAR.x + 12.2, fz0 = 125.3, fz1 = 172;
+    const precast = new THREE.MeshStandardMaterial({ color: 0xb9b6ae, roughness: 0.9 });
+    weatherPlaster(precast);
+    for (let z = fz0; z < fz1 - 0.1; z += 2.0) {
+      B.span(precast, fx - 0.06, fx + 0.06, 0, 1.75, z, Math.min(fz1, z + 2.0));
+      B.add(precast, new THREE.CylinderGeometry(0.5, 0.5, 0.12, 12, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateY(Math.PI / 2).scale(1, 0.32, 1).translate(fx, 1.75, z + 1.0));
+      B.span(precast, fx - 0.12, fx + 0.12, 0, 2.05, z - 0.08, z + 0.08);
+    }
+    P.solid(fx - 0.2, 0, fz0, fx + 0.2, 2.5, fz1);
+    const mx = fx - 0.9, mz0 = 141, mz1 = 166, frame = new THREE.MeshStandardMaterial({ color: 0xe0b23c, roughness: 0.75 });
+    B.span(frame, mx - 0.25, mx + 0.25, 0, 2.9, mz0, mz1);
+    P.solid(mx - 0.3, 0, mz0, mx + 0.3, 3, mz1);
+    const tex = muralTexture();
+    const n = 7, pw = (mz1 - mz0) / n;
+    for (let k = 0; k < n; k++) {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(pw - 0.35, 1.7), new THREE.MeshStandardMaterial({ map: tex[k % tex.length], roughness: 0.8 }));
+      m.position.set(mx - 0.26, 1.75, mz0 + pw * (k + 0.5));
+      m.rotation.y = -Math.PI / 2;
+      g.add(m);
+    }
+  }
+  // the thin white flagstaff in the plaza, the red-rimmed square basin before the statue, and the big LED screen
+  // beside the gate
+  {
+    const white = new THREE.MeshStandardMaterial({ color: 0xf2f2ee, roughness: 0.5 });
+    const px = DWAR.x + 6, pz = 130;
+    B.lathe(white, [[0, 0], [0.5, 0], [0.5, 0.12], [0.09, 0.14], [0.06, 11], [0.08, 11.1], [0, 11.15]], px, 0, pz, 10);
+    P.solid(px - 0.3, 0, pz - 0.3, px + 0.3, 5, pz + 0.3);
+    const red = new THREE.MeshStandardMaterial({ color: 0xa83a24, roughness: 0.7 });
+    const bx = BASIN.x, bz = BASIN.z, hw = 1.6, hd = 2.4;
+    B.span(red, bx - hw, bx + hw, 0, 0.45, bz - hd, bz - hd + 0.3);
+    B.span(red, bx - hw, bx + hw, 0, 0.45, bz + hd - 0.3, bz + hd);
+    B.span(red, bx - hw, bx - hw + 0.3, 0, 0.45, bz - hd, bz + hd);
+    B.span(red, bx + hw - 0.3, bx + hw, 0, 0.45, bz - hd, bz + hd);
+    B.span(new THREE.MeshStandardMaterial({ color: 0x8fb8b4, roughness: 0.15, metalness: 0.1 }), bx - hw + 0.3, bx + hw - 0.3, 0, 0.3, bz - hd + 0.3, bz + hd - 0.3);
+    P.solid(bx - hw, 0, bz - hd, bx + hw, 0.6, bz + hd);
+    const sx = DWAR.x + 10.2, sz = 121.2;
+    for (const o of [-2.2, 2.2]) B.span(steel, sx + o - 0.1, sx + o + 0.1, 0, 2.4, sz - 0.1, sz + 0.1);
+    B.span(T.shade, sx - 2.7, sx + 2.7, 2.2, 5.3, sz - 0.18, sz + 0.02);
+    const scr = new THREE.Mesh(new THREE.PlaneGeometry(5.1, 2.9), new THREE.MeshBasicMaterial({ map: screenTexture() }));
+    scr.position.set(sx, 3.75, sz + 0.03);
+    g.add(scr);
+    P.solid(sx - 2.7, 0, sz - 0.2, sx + 2.7, 5.3, sz + 0.2);
   }
   railPost.flush(g);
-  // the covered queue: a grey sheet-metal canopy on slender posts over the southern lane
-  const shed = new THREE.MeshStandardMaterial({ color: 0x8c9196, metalness: 0.6, roughness: 0.5, side: THREE.DoubleSide });
-  B.span(shed, -4.6, -2.0, 2.75, 2.8, 66, 99.5);
-  B.span(shed, -4.6, -2.0, 2.8, 2.95, 66, 66.15);
-  for (let z = 66; z <= 99.5; z += 3.35) for (const x of [-4.5, -2.1]) B.span(steel, x - 0.04, x + 0.04, 0, 2.75, z - 0.04, z + 0.04);
   for (const [x, z] of [[-11, 70], [-11, 84], [11, 76], [11, 92], [-12, 98], [-40, 105], [-62, 125], [-35, 2], [-48, 20]] as const) {
     B.span(S, x - 0.9, x + 0.9, 0.3, 0.55, z - 0.3, z + 0.3);
     B.span(S, x - 0.8, x - 0.55, 0, 0.3, z - 0.25, z + 0.25);
     B.span(S, x + 0.55, x + 0.8, 0, 0.3, z - 0.25, z + 0.25);
   }
 
+  // ---------- high-mast floodlights over the gardens, and the light show's projectors ----------
+  for (const [x, z] of [[30, 62], [-34, -30], [-44, 66], [36, 110], [-20, 108], [12, -62]] as const) {
+    B.lathe(steel, [[0, 0], [0.32, 0], [0.32, 0.5], [0.22, 0.6], [0.11, 17.5], [0, 17.6]], x, 0, z, 10);
+    B.lathe(steel, [[0, 0], [0.9, 0], [0.9, 0.12], [0, 0.12]], x, 17.4, z, 16);
+    for (let k = 0; k < 8; k++) {
+      const a = (k / 8) * Math.PI * 2;
+      B.box(globeMat, 0.34, 0.24, 0.12, x + Math.cos(a) * 0.82, 17.15, z + Math.sin(a) * 0.82, -a + Math.PI / 2);
+    }
+    P.solid(x - 0.35, 0, z - 0.35, x + 0.35, 6, z + 0.35);
+  }
+  // two big projector lamps on yokes, flanking the path from the south porch to the Baan Stambh
+  {
+    const gold = new THREE.MeshStandardMaterial({ color: 0xc9a44a, metalness: 0.75, roughness: 0.35 });
+    for (const z of [10, 36]) {
+      const x = -42;
+      B.span(concrete, x - 0.7, x + 0.7, 0, 0.5, z - 0.7, z + 0.7);
+      B.lathe(gold, [[0, 0], [0.12, 0], [0.1, 1.4], [0, 1.4]], x, 0.5, z, 10);
+      for (const s2 of [-1, 1]) B.box(gold, 0.08, 0.9, 0.08, x, 1.6, z + s2 * 0.55);
+      B.box(gold, 0.08, 0.08, 1.18, x, 1.6, z);
+      // the drum, tipped up towards the temple
+      const drum = new THREE.CylinderGeometry(0.42, 0.5, 1.0, 20, 1, true).rotateZ(Math.PI / 2 + 0.35).translate(x, 2.2, z);
+      B.add(gold, drum);
+      B.add(globeMat, new THREE.CircleGeometry(0.42, 20).rotateY(Math.PI / 2).rotateZ(0.35).translate(x + 0.47, 2.37, z));
+      P.solid(x - 0.75, 0, z - 0.75, x + 0.75, 2.8, z + 0.75);
+    }
+  }
+
+  // ---------- the Samudra Darshan pergola along the sea wall, and "जय सोमनाथ" on its face ----------
+  seaPergola(g, B, SB, S, P, N);
+
   // ---------- palms along the walkway and the promenade ----------
   const palms: [number, number, number][] = [
     [-12.5, 66, 7.5], [12.5, 74, 8], [-15.5, 80, 7], [13.5, 100, 8.5], [-26, 58, 9], [26, 30, 7.5], [-24, -14, 8],
     [-40, 8, 7], [-46, 40, 8.5], [-70, 120, 7.5], [-34, 104, 8], [20, 120, 7], [-16, 125, 8], [30, 108, 9],
-    [36, -10, 9.5], [44, 8, 10.5], [33, 46, 9], [44, 62, 10], [36, 90, 9.5], [-38, 28, 9], [-46, 82, 10], [-36, 94, 8.5],
-    [34, -70, 10], [42, -84, 9], [20, -40, 8.5], [-10, -45, 9], [-12, 140, 9], [16, 140, 9.5], [-12, 165, 8], [16, 168, 8.5],
+    [33, 46, 9], [44, 62, 10], [36, 90, 9.5], [-38, 28, 9], [-46, 82, 10], [-36, 94, 8.5],
+    [34, -70, 10], [42, -84, 9], [20, -40, 8.5], [-10, -45, 9], [-12, 140, 9], [18.5, 150, 9.5], [-17, 150, 8], [16, 168, 8.5],
   ];
   for (const [x, z, h] of palms) {
     palm(B, palmBark, x, z, h, x * 0.37 + z);
@@ -578,15 +881,17 @@ export function buildPrecinct(root: THREE.Group, M: Materials, T: PrecinctMats, 
     mirror(...args);
     hidden.forEach((o) => (o.visible = true));
   };
-  return { group: g, water, shore };
+  return { group: g, water, shore, ready: Promise.all([dwarReady, patelReady]).then(() => undefined) };
 }
 
 // ---------- Digvijay Dwar ----------
 
-function buildDwar(g: THREE.Group, B: Batch, S: THREE.Material, T0: PrecinctMats, M: Materials, P: Physics) {
-  // Shri Digvijay Dwar: a near-square three-storey gatehouse in painted yellow-cream stone, pillared jharokha
-  // balconies on every storey and both ends, a column-framed doorway under a cusped torana, carved niches,
-  // corner chhatris and three ribbed phamsana roofs (centre the tallest), about 24 m to the finials.
+function buildDwar(g: THREE.Group, B: Batch, S: THREE.Material, T0: PrecinctMats, M: Materials, P: Physics): Promise<void> {
+  // Shri Digvijay Dwar, from the photographs: a near-square two-storey gatehouse in pale butter-yellow paint,
+  // its walls banded with layered mouldings; on each face a doorway between two fat round columns under a
+  // serpent torana, jharokha balconies at the corners and the centre of both storeys, deity reliefs in the
+  // wall; deep chhajja eaves; and on the roof two big stepped pyramids, one behind the other along the
+  // passage, with smaller ones over the corners (about 21 m to the finials).
   const { x: cx, z0, z1, hw, door } = DWAR;
   const zc = (z0 + z1) / 2, d = z1 - z0;
   // painted limewash (no stone grain), faintly monsoon-stained; its eaves take the same paint
@@ -594,84 +899,105 @@ function buildDwar(g: THREE.Group, B: Batch, S: THREE.Material, T0: PrecinctMats
   // (the paint material is double-sided, so it also serves for the eaves)
   const T = { ...T0, stoneTwo: S };
   const xl = cx - hw, xr = cx + hw, dl = cx - door, dr = cx + door;
-  const G1 = 6.6, F1 = G1 + 1.2, S2 = F1 + 3.8, C2 = S2 + 0.7, S3 = C2 + 3.2, R0 = S3 + 0.7;
-  // ground storey: two masses either side of the passage
-  for (const [a, b] of [[xl, dl], [dr, xr]]) {
-    B.span(S, a - 0.3, b, 0, 0.6, z0 - 0.3, z1 + 0.3);
-    B.span(S, a, b, 0.6, G1, z0, z1);
-    P.solid(a - 0.3, 0, z0 - 0.3, b, 20, z1 + 0.3);
+  // ground storey, its cornice and the name band, the upper storey, the top eave, the roof terrace
+  const G1 = 7.2, C1 = G1 + 0.9, NB = C1 + 0.7, U1 = NB + 4.4, R0 = U1 + 0.8;
+  // the gatehouse itself is modelled in Blender (scratchpad dwar.py → assets/models/digvijay_dwar.glb); this simpler
+  // build of it, D, is used only if that file can't be loaded
+  const D = new Batch();
+  // ground storey: two masses either side of the passage, on a moulded plinth
+  for (const [a, b] of [[xl, dl - 0.6], [dr + 0.6, xr]]) {
+    D.span(S, a - 0.35, b, 0, 0.5, z0 - 0.35, z1 + 0.35);
+    D.span(S, a - 0.2, b, 0.5, 0.75, z0 - 0.2, z1 + 0.2);
+    D.span(S, a, b, 0.75, G1, z0, z1);
+    P.solid(a - 0.35, 0, z0 - 0.35, b, 20, z1 + 0.35);
   }
-  B.span(T.shade, dl, dr, G1 * 0.74, G1, z0 + 0.6, z1 - 0.6);
-  // upper storeys and cornices (full width over the passage)
-  B.span(S, xl - 0.3, xr + 0.3, G1, F1, z0 - 0.35, z1 + 0.35);
-  eave(B, T.stoneTwo, cx, zc, 2 * hw + 0.6, d + 0.7, G1 + 0.1, 0.7, 0.35);
-  B.span(S, xl + 0.15, xr - 0.15, F1, S2, z0 + 0.15, z1 - 0.15);
-  B.span(S, xl - 0.2, xr + 0.2, S2, C2, z0 - 0.25, z1 + 0.25);
-  eave(B, T.stoneTwo, cx, zc, 2 * hw + 0.4, d + 0.5, S2 + 0.15, 0.6, 0.3);
-  B.span(S, xl + 0.3, xr - 0.3, C2, S3, z0 + 0.3, z1 - 0.3);
-  B.span(S, xl - 0.1, xr + 0.1, S3, R0, z0 - 0.15, z1 + 0.15);
-  eave(B, T.stoneTwo, cx, zc, 2 * hw + 0.2, d + 0.3, S3 + 0.2, 0.8, 0.4);
-  // deep pilasters with bases and capitals dividing the bays, and dentilled string courses, on both faces
-  for (const [z, sg] of [[z0, -1], [z1, 1]] as const) {
-    for (const x of [xl + 0.5, cx - 3.9, cx + 3.9, xr - 0.5]) {
-      for (const [y0, y1, w, d] of [[0.6, G1, 0.95, 0.9], [F1, S2, 0.85, 0.75], [C2, S3, 0.75, 0.6]] as const) {
-        B.box(S, w, y1 - y0, d, x, y0, z + sg * d / 2);
-        B.box(S, w + 0.25, 0.3, d + 0.2, x, y0, z + sg * (d / 2 + 0.05));
-        B.box(S, w + 0.3, 0.22, d + 0.25, x, y1 - 0.3, z + sg * (d / 2 + 0.07));
-        B.box(S, w + 0.15, 0.08, d + 0.12, x, y1 - 0.4, z + sg * (d / 2 + 0.03));
+  // the passage's dark ceiling and the wall over it
+  D.span(T.shade, dl - 0.6, dr + 0.6, 5.5, 5.6, z0 + 0.3, z1 - 0.3);
+  D.span(S, dl - 0.6, dr + 0.6, 5.6, G1, z0, z1);
+  // the ground-storey cornice: two stepped courses and a deep chhajja
+  D.span(S, xl - 0.25, xr + 0.25, G1, G1 + 0.35, z0 - 0.25, z1 + 0.25);
+  D.span(S, xl - 0.45, xr + 0.45, G1 + 0.35, G1 + 0.55, z0 - 0.45, z1 + 0.45);
+  eave(D, T.stoneTwo, cx, zc, 2 * hw + 1.0, d + 1.0, G1 + 0.55, 0.8, 0.35);
+  // the name band and the upper storey
+  D.span(S, xl - 0.1, xr + 0.1, C1, NB, z0 - 0.1, z1 + 0.1);
+  D.span(S, xl + 0.1, xr - 0.1, NB, U1, z0 + 0.1, z1 - 0.1);
+  // the top cornice and its deep eave, the roof terrace's parapet
+  D.span(S, xl - 0.15, xr + 0.15, U1, U1 + 0.35, z0 - 0.15, z1 + 0.15);
+  eave(D, T.stoneTwo, cx, zc, 2 * hw + 1.2, d + 1.2, U1 + 0.35, 0.9, 0.4);
+  D.span(S, xl + 0.2, xr - 0.2, R0 - 0.1, R0 + 0.5, z0 + 0.2, z1 - 0.2);
+  // layered mouldings banding the plain walls, on all four faces
+  const band = (y: number, h: number, out: number) => D.span(S, xl - out, xr + out, y, y + h, z0 - out, z1 + out);
+  for (const y of [1.15, 4.6, 6.7]) { band(y, 0.14, 0.08); band(y + 0.18, 0.08, 0.04); }
+  for (const y of [NB + 0.15, U1 - 0.5]) { band(y, 0.14, 0.18); band(y + 0.18, 0.08, 0.13); }
+  // corner pilasters
+  for (const x of [xl + 0.35, xr - 0.35]) for (const z of [z0 + 0.35, z1 - 0.35]) {
+    D.span(S, x - 0.5, x + 0.5, 0.75, G1, z - 0.5, z + 0.5);
+    D.span(S, x - 0.42, x + 0.42, NB, U1, z - 0.42, z + 0.42);
+  }
+
+  // both faces alike: the outer (+z, to the market) and the inner (-z, to the temple)
+  for (const [z, s] of [[z0, -1], [z1, 1]] as const) {
+    const fz = z + s * 0.8;
+    // the two fat round columns with cushion capitals, on square bases
+    for (const x of [dl - 0.35, dr + 0.35]) {
+      D.box(S, 1.15, 0.75, 1.15, x, 0, fz);
+      D.lathe(S, [[0, 0], [0.5, 0], [0.5, 0.35], [0.42, 0.45], [0.4, 0.8], [0.44, 0.9], [0.38, 1.0], [0.36, 3.7], [0.42, 3.85], [0.56, 4.05],
+        [0.6, 4.25], [0.5, 4.45], [0.42, 4.55], [0.55, 4.65], [0.55, 4.85], [0, 4.85]], x, 0.75, fz, 18);
+      P.solid(x - 0.6, 0, fz - 0.6, x + 0.6, 6, fz + 0.6);
+    }
+    // the entablature over the columns and the serpent torana under it (cusped arches, one behind another)
+    D.span(S, dl - 1.3, dr + 1.3, 5.6, 6.35, fz - 0.5, fz + 0.5);
+    D.span(S, dl - 1.45, dr + 1.45, 6.35, 6.5, fz - 0.6, fz + 0.6);
+    for (let k = 0; k < 2; k++) {
+      const arch = archPanelGeometry(door * 2 + 0.2 + k * 0.4, 4.85 + k * 0.2, 0.26, 9 + k * 2);
+      arch.translate(cx, 0.75, fz - s * k * 0.3);
+      D.add(S, arch);
+    }
+    // the coiled serpents (naga) of the torana: two loops each side over the capitals
+    for (const sx of [-1, 1]) {
+      for (let k = 0; k < 2; k++) {
+        const coil = new THREE.TorusGeometry(0.32 - k * 0.08, 0.09, 6, 14, Math.PI * 1.6).rotateZ(sx * 0.6 + k);
+        coil.translate(cx + sx * (door - 0.15 - k * 0.55), 5.3 - k * 0.05, fz + s * 0.15);
+        D.add(S, coil);
       }
     }
-    for (const y of [G1 - 0.5, S2 - 0.22, S3 - 0.22]) {
-      B.box(S, 2 * hw + 0.2, 0.12, 0.4, cx, y + 0.22, z + sg * 0.2);
-      for (let x = xl + 0.2; x < xr - 0.1; x += 0.42) B.box(S, 0.2, 0.2, 0.32, x, y, z + sg * 0.16);
-    }
-  }
-  // the doorway on both faces: round pillars, an entablature and a cusped (makara) torana arch
-  for (const [z, s] of [[z0, -1], [z1, 1]] as const) {
-    const fz = z + s * 0.75;
-    for (const x of [dl - 0.55, dr + 0.55]) {
-      B.lathe(S, [[0, 0], [0.5, 0], [0.5, 0.5], [0.38, 0.62], [0.32, 1.2], [0.36, 1.3], [0.3, 1.4], [0.28, 4.3], [0.42, 4.5], [0.48, 4.75], [0.3, 4.9], [0, 4.9]], x, 0.6, fz, 16);
-      P.solid(x - 0.5, 0, fz - 0.5, x + 0.5, 6, fz + 0.5);
-    }
-    B.span(S, dl - 1.2, dr + 1.2, 5.5, 6.6, fz - 0.45, fz + 0.45);
-    // stepped archivolts: three cusped arches, each a little larger and further back
-    for (let k = 0; k < 3; k++) {
-      const arch = archPanelGeometry(door * 2 + 0.4 + k * 0.5, 4.9 + k * 0.25, 0.3, 9 + k * 2);
-      arch.translate(cx, 0.6, fz - s * k * 0.25);
-      B.add(S, arch);
-    }
-    // the moulded cornice over the entablature, under the name board
-    B.span(S, dl - 1.4, dr + 1.4, 6.6, 6.75, fz - 0.55, fz + 0.55);
-    // carved niches with figures in soft relief either side of the door
-    for (const x of [cx - 5.6, cx + 5.6, cx - 9.6, cx + 9.6]) {
-      const fig = figureReliefGeometry().scale(1.2, 1.25, 1.2);
+    // the ground storey: jharokha windows either side, deity reliefs in niches between
+    for (const x of [cx - 5.7, cx + 5.7]) jharokha(D, S, T.shade, x, 2.4, z, 0, s, 2.6, 3.1, T.jali);
+    for (const x of [cx - 3.4, cx + 3.4, xl + 1.2, xr - 1.2]) {
+      D.box(T.shade, 1.0, 2.2, 0.05, x, 1.6, z + s * 0.02);
+      const fig = figureReliefGeometry().scale(1.0, 1.1, 1.0);
       if (s < 0) fig.rotateY(Math.PI);
-      fig.translate(x, 1.6, z + s * 0.12);
-      B.add(S, fig);
+      fig.translate(x, 1.7, z + s * 0.1);
+      D.add(S, fig);
+      D.box(S, 1.3, 0.2, 0.4, x, 3.85, z + s * 0.2);
     }
-    // jharokha balconies: storey 2 and 3 (three each), ground storey (two)
-    // (the centre one sits a little higher, leaving the band below it clear for the name board)
-    for (const [x, w] of [[cx - 7.4, 2.6], [cx, 3.4], [cx + 7.4, 2.6]] as const) jharokha(B, S, T.shade, x, F1 + (x === cx ? 0.6 : 0.2), z, 0, s, w, S2 - F1 - (x === cx ? 0.7 : 0.3), T.jali);
-    // the top storey: two open pillared chhatris per face, the wall behind them pierced by a dark doorway
-    for (const x of [cx - 4.6, cx + 4.6]) chhatri(B, S, T.shade, x, C2 + 0.15, z, s, 3.0, S3 - C2 - 0.2);
-    for (const x of [cx - 7.6, cx + 7.6]) jharokha(B, S, T.shade, x, 1.6, z, 0, s, 2.2, 3.2, T.jali);
+    // the upper storey: a broad jharokha at the centre over the door, narrower ones at the corners
+    jharokha(D, S, T.shade, cx, NB + 1.0, z, 0, s, 4.2, 3.0, T.jali);
+    for (const x of [xl + 1.7, xr - 1.7]) jharokha(D, S, T.shade, x, NB + 1.2, z, 0, s, 2.4, 2.8, T.jali);
   }
-  // balconies on the two ends too
+  // the two side faces: a jharokha at the centre of the upper storey, windows and reliefs below
   for (const [x, s] of [[xl, -1], [xr, 1]] as const) {
-    for (const zz of [zc - 3.5, zc + 3.5]) jharokha(B, S, T.shade, x, F1 + 0.2, zz, s, 0, 2.4, S2 - F1 - 0.3, T.jali);
-    jharokha(B, S, T.shade, x, C2 + 0.15, zc, s, 0, 3.0, S3 - C2 - 0.3, T.jali);
+    jharokha(D, S, T.shade, x, NB + 1.0, zc, s, 0, 3.4, 3.0, T.jali);
+    for (const zz of [z0 + 3.0, z1 - 3.0]) jharokha(D, S, T.shade, x, 2.4, zz, s, 0, 2.4, 3.0, T.jali);
+    for (const zz of [zc - 1.3, zc + 1.3]) {
+      D.box(T.shade, 0.05, 2.2, 1.0, x + s * 0.02, 1.6, zz);
+      const fig = figureReliefGeometry().scale(1.0, 1.1, 1.0).rotateY(s * Math.PI / 2);
+      fig.translate(x + s * 0.1, 1.7, zz);
+      D.add(S, fig);
+    }
   }
-  // corner chhatris on the roof terrace
-  for (const [x, z] of [[xl + 1.0, z0 + 1.0], [xr - 1.0, z0 + 1.0], [xl + 1.0, z1 - 1.0], [xr - 1.0, z1 - 1.0]]) {
-    for (const [ox, oz] of [[-0.55, -0.55], [0.55, -0.55], [-0.55, 0.55], [0.55, 0.55]]) B.box(S, 0.16, 1.6, 0.16, x + ox, R0, z + oz);
-    B.box(S, 1.6, 0.18, 1.6, x, R0 + 1.6, z);
-    phamsana(B, S, x, R0 + 1.78, z, 0.85, 1.2, 3);
+  // the roof: two big stepped pyramids on square drums along the passage, smaller ones over the corners
+  for (const z of [zc - 3.5, zc + 3.5]) {
+    D.span(S, cx - 3.6, cx + 3.6, R0, R0 + 1.6, z - 3.4, z + 3.4);
+    D.span(S, cx - 3.9, cx + 3.9, R0 + 1.6, R0 + 1.85, z - 3.7, z + 3.7);
+    phamsana(D, S, cx, R0 + 1.85, z, 3.6, 7.2, 16);
   }
-  // three ribbed phamsana roofs, the centre one the tallest
-  phamsana(B, S, cx, R0, zc, 6.0, 10.5, 15);
-  phamsana(B, S, cx - 7.2, R0, zc, 4.6, 8.4, 12);
-  phamsana(B, S, cx + 7.2, R0, zc, 4.6, 8.4, 12);
-  // inscription in red on the second-storey band, large enough to read from the plaza: श्री दिग्विजय द्वार
+  for (const x of [xl + 1.8, xr - 1.8]) for (const z of [z0 + 1.8, z1 - 1.8]) {
+    D.span(S, x - 1.5, x + 1.5, R0, R0 + 1.0, z - 1.5, z + 1.5);
+    D.span(S, x - 1.7, x + 1.7, R0 + 1.0, R0 + 1.18, z - 1.7, z + 1.7);
+    phamsana(D, S, x, R0 + 1.18, z, 1.7, 3.4, 8);
+  }
+  // inscription in red on the name band, on both faces: श्री दिग्विजय द्वार
   const c = document.createElement('canvas');
   c.width = 2048; c.height = 200;
   const x2 = c.getContext('2d')!;
@@ -683,33 +1009,118 @@ function buildDwar(g: THREE.Group, B: Batch, S: THREE.Material, T0: PrecinctMats
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
   const signMat = new THREE.MeshStandardMaterial({ map: tex, transparent: true, roughness: 0.8 });
-  // the white banner board of the trust over the doorway, lettered in red
+  // the trust's white welcome banner hung between the columns, lettered in red
   const bc = document.createElement('canvas');
   bc.width = 1024; bc.height = 256;
   const bx = bc.getContext('2d')!;
   bx.fillStyle = '#f7f5ef'; bx.fillRect(0, 0, 1024, 256);
-  bx.strokeStyle = '#c0281e'; bx.lineWidth = 10; bx.strokeRect(12, 12, 1000, 232);
+  bx.strokeStyle = '#c0281e'; bx.lineWidth = 8; bx.strokeRect(10, 10, 1004, 236);
   bx.fillStyle = '#c0281e'; bx.textAlign = 'center';
-  bx.font = '800 92px Martel, "Noto Sans Devanagari", serif';
-  bx.fillText('श्री सोमनाथ ट्रस्ट', 512, 112);
-  bx.font = '600 52px Martel, "Noto Sans Devanagari", serif';
-  bx.fillText('श्री सोमनाथ महादेव मंदिर', 512, 200);
+  bx.font = '800 96px Martel, "Noto Sans Devanagari", serif';
+  bx.fillText('श्री सोमनाथ ट्रस्ट', 512, 108);
+  bx.font = '600 62px Martel, "Noto Sans Devanagari", serif';
+  bx.fillText('आपका हार्दिक स्वागत करता है', 512, 205);
   const btex = new THREE.CanvasTexture(bc);
   btex.colorSpace = THREE.SRGBColorSpace;
   btex.anisotropy = 8;
-  const bannerMat = new THREE.MeshStandardMaterial({ map: btex, roughness: 0.7 });
-  for (const [z, ry, s] of [[z1 + 0.37, 0, 1], [z0 - 0.37, Math.PI, -1]] as const) {
-    const sign = new THREE.Mesh(new THREE.PlaneGeometry(9.4, 0.92), signMat);
-    sign.position.set(cx, G1 + 0.6, z);
+  const bannerMat = new THREE.MeshStandardMaterial({ map: btex, roughness: 0.7, side: THREE.DoubleSide });
+  // the red notice boards on the columns' pedestals' faces
+  const rc = document.createElement('canvas');
+  rc.width = 64; rc.height = 256;
+  const rx = rc.getContext('2d')!;
+  rx.fillStyle = '#b8241c'; rx.fillRect(0, 0, 64, 256);
+  rx.fillStyle = '#f4e9d8';
+  for (let y = 26; y < 240; y += 16) rx.fillRect(10, y, 30 + ((y * 7) % 14), 5);
+  const rtex = new THREE.CanvasTexture(rc);
+  rtex.colorSpace = THREE.SRGBColorSpace;
+  const redMat = new THREE.MeshStandardMaterial({ map: rtex, roughness: 0.7 });
+  // (as in the model: the passage floor PLAT up, five steps each side; the porch pillars 0.8 m out from each face)
+  const PLAT = 1.0;
+  for (const [z, ry, s] of [[z1, 0, 1], [z0, Math.PI, -1]] as const) {
+    // the name on the projecting base of the upper central balcony
+    const sign = new THREE.Mesh(new THREE.PlaneGeometry(5.0, 0.6), signMat);
+    sign.position.set(cx, 8.43, z + s * 0.77);
     sign.rotation.y = ry;
     g.add(sign);
-    const banner = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 1.0), bannerMat);
-    banner.position.set(cx, 6.05, z + s * 1.22);
+    // the welcome banner, hung just inside the porch under the serpents and lamps
+    const banner = new THREE.Mesh(new THREE.PlaneGeometry(3.0, 0.82), bannerMat);
+    banner.position.set(cx, PLAT + 3.55, z + s * 0.55);
     banner.rotation.y = ry;
     g.add(banner);
+    // the red notice boards on the pillars' square shafts
+    for (const x of [dl - 0.35, dr + 0.35]) {
+      const board = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 1.5), redMat);
+      board.position.set(x, PLAT + 1.8, z + s * 1.175);
+      board.rotation.y = ry;
+      g.add(board);
+    }
+    // walkable: the steps up to the doorway and its raised floor; the handrails can't be walked through
+    const zs = z + s * 1.2, ze = z + s * 2.8;
+    P.floor(g, dl - 0.9, dr + 0.9, Math.min(zs, ze), Math.max(zs, ze), s > 0 ? PLAT : 0, s > 0 ? 0 : PLAT);
+    for (const x of [cx - (door - 0.45), cx + (door - 0.45)]) P.solid(x - 0.05, 0, Math.min(z + s * 1.0, z + s * 3.15), x + 0.05, PLAT + 1.0, Math.max(z + s * 1.0, z + s * 3.15));
   }
-  garland(g, M.marigold, new THREE.Vector3(dl, G1 - 1.6, z1 + 0.85), new THREE.Vector3(dr, G1 - 1.6, z1 + 0.85), 0.7, 0.06);
-  garland(g, M.marigold, new THREE.Vector3(dl, G1 - 1.6, z0 - 0.85), new THREE.Vector3(dr, G1 - 1.6, z0 - 0.85), 0.7, 0.06);
+  P.floor(g, dl - 0.6, dr + 0.6, z0 - 1.2, z1 + 1.2, PLAT);
+
+  // outside, beside the gate: the round white security kiosk at its southern corner (as photographed from the
+  // plaza), the "सुरक्षा विभाग" office against the wall to the north, and a black iron railing in front of that
+  {
+    const white = new THREE.MeshStandardMaterial({ color: 0xf2ead6, roughness: 0.85 });
+    weatherPlaster(white);
+    const kx = xl + 3.0, kz = z1 + 3.3;
+    B.lathe(white, [[0, 0], [1.7, 0], [1.7, 2.6], [1.78, 2.65], [1.78, 2.8], [0, 2.8]], kx, 0, kz, 28);
+    for (let k = 0; k < 5; k++) {
+      const a = 1.2 + k * 0.55; // (windows round its plaza and southern sides)
+      B.add(T.shade, new THREE.PlaneGeometry(0.34, 0.5).rotateY(a + Math.PI / 2).translate(kx + Math.cos(a) * 1.71, 1.55, kz + Math.sin(a) * 1.71));
+    }
+    P.solid(kx - 1.75, 0, kz - 1.75, kx + 1.75, 3, kz + 1.75);
+    // the security office: a low cream block with a deep blue-framed signboard and a window band
+    const ox0 = xr + 0.4, ox1 = xr + 9.5, oz0 = 114.3, oz1 = 118.3;
+    B.span(S, ox0, ox1, 0, 3.2, oz0, oz1);
+    B.span(S, ox0 - 0.15, ox1 + 0.15, 3.2, 3.45, oz0, oz1 + 0.2);
+    B.span(T.shade, ox0 + 1.5, ox1 - 0.6, 0.9, 2.0, oz1, oz1 + 0.04);
+    P.solid(ox0, 0, oz0, ox1, 3.5, oz1);
+    const sc = document.createElement('canvas');
+    sc.width = 512; sc.height = 128;
+    const sx = sc.getContext('2d')!;
+    sx.fillStyle = '#2a5aa8'; sx.fillRect(0, 0, 512, 128);
+    sx.fillStyle = '#f7f1e0'; sx.fillRect(10, 10, 492, 108);
+    sx.fillStyle = '#b8241c'; sx.textAlign = 'center';
+    sx.font = '700 26px Martel, "Noto Sans Devanagari", serif';
+    sx.fillText('श्री सोमनाथ ट्रस्ट', 256, 44);
+    sx.font = '800 54px Martel, "Noto Sans Devanagari", serif';
+    sx.fillText('सुरक्षा विभाग', 256, 104);
+    const stex = new THREE.CanvasTexture(sc);
+    stex.colorSpace = THREE.SRGBColorSpace;
+    const board = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 0.9), new THREE.MeshStandardMaterial({ map: stex, roughness: 0.7 }));
+    board.position.set(ox0 + 3.6, 2.55, oz1 + 0.05);
+    g.add(board);
+    // black iron railing: square bars between posts, with spear tops
+    const iron = new THREE.MeshStandardMaterial({ color: 0x1e1e1e, metalness: 0.6, roughness: 0.5 });
+    const rz = z1 + 6.0, rx0 = xr + 0.2, rx1 = ox1;
+    for (let x = rx0; x <= rx1 + 0.01; x += 0.14) B.box(iron, 0.025, 1.15, 0.025, x, 0, rz);
+    for (let x = rx0; x <= rx1 + 0.01; x += 2.4) B.box(iron, 0.07, 1.3, 0.07, x, 0, rz);
+    for (const y of [0.12, 1.02]) B.box(iron, rx1 - rx0, 0.04, 0.04, (rx0 + rx1) / 2, y, rz);
+    P.solid(rx0, 0, rz - 0.06, rx1, 1.3, rz + 0.06);
+  }
+
+  // the Blender model, painted with the gate's limewash (its shade comes from the scene's own shadows and AO: shadows
+  // baked per vertex went black on the big wall faces, whose corner vertices sit inside the cornices)
+  return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('assets/models/digvijay_dwar.glb').then((gl) => {
+    const paint = S;
+    gl.scene.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      const name = (mesh.material as THREE.Material).name;
+      mesh.material = name === 'dark' ? T.shade : paint;
+      mesh.castShadow = mesh.receiveShadow = true;
+    });
+    gl.scene.position.set(cx, 0, zc);
+    gl.scene.name = 'digvijay-dwar';
+    g.add(gl.scene);
+  }).catch((e) => {
+    console.warn('Digvijay Dwar model not loaded, using the simple build', e);
+    D.flush(g);
+  });
 }
 
 /**
@@ -862,15 +1273,15 @@ function baanStambh(g: THREE.Group, B: Batch, S: THREE.Material, M: Materials, P
     const a = (k / 14) * Math.PI * 2;
     B.add(S, new THREE.SphereGeometry(0.13, 8, 5).scale(0.8, 0.9, 0.45).rotateY(-a).translate(x + Math.cos(a) * 0.56, 4.58, z + Math.sin(a) * 0.56));
   }
-  // the globe in weathered stone
-  const globeStone = new THREE.MeshStandardMaterial({ color: 0x9c9588, roughness: 0.95 });
-  weatherPlaster(globeStone);
+  // the globe
+  // painted sky-blue, as it is today
+  const globeStone = new THREE.MeshStandardMaterial({ color: 0x2f74c0, roughness: 0.45 });
   const globe = new THREE.Mesh(new THREE.SphereGeometry(0.62, 32, 20), globeStone);
   globe.position.set(x, 5.25, z);
   globe.castShadow = true;
   g.add(globe);
   // the arrow: a metal shaft through the globe, a barbed head out over the sea (south, -x), fletching behind
-  const metal = new THREE.MeshStandardMaterial({ color: 0x8a8a86, metalness: 0.8, roughness: 0.45 });
+  const metal = new THREE.MeshStandardMaterial({ color: 0xd4a640, metalness: 0.9, roughness: 0.3 });
   const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 2.3, 8), metal);
   shaft.rotation.z = Math.PI / 2;
   shaft.position.set(x, 5.25, z);
@@ -918,6 +1329,93 @@ function baanStambh(g: THREE.Group, B: Batch, S: THREE.Material, M: Materials, P
   P.solid(x - 0.9, 0, z - 0.9, x + 0.9, 6, z + 0.9);
 }
 
+// ---------- Samudra Darshan pergola ----------
+
+/**
+ * The red pergola of the sea walk (opened 2021) on top of the sea wall, both sides of the Baan Stambh: square
+ * red posts in pairs, deep beams and a slatted roof; and the wall's outer face lettered "जय सोमनाथ" in
+ * saffron, white and green, as seen from the beach.
+ */
+function seaPergola(g: THREE.Group, B: Batch, SB: Batch, S: THREE.Material, P: Physics, N: [number, number][]) {
+  const red = new THREE.MeshStandardMaterial({ color: 0x9c3426, roughness: 0.75 });
+  const H = 3.3, IN0 = 1.0, IN1 = 4.6;
+  for (let i = 1; i < SEA_WALL.length - 2; i++) {
+    const [ax, az] = SEA_WALL[i], [bx, bz] = SEA_WALL[i + 1];
+    const dx = bx - ax, dz = bz - az, len = Math.hypot(dx, dz);
+    const nx = -N[i][0], nz = -N[i][1]; // inland
+    const ry = -Math.atan2(dz, dx);
+    // runs of pergola, broken round the Baan Stambh and kept to the temple's reach of the wall
+    let run: number[] = [];
+    const flush = () => {
+      if (run.length < 2) { run = []; return; }
+      const s0 = run[0], s1 = run[run.length - 1];
+      for (const d of [IN0, IN1]) {
+        const t0 = s0 / len, t1 = s1 / len;
+        const cx = ax + dx * (t0 + t1) / 2 + nx * d, cz = az + dz * (t0 + t1) / 2 + nz * d;
+        B.box(red, s1 - s0 + 0.5, 0.45, 0.32, cx, H - 0.45, cz, ry);
+      }
+      run = [];
+    };
+    for (let s = 3; s < len - 3; s += 3.6) {
+      const t = s / len, x = ax + dx * t, z = az + dz * t;
+      if (z < -20 || z > 125 || Math.hypot(x - BAAN.x, z - BAAN.z) < 8) { flush(); continue; }
+      run.push(s);
+      for (const d of [IN0, IN1]) {
+        const px = x + nx * d, pz = z + nz * d;
+        B.box(red, 0.34, H - 0.45, 0.34, px, 0, pz, ry);
+        P.solid(px - 0.2, 0, pz - 0.2, px + 0.2, H, pz + 0.2);
+      }
+      // cross beam and the slats of the roof
+      B.box(red, 0.24, 0.3, IN1 - IN0 + 0.6, x + nx * (IN0 + IN1) / 2, H - 0.3, z + nz * (IN0 + IN1) / 2, ry);
+      for (let k = -1; k <= 1; k++) {
+        const t2 = (s + k * 1.2) / len;
+        B.box(red, 0.1, 0.16, IN1 - IN0 + 0.9, ax + dx * t2 + nx * (IN0 + IN1) / 2, H, az + dz * t2 + nz * (IN0 + IN1) / 2, ry);
+      }
+    }
+    flush();
+  }
+
+  // the lettering on the wall's outer face
+  const c = document.createElement('canvas');
+  c.width = 1024; c.height = 256;
+  const x2 = c.getContext('2d')!;
+  // the words fill the board whatever the font's width
+  let px = 190;
+  x2.font = `800 ${px}px Martel, "Noto Sans Devanagari", serif`;
+  px = Math.floor(px * Math.min(1, 960 / x2.measureText('जय सोमनाथ').width));
+  x2.font = `800 ${px}px Martel, "Noto Sans Devanagari", serif`;
+  x2.textAlign = 'center';
+  x2.textBaseline = 'middle';
+  const gr = x2.createLinearGradient(0, 30, 0, 226);
+  gr.addColorStop(0, '#e8731c'); gr.addColorStop(0.36, '#e8731c');
+  gr.addColorStop(0.37, '#f6f3ea'); gr.addColorStop(0.63, '#f6f3ea');
+  gr.addColorStop(0.64, '#2c8a3a'); gr.addColorStop(1, '#2c8a3a');
+  x2.lineWidth = 10; x2.strokeStyle = '#7a1e12';
+  x2.strokeText('जय सोमनाथ', 512, 136);
+  x2.fillStyle = gr;
+  x2.fillText('जय सोमनाथ', 512, 136);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  const mat = new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: 0.3, roughness: 0.7 });
+  const geo = new THREE.PlaneGeometry(8, 2);
+  for (const [i, t] of [[2, 0.75], [3, 0.3], [3, 0.7]] as const) {
+    const [ax, az] = SEA_WALL[i], [bx, bz] = SEA_WALL[i + 1];
+    // the segment's own seaward normal (N holds the mitred corner normals), so the board lies flat on the face
+    const dx = bx - ax, dz = bz - az, l = Math.hypot(dx, dz);
+    let n: [number, number] = [-dz / l, dx / l];
+    if (n[0] * N[i][0] + n[1] * N[i][1] < 0) n = [-n[0], -n[1]];
+    // the wall's outer face: its centre line is pushed out by 0.22 x the two corner normals, plus half its 0.9 m
+    const face = 0.22 * (N[i][0] * n[0] + N[i][1] * n[1] + N[i + 1][0] * n[0] + N[i + 1][1] * n[1]) + 0.45 + 0.04;
+    const x = ax + dx * t + n[0] * face, z = az + dz * t + n[1] * face;
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, ROAD_Y + 1.75, z);
+    m.rotation.y = Math.atan2(n[0], n[1]);
+    g.add(m);
+  }
+  void SB; void S;
+}
+
 // ---------- lamp post ----------
 
 function lampPost(B: Batch, S: THREE.Material, globe: THREE.Material, x: number, z: number) {
@@ -930,6 +1428,29 @@ function lampPost(B: Batch, S: THREE.Material, globe: THREE.Material, x: number,
     B.add(globe, ball);
   }
   B.add(globe, new THREE.SphereGeometry(0.175, 12, 10).translate(x, 4.02, z));
+}
+
+/**
+ * One of the four pillars round the Patel statue, as photographed: a red square plinth, a turned butter-yellow
+ * shaft (a vase at the foot, lotus bulbs and rings, a slender fluted middle), a red square block for capital
+ * under a yellow cap, and a small finial. ~4.2 m.
+ */
+const pillarYellow = new THREE.MeshStandardMaterial({ color: 0xe6b44a, roughness: 0.6 });
+const pillarRed = new THREE.MeshStandardMaterial({ color: 0xa4321f, roughness: 0.65 });
+function chowkPillar(B: Batch, x: number, z: number) {
+  B.span(pillarRed, x - 0.3, x + 0.3, 0, 0.72, z - 0.3, z + 0.3);
+  B.span(pillarYellow, x - 0.33, x + 0.33, 0.72, 0.8, z - 0.33, z + 0.33);
+  B.lathe(pillarYellow, [[0, 0], [0.2, 0], [0.2, 0.06], [0.14, 0.1], [0.2, 0.22], [0.22, 0.34], [0.17, 0.48], [0.11, 0.56], [0.15, 0.6], [0.15, 0.66],
+    [0.12, 0.7], [0.18, 0.82], [0.19, 0.92], [0.14, 1.02], [0.12, 1.06], [0.12, 1.12], [0.1, 1.16], [0.095, 2.2], [0.13, 2.24], [0.13, 2.3],
+    [0.1, 2.34], [0.16, 2.46], [0.17, 2.56], [0.12, 2.66], [0.15, 2.72], [0.21, 2.82], [0.23, 2.9], [0, 2.9]], x, 0.8, z, 20);
+  // flutes down the slender middle
+  for (let k = 0; k < 12; k++) {
+    const a = (k / 12) * Math.PI * 2;
+    B.add(pillarYellow, new THREE.CylinderGeometry(0.014, 0.014, 1.0, 4).translate(x + Math.cos(a) * 0.098, 0.8 + 1.68, z + Math.sin(a) * 0.098));
+  }
+  B.span(pillarRed, x - 0.26, x + 0.26, 3.7, 4.0, z - 0.26, z + 0.26);
+  B.span(pillarYellow, x - 0.3, x + 0.3, 4.0, 4.07, z - 0.3, z + 0.3);
+  B.lathe(pillarYellow, [[0, 0], [0.08, 0], [0.09, 0.06], [0.05, 0.12], [0.02, 0.2], [0, 0.22]], x, 4.07, z, 12);
 }
 
 // ---------- palm ----------
@@ -1143,6 +1664,54 @@ function leafyMaterial(color = 0xffffff) {
 }
 
 /** signboards: rows of painted lettering-like strokes (no readable words) on a coloured board */
+/** painted mural panels for the wall behind the statue: bright figure scenes in broad strokes (none legible) */
+function muralTexture() {
+  const out: THREE.CanvasTexture[] = [];
+  let s = 31;
+  const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  const pal = ['#2f6fb0', '#e0a43a', '#c8402c', '#3c8a5a', '#f2e6c8', '#7a4a9a', '#e86a3a', '#1f3f6a', '#f0c8a0'];
+  for (let k = 0; k < 4; k++) {
+    const c = document.createElement('canvas');
+    c.width = 256; c.height = 128;
+    const g = c.getContext('2d')!;
+    const sky = g.createLinearGradient(0, 0, 0, 128);
+    sky.addColorStop(0, pal[Math.floor(r() * pal.length)]); sky.addColorStop(1, pal[Math.floor(r() * pal.length)]);
+    g.fillStyle = sky; g.fillRect(0, 0, 256, 128);
+    for (let i = 0; i < 9; i++) {
+      g.fillStyle = pal[Math.floor(r() * pal.length)];
+      g.beginPath(); g.ellipse(r() * 256, 40 + r() * 80, 12 + r() * 40, 10 + r() * 30, r() * 3, 0, Math.PI * 2); g.fill();
+    }
+    // two or three figures
+    for (let i = 0; i < 3; i++) {
+      const x = 40 + i * 80 + r() * 20;
+      g.fillStyle = '#e8b890'; g.beginPath(); g.arc(x, 44, 10, 0, Math.PI * 2); g.fill();
+      g.fillStyle = pal[Math.floor(r() * pal.length)]; g.beginPath(); g.moveTo(x - 16, 120); g.lineTo(x - 8, 56); g.lineTo(x + 8, 56); g.lineTo(x + 18, 120); g.fill();
+    }
+    g.strokeStyle = '#3a2a1a'; g.lineWidth = 6; g.strokeRect(3, 3, 250, 122);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    out.push(t);
+  }
+  return out;
+}
+
+/** the LED screen beside the gate, showing the live darshan: a gold sanctum and a dark linga, softly blurred */
+function screenTexture() {
+  const c = document.createElement('canvas');
+  c.width = 256; c.height = 144;
+  const g = c.getContext('2d')!;
+  const bg = g.createLinearGradient(0, 0, 0, 144);
+  bg.addColorStop(0, '#6a4a1a'); bg.addColorStop(1, '#d8a440');
+  g.fillStyle = bg; g.fillRect(0, 0, 256, 144);
+  g.fillStyle = '#f0c860'; g.fillRect(60, 20, 136, 110);
+  g.fillStyle = '#ff9a20'; g.beginPath(); g.ellipse(128, 110, 60, 22, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#1a1a2a'; g.beginPath(); g.ellipse(128, 86, 26, 30, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.18)'; for (let y = 0; y < 144; y += 3) g.fillRect(0, y, 256, 1);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
 function signTexture() {
   const c = document.createElement('canvas');
   c.width = 256; c.height = 64;
@@ -1249,7 +1818,10 @@ function town(g: THREE.Group) {
   // the market outside the Dwar: shops lining both sides of the statue plaza
   for (let z = 124; z < 182; z += 10) for (const side of [-1, 1]) {
     const w = 8 + rnd() * 3;
-    spots.push({ x: 2 + side * (19 + w / 2), z: z + 5, w, d: 9.4, h: 3.1 * (1 + Math.floor(rnd() * 2)) + 0.4, face: side < 0 ? 0 : 2 });
+    // (by the gate the plaza is walled: the queue and the compound wall on the south, the fence and murals on the north)
+    if (side < 0 && z < 180) continue;
+    if (side > 0 && z < 170) continue;
+    spots.push({ x: DWAR.x + side * (19 + w / 2), z: z + 5, w, d: 9.4, h: 3.1 * (1 + Math.floor(rnd() * 2)) + 0.4, face: side < 0 ? 0 : 2 });
   }
   // low shop rows facing the boulevard, stepping back the further they are from the gate
   for (let z = 190; z < 420; ) {
@@ -1257,7 +1829,7 @@ function town(g: THREE.Group) {
     for (const side of [-1, 1]) {
       const h = (z < 290 ? 3.4 : 3.1 * (1 + Math.floor(rnd() * 2))) + rnd() * 0.8;
       const w = 9 + rnd() * 3;
-      spots.push({ x: 2 + side * (19 + w / 2), z: z + d / 2, w, d: d - 0.4, h, face: side < 0 ? 0 : 2 });
+      spots.push({ x: DWAR.x + side * (19 + w / 2), z: z + d / 2, w, d: d - 0.4, h, face: side < 0 ? 0 : 2 });
     }
     z += d;
   }

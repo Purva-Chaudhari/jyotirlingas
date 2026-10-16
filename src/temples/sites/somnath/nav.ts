@@ -1,5 +1,5 @@
 import type { NavEdge, NavGraph, Place } from '../types';
-import { JAGATI, FLOOR } from './temple';
+import { JAGATI, FLOOR, SANCTUM_Z } from './temple';
 import { BAAN, DWAR, STATUE } from './precinct';
 
 type V = [number, number, number];
@@ -15,28 +15,34 @@ type V = [number, number, number];
 export function somnathNav(): { nav: NavGraph; places: Place[] } {
   const J = JAGATI, F = FLOOR;
   const nodes: Record<string, V> = {
-    // the statue plaza outside the gate and the Digvijay Dwar
-    statue: [STATUE.x + 6.5, 0, STATUE.z + 5],
-    'statue-w': [STATUE.x + 6.5, 0, STATUE.z - 8],
-    spawn: [2, 0, 136],
-    'dwar-out': [DWAR.x, 0, 122],
-    dwar: [DWAR.x, 0, 102],
+    // the market road where the walk begins, the statue plaza outside the gate and the Digvijay Dwar
+    road: [DWAR.x + 1.5, 0, 172],
+    // (the statue stands on the gate's line facing it, the queue slanting away to the south: these are on his
+    // north side, beside him and before his face)
+    statue: [STATUE.x + 7.5, 0, STATUE.z + 2],
+    'statue-w': [STATUE.x + 7.5, 0, STATUE.z - 8],
+    spawn: [DWAR.x + 1.5, 0, 128],
+    'dwar-out': [DWAR.x + 0.85, 0, 123.2],
+    // (just past the foot of the inner steps and their handrails)
+    dwar: [DWAR.x + 0.8, 0, 101.3],
     // the Ganesha devkulika north of the walkway
-    'dwar-n': [10, 0, 102],
+    'dwar-n': [10, 0, 101.3],
     ganesh: [15.6, 0, 86],
     // the walkway and the court's torana gate
-    'walk-e': [0, 0, 98],
-    'court-gate': [0, 0, 66],
+    // (down the northern half of the covered walkway, beside the queue)
+    'walk-e': [0.8, 0, 100.4],
+    'court-gate': [0.8, 0, 65.6],
     court: [0, 0, 60.5],
     // the jagati's east steps, the mukha, nritya and sabha mandapas, the passage, the garbhagriha
     'jagati-e': [0, J, 55.2],
     temple: [3.2, J, 54.5],
     mukha: [0, F, 51],
     nritya: [0, F, 40.5],
-    sabha: [0, F, 22.5],
+    // (beside Nandi, who lies on the axis under the dome)
+    sabha: [1.7, F, 22.5],
     passage: [0, F, 10],
-    darshan: [0, F, 2.6],
-    garbhagriha: [2.9, F, 3.3],
+    darshan: [0, F, SANCTUM_Z + 2.6],
+    garbhagriha: [2.9, F, SANCTUM_Z + 3.3],
     // the sabha mandapa's north and south porches, down to the jagati and the court's side gates
     'porch-n': [13, F, 22.5],
     'jag-n': [16.2, J, 22.5],
@@ -63,7 +69,7 @@ export function somnathNav(): { nav: NavGraph; places: Place[] } {
   };
   const chain = (...ids: string[]): NavEdge[] => ids.slice(1).map((b, i) => [ids[i], b]);
   const edges: NavEdge[] = [
-    ...chain('statue', 'statue-w', 'spawn', 'dwar-out', 'dwar', 'walk-e', 'court-gate', 'court', 'jagati-e', 'mukha', 'nritya', 'sabha', 'passage', 'darshan', 'garbhagriha'),
+    ...chain('road', 'statue', 'statue-w', 'spawn', 'dwar-out', 'dwar', 'walk-e', 'court-gate', 'court', 'jagati-e', 'mukha', 'nritya', 'sabha', 'passage', 'darshan', 'garbhagriha'),
     ['jagati-e', 'temple'],
     ...chain('dwar', 'dwar-n', 'ganesh'),
     ...chain('sabha', 'porch-n', 'jag-n', 'court-n', 'gate-n'),
@@ -73,7 +79,7 @@ export function somnathNav(): { nav: NavGraph; places: Place[] } {
     ['gate-s', 'baan'],
   ];
   const places: Place[] = [
-    { id: 'patel', node: 'statue', label: { hi: 'सरदार पटेल प्रतिमा', en: 'Sardar Patel statue' }, look: [STATUE.x, 6, STATUE.z] },
+    { id: 'patel', node: 'statue-w', label: { hi: 'सरदार पटेल प्रतिमा', en: 'Sardar Patel statue' }, look: [STATUE.x, 6, STATUE.z] },
     { id: 'dwar', node: 'dwar', label: { hi: 'श्री दिग्विजय द्वार', en: 'Digvijay Dwar' }, look: [0, 10, 40] },
     { id: 'ganesh', node: 'ganesh', label: { hi: 'गणेश देवकुलिका', en: 'Ganesha shrine by the walkway' }, look: [19, 1.6, 86] },
     { id: 'court', node: 'court', label: { hi: 'मंदिर प्रांगण · तोरण द्वार', en: 'Temple court · torana gate' }, look: [0, 14, 20] },

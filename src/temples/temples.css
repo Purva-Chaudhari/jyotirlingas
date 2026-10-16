@@ -172,7 +172,8 @@ kbd {
 }
 #walk.on { display: flex; }
 #walk .hi { margin: 0; font-family: var(--deva); font-weight: 800; font-size: clamp(36px, 5vw, 64px); color: var(--gold); text-shadow: 0 0 30px rgba(255,138,31,.5); }
-#walk .en { margin: 6px 0 22px; font-family: var(--serif); font-size: 26px; letter-spacing: 0.3em; text-transform: uppercase; }
+#walk .name { margin: 4px 0 0; font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.8vw, 34px); letter-spacing: 0.08em; color: var(--gold); }
+#walk .en { margin: 10px 0 22px; font-family: var(--serif); font-size: 26px; letter-spacing: 0.3em; text-transform: uppercase; }
 #walk .keys { font-size: 14px; opacity: 0.85; }
 #walk #back { margin-top: 28px; }
 #hud {

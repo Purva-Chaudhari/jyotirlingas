@@ -47,12 +47,22 @@ Garamond, Mukta, Martel, Inter and Tiro Devanagari Hindi.
   [Shankaracharya.jpg](https://commons.wikimedia.org/wiki/File:Shankaracharya.jpg) by Mayank7078 (2022),
   [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); the model is shared under the same licence.
   The statue itself is the work of Arun Yogiraj and his team (2021).
+- **The Sardar Patel statue at Somnath** (`public/assets/models/sardar_patel.glb`, not kept in the repository): a
+  3D reconstruction (TripoSR) made from a front photograph of the statue supplied by the site owner, whose
+  source and rights are not yet verified. To be replaced, or credited, once they are. (A Government of India
+  photograph of the same statue, GODL-India, President's Secretariat / PIB, 1 Dec 2015, was tried first but is
+  taken from too low an angle to reconstruct from.)
+- **Somnath's Digvijay Dwar, cloud toranas and niche deities** (`public/assets/models/digvijay_dwar.glb`,
+  `somnath_torana.glb`, `somnath_deity.glb`): modelled for this site in Blender by script, from photographs and
+  travel films of the temple.
 - **The glass Shiva** on the landing map (`public/landing/shiva-glass.webp`, built by
   `scripts/build-shiva-glass.mjs`): a placeholder traced from a reference image whose rights are not
   verified. To be replaced with an image we have rights to.
 - **Mahakaleshwar's picture** on its landing card (`public/landing/mahakaleshwar.webp`): captured from this
   site's own 3D temple.
 - **Kedarnath's picture** on its landing card (`public/landing/kedarnath.webp`): captured from this site's own
+  3D temple.
+- **Somnath's picture** on its landing card (`public/landing/somnath.webp`): captured from this site's own
   3D temple.
 
 ## Audio
@@ -86,9 +96,17 @@ owner's choice. It plays at Kedarnath's darshan spot (the temple committee publi
 while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
 `src/temples/stories/kedarnath.json`). Unchanged copy of the audio (MP3, 9:08).
 
+#### Somnath — `public/audio/aarti/somnath-om-jai-shiv-omkara.mp3`
+
+"[सोमनाथ आरती | Om Shiv Omkara | Shiv Lyrical Aarti | Om Jai Shiv Omkara | Somnath Aarti Lyrical](https://www.youtube.com/watch?v=BtJJ58Tl-co)"
+by **Soor Mandir** ([youtube.com/@soormandir](https://www.youtube.com/@soormandir)) on YouTube. Not openly licensed;
+used at the site owner's choice. It plays at Somnath's darshan spot in place of the embedded YouTube aarti, and
+while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
+`src/temples/stories/somnath.json`). Unchanged copy of the audio (MP3, 7:26).
+
 #### The other temples
 
-Where a temple trust publishes its aarti on its own YouTube channel (Somnath, Mallikarjuna, Omkareshwar,
+Where a temple trust publishes its aarti on its own YouTube channel (Mallikarjuna, Omkareshwar,
 Vaidyanath, Kashi Vishwanath), the darshan spot plays it through YouTube's official embedded player: never
 downloaded or rehosted, with the channel named on screen. The videos and channels are listed under
 `aarti.youtube` in each story file.

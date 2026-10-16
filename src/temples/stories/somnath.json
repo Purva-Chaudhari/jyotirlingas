@@ -80,12 +80,12 @@
     },
     {
       "id": "somnath-garbhagriha",
-      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "at": { "feature": "garbhagriha" },
       "kind": "ritual",
       "title": { "en": "Darshan of Shri Somnath", "hi": "श्री सोमनाथ के दर्शन" },
       "text": {
-        "en": "And now, here you are, before Shri Somnath. Think of everything that has brought you to this moment: the fading Moon who prayed on this shore, the temples of gold and stone, the raids, the long wait, and the promise made among the ruins. Through all of it people kept coming, just as you have come today, each carrying something to lay down: a worry, a hope, a prayer for someone far away. Take a breath and fold your hands. In the words of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya: ‘Saurashtradeshe vishade’tiramye jyotirmayam chandrakalavatamsam, bhaktipradanaya kripavatirnam tam Somanatham sharanam prapadye.’ ‘In the bright and lovely land of Saurashtra, radiant, wearing the crescent moon as his crown, who came down in compassion to grant devotion: in that Somanatha I take refuge.’ You have begun where tradition begins: Somnath is the first of the twelve. Pilgrims may visit the others in any order their journey allows; by tradition, the yatra is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Now the drums begin, the conch sounds and the lamps are raised. Let the aarti begin. Har Har Mahadev.",
-        "hi": "और अब, आप श्री सोमनाथ के सम्मुख हैं। सोचिए, किन-किन कथाओं से होकर आप इस क्षण तक पहुँचे हैं: इसी तट पर प्रार्थना करते क्षीण चंद्रमा, सोने और पत्थर के मंदिर, आक्रमण, लंबी प्रतीक्षा, और खंडहरों के बीच लिया गया संकल्प। इस सबके बीच भी लोग आते रहे, ठीक वैसे ही जैसे आज आप आए हैं, हर कोई अपने साथ कुछ अर्पित करने को लाया है: कोई चिंता, कोई आशा, किसी दूर बैठे अपने के लिए प्रार्थना। एक गहरी साँस लीजिए और हाथ जोड़िए। आदि शंकराचार्य को परंपरा से समर्पित द्वादश ज्योतिर्लिंग स्तोत्र के शब्दों में: ‘सौराष्ट्रदेशे विशदेऽतिरम्ये ज्योतिर्मयं चन्द्रकलावतंसम्। भक्तिप्रदानाय कृपावतीर्णं तं सोमनाथं शरणं प्रपद्ये॥’ ‘निर्मल और अति रमणीय सौराष्ट्र देश में, ज्योतिर्मय, चंद्रकला को मुकुट बनाए, भक्ति देने के लिए कृपा करके अवतरित: उन सोमनाथ की मैं शरण लेता हूँ।’ आपने वहीं से आरंभ किया है जहाँ से परंपरा आरंभ होती है: सोमनाथ बारह में प्रथम हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बाकी ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। अब नगाड़े बजने लगे हैं, शंख गूँज रहा है और दीप उठाए जा रहे हैं। आरती आरंभ हो। हर हर महादेव।"
+        "en": "And now, here you are, before Shri Somnath. Look around you: this inner shrine, where Somnath and Maa Parvati are worshipped, has been clad in gold by the temple trust, its walls shining in the lamplight. Think of everything that has brought you to this moment: the fading Moon who prayed on this shore, the temples of gold and stone, the raids, the long wait, and the promise made among the ruins. Through all of it people kept coming, just as you have come today, each carrying something to lay down: a worry, a hope, a prayer for someone far away. Take a breath and fold your hands. In the words of the Dwadasha Jyotirlinga Stotram, traditionally attributed to Adi Shankaracharya: ‘Saurashtradeshe vishade’tiramye jyotirmayam chandrakalavatamsam, bhaktipradanaya kripavatirnam tam Somanatham sharanam prapadye.’ ‘In the bright and lovely land of Saurashtra, radiant, wearing the crescent moon as his crown, who came down in compassion to grant devotion: in that Somanatha I take refuge.’ You have begun where tradition begins: Somnath is the first of the twelve. Pilgrims may visit the others in any order their journey allows; by tradition, the yatra is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Now the drums begin, the conch sounds and the lamps are raised. Let the aarti begin. Har Har Mahadev.",
+        "hi": "और अब, आप श्री सोमनाथ के सम्मुख हैं। चारों ओर देखिए: यह गर्भगृह, जहाँ सोमनाथ और माँ पार्वती की पूजा होती है, मंदिर ट्रस्ट ने सोने से मढ़वाया है, और इसकी दीवारें दीपों की रोशनी में चमकती हैं। सोचिए, किन-किन कथाओं से होकर आप इस क्षण तक पहुँचे हैं: इसी तट पर प्रार्थना करते क्षीण चंद्रमा, सोने और पत्थर के मंदिर, आक्रमण, लंबी प्रतीक्षा, और खंडहरों के बीच लिया गया संकल्प। इस सबके बीच भी लोग आते रहे, ठीक वैसे ही जैसे आज आप आए हैं, हर कोई अपने साथ कुछ अर्पित करने को लाया है: कोई चिंता, कोई आशा, किसी दूर बैठे अपने के लिए प्रार्थना। एक गहरी साँस लीजिए और हाथ जोड़िए। आदि शंकराचार्य को परंपरा से समर्पित द्वादश ज्योतिर्लिंग स्तोत्र के शब्दों में: ‘सौराष्ट्रदेशे विशदेऽतिरम्ये ज्योतिर्मयं चन्द्रकलावतंसम्। भक्तिप्रदानाय कृपावतीर्णं तं सोमनाथं शरणं प्रपद्ये॥’ ‘निर्मल और अति रमणीय सौराष्ट्र देश में, ज्योतिर्मय, चंद्रकला को मुकुट बनाए, भक्ति देने के लिए कृपा करके अवतरित: उन सोमनाथ की मैं शरण लेता हूँ।’ आपने वहीं से आरंभ किया है जहाँ से परंपरा आरंभ होती है: सोमनाथ बारह में प्रथम हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बाकी ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। अब नगाड़े बजने लगे हैं, शंख गूँज रहा है और दीप उठाए जा रहे हैं। आरती आरंभ हो। हर हर महादेव।"
       },
       "didYouKnow": {
         "en": "Mobile phones and cameras are not allowed inside the temple, so this darshan is one every pilgrim carries home only in memory.",
@@ -93,8 +93,121 @@
       },
       "sources": [
         "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
+        "https://www.hinduismtoday.com/hpi/?p=6939",
         "https://somnath.org/faq/",
         "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226515.html"
+      ]
+    },
+    {
+      "id": "somnath-hamir",
+      "at": { "feature": "hamir" },
+      "kind": "history",
+      "title": { "en": "The Prince Who Rode Out", "hi": "जो राजकुमार लड़ने निकला" },
+      "text": {
+        "en": "Walk slowly here, where the line moves towards the temple, and let me tell you of Veer Hamirji Gohil. He was a young prince of Lathi in Saurashtra, remembered for riding out to defend Somnath when an army of the Delhi Sultanate came to this shore. Accounts differ on which raid it was: some say Alauddin Khalji’s, in 1299; others, the governor Zafar Khan’s, about a century later. On one thing they all agree: he did not come back. Beside him fought Vegadaji Bhil, a chieftain of the forests, and their friendship is still honoured here, the hills and the court standing together. The old songs of Saurashtra add more. They say Hamirji married Vegadaji’s daughter just before the battle, and that even after his head fell, he fought on before the temple. Hold those as the songs hold them: as devotion, more than record. His memorial stands at the temple’s entrance, and pilgrims bow to it on their way in. Every step of this walk passes through a gateway that someone once gave everything to keep open.",
+        "hi": "यहाँ धीरे चलिए, जहाँ कतार मंदिर की ओर बढ़ती है, और सुनिए वीर हमीरजी गोहिल की कथा। वे सौराष्ट्र के लाठी के एक युवा राजकुमार थे, जिन्हें इसलिए याद किया जाता है कि जब दिल्ली सल्तनत की सेना इस तट पर आई, तब वे सोमनाथ की रक्षा के लिए निकल पड़े। किस आक्रमण की बात है, इस पर वृत्तांत अलग-अलग हैं: कुछ कहते हैं अलाउद्दीन खिलजी का, सन 1299 में; कुछ कहते हैं लगभग एक सदी बाद सूबेदार ज़फ़र ख़ान का। एक बात पर सब सहमत हैं: वे लौटकर नहीं आए। उनके साथ लड़े वेगड़ाजी भील, वनों के एक सरदार, और उनकी मित्रता यहाँ आज भी सम्मान से याद की जाती है, पहाड़ और राजदरबार एक साथ खड़े। सौराष्ट्र के पुराने गीत और भी कहते हैं: कि युद्ध से ठीक पहले हमीरजी ने वेगड़ाजी की बेटी से विवाह किया, और सिर कट जाने के बाद भी वे मंदिर के सामने लड़ते रहे। इन बातों को वैसे ही रखिए जैसे गीत रखते हैं: इतिहास से अधिक श्रद्धा के रूप में। उनका स्मारक मंदिर के प्रवेश पर है, और श्रद्धालु भीतर जाते हुए उसे नमन करते हैं। इस राह का हर कदम उस द्वार से होकर जाता है, जिसे खुला रखने के लिए कभी किसी ने अपना सब कुछ दे दिया था।"
+      },
+      "didYouKnow": {
+        "en": "In January 2026 the Shaurya Yatra of the Somnath Swabhiman Parv set out from Veer Hamirji Gohil’s statue.",
+        "hi": "जनवरी 2026 में सोमनाथ स्वाभिमान पर्व की शौर्य यात्रा वीर हमीरजी गोहिल की प्रतिमा से आरंभ हुई।"
+      },
+      "sources": [
+        "https://www.newsonair.gov.in/somnath-swabhiman-parv-celebrates-thousand-year-legacy-of-faith-and-resilience",
+        "https://en.wikipedia.org/wiki/Lathi,_Gujarat",
+        "https://en.wikipedia.org/wiki/Somnath_temple"
+      ]
+    },
+    {
+      "id": "somnath-kapardi",
+      "at": { "feature": "kapardi" },
+      "kind": "legend",
+      "title": { "en": "The Guardian of the Way", "hi": "राह के रक्षक" },
+      "text": {
+        "en": "Before you go to Somnath, greet the one who guards the way. In the old Prabhasa texts, the Ganesha of this sacred land is Shri Kapardi Vinayak, and the Skanda Purana gives him a whole chapter. Its story is a gentle warning. The gods once complained that Somnath’s grace was too easy: anyone at all could reach heaven just by coming here. So the Goddess shaped Ganesha and sent him to guard this land, setting obstacles before those who came without a true heart. That is why the text asks every pilgrim to bow to Kapardin first, ‘for freedom from obstacles in the course of the pilgrimage’, and promises that remembering him brings the merit of every tirtha and every sacrifice. In Somnath today his shrine is honoured with Siddhi and Buddhi beside him, and local tradition links it with Adi Shankaracharya. So fold your hands here, as pilgrims have done for centuries, and ask him to clear your path. Then go on to the Lord, with nothing left in your way.",
+        "hi": "सोमनाथ जाने से पहले, उसे प्रणाम कीजिए जो इस राह की रक्षा करता है। प्रभास के पुराने ग्रंथों में इस पवित्र भूमि के गणेश हैं श्री कपर्दी विनायक, और स्कंद पुराण में उन पर पूरा एक अध्याय है। उसकी कथा एक कोमल चेतावनी है। एक बार देवताओं ने शिकायत की कि सोमनाथ की कृपा बहुत सहज है: कोई भी यहाँ आकर स्वर्ग पा लेता है। तब देवी ने गणेश को रचा और इस भूमि की रक्षा के लिए भेजा, ताकि जो सच्चे मन के बिना आएँ, उनके मार्ग में बाधा आए। इसीलिए ग्रंथ हर यात्री से कहता है कि पहले कपर्दी को नमन करे, ‘यात्रा में विघ्नों से मुक्ति के लिए’, और वचन देता है कि उनका स्मरण हर तीर्थ और हर यज्ञ का पुण्य देता है। आज सोमनाथ में उनका मंदिर सिद्धि और बुद्धि के साथ पूजा जाता है, और स्थानीय परंपरा इसे आदि शंकराचार्य से जोड़ती है। तो यहाँ हाथ जोड़िए, जैसे सदियों से यात्री जोड़ते आए हैं, और उनसे अपनी राह साफ़ करने की विनती कीजिए। फिर प्रभु की ओर बढ़िए, बिना किसी बाधा के।"
+      },
+      "didYouKnow": {
+        "en": "In the Skanda Purana, the Goddess creates Kapardi Vinayak because Somnath’s grace had become too easy to win.",
+        "hi": "स्कंद पुराण में देवी कपर्दी विनायक को इसलिए रचती हैं क्योंकि सोमनाथ की कृपा पाना बहुत सहज हो गया था।"
+      },
+      "sources": [
+        "https://www.wisdomlib.org/hinduism/book/the-skanda-purana/d/doc626826.html",
+        "https://en.wikipedia.org/wiki/Prabhas_Patan",
+        "https://www.vedantabharati.org/shaankara-jyoti-prakasha/locations/loc-somnath"
+      ]
+    },
+    {
+      "id": "somnath-nandi",
+      "at": { "feature": "nandi" },
+      "kind": "ritual",
+      "title": { "en": "The Gaze That Never Turns", "hi": "जो दृष्टि कभी नहीं हटती" },
+      "text": {
+        "en": "Here, in the great hall, rests Nandi, the bull who carries Shiva. Look at where he looks. His eyes never leave the sanctum. In almost every Shiva temple Nandi waits like this, still and patient, facing his Lord: he is Shiva’s mount, and the guardian at the door of Kailash. The old teachers say his unbroken gaze is a lesson for you. The soul, like Nandi, is meant to keep its attention on the divine, however busy the hall around it becomes. Many devotees like to bend close and whisper a wish into Nandi’s ear, often the right one, trusting the faithful gatekeeper to carry it to his master. It is a loving custom, not a rule. If you wish, stand beside him and look where he looks, straight down the hall to the Jyotirlinga, and let your own gaze settle the same way. Then go on. You are only a few steps from the Lord now.",
+        "hi": "यहाँ, इस विशाल सभामंडप में, विराजते हैं नंदी, वह बैल जो शिव का वाहन है। देखिए वे किधर देख रहे हैं। उनकी आँखें गर्भगृह से कभी नहीं हटतीं। लगभग हर शिव मंदिर में नंदी ऐसे ही प्रतीक्षा करते हैं, शांत और धैर्यवान, अपने प्रभु की ओर मुख किए: वे शिव के वाहन हैं, और कैलास के द्वार के रक्षक भी। पुराने गुरु कहते हैं कि उनकी यह अटूट दृष्टि आपके लिए एक सीख है। आत्मा को भी नंदी की तरह अपना ध्यान ईश्वर पर टिकाए रखना है, चाहे चारों ओर कितनी भी हलचल हो। बहुत से भक्त झुककर नंदी के कान में, प्रायः दाहिने कान में, अपनी मनोकामना कहते हैं, इस विश्वास से कि यह निष्ठावान द्वारपाल उसे अपने स्वामी तक पहुँचा देगा। यह प्रेम की एक परंपरा है, कोई नियम नहीं। चाहें तो उनके पास खड़े होकर वहीं देखिए जहाँ वे देखते हैं, सभामंडप के उस पार ज्योतिर्लिंग तक, और अपनी दृष्टि को भी वैसे ही ठहरने दीजिए। फिर आगे बढ़िए। अब आप प्रभु से बस कुछ ही कदम दूर हैं।"
+      },
+      "didYouKnow": {
+        "en": "In many Shiva temples devotees whisper their prayers into Nandi’s ear, for him to carry to Shiva.",
+        "hi": "कई शिव मंदिरों में भक्त अपनी प्रार्थना नंदी के कान में कहते हैं, ताकि वे उसे शिव तक पहुँचाएँ।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Nandi_(Hinduism)"
+      ]
+    },
+    {
+      "id": "somnath-parvati",
+      "at": { "feature": "parvati" },
+      "kind": "history",
+      "title": { "en": "The Foundation of a Lost Shrine", "hi": "एक खोए मंदिर की नींव" },
+      "text": {
+        "en": "Look at these stones beside the great temple, set in steps but holding up nothing. This is the foundation of an older shrine, and historians link it with the twelfth century, when the Chaulukya king Kumarapala had Somnath rebuilt in fine stone. His minister Bhava Brihaspati, who oversaw that work, is said to have raised temples here to Parvati, to Bhimeshvara and to Siddheshvara. What remains of the Parvati shrine is mostly this base: its walls went the way of so much at Somnath, through the troubled centuries that struck the temple again and again. Even modern writers describe it with a little wonder, as a mysterious stone foundation. The Mother has not been forgotten, though. Inside the sanctum Maa Parvati stands right behind the Jyotirlinga, and in 2021 the foundation stone was laid for a new Shree Parvati Temple at Somnath, in the traditional Sompura style of Gujarat’s temple builders. Here, then, the old and the new meet: a plinth from a vanished age, and a shrine rising again for the Goddess.",
+        "hi": "बड़े मंदिर के पास के इन पत्थरों को देखिए, सीढ़ियों में सजे, पर किसी को थामे हुए नहीं। यह एक पुराने मंदिर की नींव है, और इतिहासकार इसे बारहवीं सदी से जोड़ते हैं, जब चौलुक्य राजा कुमारपाल ने सोमनाथ को सुंदर पत्थर में फिर से बनवाया। उस कार्य की देखरेख करने वाले उनके मंत्री भाव बृहस्पति ने, कहा जाता है, यहाँ पार्वती, भीमेश्वर और सिद्धेश्वर के मंदिर भी बनवाए। पार्वती मंदिर का जो बचा है, वह मुख्यतः यही आधार है: उसकी दीवारें उन्हीं अशांत सदियों में खो गईं जिन्होंने सोमनाथ पर बार-बार प्रहार किया। आज के लेखक भी इसे थोड़े विस्मय से एक रहस्यमय पत्थर की नींव कहते हैं। पर माँ को भुलाया नहीं गया। गर्भगृह में माँ पार्वती ज्योतिर्लिंग के ठीक पीछे विराजती हैं, और 2021 में सोमनाथ में नए श्री पार्वती मंदिर की आधारशिला रखी गई, गुजरात के मंदिर-शिल्पियों की पारंपरिक सोमपुरा शैली में। तो यहाँ पुराना और नया आमने-सामने हैं: एक बीते युग की नींव, और देवी के लिए फिर से उठता एक मंदिर।"
+      },
+      "didYouKnow": {
+        "en": "The Parvati shrine was one of several temples traditionally credited to Bhava Brihaspati, who oversaw Kumarapala’s rebuilding of Somnath.",
+        "hi": "पार्वती मंदिर उन कई मंदिरों में से था जिनका श्रेय परंपरा से भाव बृहस्पति को दिया जाता है, जिन्होंने कुमारपाल के समय सोमनाथ के पुनर्निर्माण की देखरेख की।"
+      },
+      "sources": [
+        "https://www.prekshaa.in/history-somnath-temple-2",
+        "https://swarajyamag.com/news-brief/gujarat-pm-modi-inaugurates-promenade-exhibition-centre-and-reconstructed-temples-in-somnath",
+        "https://esamskriti.com/e/Culture/Indian-Culture/Light-And-Sound-Show-Somnath-1.aspx"
+      ]
+    },
+    {
+      "id": "somnath-show",
+      "at": { "feature": "show" },
+      "kind": "history",
+      "title": { "en": "When the Sea Tells the Story", "hi": "जब सागर कथा सुनाता है" },
+      "text": {
+        "en": "These tiers face the temple for a reason. Every evening, outside the monsoon, people fill them for the light and sound show, and as the lights come up on the temple walls, a voice begins. In this telling the storyteller is not a king or a priest, but the ocean itself, the sea behind you, which has watched this shore longer than anyone. It tells of Soma, the Moon, who did penance here and was healed by Shiva. It tells of the temple’s splendour, of the raids that broke it, and of the hands that raised it each time. It tells of Krishna’s last journey from Prabhasa, and of the brave Hamirji Gohil and Vegadaji Bhil. Ragas and chants rise and fall with the stories. Many visitors say the narration is in the famous voice of Amitabh Bachchan. The temple trust gives its time as eight to nine in the evening, but check at the counter, because rain and festivals can change it. Sit for a moment, and let the waves keep time.",
+        "hi": "ये सीढ़ियाँ यूँ ही मंदिर की ओर मुख किए नहीं हैं। मानसून के अलावा हर शाम लोग यहाँ लाइट एंड साउंड शो के लिए बैठते हैं, और जैसे ही मंदिर की दीवारों पर रोशनी जगमगाती है, एक आवाज़ शुरू होती है। इस कथा का सूत्रधार कोई राजा या पुजारी नहीं, स्वयं सागर है, आपके पीछे का यह समुद्र, जिसने इस तट को सबसे लंबे समय से देखा है। वह सोम, यानी चंद्रमा की कथा कहता है, जिन्होंने यहाँ तप किया और शिव ने उन्हें स्वस्थ किया। वह मंदिर के वैभव की, उसे तोड़ने वाले आक्रमणों की, और हर बार उसे फिर से उठाने वाले हाथों की कथा कहता है। वह प्रभास से श्रीकृष्ण की अंतिम यात्रा की, और वीर हमीरजी गोहिल और वेगड़ाजी भील की कथा कहता है। कथाओं के साथ राग और मंत्र उठते और थमते हैं। बहुत से दर्शक कहते हैं कि कथा अमिताभ बच्चन की प्रसिद्ध आवाज़ में है। मंदिर ट्रस्ट इसका समय रात आठ से नौ बजे बताता है, पर काउंटर पर पूछ लीजिए, क्योंकि बारिश और त्योहारों में यह बदल सकता है। एक पल बैठिए, और लहरों को ताल देने दीजिए।"
+      },
+      "didYouKnow": {
+        "en": "In the show’s script the narrator is not a person at all, but the Arabian Sea.",
+        "hi": "शो की पटकथा में सूत्रधार कोई व्यक्ति नहीं, स्वयं अरब सागर है।"
+      },
+      "sources": [
+        "https://esamskriti.com/e/Culture/Indian-Culture/Light-And-Sound-Show-Somnath-1.aspx",
+        "https://www.esamskriti.com/essays/textfile/15_1578_2682.txt",
+        "https://somnath.org/faq/"
+      ]
+    },
+    {
+      "id": "somnath-krishna",
+      "at": { "feature": "krishna" },
+      "kind": "legend",
+      "title": { "en": "Where Krishna Forgave", "hi": "जहाँ कृष्ण ने क्षमा किया" },
+      "text": {
+        "en": "Look along this shore. This land is Prabhasa, and it is where the Mahabharata’s story of the Yadavas comes to its end. The epic tells how Krishna’s clan came on pilgrimage to the Prabhasa sea and, in a dark hour, turned on one another. Balarama left his body by the ocean. Then Krishna lay down in deep yoga, and a hunter named Jara, mistaking him for a deer, shot an arrow into his heel. When Jara ran up and saw what he had done, he was terrified, but Krishna comforted him, and then rose, the epic says, filling the whole sky with splendour. The epic itself names no exact spot. But the people of Prabhas have long kept these memories in two places: Bhalka Tirth, about four kilometres away, where a peepal tree is honoured as the tree Krishna rested under, and Dehotsarg, on the Hiran river close by, remembered as the place of his departure. If you go there, go gently. This is the place where a god forgave the hand that wounded him.",
+        "hi": "इस तट के साथ-साथ देखिए। यह भूमि प्रभास है, और यहीं महाभारत में यादवों की कथा का अंत होता है। महाकाव्य बताता है कि श्रीकृष्ण का कुल प्रभास के सागर पर तीर्थयात्रा के लिए आया और एक अंधेरी घड़ी में आपस में ही लड़ पड़ा। बलराम ने समुद्र के किनारे देह त्यागी। फिर श्रीकृष्ण गहरे योग में लेट गए, और जरा नाम के एक शिकारी ने उन्हें हिरण समझकर उनकी एड़ी में बाण मार दिया। जब जरा दौड़कर आया और देखा कि उसने क्या किया है, तो वह भयभीत हो गया, पर श्रीकृष्ण ने उसे सांत्वना दी, और फिर, महाकाव्य कहता है, सारे आकाश को तेज से भरते हुए ऊपर उठ गए। महाकाव्य स्वयं कोई निश्चित स्थान नहीं बताता। पर प्रभास के लोगों ने ये स्मृतियाँ दो स्थानों में सँजोई हैं: लगभग चार किलोमीटर दूर भालका तीर्थ, जहाँ एक पीपल को वही वृक्ष माना जाता है जिसके नीचे श्रीकृष्ण ने विश्राम किया, और पास ही हिरण नदी पर देहोत्सर्ग, जिसे उनके प्रस्थान का स्थान माना जाता है। वहाँ जाएँ तो धीरे से जाइए। यह वह स्थान है जहाँ एक भगवान ने उस हाथ को क्षमा किया जिसने उन्हें घायल किया था।"
+      },
+      "didYouKnow": {
+        "en": "In the Mahabharata, Krishna’s first act after being struck by the arrow was to comfort the hunter who had shot it.",
+        "hi": "महाभारत में बाण लगने के बाद श्रीकृष्ण का पहला काम था उस शिकारी को सांत्वना देना जिसने बाण चलाया था।"
+      },
+      "sources": [
+        "https://www.ibiblio.org/sripedia/ebooks/mb/m16/m16004.htm",
+        "https://en.wikipedia.org/wiki/Bhalka_Tirth",
+        "https://en.wikipedia.org/wiki/Prabhas_Patan"
       ]
     }
   ],
@@ -117,6 +230,15 @@
     },
     "audio": [
       {
+        "url": "audio/aarti/somnath-om-jai-shiv-omkara.mp3",
+        "title": "सोमनाथ आरती | Om Shiv Omkara | Shiv Lyrical Aarti | Om Jai Shiv Omkara | Somnath Aarti Lyrical",
+        "by": "Soor Mandir",
+        "creditUrl": "https://www.youtube.com/watch?v=BtJJ58Tl-co",
+        "license": "Not openly licensed (YouTube upload by Soor Mandir, youtube.com/@soormandir)",
+        "permission": "Used at the site owner's choice, credited on screen while it plays and in CREDITS.md",
+        "notes": "Hosted copy of the YouTube audio (7:26, 192 kb/s MP3)"
+      },
+      {
         "url": "https://somnath.org/somnath-live-darshan",
         "license": "All rights reserved (Shree Somnath Trust) - needs permission",
         "notes": "The trust’s official live darshan and aarti stream. No reuse licence found; write to the trust before using any recording."
@@ -128,6 +250,6 @@
       {"channelId": "UCT1egsvA08YcdMLiEu1DTRg", "title": "Live darshan and aarti, Shree Somnath Temple", "channel": "Somnath Temple - Official Channel", "channelUrl": "https://www.youtube.com/@SomnathTempleOfficialChannel", "official": true, "kind": "live", "url": "https://www.youtube.com/channel/UCT1egsvA08YcdMLiEu1DTRg/live", "verifiedBy": "somnath.org/somnath-live-darshan embeds this channel's live Sayam Aarti (video ZQ3KS2WkLNs)"}
     ],
     "youtubeSources": ["https://somnath.org/somnath-live-darshan", "https://www.youtube.com/watch?v=r9xf3J2yVWo", "https://www.youtube.com/watch?v=yKznRuohGl0", "https://www.youtube.com/@SomnathTempleOfficialChannel"],
-    "notes": "Schedule from the Shree Somnath Trust FAQ (somnath.org/faq). Some travel sites give the show at 19:45 or 19:30; the trust gives 20:00–21:00. No freely licensed recording of Somnath’s aarti was found on Wikimedia Commons, archive.org or freesound. Until the trust grants permission, use the synthesized ambience (bells, conch, drums). CC0 sound candidates are listed in docs/content/somnath.md."
+    "notes": "Schedule from the Shree Somnath Trust FAQ (somnath.org/faq). Some travel sites give the show at 19:45 or 19:30; the trust gives 20:00–21:00. No freely licensed recording of Somnath’s aarti was found on Wikimedia Commons, archive.org or freesound. The darshan spot plays the hosted Soor Mandir aarti (first in `audio`, the site owner's choice); without it, the trust's YouTube aarti, then the synthesized ambience (bells, conch, drums). CC0 sound candidates are listed in docs/content/somnath.md."
   }
 }

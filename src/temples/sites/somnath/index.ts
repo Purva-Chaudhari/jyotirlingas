@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { SiteDef } from '../types';
 import { scanMaterial } from '../../engine/materials';
-import { buildTemple, JAG, SANCTUM } from './temple';
+import { buildTemple, JAG, SANCTUM, SANCTUM_Z } from './temple';
 import { weatherStone, copyScan } from './stone';
 import { goldRepousse, goldRoomEnv } from './gold';
 import { pilgrims } from './people';
@@ -36,16 +36,17 @@ const site: SiteDef = {
   // mid-morning sun from the south-south-east, high enough not to glare down the eastern approach
   sunAzimuth: Math.atan2(-0.9, 0.45),
   sunElevationMin: 38,
+  // a clear, bright seaside morning: a little more colour in the sea, the lawns and the saffron flags
+  grade: { saturation: 1.16, exposure: 1.06 },
   build({ root, M, P, flames, sunDir, pending, interiorEnv, renderer }) {
-    // the 1951 temple's yellowish-cream sandstone: a smooth fine-jointed ashlar scan, tinted
-    // the 1951 temple's warm saffron-peach sandstone: a smooth fine-jointed ashlar scan, tinted
-    const stone = scanMaterial('sandstone_blocks_08', 2.4, { tint: 0xf4bf88, normalScale: 0.9 });
+    // the 1951 temple's honey-gold sandstone (yellow-gold in the sun, not orange): a smooth fine-jointed ashlar scan, tinted
+    const stone = scanMaterial('sandstone_blocks_08', 2.4, { tint: 0xf6c27a, normalScale: 0.9 });
     // carved variants for the temple itself (relief + weathering); the precinct's stone is only weathered
     const carved = stone.material.clone();
     const carvedTwo = stone.material.clone();
     carvedTwo.side = THREE.DoubleSide;
     // the sandstone keeps a faint warm glow even in shade (bounce light off the paving and walls)
-    for (const m of [stone.material, carved, carvedTwo]) m.emissive.set(0x1a0e04);
+    for (const m of [stone.material, carved, carvedTwo]) m.emissive.set(0x1a1204);
     weatherStone(stone.material, 0);
     weatherStone(carved, 0.02, 1.1);
     weatherStone(carvedTwo, 0.02, 1.1);
@@ -53,12 +54,14 @@ const site: SiteDef = {
     const ceiling = stone.material.clone();
     ceiling.side = THREE.DoubleSide;
     weatherStone(ceiling, 0.02, 1.1);
-    // the Digvijay Dwar is limewashed and painted a bright yellow-cream (no stone grain shows through)
-    // (0xefd48a reads washed-out grey-beige under the noon sun and AgX: pushed a little deeper to match the photographs)
-    const dwarStone = new THREE.MeshStandardMaterial({ color: 0xf5c24a, roughness: 0.8, side: THREE.DoubleSide });
+    // the Digvijay Dwar is limewashed and painted a pale butter-yellow (no stone grain shows through), lighter
+    // than the temple's honey-gold stone, as in the photographs
+    const dwarStone = new THREE.MeshStandardMaterial({ color: 0xfad165, roughness: 0.8, side: THREE.DoubleSide });
     pending.push(stone.loaded.then(() => {
-      // the scan's own albedo is a mid tan: lift it so the temple reads warm saffron-peach in daylight (c13: ~0xf2c08a lit, ~0xe8a46c shade)
-      stone.material.color.set(0xf4bf88).multiplyScalar(1.22);
+      // the scan's own albedo is a mid tan: lift it so the temple reads honey-gold in the midday sun, as in the
+      // travel films (a peach tint went orange, a buff one went pale grey-cream)
+      // (apricot-buff, as it shows in the sun in the photographs)
+      stone.material.color.set(0xf6c27a).multiplyScalar(1.28);
       copyScan(stone.material, carved);
       copyScan(stone.material, carvedTwo);
       copyScan(stone.material, ceiling);
@@ -84,24 +87,30 @@ const site: SiteDef = {
     const leaf = new THREE.MeshStandardMaterial({ color: 0x3f7a2a, roughness: 0.8 });
     const jali = jaliMaterial();
 
-    // the halls and sanctum are floored in white marble (polished, faintly veined by the weathering noise)
-    const marble = new THREE.MeshStandardMaterial({ color: 0xf4f0e8, roughness: 0.28, emissive: 0x1c1a16 });
+    // the halls and sanctum are floored in ivory marble (polished, faintly veined by the weathering noise; not a
+    // cold white: in the films it reads warm cream against the honey-gold stone)
+    const marble = new THREE.MeshStandardMaterial({ color: 0xe8d4ac, roughness: 0.32, emissive: 0x1a140a });
     weatherStone(marble, 0);
     const t = buildTemple(root, M, { stone: carved, stoneTwo: carvedTwo, shade, goldWall, goldTrim, goldEnv, ceiling, jali, flagCloth, copper, leaf, env: interiorEnv, marble }, P);
+    pending.push(t.ready);
     flames.points.push(...t.flames.points);
     flames.lights.push(...t.flames.lights);
-    const { water, group: precinct, shore } = buildPrecinct(root, M, { stone: stone.material, stoneTwo: carvedTwo, shade, paving: pave.material, dwar: dwarStone, jali }, P, flames, sunDir);
+    const { water, group: precinct, shore, ready: precinctReady } = buildPrecinct(root, M, { stone: stone.material, stoneTwo: carvedTwo, shade, paving: pave.material, dwar: dwarStone, jali }, P, flames, sunDir);
+    pending.push(precinctReady);
     // pilgrims in the queue, on the jagati, the promenade, round the Baan Stambh and in the market (one batched draw)
     const crowd = pilgrims(precinct, P);
 
     return {
       // Places (engine/travel.ts): the walking graph and the places list
       ...somnathNav(),
-      // outside the Digvijay Dwar on the approach road from the Sardar Patel statue, facing the gate: the pilgrim
-      // walks in through it, as every visitor does
-      spawn: { feet: [2, 0, 136], look: [2, 12, 60] },
+      // on the market road outside the Digvijay Dwar, facing it: Sardar Patel's statue stands before the gate, and
+      // the pilgrim walks past him and in through it, as every visitor does
+      // (south of the gate's line, as the plaza is photographed: the queue on the left, Patel on the right and the
+      // shikhara showing beside the Dwar)
+      spawn: { feet: [DWAR.x - 20, 0, 176], look: [DWAR.x - 6, 8, 105] },
       update(time) {
         t.flag.update(time);
+        t.fittings.update(time);
         crowd.update(time);
         water.material.uniforms.time.value = time * 0.5;
         animateSea(time);
@@ -117,7 +126,7 @@ const site: SiteDef = {
         water.material.uniforms.sunDirection.value.copy(dir);
       },
       zoneAt({ x, y, z }) {
-        if (y > 1.5 && Math.abs(x) < SANCTUM && Math.abs(z) < SANCTUM) return 'garbhagriha';
+        if (y > 1.5 && Math.abs(x) < SANCTUM && Math.abs(z - SANCTUM_Z) < SANCTUM) return 'garbhagriha';
         if (y > 0.9 && Math.abs(x) < JAG.x + 4 && z > JAG.z0 && z < JAG.z1 + 4) return 'temple';
         if (Math.hypot(x - BAAN.x, z - BAAN.z) < 9) return 'baan';
         if (distToSeaWall(x, z) < 12) return 'sea';
@@ -134,8 +143,9 @@ function flagMaterial() {
   c.width = 512; c.height = 280;
   const x = c.getContext('2d')!;
   const gr = x.createLinearGradient(0, 0, 512, 0);
-  gr.addColorStop(0, '#c8360c');
-  gr.addColorStop(1, '#d8440f');
+  // bright saffron, as it shows against the sky in the photographs
+  gr.addColorStop(0, '#e8501a');
+  gr.addColorStop(1, '#f2601f');
   x.fillStyle = gr;
   x.fillRect(0, 0, 512, 280);
   x.strokeStyle = '#8f1b06';

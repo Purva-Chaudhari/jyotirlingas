@@ -29,9 +29,19 @@ export const STOPS: Record<string, Record<string, Anchor>> = {
     // +z east (the Digvijay Dwar approach), +x north; jagati top 1.2, sanctum floor 1.8
     dwar: [2, 0, 101, 5],
     temple: [3.2, 1.2, 54.5, 5], // top of the front steps, off the axis
-    garbhagriha: [2.8, 1.8, 2.8, 2.5], // beside, never in front of, the lingam
+    // at the threshold, just outside the sanctum door (not the sanctum itself: inside, the aarti comes first and a
+    // story pauses until you step out again)
+    garbhagriha: [1.5, 1.8, 12.8, 1.8],
     baan: [-55, 0, 9, 6],
     sea: [-6, 0, -45, 7],
+    // beyond the darshan route: along the covered walkway, at the Ganesha shrine, by Nandi, before the Old Parvati
+    // plinth, at the foot of the amphitheatre's tiers, and on the south lawns towards the shore (clear of the sea zone)
+    hamir: [0.8, 0, 84, 3.5],
+    kapardi: [15.6, 0, 88, 4],
+    nandi: [1.7, 1.8, 26, 2.6],
+    parvati: [29, 0, -7, 5],
+    show: [35.5, 0, -26, 4],
+    krishna: [-40, 0, 80, 6],
   },
   mallikarjuna: {
     // +x east (Rajagopuram, temple street), origin = the Jyotirlinga; sanctum/mandapa floor 0.9
@@ -153,7 +163,8 @@ export const STOPS: Record<string, Record<string, Anchor>> = {
 };
 
 export const DARSHAN: Record<string, Darshan> = {
-  somnath: { at: [0, 1.8, 2.6, 3.5], zones: ['garbhagriha'], source: [0, 2.6, 0] },
+  // (the sanctum stands 5.7 m east of the prasada's centre, temple.ts SANCTUM_Z)
+  somnath: { at: [0, 1.8, 8.3, 3.5], zones: ['garbhagriha'], source: [0, 2.6, 5.7] },
   mallikarjuna: { at: [3, 0.9, 0, 4], zones: ['garbhagriha'], source: [0, 1.5, 0] },
   // the Ganesh Mandapam barricade on the axis of the sanctum door (DARSHAN_SPOT), or inside the sanctum
   // after darshan the daily queue is led upstairs to Omkareshwar, directly above the sanctum

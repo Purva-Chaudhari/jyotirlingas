@@ -6,6 +6,16 @@ import { Physics, archPanelGeometry, Flag, garland, type Flames } from '../../en
 import { Batch, Instances, pillarGeometry, ghantaGeometry, ghantaLoGeometry, pillarLoGeometry, eave, reliefPanelGeometry, figureReliefGeometry, withUV } from './batch';
 import { shikhara } from './shikhara';
 import { omFriezeMaterial } from './gold';
+import { buildDarshan, buildNandi, VERANDAH } from './darshan';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+
+/**
+ * The queue lanes inside the sabha mandapa (stainless rails running north-south across the hall, both sides of
+ * the open central aisle): rail lines at these z, from |x| = QX0 out to QX1. Two blocks, west (before the
+ * sanctum) and east, leaving the cross-aisle to the side porches open.
+ */
+export const QUEUE = { rails: [13.95, 15.1, 16.25, 17.4, 18.55, 26.45, 27.6, 28.75, 29.9, 31.05], x0: 1.55, x1: 9.3 };
 
 /**
  * Shri Somnath temple (rebuilt 1951, Kailash Mahameru Prasad, Maru-Gurjara / Chalukya style),
@@ -25,11 +35,16 @@ import { omFriezeMaterial } from './gold';
 export const JAGATI = 1.2;
 export const FLOOR = 1.8;
 export const SANCTUM = 4.2; // half size of the garbhagriha
+/** z of the garbhagriha's centre: it sits forward in the prasada, right behind its door on the sabha mandapa's west
+ * wall, so from the darshan parapet the linga is ~6 m away, as in the darshan photographs (not at the prasada's centre) */
+export const SANCTUM_Z = 5.7;
 export const JAG = { x: 17, z0: -13.5, z1: 56.5 };
 const DOOR_W = 1.3; // half width of the sanctum passage
 const DOOR_TOP = 6.4;
 const PR = 10.2; // prasada half size at the corners
 const SANCTUM_CEIL = 7.8;
+/** the garbhagriha's wall niches (local to the sanctum): x, z, facing (ry) */
+const SANCTUM_NICHES: [number, number, number][] = [[-2.6, -SANCTUM + 0.12, 0], [2.6, -SANCTUM + 0.12, 0], [-SANCTUM + 0.12, -2.0, Math.PI / 2], [SANCTUM - 0.12, -2.0, -Math.PI / 2]];
 // mandapa levels: ground colonnade top, gallery band top, balcony rail top, upper colonnade top, lintel top, parapet top (roof base)
 const L1 = 7.4, L2 = 8.8, L3 = 9.8, L4 = 12.4, L5 = 13.0, L6 = 14.0;
 
@@ -84,26 +99,26 @@ const sidePoint = (s: number, u: number, o: number, scale = 1): [number, number]
 };
 
 /** Outline of the plan scaled; with `door` the east side is opened by a passage leading into the sanctum (a C-shaped polygon). */
-function prasadaOutline(scale: number, door: boolean): [number, number][] {
+function prasadaOutline(scale: number, door: boolean, eastScale = scale): [number, number][] {
   const pts: [number, number][] = [];
-  const east = PR_SIDE.map(([u, o]) => sidePoint(0, u, o, scale));
+  const east = PR_SIDE.map(([u, o]) => sidePoint(0, u, o, eastScale));
   if (!door) {
     for (let s = 0; s < 4; s++) PR_SIDE.forEach(([u, o], i) => { if (s === 0 || i > 0) pts.push(sidePoint(s, u, o, scale)); });
     pts.pop(); // closing duplicate of the first point
     return pts;
   }
-  const ez = (PR + 1.0) * scale;
+  const ez = (PR + 1.0) * eastScale;
   pts.push([DOOR_W, ez]);
   east.forEach((p) => { if (p[0] > DOOR_W + 0.01) pts.push(p); });
   for (let s = 1; s < 4; s++) PR_SIDE.forEach(([u, o], i) => { if (i > 0) pts.push(sidePoint(s, u, o, scale)); });
   pts.pop();
   east.forEach((p) => { if (p[0] < -DOOR_W - 0.01) pts.push(p); });
-  pts.push([-DOOR_W, ez], [-DOOR_W, SANCTUM], [-SANCTUM, SANCTUM], [-SANCTUM, -SANCTUM],
-    [SANCTUM, -SANCTUM], [SANCTUM, SANCTUM], [DOOR_W, SANCTUM]);
+  const z0 = SANCTUM_Z - SANCTUM, z1 = SANCTUM_Z + SANCTUM;
+  pts.push([-DOOR_W, ez], [-DOOR_W, z1], [-SANCTUM, z1], [-SANCTUM, z0], [SANCTUM, z0], [SANCTUM, z1], [DOOR_W, z1]);
   return pts;
 }
 
-const sanctumHole = (): [number, number][] => [[-SANCTUM, -SANCTUM], [SANCTUM, -SANCTUM], [SANCTUM, SANCTUM], [-SANCTUM, SANCTUM]];
+const sanctumHole = (): [number, number][] => [[-SANCTUM, SANCTUM_Z - SANCTUM], [SANCTUM, SANCTUM_Z - SANCTUM], [SANCTUM, SANCTUM_Z + SANCTUM], [-SANCTUM, SANCTUM_Z + SANCTUM]];
 
 // ---------- samvarana roof ----------
 
@@ -195,20 +210,34 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
   const B = new Batch();
   const S = T.stone;
   const pillars = new Instances(withUV(pillarGeometry(), 0.32, 6), S);
+  // before the sanctum the sabha mandapa is gold-plated: its pillars there are sheathed in gold repoussé
+  const goldPillars = new Instances(withUV(pillarGeometry(), 0.32, 6), T.goldWall);
+  // (the photographs show the free-standing hall pillars still in sandstone: only the sanctum's own pilasters are gold)
+  const goldZone = (_x: number, _z: number, _y: number) => false;
   const gh = new Instances(withUV(ghantaGeometry(), 0.6, 0.6), S);
   const panels = new Instances(withUV(reliefPanelGeometry(), 1.05, 1.1), S);
   const pillar = (x: number, z: number, y: number, h: number, r: number, solid = true) => {
-    pillars.at(x, y, z, r, h, r);
+    (goldZone(x, z, y) ? goldPillars : pillars).at(x, y, z, r, h, r);
     if (solid) P.solid(x - r * 1.4, y, z - r * 1.4, x + r * 1.4, y + h, z + r * 1.4);
   };
-  const torana = (a: [number, number], b: [number, number], y: number, h: number, r: number) => {
+  // the white marble cloud toranas between the pillars (Blender: pieces.py torana, span 2 between its makara
+  // heads, springing at y 0): placed once the model has loaded; the old stone arch panels only if it can't be
+  const toranaAt: { m: THREE.Matrix4; fallback: () => THREE.BufferGeometry }[] = [];
+  const torana = (a: [number, number], b: [number, number], y: number, h: number, r: number, spring = L1 - 1.9) => {
     const span = Math.hypot(b[0] - a[0], b[1] - a[1]) - r * 2.6;
     if (span < 0.8) return;
-    const geo = archPanelGeometry(span, h, 0.32, 7);
-    geo.rotateY(-Math.atan2(b[1] - a[1], b[0] - a[0]));
-    geo.translate((a[0] + b[0]) / 2, y, (a[1] + b[1]) / 2);
-    B.add(S, geo);
+    const ry = -Math.atan2(b[1] - a[1], b[0] - a[0]);
+    const mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
+    const sx = (span + r * 1.2) / 2.3, sy = Math.min(1.35, 0.75 + sx * 0.5);
+    toranaAt.push({
+      m: new THREE.Matrix4().compose(new THREE.Vector3(mx, spring, mz), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ry), new THREE.Vector3(sx, sy, 0.9)),
+      fallback: () => archPanelGeometry(span, h, 0.32, 7).rotateY(ry).translate(mx, y, mz),
+    });
   };
+  // the deities in the niches (Blender: pieces.py deity, the same 1 x 1.4 frame as figureReliefGeometry)
+  const deityAt: THREE.Matrix4[] = [];
+  const goldDeityAt: THREE.Matrix4[] = [];
+  const whiteDeityAt: THREE.Matrix4[] = [];
 
   // ---------- jagati (raised platform) and stairs ----------
   B.span(S, -JAG.x, JAG.x, 0, JAGATI, JAG.z0, JAG.z1);
@@ -248,47 +277,49 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     [9.3, 14.4, 0.985], [14.4, 14.8, 1.04], [14.8, 15.25, 1.11], [15.25, 15.6, 1.05], [15.6, 17.0, 1.0],
   ];
   for (const [y0, y1, sc] of bands) {
-    if (y0 < DOOR_TOP) B.prism(S, prasadaOutline(sc, true), y0, y1);
+    // (the low mouldings stay flush on the east face: there the sabha mandapa's gold-clad wall rises from its floor)
+    if (y0 < DOOR_TOP) B.prism(S, prasadaOutline(sc, true, y0 < 3.0 ? 1 : sc), y0, y1);
     else if (y0 < SANCTUM_CEIL + 0.2) B.prism(S, prasadaOutline(sc, false), y0, y1, [sanctumHole()]);
     else B.prism(S, prasadaOutline(sc, false), y0, y1);
   }
   // colliders: four walls round the sanctum, the east one split by the passage
   const E = PR + 1.0;
-  P.solid(-E, 0, -E, E, 17, -SANCTUM);
-  P.solid(SANCTUM, 0, -SANCTUM, E, 17, E);
-  P.solid(-E, 0, -SANCTUM, -SANCTUM, 17, E);
-  P.solid(-SANCTUM, 0, SANCTUM, -DOOR_W, 17, E);
-  P.solid(DOOR_W, 0, SANCTUM, SANCTUM, 17, E);
+  const SB = SANCTUM_Z - SANCTUM, SF = SANCTUM_Z + SANCTUM;
+  P.solid(-E, 0, -E, E, 17, SB);
+  P.solid(SANCTUM, 0, SB, E, 17, E);
+  P.solid(-E, 0, SB, -SANCTUM, 17, E);
+  P.solid(-SANCTUM, 0, SF, -DOOR_W, 17, E);
+  P.solid(DOOR_W, 0, SF, SANCTUM, 17, E);
 
   // niches (devakoshthas) on every ratha of both storeys, kept empty and dark; balconies on the bhadras
   const niche = (s: number, u: number, o: number, y0: number, h: number, w: number) => {
     const { n } = SIDES[s];
     const [px, pz] = sidePoint(s, u, o);
     const ry = Math.atan2(n[0], n[1]);
+    // the east face's lower niches stand inside the sabha mandapa, where everything before the sanctum is gold
+    const inGold = s === 0 && y0 < L1;
+    const NS = inGold ? T.goldWall : S;
     const at = (along: number, out: number): [number, number] => {
       const t = SIDES[s].t;
       return [px + t[0] * along + n[0] * out, pz + t[1] * along + n[1] * out];
     };
     let [x, z] = at(0, 0.03);
     B.box(T.shade, w, h, 0.1, x, y0, z, ry);
-    // a deity in soft relief stands in every niche (draped form, no facial features)
-    const fig = figureReliefGeometry();
+    // a deity stands in every niche (the Blender figure; gilded inside the hall)
     const fs = Math.min(w * 0.95, h / 1.45);
-    fig.scale(fs, fs, fs).rotateY(ry);
     [x, z] = at(0, 0.1);
-    fig.translate(x, y0 + 0.05, z);
-    B.add(S, fig);
+    (inGold ? goldDeityAt : deityAt).push(new THREE.Matrix4().compose(new THREE.Vector3(x, y0 + 0.05, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ry), new THREE.Vector3(fs, fs, fs)));
     for (const sgn of [-1, 1]) {
       [x, z] = at(sgn * (w / 2 + 0.16), 0.14);
-      B.box(S, 0.32, h, 0.3, x, y0, z, ry);
+      B.box(NS, 0.32, h, 0.3, x, y0, z, ry);
     }
     [x, z] = at(0, 0.18);
-    B.box(S, w + 0.8, 0.22, 0.42, x, y0 - 0.22, z, ry);
-    B.box(S, w + 0.8, 0.3, 0.42, x, y0 + h, z, ry);
+    B.box(NS, w + 0.8, 0.22, 0.42, x, y0 - 0.22, z, ry);
+    B.box(NS, w + 0.8, 0.3, 0.42, x, y0 + h, z, ry);
     const ped = new THREE.ConeGeometry((w + 0.7) * 0.72, 1.0, 4, 1).rotateY(Math.PI / 4).scale(1, 1, 0.45).rotateY(ry);
     [x, z] = at(0, 0.0);
     ped.translate(x, y0 + h + 0.3 + 0.5, z);
-    B.add(S, ped);
+    B.add(NS, ped);
   };
   for (let s = 0; s < 4; s++) {
     for (const u of [-5.25, 5.25]) {
@@ -301,6 +332,8 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     }
     if (s === 0) continue; // east bhadra holds the sanctum door
     niche(s, 0, 1.0, 3.5, 3.0, 2.0);
+    // and a deity either side of it on the bhadra's face, as along the whole mandovara in the photographs
+    for (const u of [-2.25, 2.25]) niche(s, u, 1.0, 3.8, 2.2, 0.95);
     // jharokha balcony on the upper bhadra
     const { n, t } = SIDES[s];
     const ry = Math.atan2(n[0], n[1]);
@@ -337,12 +370,24 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     bell.position.set(dz, poleTop - 1.15, -1.0);
     g.add(bell);
   }
-  trishul(g, M.gold, 0, poleTop, -1.0, 1.3);
+  // the trishul faces north-south, so it reads full-face from the lawns and the sea side (as photographed)
+  trishul(g, M.gold, 0, poleTop, -1.0, 2.4, Math.PI / 2);
   const flag = new Flag(g, M.brass, T.flagCloth, 0, poleTop - 4.2, -1.0, 3.2);
-  flag.mesh.scale.setScalar(2.1);
+  flag.mesh.scale.setScalar(2.4);
+  // thin steel guy-wires bracing the staff, from under the bar down to the shikhara's shoulders
+  const wire = new THREE.MeshStandardMaterial({ color: 0x55585c, metalness: 0.7, roughness: 0.5 });
+  for (let k = 0; k < 4; k++) {
+    const a = Math.PI / 4 + (k * Math.PI) / 2;
+    const top = new THREE.Vector3(0, poleTop - 1.6, -1.0), foot = new THREE.Vector3(Math.cos(a) * 3.6, spire.crownY - 4.5, -1.0 + Math.sin(a) * 3.6);
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(top, foot), 1, 0.022, 4), wire));
+  }
   void kTop;
 
   // ---------- mandapas ----------
+  // the halls' floor: the same ivory marble, honed (worn by the crowds) rather than polished, so a sunlit patch
+  // through a porch reads as light on stone and not as a mirror
+  const hallFloor = T.marble.clone();
+  hallFloor.roughness = 0.62;
   interface Hall {
     cz: number; hz: number; hx: number; storeys: 1 | 2;
     /** which perimeter sides get columns, and ranges along them left open */
@@ -353,7 +398,7 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
   const hall = (h: Hall) => {
     const z0 = h.cz - h.hz, z1 = h.cz + h.hz;
     B.span(S, -h.hx - 0.45, h.hx + 0.45, JAGATI, FLOOR, z0, z1);
-    B.span(T.marble, -h.hx + 0.2, h.hx - 0.2, FLOOR - 0.02, FLOOR + 0.01, z0 + 0.2, z1 - 0.2);
+    B.span(hallFloor, -h.hx + 0.2, h.hx - 0.2, FLOOR - 0.02, FLOOR + 0.01, z0 + 0.2, z1 - 0.2);
     P.floor(g, -h.hx - 0.45, h.hx + 0.45, z0, z1, FLOOR);
     const top1 = L1;
     const r1 = h.storeys === 2 ? 0.36 : 0.32;
@@ -379,18 +424,21 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
         if (h.storeys === 2) pillar(p[0], p[1], L3, L4 - L3, 0.2, false);
         const q = pts[i + 1];
         if (q && !Number.isNaN(q[0])) {
-          torana(p, q, FLOOR, top1 - FLOOR - 0.1, r1);
+          // (the great halls' outer pillars stand free under straight beams, an open verandah, as photographed; only
+          // the porch keeps its arches)
+          if (h.storeys !== 2) torana(p, q, FLOOR, top1 - FLOOR - 0.1, r1);
           const out = sd.side === 'n' ? [1, 0] : sd.side === 's' ? [-1, 0] : sd.side === 'e' ? [0, 1] : [0, -1];
           if (h.storeys === 2) {
-            // screen wall set back behind the torana: a stone dado and a pierced jali above it
-            const inX = -out[0] * 0.6, inZ = -out[1] * 0.6;
+            // the hall's wall, set back behind the verandah: carved stone inside, and outside deep in the verandah's
+            // shade, so the pillars read against darkness as in the photographs
+            const inX = -out[0] * VERANDAH, inZ = -out[1] * VERANDAH;
             const ax = p[0] + inX, az = p[1] + inZ, bx = q[0] + inX, bz = q[1] + inZ;
             const thin = 0.14;
             const [x0, x1] = [Math.min(ax, bx) - (out[0] ? thin : 0), Math.max(ax, bx) + (out[0] ? thin : 0)];
             const [zA, zB] = [Math.min(az, bz) - (out[1] ? thin : 0), Math.max(az, bz) + (out[1] ? thin : 0)];
-            B.span(S, x0, x1, FLOOR, FLOOR + 0.95, zA, zB);
-            B.span(T.jali, x0, x1, FLOOR + 0.95, FLOOR + 4.3, zA, zB);
-            B.span(S, x0, x1, FLOOR + 4.3, top1, zA, zB);
+            B.span(S, x0, x1, FLOOR, top1, zA, zB);
+            const ox = out[0] * (thin + 0.01), oz = out[1] * (thin + 0.01);
+            B.box(T.shade, out[0] ? 0.02 : x1 - x0, top1 - FLOOR, out[1] ? 0.02 : zB - zA, (ax + bx) / 2 + ox, FLOOR, (az + bz) / 2 + oz);
             P.solid(x0, FLOOR, zA, x1, top1, zB);
           }
           if (h.storeys === 2) {
@@ -413,7 +461,10 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     }
     // the sabha mandapa is wider than the prasada it abuts: close its west corners up to the parapet
     if (h.storeys === 2 && !h.sides.some((sd) => sd.side === 'w')) {
-      for (const sg of [-1, 1]) B.span(S, sg * (PR + 0.9), sg * (h.hx + 0.5), FLOOR, L6, z0 - 0.4, z0 + 0.1);
+      for (const sg of [-1, 1]) {
+        B.span(T.goldWall, sg * (PR + 0.9), sg * (h.hx + 0.5), FLOOR, L1, z0 - 0.4, z0 + 0.1);
+        B.span(S, sg * (PR + 0.9), sg * (h.hx + 0.5), L1, L6, z0 - 0.4, z0 + 0.1);
+      }
       B.span(S, -h.hx - 0.5, h.hx + 0.5, L2, L6, z0 - 0.4, z0 + 0.1);
     }
     // over the side-porch openings the upper gallery is still closed: balcony rail and dark back panel
@@ -471,10 +522,15 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
       }
       samvarana(B, gh, S, 0, h.cz, L6, h.roof.half, h.roof.H);
       // interior: inner octagon of tall pillars carries a stepped ceiling with a lotus pendant
+      const oct: [number, number][] = [];
       for (let i = 0; i < 8; i++) {
         const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
-        pillar(Math.cos(a) * R, h.cz + Math.sin(a) * R, FLOOR, L4 - 0.2 - FLOOR, 0.36);
+        oct.push([Math.cos(a) * R, h.cz + Math.sin(a) * R]);
+        pillar(oct[i][0], oct[i][1], FLOOR, L4 - 0.2 - FLOOR, 0.36);
       }
+      // white cloud toranas round the central space: across the aisle at its east and west, and along both sides
+      // (the procession of arches the pilgrim walks under in the films)
+      for (const [i, j] of [[1, 2], [5, 6], [0, 7], [3, 4]] as const) torana(oct[i], oct[j], FLOOR, L1 - FLOOR - 0.1, 0.36, FLOOR + 3.9);
       B.prism(T.ceiling, rect(-0.2, -0.2), L4 - 0.2, L4, [circle(R + 0.6)]);
       domeCeiling(B, T.ceiling, 0, h.cz, L4 - 0.2, R + 0.6);
     } else {
@@ -518,6 +574,35 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     eave(B, T.stoneTwo, s * 13.0, 22.5, 3.8, 8.4, L1 + 0.8, 0.8, 0.45);
     samvarana(B, gh, S, s * 12.9, 22.5, L1 + 0.8, 3.9, 5.2);
   }
+  // the entrance doorway: white marble jambs and lintel crowded with deities in tiers, dark studded doors open inward
+  {
+    const zf = 53.5, JI = 1.3, JO = 2.45;
+    for (const sg of [-1, 1]) {
+      const [x0, x1] = [Math.min(sg * JI, sg * JO), Math.max(sg * JI, sg * JO)];
+      B.span(T.marble, x0, x1, FLOOR, L1 - 0.2, zf - 0.35, zf + 0.35);
+      // the jamb's projecting bands and the tiers of figures on its face
+      for (const y of [FLOOR + 0.6, FLOOR + 2.15, FLOOR + 3.7]) B.span(T.marble, x0 - 0.05, x1 + 0.05, y - 0.12, y, zf + 0.3, zf + 0.42);
+      for (const [k, y] of [[0, FLOOR + 0.62], [1, FLOOR + 2.17], [2, FLOOR + 3.72]] as const) {
+        for (const u of [0.32, 0.82]) {
+          whiteDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(sg * (JI + u), y, zf + 0.36), new THREE.Quaternion(), new THREE.Vector3(0.48, 0.48 + k * 0.0, 0.48)));
+        }
+      }
+      // the inner reveal carries a column of figures facing the doorway
+      for (const y of [FLOOR + 0.3, FLOOR + 1.85, FLOOR + 3.4]) {
+        whiteDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(sg * JI, y, zf), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -sg * Math.PI / 2), new THREE.Vector3(0.55, 0.55, 0.55)));
+      }
+      P.solid(x0, FLOOR, zf - 0.35, x1, L1, zf + 0.35);
+      // the door leaf, swung back against the porch's side
+      B.span(T.shade, Math.min(sg * JI, sg * (JI + 0.12)), Math.max(sg * JI, sg * (JI + 0.12)), FLOOR, FLOOR + 4.4, zf - 2.3, zf - 0.38);
+      for (let y = FLOOR + 0.4; y < FLOOR + 4.3; y += 0.55) for (let z = zf - 2.15; z < zf - 0.45; z += 0.45) {
+        B.add(M.brass, new THREE.SphereGeometry(0.035, 6, 4).translate(sg * (JI + 0.13), y, z));
+      }
+    }
+    // lintel with a row of seated figures and a central Ganesha boss
+    B.span(T.marble, -JO, JO, L1 - 1.6, L1 - 0.2, zf - 0.35, zf + 0.4);
+    B.span(T.marble, -JO - 0.1, JO + 0.1, L1 - 0.2, L1 + 0.05, zf - 0.4, zf + 0.5);
+    for (let k = -3; k <= 3; k++) whiteDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(k * 0.62, L1 - 1.5, zf + 0.38), new THREE.Quaternion(), new THREE.Vector3(0.52, 0.52 * (k === 0 ? 1.1 : 0.95), 0.52)));
+  }
   // steps from the porch floor down to the jagati at the entrance
   for (let i = 0; i < 3; i++) B.span(S, -3.5, 3.5, JAGATI, FLOOR - i * 0.2, 53.5, 53.5 + 0.4 * (i + 1));
 
@@ -532,9 +617,58 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
     B.lathe(T.goldWall, [[0, 0], [0.3, 0], [0.34, 0.12], [0.22, 0.3], [0, 0.32]], x, GT - 0.6, dz + 0.42, 12);
   }
   B.span(T.goldWall, -GW - 0.1, GW + 0.1, GT - 0.3, GT, dz + 0.1, dz + 0.5);
+  // the rest of the prasada's east face inside the hall is gold-plated too, ratha by ratha, up to the gallery band
+  for (const sg of [-1, 1]) {
+    for (const [u0, u1, o] of [[3.1, 3.6, 0.05], [3.6, 6.9, 0.35], [6.9, 7.4, -0.35], [7.4, PR + 0.9, 0]] as const) {
+      const za = PR + o;
+      B.span(T.goldWall, Math.min(sg * u0, sg * u1), Math.max(sg * u0, sg * u1), FLOOR, L1, za + 0.01, za + 0.06);
+    }
+  }
+  // gilded deities on marble pedestals either side of the darshan railing, as in the films
+  for (const sg of [-1, 1]) {
+    const x = sg * 6.4, z = PR + 2.2;
+    B.span(T.marble, x - 0.75, x + 0.75, FLOOR, FLOOR + 0.85, z - 0.55, z + 0.55);
+    B.span(T.marble, x - 0.85, x + 0.85, FLOOR + 0.85, FLOOR + 0.95, z - 0.62, z + 0.62);
+    goldDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(x, FLOOR + 0.95, z), new THREE.Quaternion(), new THREE.Vector3(1.35, 1.35, 1.35)));
+    P.solid(x - 0.85, FLOOR, z - 0.62, x + 0.85, FLOOR + 3, z + 0.62);
+  }
+
+  // ---------- the queue inside the sabha mandapa: serpentine lanes of stainless rails both sides of the aisle ----------
+  {
+    const steel = new THREE.MeshStandardMaterial({ color: 0xd2d6db, metalness: 0.92, roughness: 0.22, envMap: T.env, envMapIntensity: 0.9 });
+    const post = new Instances(new THREE.CylinderGeometry(0.03, 0.03, 1.05, 8).translate(0, 0.525, 0), steel);
+    QUEUE.rails.forEach((z, i) => {
+      for (const sg of [-1, 1]) {
+        // alternate rails leave the lane open at the aisle end or the outer end, so the line snakes across
+        const a = QUEUE.x0 + (i % 2 ? 1.2 : 0), b = QUEUE.x1 - (i % 2 ? 0 : 1.2);
+        const [x0, x1] = [Math.min(sg * a, sg * b), Math.max(sg * a, sg * b)];
+        for (const y of [0.5, 1.02]) B.add(steel, new THREE.CylinderGeometry(0.024, 0.024, x1 - x0, 8).rotateZ(Math.PI / 2).translate((x0 + x1) / 2, FLOOR + y, z));
+        for (let x = x0; x <= x1 + 0.01; x += (x1 - x0) / Math.max(1, Math.round((x1 - x0) / 1.7))) post.at(x, FLOOR, z);
+        P.solid(x0, FLOOR, z - 0.05, x1, FLOOR + 1.1, z + 0.05);
+      }
+    });
+    // the lanes' end rails along the aisle (a pipe on short posts, open where each lane turns)
+    post.flush(g);
+  }
+
+  // ---------- the white marble floor's inlay down the aisle: brown borders and rosettes ----------
+  {
+    const inlay = new THREE.MeshStandardMaterial({ color: 0x7a4a26, roughness: 0.35 });
+    for (const [z0, z1] of [[11.8, 33.3], [33.7, 47.3], [47.7, 53.3]] as const) {
+      for (const x of [-1.25, 1.25]) B.span(inlay, x - 0.06, x + 0.06, FLOOR + 0.008, FLOOR + 0.014, z0, z1);
+    }
+    const rosette = new THREE.MeshStandardMaterial({ map: rosetteTexture(), roughness: 0.3, transparent: true, alphaTest: 0.4 });
+    for (const z of [17.5, 22.5, 27.5, 31.5, 37, 40.5, 44, 50.5]) {
+      const m = new THREE.Mesh(new THREE.CircleGeometry(0.75, 40).rotateX(-Math.PI / 2), rosette);
+      m.position.set(0, FLOOR + 0.016, z);
+      m.receiveShadow = true;
+      g.add(m);
+    }
+  }
+
   // white marble darshan railing in front, its panels carved with lotus medallions; the way in stays open
   for (const sgn of [-1, 1]) {
-    const xa = sgn * 1.7, xb = sgn * 5.2;
+    for (const [xa, xb] of (sgn > 0 ? [[1.7, 2.78], [3.87, 5.2]] : [[-5.2, -1.7]]) as [number, number][]) {
     const [x0, x1] = [Math.min(xa, xb), Math.max(xa, xb)];
     B.span(T.marble, x0, x1, FLOOR, FLOOR + 0.9, 13.0, 13.35);
     B.span(T.marble, x0 - 0.05, x1 + 0.05, FLOOR + 0.9, FLOOR + 1.0, 12.95, 13.4);
@@ -543,18 +677,56 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
       B.add(T.marble, new THREE.TorusGeometry(0.2, 0.025, 6, 18).translate(x, FLOOR + 0.45, 13.42));
     }
     P.solid(x0, FLOOR, 12.95, x1, FLOOR + 1.0, 13.4);
+    }
   }
-  // sanctum doorway in silver, seen from the sabha mandapa
-  B.span(M.silver, -DOOR_W - 0.45, -DOOR_W, FLOOR, DOOR_TOP + 0.4, dz - 0.05, dz + 0.12);
-  B.span(M.silver, DOOR_W, DOOR_W + 0.45, FLOOR, DOOR_TOP + 0.4, dz - 0.05, dz + 0.12);
-  B.span(M.silver, -DOOR_W - 0.45, DOOR_W + 0.45, DOOR_TOP, DOOR_TOP + 0.55, dz - 0.05, dz + 0.12);
+  // the marble parapet's turned knob finials, as in the darshan photographs
+  for (const sgn of [-1, 1]) for (let k = 0; k <= 4; k++) {
+    if (sgn > 0 && k === 2) continue; // where the abhisheka counter runs through
+    B.lathe(T.marble, [[0, 0], [0.09, 0], [0.1, 0.04], [0.05, 0.08], [0.09, 0.15], [0.07, 0.22], [0.02, 0.26], [0, 0.27]], sgn * (1.75 + k * 0.85), FLOOR + 1.0, 13.17, 14);
+  }
+  // sanctum doorway, gold-clad today (the old silver doors and frame were replaced in gold), seen from the sabha mandapa
+  B.span(T.goldTrim, -DOOR_W - 0.45, -DOOR_W, FLOOR, DOOR_TOP + 0.4, dz - 0.05, dz + 0.12);
+  B.span(T.goldTrim, DOOR_W, DOOR_W + 0.45, FLOOR, DOOR_TOP + 0.4, dz - 0.05, dz + 0.12);
+  B.span(T.goldTrim, -DOOR_W - 0.45, DOOR_W + 0.45, DOOR_TOP, DOOR_TOP + 0.55, dz - 0.05, dz + 0.12);
   B.span(M.brass, -DOOR_W - 0.7, DOOR_W + 0.7, DOOR_TOP + 0.55, DOOR_TOP + 0.75, dz - 0.1, dz + 0.2);
   garland(g, M.marigold, new THREE.Vector3(-DOOR_W - 0.3, DOOR_TOP + 0.2, dz + 0.2), new THREE.Vector3(DOOR_W + 0.3, DOOR_TOP + 0.2, dz + 0.2), 0.5, 0.05);
-  for (const s of [-1, 1]) {
-    garland(g, M.marigold, new THREE.Vector3(s * (DOOR_W + 0.25), DOOR_TOP + 0.2, dz + 0.2), new THREE.Vector3(s * (DOOR_W + 0.25), FLOOR + 1.6, dz + 0.2), 0.05, 0.05);
+  // the threshold, dais, donation boxes, abhisheka counter, the jambs' flower columns and the aisle ceilings' fittings
+  const fittings = buildDarshan(g, B, T.marble, T.goldTrim, P, {
+    floor: FLOOR, front: dz, doorW: DOOR_W, doorTop: DOOR_TOP, ceil: L1,
+    halls: [{ cz: 22.5, hx: 11, hz: 11, well: 6.2 + 0.6 }, { cz: 40.5, hx: 8.5, hz: 7, well: 4.6 + 0.6 }],
+  });
+  // the deities in the sanctum's wall niches, each dressed in red vastra
+  for (const [x, z, ry] of SANCTUM_NICHES) {
+    const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ry);
+    goldDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(x, FLOOR + 1.0, z + SANCTUM_Z).add(new THREE.Vector3(0, 0, 0.06).applyQuaternion(q)), q, new THREE.Vector3(0.95, 1.0, 0.8)));
+    B.add(new THREE.MeshStandardMaterial({ color: 0xc0141c, roughness: 0.8 }), new THREE.CylinderGeometry(0.2, 0.3, 0.7, 14, 1, true, -Math.PI / 2, Math.PI).rotateY(ry).translate(x, FLOOR + 1.4, z + SANCTUM_Z).translate(...new THREE.Vector3(0, 0, 0.14).applyQuaternion(q).toArray()));
   }
+  // the door leaves' panel deities and the standing figures on the gold jambs (the Blender deity, gilded)
+  for (const s of [-1, 1]) {
+    const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -s * Math.PI / 2);
+    for (let r = 0; r < 5; r++) for (const zl of [SANCTUM + 0.38, SANCTUM + 0.97]) {
+      goldDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(s * (DOOR_W - 0.2), FLOOR + 0.45 + r * 0.76 - 0.26, SANCTUM_Z + zl), q, new THREE.Vector3(0.36, 0.36, 0.36)));
+    }
+    for (const y of [FLOOR + 0.75, FLOOR + 2.85]) goldDeityAt.push(new THREE.Matrix4().compose(new THREE.Vector3(s * (DOOR_W + 0.22), y, dz + 0.13), new THREE.Quaternion(), new THREE.Vector3(0.42, 0.42 * 1.25, 0.3)));
+  }
+  // Nandi under the sabha mandapa's dome, on the axis, gazing at the linga
+  buildNandi(B, T.marble, P, 0, FLOOR, 27.6);
 
-  buildSanctum(g, B, M, T, P, flames);
+  // the garbhagriha is built about its own centre and set forward (SANCTUM_Z) in a group of its own
+  {
+    const sg = new THREE.Group();
+    sg.position.z = SANCTUM_Z;
+    g.add(sg);
+    const SBt = new Batch();
+    const Pz = {
+      solid: (a: number, b: number, c: number, d: number, e: number, f: number) => P.solid(a, b, c + SANCTUM_Z, d, e, f + SANCTUM_Z),
+      floor: (_p: THREE.Object3D, x0: number, x1: number, z0: number, z1: number, y0: number, y1 = y0) => P.floor(g, x0, x1, z0 + SANCTUM_Z, z1 + SANCTUM_Z, y0, y1),
+    } as unknown as Physics;
+    const fz: Flames = { points: [], lights: flames.lights };
+    buildSanctum(sg, SBt, M, T, Pz, fz);
+    for (const p of fz.points) flames.points.push(p.clone().setZ(p.z + SANCTUM_Z));
+    SBt.flush(sg);
+  }
 
   // ---------- lamps: diyas along the jagati edge and up the steps, hanging lamps in the halls ----------
   for (const z of linspace(JAG.z0 + 0.4, JAG.z1 - 0.4, 60)) {
@@ -576,7 +748,7 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
       flames.points.push(new THREE.Vector3(x + Math.cos(a) * 0.36, 9.28, z + Math.sin(a) * 0.36));
     }
     // set below the gallery band so it lights the aisle ceilings' undersides and, through the open well, the dome
-    const l = new THREE.PointLight(0xffe2c0, 9, 18, 1.4);
+    const l = new THREE.PointLight(0xffe2c0, 5, 18, 1.4);
     l.position.set(x, 5.6, z);
     g.add(l);
     flames.lights.push(l);
@@ -591,9 +763,77 @@ export function buildTemple(root: THREE.Group, M: Materials, T: TempleMats, P: P
   pillars.flushLOD(g, withUV(pillarLoGeometry(), 0.32, 6), roofs, 50);
   flushPigeons(g);
   gh.flushLOD(g, withUV(ghantaLoGeometry(), 0.6, 0.6), roofs, 50);
+  goldPillars.flush(g);
   panels.flush(g);
   B.flush(g);
-  return { group: g, flag, flames };
+
+  // the Blender carvings: cloud toranas in white marble, deities in the niches (stone), before the sanctum (gold)
+  // and on the entrance doorway (white marble); the old stand-ins only if a file can't be loaded
+  const whiteMarble = T.marble.clone();
+  // a warm ivory, honed rather than polished, so the carved lobes read as stone and not as cloud
+  whiteMarble.color.set(0xe3cda2);
+  whiteMarble.roughness = 0.62;
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  const geometryOf = (url: string) => loader.loadAsync(url).then((gl) => {
+    let geo: THREE.BufferGeometry | undefined;
+    gl.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh && !geo) geo = (o as THREE.Mesh).geometry; });
+    if (!geo) throw new Error(`no mesh in ${url}`);
+    // stone-sized planar UVs for the scanned stone and the gold repoussé
+    return withUV(geo, 1.2, 1.2);
+  });
+  const place = (geo: THREE.BufferGeometry, mat: THREE.Material, ms: THREE.Matrix4[], name: string) => {
+    if (!ms.length) return;
+    const im = new THREE.InstancedMesh(geo, mat, ms.length);
+    ms.forEach((m, i) => im.setMatrixAt(i, m));
+    im.castShadow = im.receiveShadow = true;
+    im.name = name;
+    im.computeBoundingSphere();
+    g.add(im);
+  };
+  const fallback = (parts: THREE.BufferGeometry[], mat: THREE.Material) => {
+    const FB = new Batch();
+    parts.forEach((p) => FB.add(mat, p));
+    FB.flush(g);
+  };
+  const ready = Promise.all([
+    geometryOf('assets/models/somnath_torana.glb').then((geo) => place(geo, whiteMarble, toranaAt.map((t) => t.m), 'cloud-toranas'))
+      .catch(() => fallback(toranaAt.map((t) => t.fallback()), S)),
+    geometryOf('assets/models/somnath_deity.glb').then((geo) => {
+      place(geo, S, deityAt, 'deities');
+      place(geo, T.goldTrim, goldDeityAt, 'gold-deities');
+      place(geo, whiteMarble, whiteDeityAt, 'marble-deities');
+    }).catch(() => {
+      fallback(deityAt.map((m) => figureReliefGeometry().applyMatrix4(m)), S);
+      fallback(goldDeityAt.map((m) => figureReliefGeometry().applyMatrix4(m)), T.goldTrim);
+      fallback(whiteDeityAt.map((m) => figureReliefGeometry().applyMatrix4(m)), T.marble);
+    }),
+  ]).then(() => undefined);
+  return { group: g, flag, flames, ready, fittings };
+}
+
+/** The floor's inlaid rosette: a sixteen-petalled flower in brown, gold and black marble on white. */
+function rosetteTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 512;
+  const x = c.getContext('2d')!;
+  const R = 250;
+  x.translate(256, 256);
+  x.fillStyle = '#6b3f22'; x.beginPath(); x.arc(0, 0, R, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#efe9dc'; x.beginPath(); x.arc(0, 0, R - 18, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#c9a050'; x.beginPath(); x.arc(0, 0, R - 34, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#efe9dc'; x.beginPath(); x.arc(0, 0, R - 46, 0, Math.PI * 2); x.fill();
+  for (let i = 0; i < 16; i++) {
+    x.save(); x.rotate((i / 16) * Math.PI * 2);
+    x.fillStyle = i % 2 ? '#2a2420' : '#8a5530';
+    x.beginPath(); x.moveTo(0, 30); x.quadraticCurveTo(38, 110, 0, 190); x.quadraticCurveTo(-38, 110, 0, 30); x.fill();
+    x.restore();
+  }
+  x.fillStyle = '#c9a050'; x.beginPath(); x.arc(0, 0, 38, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#2a2420'; x.beginPath(); x.arc(0, 0, 16, 0, Math.PI * 2); x.fill();
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 8;
+  return t;
 }
 
 // ---------- pieces ----------
@@ -623,12 +863,16 @@ function goldKalash(parent: THREE.Object3D, gold: THREE.Material, y: number, h: 
   return y + h;
 }
 
-function trishul(parent: THREE.Object3D, gold: THREE.Material, x: number, y: number, z: number, s: number) {
+function trishul(parent: THREE.Object3D, gold: THREE.Material, x: number, y: number, z: number, s: number, ry = 0) {
+  const tg = new THREE.Group();
+  tg.position.set(x, y, z);
+  tg.rotation.y = ry;
+  parent.add(tg);
   const add = (geo: THREE.BufferGeometry, px: number, py: number, rz = 0) => {
     const m = new THREE.Mesh(geo, gold);
-    m.position.set(x + px, y + py, z);
+    m.position.set(px, py, 0);
     m.rotation.z = rz;
-    parent.add(m);
+    tg.add(m);
   };
   add(new THREE.CylinderGeometry(0.05 * s, 0.05 * s, 0.5 * s, 8), 0, 0.25 * s);
   add(new THREE.ConeGeometry(0.09 * s, 0.55 * s, 8), 0, 0.75 * s);
@@ -661,9 +905,10 @@ function buildSanctum(g: THREE.Group, B: Batch, M: Materials, T: TempleMats, P: 
   const S = SANCTUM, F = FLOOR, C = SANCTUM_CEIL;
   // floor slab and passage floor
   B.span(T.marble, -S, S, JAGATI, F, -S, S);
-  B.span(T.marble, -DOOR_W, DOOR_W, JAGATI, F, S, PR + 1.6);
+  const HALL = PR + 1.6 - SANCTUM_Z; // the passage's end, in the sabha mandapa (local z)
+  B.span(T.marble, -DOOR_W, DOOR_W, JAGATI, F, S, HALL);
   P.floor(g, -S, S, -S, S, F);
-  P.floor(g, -DOOR_W, DOOR_W, S, PR + 1.6, F);
+  P.floor(g, -DOOR_W, DOOR_W, S, HALL, F);
   // gold-plated walls and ceiling
   const t = 0.12;
   const NW = 1.1, NT = F + 4.35; // the blind arched frame on the back wall, behind Maa Parvati's shrine
@@ -675,6 +920,23 @@ function buildSanctum(g: THREE.Group, B: Batch, M: Materials, T: TempleMats, P: 
   B.span(T.goldWall, DOOR_W, S, F, C, S - t, S);
   B.span(T.goldWall, -DOOR_W, DOOR_W, DOOR_TOP, C, S - t, S);
   B.span(T.goldWall, -S, S, C - 0.01, C + 0.2, -S, S);
+  // white marble floor tiles: their joints
+  const joint = new THREE.MeshStandardMaterial({ color: 0xa9a49a, roughness: 0.8 });
+  for (let v = -S + 0.6; v < S - 0.1; v += 0.6) {
+    B.span(joint, v - 0.006, v + 0.006, F, F + 0.003, -S, S);
+    B.span(joint, -S, S, F, F + 0.003, v - 0.006, v + 0.006);
+  }
+  // pillared niches on the back wall either side of Maa Parvati and on each side wall, each with a deity in red
+  // vastra (the Blender deity, gilded, placed from buildTemple at the same spots)
+  for (const [x, z, ry] of SANCTUM_NICHES) {
+    const c = Math.cos(ry), s = Math.sin(ry);
+    const put = (geo: THREE.BufferGeometry, m: THREE.Material) => B.add(m, geo.rotateY(ry).translate(x, 0, z));
+    put(new THREE.BoxGeometry(1.0, 1.55, 0.04).translate(0, F + 1.75, -0.02), new THREE.MeshStandardMaterial({ color: 0x5a1a10, roughness: 0.8 }));
+    for (const d of [-0.56, 0.56]) put(new THREE.BoxGeometry(0.12, 1.75, 0.14).translate(d, F + 1.78, 0.05), GT);
+    put(new THREE.BoxGeometry(1.3, 0.16, 0.2).translate(0, F + 2.7, 0.07), GT);
+    put(new THREE.BoxGeometry(1.2, 0.1, 0.32).translate(0, F + 0.95, 0.12), GT);
+    void c; void s;
+  }
   // gold pilasters with pot capitals and a cusped torana arch on the back wall
   for (const sg of [-1, 1]) {
     const x = sg * (NW + 0.16);
@@ -695,8 +957,8 @@ function buildSanctum(g: THREE.Group, B: Batch, M: Materials, T: TempleMats, P: 
   B.span(GT, -1.6, 1.6, NT + 0.65, NT + 0.7, -S + t - 0.02, -S + t + 0.08);
 
   // passage lined in gold
-  B.span(T.goldWall, -DOOR_W, -DOOR_W + 0.08, F, DOOR_TOP, S, PR + 1.0);
-  B.span(T.goldWall, DOOR_W - 0.08, DOOR_W, F, DOOR_TOP, S, PR + 1.0);
+  B.span(T.goldWall, -DOOR_W, -DOOR_W + 0.08, F, DOOR_TOP, S, HALL - 0.6);
+  B.span(T.goldWall, DOOR_W - 0.08, DOOR_W, F, DOOR_TOP, S, HALL - 0.6);
   // burnished gold pilasters at the corners and mid-walls, and a cornice ring
   for (const [x, z] of [[-S + 0.25, -S + 0.25], [S - 0.25, -S + 0.25], [-S + 0.25, S - 0.25], [S - 0.25, S - 0.25], [-S + 0.25, 0], [S - 0.25, 0]] as const) {
     B.span(GT, x - 0.22, x + 0.22, F, C, z - 0.22, z + 0.22);
@@ -713,6 +975,12 @@ function buildSanctum(g: THREE.Group, B: Batch, M: Materials, T: TempleMats, P: 
   for (const s of [-1, 1]) {
     B.span(T.goldWall, s * (DOOR_W - 0.16), s * (DOOR_W - 0.08), F, F + 4.2, S + 0.05, S + 1.3);
     for (const y of [F + 0.8, F + 2.1, F + 3.4]) B.span(GT, s * (DOOR_W - 0.2), s * (DOOR_W - 0.15), y, y + 0.08, S + 0.1, S + 1.25);
+    // each leaf two columns of square panels, a seated deity in relief in each (placed with the Blender deities)
+    const fx = s * (DOOR_W - 0.16);
+    for (let r = 0; r < 5; r++) for (const zc of [S + 0.38, S + 0.97]) {
+      const yc = F + 0.45 + r * 0.76;
+      B.span(GT, fx - 0.035, fx + 0.035, yc - 0.3, yc + 0.3, zc - 0.25, zc + 0.25);
+    }
   }
 
   // brass deepstambhas flanking the linga, kept well clear of the pradakshina round the walls
@@ -894,7 +1162,7 @@ function buildJyotirlinga(g: THREE.Group, M: Materials, T: TempleMats, P: Physic
       [0.07, 3.4], [0.13, 3.47], [0.14, 3.55], [0, 3.55]], x, F, z, 12);
   }
   const ch = new THREE.LatheGeometry([[0, 0.62], [0.2, 0.58], [0.55, 0.42], [0.85, 0.18], [0.97, 0.02], [0.98, -0.06], [0.9, -0.04], [0.72, 0.12], [0.25, 0.4], [0, 0.44]]
-    .map(([r, y]) => new THREE.Vector2(r * CR, y * 1.15)), 48);
+    .map(([r, y]) => new THREE.Vector2(r * CR, y * 1.7)), 48);
   const cp = ch.attributes.position;
   for (let i = 0; i < cp.count; i++) {
     const x = cp.getX(i), z = cp.getZ(i);
@@ -903,8 +1171,8 @@ function buildJyotirlinga(g: THREE.Group, M: Materials, T: TempleMats, P: Physic
   }
   ch.computeVertexNormals();
   B.add(gold, ch.translate(0, cy, 0));
-  B.lathe(gold, [[0, 0], [0.16, 0], [0.2, 0.12], [0.1, 0.26], [0.14, 0.38], [0.05, 0.56], [0, 0.6]], 0, cy + 0.7, 0, 16);
-  B.add(gold, new THREE.CylinderGeometry(0.03, 0.03, C - cy - 1.2, 8).translate(0, cy + 1.2 + (C - cy - 1.2) / 2, 0));
+  B.lathe(gold, [[0, 0], [0.16, 0], [0.2, 0.12], [0.1, 0.26], [0.14, 0.38], [0.05, 0.56], [0, 0.6]], 0, cy + 1.04, 0, 16);
+  B.add(gold, new THREE.CylinderGeometry(0.03, 0.03, C - cy - 1.6, 8).translate(0, cy + 1.6 + (C - cy - 1.6) / 2, 0));
   for (let i = 0; i < 48; i++) {
     const a = (i / 48) * Math.PI * 2;
     B.add(gold, new THREE.CylinderGeometry(0.006, 0.006, 0.14, 4).translate(Math.cos(a) * CR, cy - 0.15, Math.sin(a) * CR));
@@ -914,7 +1182,7 @@ function buildJyotirlinga(g: THREE.Group, M: Materials, T: TempleMats, P: Physic
   // ---- flowers: one instanced mesh, every bloom its own colour
   const MARI = [0xffc400, 0xffcc10, 0xffb800, 0xffd020, 0xffbe00];
   const ORNG = [0xff8a00, 0xff9a10, 0xff7c00];
-  const WHITE = [0xfffaf0, 0xf6f1e6, 0xfdfbf4];
+  const WHITE = [0xfff1d8, 0xf8ead0, 0xfff4de]; // jasmine and white roses, warm (lamp-lit, never the sky's blue)
   const ROSE = [0xb0102a, 0xc0122a, 0x9e0c26, 0xb3122e];
   // a toran: a marigold rope with a mango leaf hanging from it every ~12 cm
   const toran = (pts: THREE.Vector3[], rad: number, yaw: number, cols: number[] = MARI) => {
@@ -1019,23 +1287,27 @@ function buildJyotirlinga(g: THREE.Group, M: Materials, T: TempleMats, P: Physic
     flames.points.push(new THREE.Vector3(Math.cos(a) * 1.36, F + 0.42, Math.sin(a) * 1.36));
   }
 
-  // ---- Maa Parvati right behind the linga: a gold throne under a gold arch with a gold back panel
-  const PZ = -1.6, PB = F + 2.0;
-  B.span(T.goldWall, -0.6, 0.6, F, PB, PZ - 0.42, PZ + 0.35);
-  B.span(T.goldTrim, -0.66, 0.66, PB - 0.07, PB, PZ - 0.46, PZ + 0.4);
-  B.span(T.goldWall, -0.66, 0.66, PB, PB + 1.05, PZ - 0.5, PZ - 0.44);
+  // ---- Maa Parvati right behind the linga, in her own small gold shrine (as at darshan, o67): a gold plinth,
+  // two gold pillars, a round arch over her crown edged with a row of grey-silver bosses that runs on down the
+  // pillars, and a gold back panel; her face and crown rise just above the linga's dressing seen from the door
+  const PZ = -1.6, PB = F + 1.35, PH = 1.62, AW = 0.66;
+  B.span(T.goldWall, -0.62, 0.62, F, PB, PZ - 0.42, PZ + 0.3);
+  B.span(T.goldTrim, -0.68, 0.68, PB - 0.07, PB, PZ - 0.46, PZ + 0.36);
+  B.span(T.goldWall, -0.82, 0.82, F, PB + PH + 0.62, PZ - 0.52, PZ - 0.44);
   for (const sg of [-1, 1]) {
-    B.lathe(T.goldTrim, [[0, 0], [0.07, 0], [0.07, 0.08], [0.045, 0.16], [0.045, 0.98], [0.075, 1.02], [0.08, 1.06], [0, 1.06]], sg * 0.64, PB, PZ - 0.4, 12);
+    B.lathe(T.goldTrim, [[0, 0], [0.08, 0], [0.08, 0.08], [0.05, 0.16], [0.05, PH - 0.12], [0.08, PH - 0.06], [0.09, PH], [0, PH]], sg * AW, PB, PZ - 0.32, 12);
   }
-  B.add(T.goldTrim, new THREE.TorusGeometry(0.64, 0.045, 8, 32, Math.PI).scale(1, 0.6, 1).translate(0, PB + 1.05, PZ - 0.4));
-  for (let k = 1; k < 8; k++) {
-    const a = (k / 8) * Math.PI;
-    B.add(T.goldTrim, new THREE.SphereGeometry(0.04, 8, 6).translate(Math.cos(a) * 0.58, PB + 1.05 + Math.sin(a) * 0.58 * 0.6, PZ - 0.38));
+  B.add(T.goldTrim, new THREE.TorusGeometry(AW, 0.05, 8, 40, Math.PI).scale(1, 0.75, 1).translate(0, PB + PH, PZ - 0.32));
+  const boss = new THREE.MeshStandardMaterial({ color: 0x8c8c90, metalness: 0.8, roughness: 0.4, envMap: T.goldEnv, envMapIntensity: 0.5 });
+  for (let k = 0; k <= 16; k++) {
+    const a = (k / 16) * Math.PI;
+    B.add(boss, new THREE.SphereGeometry(0.032, 8, 6).translate(Math.cos(a) * (AW + 0.1), PB + PH + Math.sin(a) * (AW + 0.1) * 0.75, PZ - 0.3));
   }
-  P.solid(-0.7, F, PZ - 0.5, 0.7, F + 3.4, PZ + 0.4);
+  for (const sg of [-1, 1]) for (let k = 0; k < 9; k++) {
+    B.add(boss, new THREE.SphereGeometry(0.032, 8, 6).translate(sg * (AW + 0.1), PB + 0.08 + (k / 9) * PH, PZ - 0.3));
+  }
+  P.solid(-0.85, F, PZ - 0.52, 0.85, PB + PH + 0.62, PZ + 0.36);
   parvati(dress, B, M, T, 0, PB, PZ);
-  // marigold garlands framing her arch
-  for (const sg of [-1, 1]) strand([new THREE.Vector3(sg * 0.66, PB + 1.35, PZ - 0.3), new THREE.Vector3(sg * 0.72, PB + 0.6, PZ - 0.25), new THREE.Vector3(sg * 0.66, PB - 0.05, PZ - 0.2)], 0.035, MARI);
 
   fl.flush(dress, T.env);
   B.flush(dress);
@@ -1111,18 +1383,21 @@ function shringarTexture() {
 }
 
 /**
- * Maa Parvati in the sanctum's back niche, seen above the linga at darshan: a white marble figure ~1.1 m tall
- * standing on a gold lotus before a gold prabhavali, in a red-orange vastra with the chunri over the back of
- * her head, a gold mukut, a necklace and a marigold garland; one hand raised in blessing, one holding a lotus.
- * The face is left smooth (no features are modelled).
+ * Maa Parvati in her shrine behind the linga, seen above it at darshan (o67): a white marble figure ~1.3 m tall
+ * on a gold lotus, in a red vastra under a teal-blue chunri that covers her head and falls wide round her,
+ * a tall gold mukut, a necklace and a marigold garland; one hand raised in blessing, one holding a lotus.
+ * The face is painted as on the murti: dark eyes and brows, a red bindi and lips.
  */
 function parvati(g: THREE.Object3D, B0: Batch, M: Materials, T: TempleMats, x: number, y: number, z: number) {
-  // modelled at 1.1 m to the brow and set up at 1.35x, so she reads clearly above the linga as in the photographs
-  const K = 1.35;
+  // modelled at 1.1 m to the brow and set up at 1.4x, so she reads clearly over the linga from the door
+  const K = 1.4;
   const B = { add: (m: THREE.Material, geo: THREE.BufferGeometry) => B0.add(m, geo.translate(-x, -y, -z).scale(K, K, K).translate(x, y, z)) };
-  const marble = new THREE.MeshStandardMaterial({ color: 0xfff4e4, roughness: 0.3, emissive: 0xffeedc, emissiveIntensity: 0.85, envMap: T.goldEnv, envMapIntensity: 0.3 });
-  const vastra = new THREE.MeshStandardMaterial({ color: 0xe8461a, roughness: 0.7, emissive: 0x2a0802, envMap: T.goldEnv, envMapIntensity: 0.4 });
-  const chunri = vastra;
+  const marble = new THREE.MeshStandardMaterial({ color: 0xfff4e4, roughness: 0.3, emissive: 0xffeedc, emissiveIntensity: 0.6, envMap: T.goldEnv, envMapIntensity: 0.3 });
+  const vastra = new THREE.MeshStandardMaterial({ color: 0xc8283a, roughness: 0.7, emissive: 0x200406, envMap: T.goldEnv, envMapIntensity: 0.4 });
+  // the chunri: a deep teal-blue cloth over her head and falling wide round her shoulders, open at the front
+  const chunri = new THREE.MeshStandardMaterial({ color: 0x1f6a8e, roughness: 0.75, emissive: 0x041620, side: THREE.DoubleSide, envMap: T.goldEnv, envMapIntensity: 0.4 });
+  const ink = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5 });
+  const kum = new THREE.MeshStandardMaterial({ color: 0xc8101e, roughness: 0.5, emissive: 0x300004 });
   const GT = T.goldTrim;
   const L = (mat: THREE.Material, prof: [number, number][], seg = 24, sx = 1, sz = 1) => {
     const geo = new THREE.LatheGeometry(prof.map(([r, yy]) => new THREE.Vector2(r, yy)), seg).scale(sx, 1, sz).translate(x, y, z);
@@ -1136,30 +1411,38 @@ function parvati(g: THREE.Object3D, B0: Batch, M: Materials, T: TempleMats, x: n
     const a = (k / 12) * Math.PI * 2;
     B.add(GT, new THREE.SphereGeometry(0.075, 8, 5).scale(1, 0.45, 0.55).rotateY(-a).translate(x + Math.cos(a) * 0.25, y + 0.07, z + Math.sin(a) * 0.25));
   }
-  // prabhavali: a gold aureole arching behind her, with a beaded rim
-  const ring = new THREE.TorusGeometry(0.46, 0.035, 8, 40, Math.PI * 1.25).rotateZ(-Math.PI * 0.125).translate(x, y + 0.7, z - 0.2);
-  B.add(GT, ring);
-  for (let k = 0; k <= 14; k++) {
-    const a = -Math.PI * 0.125 + (k / 14) * Math.PI * 1.25;
-    B.add(GT, new THREE.SphereGeometry(0.03, 8, 6).translate(x + Math.cos(a) * 0.52, y + 0.7 + Math.sin(a) * 0.52, z - 0.2));
-  }
   // vastra: the pleated skirt to the feet, a gold border at the hem, the bodice
   L(vastra, [[0, 0.1], [0.2, 0.1], [0.19, 0.2], [0.165, 0.45], [0.14, 0.62], [0, 0.62]], 28, 1.05, 0.85);
   L(GT, [[0.205, 0.1], [0.205, 0.145], [0.198, 0.145]], 28, 1.05, 0.85);
   L(vastra, [[0, 0.6], [0.135, 0.6], [0.125, 0.7], [0.135, 0.78], [0.15, 0.84], [0.1, 0.875], [0.04, 0.89], [0, 0.89]], 24, 1.12, 0.75);
   // pallu across the breast to the left shoulder
   B.add(vastra, new THREE.CapsuleGeometry(0.045, 0.3, 2, 10).scale(1, 1, 0.5).rotateZ(-0.55).translate(x - 0.02, y + 0.72, z + 0.09));
-  // neck and smooth head
+  // neck and head, the face painted as on the murti: large dark almond eyes, arched brows, a red bindi, red lips
   L(marble, [[0.035, 0.86], [0.033, 0.9], [0, 0.91]], 16);
   blob(marble, 0.066, 0.082, 0.07, 0, 0.965, 0.0);
-  // chunri over the back of the head and falling behind the shoulders
-  B.add(chunri, new THREE.SphereGeometry(0.098, 18, 12, Math.PI, Math.PI, 0, Math.PI * 0.7).scale(1, 1.15, 1.05).translate(x, y + 0.975, z - 0.005));
-  B.add(chunri, new THREE.CylinderGeometry(0.11, 0.2, 0.42, 18, 1, true, Math.PI * 0.55, Math.PI * 0.9).translate(x, y + 0.72, z - 0.02));
-  // gold mukut: a tall crown with a fan of points
-  L(GT, [[0, 1.02], [0.066, 1.02], [0.07, 1.05], [0.055, 1.1], [0.06, 1.13], [0.035, 1.18], [0.012, 1.24], [0, 1.25]], 18);
-  for (let k = -2; k <= 2; k++) {
-    B.add(GT, new THREE.ConeGeometry(0.018, 0.08, 6).rotateZ(-k * 0.35).translate(x + Math.sin(k * 0.35) * 0.06, y + 1.1 + Math.cos(k * 0.35) * 0.03, z + 0.05));
+  blob(marble, 0.012, 0.022, 0.014, 0, 0.958, 0.064);                            // the nose
+  for (const sg of [-1, 1]) {
+    blob(marble, 0.018, 0.009, 0.006, sg * 0.026, 0.982, 0.06, sg * 0.12);        // the white of the eye
+    blob(ink, 0.008, 0.008, 0.004, sg * 0.026, 0.982, 0.065);                      // the pupil
+    blob(ink, 0.02, 0.0035, 0.004, sg * 0.027, 0.998, 0.061, -sg * 0.18);         // the brow
   }
+  blob(kum, 0.006, 0.008, 0.004, 0, 1.006, 0.066);                                 // the bindi
+  blob(kum, 0.016, 0.006, 0.006, 0, 0.928, 0.062);                                 // the lips
+  // gold mukut: a tall crown rising to a point, its front fanned with points
+  L(GT, [[0, 1.02], [0.07, 1.02], [0.074, 1.05], [0.06, 1.1], [0.064, 1.14], [0.04, 1.2], [0.015, 1.28], [0.02, 1.3], [0, 1.33]], 18);
+  for (let k = -2; k <= 2; k++) {
+    B.add(GT, new THREE.ConeGeometry(0.02, 0.1, 6).rotateZ(-k * 0.35).translate(x + Math.sin(k * 0.35) * 0.06, y + 1.1 + Math.cos(k * 0.35) * 0.035, z + 0.055));
+  }
+  // the chunri over the crown's back and down both sides, wide over the shoulders and arms; gold-bordered
+  const open = 0.62; // half-width (rad) of the opening at the front
+  B.add(chunri, new THREE.SphereGeometry(0.1, 20, 12, Math.PI / 2 + open, Math.PI * 2 - 2 * open, 0, Math.PI * 0.62).scale(1.05, 1.25, 1.05).translate(x, y + 0.985, z - 0.01));
+  B.add(chunri, new THREE.CylinderGeometry(0.1, 0.3, 0.72, 24, 1, true, open, Math.PI * 2 - 2 * open).translate(x, y + 0.56, z - 0.01));
+  for (const sg of [-1, 1]) {
+    const s = Math.sin(sg * open), c = Math.cos(open);
+    const edge = new THREE.LineCurve3(new THREE.Vector3(s * 0.102, 0.93, c * 0.102), new THREE.Vector3(s * 0.302, 0.2, c * 0.302));
+    B.add(GT, new THREE.TubeGeometry(edge, 1, 0.009, 6).translate(x, y, z - 0.01));
+  }
+  B.add(GT, new THREE.LatheGeometry([[0.296, 0.2], [0.306, 0.2], [0.306, 0.24], [0.296, 0.24]].map(([r, yy]) => new THREE.Vector2(r, yy)), 28, open, Math.PI * 2 - 2 * open).translate(x, y, z - 0.01));
   // necklace
   B.add(GT, new THREE.TorusGeometry(0.075, 0.012, 6, 20, Math.PI).rotateX(Math.PI * 0.6).rotateZ(Math.PI).translate(x, y + 0.84, z + 0.06));
   // arms: right forearm raised, palm out in blessing; left holding a pink lotus at the waist

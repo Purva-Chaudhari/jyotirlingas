@@ -56,6 +56,9 @@ export interface CrowdOpts {
   /** polylines (x,z) the player walks: no figure within clearRadius of them */
   clearPaths?: [number, number][][];
   clearRadius?: number;
+  /** polylines walked close beside people who must stay (a queue alongside): kept clear only within nearRadius */
+  nearPaths?: [number, number][][];
+  nearRadius?: number;
   seed?: number;
   /** distance beyond which figures use the ≈300-tri kit (default 25 m) */
   lodDistance?: number;
@@ -1069,8 +1072,9 @@ export function buildCrowd(root: THREE.Object3D, spots: CrowdSpot[], opts: Crowd
   const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
   const clearR = opts.clearRadius ?? 4;
   const paths = opts.clearPaths ?? [];
-  const keep = spots.filter((p) => !paths.some((pl) => pl.some((a, i) => i > 0 && segDist(p.x, p.z, pl[i - 1][0], pl[i - 1][1], a[0], a[1]) < clearR)
-    || (pl.length === 1 && Math.hypot(p.x - pl[0][0], p.z - pl[0][1]) < clearR)));
+  const near = (p: CrowdSpot, list: [number, number][][], r: number) => list.some((pl) => pl.some((a, i) => i > 0 && segDist(p.x, p.z, pl[i - 1][0], pl[i - 1][1], a[0], a[1]) < r)
+    || (pl.length === 1 && Math.hypot(p.x - pl[0][0], p.z - pl[0][1]) < r));
+  const keep = spots.filter((p) => !near(p, paths, clearR) && !near(p, opts.nearPaths ?? [], opts.nearRadius ?? 1.2));
   // phones show an evenly spread share of the crowd (engine/profile.ts); the others are hidden instances, so
   // instance ids still match the spots (sites animate figures by spot index)
   const prof = quality();

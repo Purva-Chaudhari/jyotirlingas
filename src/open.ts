@@ -3,7 +3,7 @@
  * others are "coming soon" on the landing page and their addresses lead back there. Dev tools can still open
  * any temple with ?temple=<id>&preview=1.
  */
-export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath']);
+export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath', 'somnath']);
 
 /** every temple's address (/<id>): the open ones enter, the rest lead back to the landing page */
 export const ALL_TEMPLES: readonly string[] = [
@@ -32,6 +32,11 @@ export const TEMPLE_FILES: Readonly<Record<string, readonly string[]>> = {
     ...scan('large_grey_tiles', 'aerial_rocks_02'),
     'assets/tex/rocky_terrain_02_diff.webp', 'assets/tex/gray_rocks_diff.webp', 'assets/tex/aerial_rocks_02_diff.webp',
     'assets/tex/snow_02_diff.webp',
+  ],
+  somnath: [
+    'assets/hdri/syferfontein_18d_clear_puresky.hdr',
+    'assets/models/digvijay_dwar.glb', 'assets/models/somnath_torana.glb', 'assets/models/somnath_deity.glb', 'assets/models/sardar_patel.glb',
+    ...scan('sandstone_blocks_08', 'rectangular_paving'),
   ],
 };
 
@@ -65,6 +70,21 @@ export const TEMPLE_INTRO: Readonly<Record<string, { hi: string; en: string; pla
       'In the June 2013 flood a huge boulder, now worshipped as Bhim Shila, came to rest behind the temple, and the torrent passed it by.',
       'Behind the temple, Adi Shankaracharya’s 12-foot statue sits in a sunken court; it was unveiled in November 2021.',
       'Kedarnath is one of the Char Dham of Uttarakhand, and one of the Panch Kedar.',
+    ],
+  },
+  somnath: {
+    hi: 'श्री सोमनाथ',
+    en: 'Somnath Jyotirlinga',
+    place: 'Prabhas Patan, Gujarat · on the shore of the Arabian Sea',
+    facts: [
+      'Somnath is honoured as the first of the twelve Jyotirlingas.',
+      'Soma, the Moon, was freed from Daksha’s curse by worshipping Shiva here: so the Lord is Somnath, Lord of the Moon.',
+      'In January 1026 Mahmud of Ghazni raided the temple; over the centuries it was destroyed and raised again many times.',
+      'In 1782–83 Ahilyabai Holkar built a temple close by, so that worship here could go on.',
+      'On Diwali, 12 November 1947, Sardar Patel stood among the ruins and resolved that Somnath would rise again.',
+      'The new temple was consecrated on 11 May 1951, in the presence of President Rajendra Prasad.',
+      'Its 150-foot shikhara carries a 10-tonne kalash and a 27-foot flagpole.',
+      'The Baan Stambh on the sea wall says that from this shore to the South Pole, no land breaks the path over the sea.',
     ],
   },
 };
