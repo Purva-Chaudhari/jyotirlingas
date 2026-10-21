@@ -35,7 +35,7 @@ function loadScan(id: string, size: number, aniso: number) {
 
 function scan(
   pending: Promise<unknown>[], aniso: number, id: string, size: number, tint: number,
-  opts: { normalScale?: number; rough?: number; grime?: number } = {},
+  opts: { normalScale?: number; rough?: number; grime?: number; match?: number } = {},
 ) {
   const m = new THREE.MeshStandardMaterial({ color: tint, roughness: 0.85 });
   pending.push(loadScan(id, size, aniso).then(([map, nor, arm]) => {
@@ -48,6 +48,7 @@ function scan(
     m.roughness = opts.rough ?? 1;
     m.metalness = 0;
     m.color.set(tint);
+    if (opts.match !== undefined) matchAlbedo(m, map, opts.match);
     m.needsUpdate = true;
   }));
   if (opts.grime) addGrime(m, opts.grime);
@@ -57,7 +58,7 @@ function scan(
 /** A scan's diffuse with a carved relief (normal + AO) on top, tiled at `reliefSize` metres. */
 function carvedScan(
   pending: Promise<unknown>[], aniso: number, id: string, size: number, tint: number, relief: Relief,
-  reliefSize: [number, number], o: { normalScale?: number; grime?: number; rough?: number; ao?: number } = {},
+  reliefSize: [number, number], o: { normalScale?: number; grime?: number; rough?: number; ao?: number; match?: number } = {},
 ) {
   const normal = relief.normal.clone(), ao = relief.ao.clone();
   for (const t of [normal, ao]) { t.repeat.set(1 / reliefSize[0], 1 / reliefSize[1]); t.needsUpdate = true; }
@@ -65,9 +66,38 @@ function carvedScan(
     color: tint, roughness: o.rough ?? 0.88, normalMap: normal, aoMap: ao, aoMapIntensity: o.ao ?? 1,
     normalScale: new THREE.Vector2(o.normalScale ?? 1, o.normalScale ?? 1),
   });
-  pending.push(loadScan(id, size, aniso).then(([map]) => { m.map = map; m.needsUpdate = true; }));
+  pending.push(loadScan(id, size, aniso).then(([map]) => {
+    m.map = map;
+    if (o.match !== undefined) matchAlbedo(m, map, o.match);
+    m.needsUpdate = true;
+  }));
   if (o.grime) addGrime(m, o.grime);
   return m;
+}
+
+const meanCache = new WeakMap<object, THREE.Color>();
+/**
+ * Tint a material so its scan averages `target` (sRGB hex), keeping the scan's own grain and contrast:
+ * the scans are photographed darker and browner than the Dham's pale pink Chunar and white marble.
+ */
+function matchAlbedo(m: THREE.MeshStandardMaterial, map: THREE.Texture, target: number) {
+  const img = map.image as CanvasImageSource & { width: number; height: number };
+  let mean = meanCache.get(img);
+  if (!mean) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 32;
+    const g = c.getContext('2d', { willReadFrequently: true })!;
+    g.drawImage(img, 0, 0, 32, 32);
+    const d = g.getImageData(0, 0, 32, 32).data;
+    const lin = (v: number) => { const c = v / 255; return c < 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+    let r = 0, gg = 0, b = 0;
+    for (let i = 0; i < d.length; i += 4) { r += lin(d[i]); gg += lin(d[i + 1]); b += lin(d[i + 2]); }
+    const n = d.length / 4;
+    mean = new THREE.Color(r / n, gg / n, b / n); // linear
+    meanCache.set(img, mean);
+  }
+  const want = new THREE.Color(target); // linear (ColorManagement converts the sRGB hex)
+  m.color.setRGB(want.r / mean.r, want.g / mean.g, want.b / mean.b, THREE.LinearSRGBColorSpace);
 }
 
 /** Darken stone near the ground (splash, hands) and add soft vertical weather streaks. */
@@ -176,7 +206,7 @@ function lampRoomEnv(renderer: THREE.WebGLRenderer) {
 
 export function kashiMaterials(M: Materials, renderer: THREE.WebGLRenderer, pending: Promise<unknown>[], interiorEnv: THREE.Texture) {
   const aniso = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-  const S = (id: string, size: number, tint: number, o?: { normalScale?: number; rough?: number; grime?: number }) =>
+  const S = (id: string, size: number, tint: number, o?: { normalScale?: number; rough?: number; grime?: number; match?: number }) =>
     scan(pending, aniso, id, size, tint, o);
   const J = jaala(), WB = wallBands(), SG = sanctumGold(), SB = silverBand();
   const tiled = (t: THREE.Texture, u: number, v: number, offV = 0) => {
@@ -238,10 +268,10 @@ export function kashiMaterials(M: Materials, renderer: THREE.WebGLRenderer, pend
   const silverBright = new THREE.MeshStandardMaterial({
     color: 0xe2e2e6, metalness: 0.9, roughness: 0.2, envMap: nEnv, envMapIntensity: 1.3, emissive: 0x8a8a90, emissiveIntensity: 0.3,
   });
-  // milk and water flooding the basin floor: glossy, milky white
+  // milk and water filling the basin: glossy, creamy, nearly opaque
   const milkFilm = new THREE.MeshPhysicalMaterial({
-    color: 0xf4f0e6, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.85, envMap: nEnv, envMapIntensity: 1.0,
-    clearcoat: 1, clearcoatRoughness: 0.03, depthWrite: false, emissive: 0xf4f0e6, emissiveIntensity: 0.3,
+    color: 0xece4c4, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.94, envMap: nEnv, envMapIntensity: 1.0,
+    clearcoat: 1, clearcoatRoughness: 0.03, depthWrite: false, emissive: 0xe8dfbc, emissiveIntensity: 0.28,
   });
   // white marble ring of the pitha, wet with milk
   const whiteMarble = new THREE.MeshPhysicalMaterial({
@@ -262,11 +292,13 @@ export function kashiMaterials(M: Materials, renderer: THREE.WebGLRenderer, pend
     emissive: 0x8a8a90, emissiveIntensity: 0.3,
   });
 
+  // the Dham's pale pink Chunar sandstone and its dressed walls, as they read in daylight in photographs
+  const CHUNAR = 0xcf9f86, ASHLAR = 0xc8957c;
   return {
     /** carved pinkish-cream Chunar sandstone of the Dham (jointless) */
-    chunar: S('beige_wall_002', 2.4, 0xffe2d6, { normalScale: 0.7, grime: 0.12 }),
+    chunar: S('beige_wall_002', 2.4, 0xffe2d6, { normalScale: 0.7, grime: 0.12, match: CHUNAR }),
     /** dressed Chunar ashlar for big walls: pink-buff, as the Dham's retaining walls */
-    ashlar: S('stone_tile_wall', 3.2, 0xffd2b8, { normalScale: 0.6, grime: 0.12 }),
+    ashlar: S('stone_tile_wall', 3.2, 0xffd2b8, { normalScale: 0.6, grime: 0.12, match: ASHLAR }),
     /** older cream-buff stone of the 1780 temple's lower storey */
     temple: carvedScan(pending, aniso, 'marble_01', 1.6, 0xf7e9d3, WB, [1.6, 1.6], { normalScale: 1.0, grime: 0.08, ao: 0.6 }),
     /** plain dressed stone of the same temple (beams, slabs) */
@@ -276,18 +308,18 @@ export function kashiMaterials(M: Materials, renderer: THREE.WebGLRenderer, pend
     /** the same buff stone, uncarved (bases, plinths) */
     shrineStone: S('beige_wall_002', 2.4, 0xd8c3ad, { normalScale: 1.0, grime: 0.28 }),
     /** Chunar walls with carved bands (lotus petals, rosettes) for the Dham gateways */
-    chunarWall: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xffe2d6, WB, [1.6, 1.6], { normalScale: 0.9, grime: 0.12 }),
+    chunarWall: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xffe2d6, WB, [1.6, 1.6], { normalScale: 0.9, grime: 0.12, match: CHUNAR }),
     /** pierced stone jali screen (alpha-tested lattice) */
     jali: jaliMaterial(),
     /** carved Chunar for the Dham's spires */
-    chunarCarved: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xffe2d6, J, [1.1, 1.1], { normalScale: 1.2, grime: 0.12 }),
+    chunarCarved: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xffe2d6, J, [1.1, 1.1], { normalScale: 1.2, grime: 0.12, match: CHUNAR }),
     /** fine-grained dressed stone for turned pillars (no directional grain) */
     templeCol: S('marble_01', 1.6, 0xefe0cc, { normalScale: 0.5, rough: 0.85, grime: 0.15 }),
-    chunarCol: S('marble_01', 1.6, 0xf7d9c8, { normalScale: 0.5, rough: 0.85, grime: 0.1 }),
+    chunarCol: S('marble_01', 1.6, 0xf7d9c8, { normalScale: 0.5, rough: 0.85, grime: 0.1, match: CHUNAR }),
     /** white marble paving of the Mandir Parisar */
-    marble: S('marble_01', 2.4, 0xfffdf9, { normalScale: 0.3, rough: 0.5 }),
+    marble: S('marble_01', 2.4, 0xfffdf9, { normalScale: 0.3, rough: 0.5, match: 0xeeebe6 }),
     /** chowk paving (Kota / granite slabs) */
-    kota: S('large_floor_tiles_02', 3.2, 0xffd2b4, { normalScale: 0.5, rough: 0.9 }),
+    kota: S('large_floor_tiles_02', 3.2, 0xffd2b4, { normalScale: 0.5, rough: 0.9, match: 0xc4b5a6 }),
     /** ghat steps: weathered sandstone */
     ghat: S('large_sandstone_blocks_01', 2.6, 0xd2c2ae, { normalScale: 1.1, grime: 0.25 }),
     /** sunlit step treads, worn smooth */

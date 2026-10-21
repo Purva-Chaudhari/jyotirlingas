@@ -52,6 +52,10 @@ Garamond, Mukta, Martel, Inter and Tiro Devanagari Hindi.
   source and rights are not yet verified. To be replaced, or credited, once they are. (A Government of India
   photograph of the same statue, GODL-India, President's Secretariat / PIB, 1 Dec 2015, was tried first but is
   taken from too low an angle to reconstruct from.)
+- **The Ahilyabai Holkar statue at Kashi Vishwanath** (`public/assets/models/ahilyabai.glb`, not kept in the
+  repository): a 3D reconstruction (TripoSR, then smoothed) made from a frame (0:56) of Curly Tales' film
+  "Newly Built Kashi Vishwanath Dham & Corridor In Varanasi" (https://www.youtube.com/watch?v=NkwxaZpuNQM),
+  used with the site owner's approval; rights not yet verified. To be replaced, or credited, once they are.
 - **Somnath's Digvijay Dwar, cloud toranas and niche deities** (`public/assets/models/digvijay_dwar.glb`,
   `somnath_torana.glb`, `somnath_deity.glb`): modelled for this site in Blender by script, from photographs and
   travel films of the temple.
@@ -64,6 +68,8 @@ Garamond, Mukta, Martel, Inter and Tiro Devanagari Hindi.
   3D temple.
 - **Somnath's picture** on its landing card (`public/landing/somnath.webp`): captured from this site's own
   3D temple.
+- **Kashi Vishwanath's picture** on its landing card (`public/landing/kashi-vishwanath.webp`): captured from this
+  site's own 3D temple.
 
 ## Audio
 
@@ -104,10 +110,26 @@ used at the site owner's choice. It plays at Somnath's darshan spot in place of 
 while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
 `src/temples/stories/somnath.json`). Unchanged copy of the audio (MP3, 7:26).
 
+#### Kashi Vishwanath — `public/audio/aarti/kashi-shayan-aarti.mp3`
+
+"[जय हरि हरा ॐ जय हरि हरा | Kashi Vishwanath Shayan Aarti | हर हर महादेव 🔱](https://www.youtube.com/watch?v=HAqXzA5x9So)"
+by **Tathastuindia** ([youtube.com/channel/UCJPPCX6-xv8DhaqJiMwFZEQ](https://www.youtube.com/channel/UCJPPCX6-xv8DhaqJiMwFZEQ)) on
+YouTube. Not openly licensed; used at the site owner's choice. It plays at Kashi Vishwanath's darshan spot in place of
+the embedded YouTube aarti, and while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
+`src/temples/stories/kashi-vishwanath.json`). Unchanged copy of the audio (MP3, 6:43).
+
+#### Kashi Vishwanath, on the ghat — `public/audio/aarti/kashi-ganga-aarti.mp3`
+
+"[Shree Shiva Tandav Stotra, Shree Ganga Aarti Varanasi, Daily Ganga Aarati Banaras, Har Har Mahadev🙏](https://www.youtube.com/watch?v=Sx0FSVPQ3bE)"
+by **Shree Ganga Aarti** ([youtube.com/@shreegangaarti](https://www.youtube.com/@shreegangaarti)) on YouTube. Not openly
+licensed; used at the site owner's choice. It plays all over Kashi Vishwanath's ghat, the Ganga Dwar and the stair down to
+them (the Ganga Aarti), and while it plays the aarti panel credits it with a link to the video (`aarti.places` in
+`src/temples/stories/kashi-vishwanath.json`). Unchanged copy of the audio (MP3, 6:51).
+
 #### The other temples
 
 Where a temple trust publishes its aarti on its own YouTube channel (Mallikarjuna, Omkareshwar,
-Vaidyanath, Kashi Vishwanath), the darshan spot plays it through YouTube's official embedded player: never
+Vaidyanath), the darshan spot plays it through YouTube's official embedded player: never
 downloaded or rehosted, with the channel named on screen. The videos and channels are listed under
 `aarti.youtube` in each story file.
 

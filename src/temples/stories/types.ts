@@ -64,6 +64,18 @@ export interface Aarti {
   youtube?: AartiYouTube[];
   youtubeSources?: string[];
   notes?: string;
+  /** other aartis heard elsewhere in the temple (e.g. the Ganga Aarti on the ghat), each in its own zones */
+  places?: AartiPlace[];
+}
+
+/** a recorded aarti heard throughout some zones of the site (not at the darshan spot) */
+export interface AartiPlace {
+  id: string;
+  name: string | Bi;
+  /** the site zones (SiteDef.zoneAt) where it is heard */
+  zones: string[];
+  schedule?: unknown[];
+  audio: AartiAudio[];
 }
 
 /** src/temples/stories/<id>.json */

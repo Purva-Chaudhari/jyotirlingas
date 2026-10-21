@@ -41,6 +41,29 @@
       ]
     },
     {
+      "id": "kashi-ahilya",
+      "at": {
+        "feature": "ahilya"
+      },
+      "kind": "history",
+      "title": {
+        "en": "Punyashlok Ahilyabai",
+        "hi": "पुण्यश्लोक अहिल्याबाई"
+      },
+      "text": {
+        "en": "Stop for a moment before this bronze. The woman seated here, her sari drawn over her head, a garland in her hands, is Punyashlok Ahilyabai Holkar, the queen who gave Vishwanath his present temple in 1780. She was born in 1725 in Chondi, a village in Maharashtra, the daughter of the village headman. Married as a child into the Holkar house of Indore, she was widowed in 1754. Her father-in-law, Malhar Rao, would not let her die on her husband’s pyre; he taught her to govern instead. From 1767 until her death in 1795 she ruled Malwa from Maheshwar on the Narmada, and her reign is remembered for its order and prosperity, and for justice that was quick, practical and kind. ‘Punyashlok’ means one whose very name is holy to speak. Her gifts to Kashi did not end with the temple: Ahilya Ghat, on the river below, still bears her name. Fold your hands to her, and then go down to the Ganga, as so many of her pilgrims did.",
+        "hi": "इस कांस्य प्रतिमा के सामने एक पल रुकिए। सिर पर साड़ी का पल्लू, हाथों में माला लिए यहाँ बैठी हैं पुण्यश्लोक अहिल्याबाई होलकर, वह रानी जिन्होंने सन सत्रह सौ अस्सी में विश्वनाथ को उनका आज का मंदिर दिया। उनका जन्म सन सत्रह सौ पच्चीस में महाराष्ट्र के चोंडी गाँव में हुआ, गाँव के पाटिल की बेटी के रूप में। बचपन में ही इंदौर के होलकर घराने में उनका विवाह हुआ, और सन सत्रह सौ चौवन में वे विधवा हो गईं। उनके ससुर मल्हार राव ने उन्हें पति की चिता पर सती नहीं होने दिया; उन्होंने उन्हें राज चलाना सिखाया। सन सत्रह सौ सड़सठ से सन सत्रह सौ पचानवे में अपनी मृत्यु तक उन्होंने नर्मदा तट पर महेश्वर से मालवा पर राज किया, और उनका शासन सुव्यवस्था और समृद्धि के लिए, और शीघ्र, व्यावहारिक और करुणामय न्याय के लिए याद किया जाता है। ‘पुण्यश्लोक’ का अर्थ है वह, जिसका नाम लेना भी पुण्य है। काशी को उनकी देन मंदिर पर ही नहीं रुकी: नीचे नदी पर अहिल्या घाट आज भी उनका नाम लिए है। उन्हें हाथ जोड़िए, और फिर गंगा की ओर उतरिए, जैसे उनके अनगिनत तीर्थयात्री उतरे।"
+      },
+      "didYouKnow": {
+        "en": "The statue stands on the Dham’s terrace beyond the Mandir Chowk, on the way to the river.",
+        "hi": "यह प्रतिमा मंदिर चौक के आगे धाम की छत पर, गंगा की राह में है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ahilyabai_Holkar",
+        "https://shrikashivishwanath.org/general/rituals"
+      ]
+    },
+    {
       "id": "kashi-ganga",
       "at": { "zone": "ganga", "feature": "ganga" },
       "kind": "legend",
@@ -80,13 +103,35 @@
       ]
     },
     {
+      "id": "kashi-ganga-aarti",
+      "at": {
+        "feature": "ganga-aarti"
+      },
+      "kind": "ritual",
+      "title": {
+        "en": "The Lamps on the River",
+        "hi": "नदी पर दीप"
+      },
+      "text": {
+        "en": "Every evening, soon after sunset, the ghats of Varanasi turn to the river for the Ganga Aarti. Its most famous home is Dashashwamedh Ghat, a little way south along this bank. Legend says Brahma himself performed ten ashwamedha sacrifices there, the horse sacrifices that give the ghat its name. On platforms at the water’s edge, priests in saffron stand in a row facing Maa Ganga, just like those below you. Conches are blown, bells ring, and to the rhythm of the bhajans they raise great brass lamps of many flames, moving them up and down and round in slow, wide circles. It lasts about three quarters of an hour, a little earlier in winter and a little later in summer, and every night hundreds gather to watch, on the steps and in boats on the river. On Tuesdays and at festivals, special aartis are held. Sit with the pilgrims here, look out over the water, and listen: the aarti you hear is sung for her.",
+        "hi": "हर शाम, सूर्यास्त के कुछ ही देर बाद, वाराणसी के घाट गंगा आरती के लिए नदी की ओर मुड़ते हैं। इसका सबसे प्रसिद्ध स्थान दशाश्वमेध घाट है, इसी तट पर थोड़ा दक्षिण की ओर। कथा है कि वहाँ स्वयं ब्रह्मा ने दस अश्वमेध यज्ञ किए, और उन्हीं से घाट का नाम पड़ा। पानी के किनारे चौकियों पर केसरिया वस्त्रों में पुजारी गंगा मैया की ओर मुख किए एक पंक्ति में खड़े होते हैं, ठीक वैसे ही जैसे आपके नीचे खड़े हैं। शंख बजते हैं, घंटियाँ गूँजती हैं, और भजनों की लय पर वे अनेक लौ वाले पीतल के बड़े दीप उठाते हैं, उन्हें ऊपर-नीचे और धीमे, बड़े घेरों में घुमाते हैं। आरती लगभग पौन घंटा चलती है, सर्दियों में थोड़ी पहले और गर्मियों में थोड़ी बाद, और हर रात सैकड़ों लोग सीढ़ियों पर और नदी में नावों से इसे देखने जुटते हैं। मंगलवार को और पर्वों पर विशेष आरती होती है। यहाँ तीर्थयात्रियों के साथ बैठिए, पानी की ओर देखिए, और सुनिए: जो आरती आप सुन रहे हैं, वह उन्हीं के लिए गाई जाती है।"
+      },
+      "didYouKnow": {
+        "en": "The aarti begins around 7 PM in summer and 6 PM in winter.",
+        "hi": "आरती गर्मियों में लगभग शाम सात बजे और सर्दियों में छह बजे शुरू होती है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Dashashwamedh_Ghat"
+      ]
+    },
+    {
       "id": "kashi-gyanvapi",
       "at": { "zone": "gyanvapi", "feature": "gyanvapi" },
       "kind": "history",
       "title": { "en": "The Well of Wisdom", "hi": "ज्ञान का कुआँ" },
       "text": {
-        "en": "Here, north of the temple, is the Gyanvapi, the well of wisdom, behind its silver grilles. The Kashi Khanda tells that Shiva himself dug it with his trident to bathe the linga, and that its water is knowledge itself. The great stone Nandi beside it was a gift, it is recorded, from the royal house of Nepal in the nineteenth century, and notice which way he faces: not toward today’s temple, but north, toward where the older temple stood. The history of this place is told through many hands. The temple of Vishweshwara was destroyed and rebuilt more than once over the centuries. In 1585 Raja Todar Mal, a minister at the Mughal court, helped raise it again. In 1669, on the orders of the Mughal emperor Aurangzeb, that temple was demolished, and the Gyanvapi mosque was built on its site; it stands beyond this court today. Tradition says that when the temple fell, a priest leapt into this well with the linga to keep it safe. And the pilgrims never stopped coming. In 1828 Baiza Bai, widow of the Scindia ruler of Gwalior, built a pillared hall here, over the well, for them. Now turn to the temple itself. It was a queen from Indore who gave Vishwanath a home again.",
-        "hi": "यहाँ, मंदिर के उत्तर में, चाँदी की जालियों के पीछे ज्ञानवापी है, ज्ञान का कुआँ। काशी खंड बताता है कि स्वयं शिव ने लिंग के अभिषेक के लिए अपने त्रिशूल से इसे खोदा था, और इसका जल स्वयं ज्ञान है। इसके पास बैठे पत्थर के विशाल नंदी, अभिलेखों के अनुसार, उन्नीसवीं सदी में नेपाल के राजघराने की भेंट हैं, और देखिए उनका मुख किस ओर है: आज के मंदिर की ओर नहीं, बल्कि उत्तर की ओर, जहाँ पुराना मंदिर था। इस स्थान का इतिहास कई हाथों से लिखा गया है। विश्वेश्वर का मंदिर सदियों में एक से अधिक बार टूटा और फिर बना। सन पंद्रह सौ पचासी में मुग़ल दरबार के मंत्री राजा टोडरमल ने इसे फिर से खड़ा करने में सहायता की। सन सोलह सौ उनहत्तर में मुग़ल बादशाह औरंगज़ेब के आदेश पर वह मंदिर गिरा दिया गया, और उसके स्थान पर ज्ञानवापी मस्जिद बनाई गई; वह आज इस आँगन के पार खड़ी है। परंपरा कहती है कि जब मंदिर गिरा, तब एक पुजारी लिंग की रक्षा के लिए उसे लेकर इसी कुएँ में कूद गए। और तीर्थयात्रियों का आना कभी नहीं रुका। सन अठारह सौ अट्ठाईस में ग्वालियर के सिंधिया शासक की विधवा बैजा बाई ने उनके लिए यहाँ, कुएँ के ऊपर, स्तंभों वाला मंडप बनवाया। अब मंदिर की ओर मुड़िए। इंदौर की एक रानी ने ही विश्वनाथ को फिर से घर दिया था।"
+        "en": "Here, north of the temple, is the Gyanvapi, the well of wisdom, within its white marble enclosure of carved jali screens, its mouth covered over and heaped with flowers. The Kashi Khanda tells that Shiva himself dug it with his trident to bathe the linga, and that its water is knowledge itself. The great stone Nandi beside it was a gift, it is recorded, from the royal house of Nepal in the nineteenth century, and notice which way he faces: not toward today’s temple, but north, toward where the older temple stood. The history of this place is told through many hands. The temple of Vishweshwara was destroyed and rebuilt more than once over the centuries. In 1585 Raja Todar Mal, a minister at the Mughal court, helped raise it again. In 1669, on the orders of the Mughal emperor Aurangzeb, that temple was demolished, and the Gyanvapi mosque was built on its site; it stands beyond this court today. Tradition says that when the temple fell, a priest leapt into this well with the linga to keep it safe. And the pilgrims never stopped coming. In 1828 Baiza Bai, widow of the Scindia ruler of Gwalior, built a pillared hall here, over the well, for them. Now turn to the temple itself. It was a queen from Indore who gave Vishwanath a home again.",
+        "hi": "यहाँ, मंदिर के उत्तर में, सफ़ेद संगमरमर के नक़्क़ाशीदार जाली वाले घेरे के भीतर ज्ञानवापी है, ज्ञान का कुआँ; उसका मुख ढका हुआ है, और उस पर फूलों के ढेर हैं। काशी खंड बताता है कि स्वयं शिव ने लिंग के अभिषेक के लिए अपने त्रिशूल से इसे खोदा था, और इसका जल स्वयं ज्ञान है। इसके पास बैठे पत्थर के विशाल नंदी, अभिलेखों के अनुसार, उन्नीसवीं सदी में नेपाल के राजघराने की भेंट हैं, और देखिए उनका मुख किस ओर है: आज के मंदिर की ओर नहीं, बल्कि उत्तर की ओर, जहाँ पुराना मंदिर था। इस स्थान का इतिहास कई हाथों से लिखा गया है। विश्वेश्वर का मंदिर सदियों में एक से अधिक बार टूटा और फिर बना। सन पंद्रह सौ पचासी में मुग़ल दरबार के मंत्री राजा टोडरमल ने इसे फिर से खड़ा करने में सहायता की। सन सोलह सौ उनहत्तर में मुग़ल बादशाह औरंगज़ेब के आदेश पर वह मंदिर गिरा दिया गया, और उसके स्थान पर ज्ञानवापी मस्जिद बनाई गई; वह आज इस आँगन के पार खड़ी है। परंपरा कहती है कि जब मंदिर गिरा, तब एक पुजारी लिंग की रक्षा के लिए उसे लेकर इसी कुएँ में कूद गए। और तीर्थयात्रियों का आना कभी नहीं रुका। सन अठारह सौ अट्ठाईस में ग्वालियर के सिंधिया शासक की विधवा बैजा बाई ने उनके लिए यहाँ, कुएँ के ऊपर, स्तंभों वाला मंडप बनवाया। अब मंदिर की ओर मुड़िए। इंदौर की एक रानी ने ही विश्वनाथ को फिर से घर दिया था।"
       },
       "didYouKnow": {
         "en": "Baiza Bai’s colonnade had more than forty pillars; sources differ on the date of the Nepali Nandi, from the early 1800s to about 1860.",
@@ -99,13 +144,37 @@
       ]
     },
     {
+      "id": "kashi-bhairav",
+      "at": {
+        "feature": "bhairav"
+      },
+      "kind": "legend",
+      "title": {
+        "en": "The Kotwal of Kashi",
+        "hi": "काशी के कोतवाल"
+      },
+      "text": {
+        "en": "This fierce face of silver, with its wide eyes and great moustache, is Kala Bhairava, and in Kashi he holds a special office. The Puranas tell that Brahma once spoke a falsehood in his pride, and from Shiva’s anger Bhairava appeared and struck off Brahma’s fifth head. But to strike Brahma was one of the greatest of sins, and the skull clung to Bhairava’s hand. He wandered the worlds with it, and nothing could free him, until he set foot in Kashi, the city of liberation, where at last the skull fell from his hand. The place is remembered as Kapal Mochan, the release of the skull. So Bhairava stayed, as the Kotwal of Kashi, its guardian and the keeper of its order. People say no one may live in Kashi, or truly arrive here, without his leave, and many pilgrims go to his own great temple in the city, the Kaal Bhairav Mandir, to ask it. Devotees bring him mustard oil, black sesame and a black thread to tie on. And see who waits at his feet: his dog, his vahana.",
+        "hi": "चाँदी का यह उग्र मुख, बड़ी-बड़ी आँखों और घनी मूँछों वाला, काल भैरव का है, और काशी में उनका एक विशेष पद है। पुराण बताते हैं कि एक बार ब्रह्मा ने अहंकार में असत्य कहा, और शिव के क्रोध से भैरव प्रकट हुए और उन्होंने ब्रह्मा का पाँचवाँ सिर काट दिया। पर ब्रह्मा पर प्रहार सबसे बड़े पापों में से था, और वह कपाल भैरव के हाथ से चिपक गया। वे उसे लिए लोकों में भटकते रहे, और कुछ भी उन्हें मुक्त न कर सका, जब तक उन्होंने मुक्ति की नगरी काशी में पाँव नहीं रखा, जहाँ आख़िरकार कपाल उनके हाथ से गिर गया। वह स्थान कपाल मोचन के नाम से याद किया जाता है, कपाल से मुक्ति। तब भैरव यहीं रह गए, काशी के कोतवाल बनकर, उसके रक्षक और उसकी व्यवस्था के रखवाले। कहते हैं कि उनकी अनुमति के बिना न कोई काशी में रह सकता है, न सच में यहाँ पहुँच सकता है, और बहुत से तीर्थयात्री वह अनुमति माँगने नगर में उनके अपने बड़े मंदिर, काल भैरव मंदिर, जाते हैं। भक्त उन्हें सरसों का तेल, काले तिल और बाँधने के लिए काला धागा चढ़ाते हैं। और देखिए, उनके चरणों में कौन बैठा है: उनका श्वान, उनका वाहन।"
+      },
+      "didYouKnow": {
+        "en": "The great Kaal Bhairav Mandir stands in the city, near Vishweshwarganj; this is the small shrine within the temple complex.",
+        "hi": "काल भैरव का बड़ा मंदिर नगर में, विश्वेश्वरगंज के पास है; यह मंदिर परिसर के भीतर का छोटा मंदिर है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Bhairava",
+        "https://en.wikipedia.org/wiki/Kaal_Bhairav_Mandir,_Varanasi",
+        "https://en.wikipedia.org/wiki/Kashi_Vishwanath_Temple"
+      ]
+    },
+    {
       "id": "kashi-temple",
       "at": { "zone": "temple", "feature": "temple" },
       "kind": "history",
       "title": { "en": "A Queen’s Temple, a Maharaja’s Gold", "hi": "रानी का मंदिर, महाराजा का सोना" },
       "text": {
-        "en": "You have stepped up onto the temple’s plinth. Look up: three crowns rise from one body, a tall spire over the sanctum, a dome over the hall, and a third spire of plain stone. The temple you see was built in 1780 by Ahilyabai Holkar. Who was she? A queen of the Holkar house of Indore, who governed her kingdom from Maheshwar on the Narmada for nearly thirty years, and who spent her wealth on pilgrims: ghats, wells, rest houses and temples, all across India. A few years later she raised a temple for worship at Somnath too. Here she gave Vishwanath a home again, beside the old site, and the worship has gone on in it ever since. Half a century later came a second gift. Maharaja Ranjit Singh, the Sikh ruler of Punjab, gave gold, and in the 1830s the spire and the dome were covered with it; that is why many call this the Golden Temple of Kashi. Look closely: of the three crowns, only two are gold. The temple trust itself notes that the third is still bare stone. Before you is the sanctum’s doorway, framed in silver. Take a breath, and step inside with me.",
-        "hi": "आप मंदिर के चबूतरे पर चढ़ आए हैं। ऊपर देखिए: एक ही देह से तीन मुकुट उठते हैं, गर्भगृह के ऊपर ऊँचा शिखर, मंडप के ऊपर गुंबद, और सादे पत्थर का एक तीसरा शिखर। जो मंदिर आप देख रहे हैं, उसे सन सत्रह सौ अस्सी में अहिल्याबाई होलकर ने बनवाया। वे कौन थीं? इंदौर के होलकर घराने की रानी, जिन्होंने नर्मदा किनारे महेश्वर से लगभग तीस वर्ष राज्य चलाया, और अपना धन तीर्थयात्रियों पर लगाया: घाट, कुएँ, धर्मशालाएँ और मंदिर, पूरे भारत में। कुछ ही वर्ष बाद उन्होंने सोमनाथ में भी पूजा के लिए एक मंदिर बनवाया। यहाँ उन्होंने पुराने स्थान के पास विश्वनाथ को फिर से घर दिया, और तब से इसी में पूजा चली आ रही है। आधी सदी बाद दूसरा दान आया। पंजाब के सिख शासक महाराजा रणजीत सिंह ने सोना दिया, और अठारह सौ तीस के दशक में शिखर और गुंबद उससे मढ़े गए; इसीलिए बहुत लोग इसे काशी का स्वर्ण मंदिर कहते हैं। ध्यान से देखिए: तीन मुकुटों में से केवल दो सोने के हैं। मंदिर न्यास स्वयं बताता है कि तीसरा आज भी पत्थर का ही है। सामने गर्भगृह का द्वार है, चाँदी से मढ़ा हुआ। एक गहरी साँस लीजिए, और मेरे साथ भीतर चलिए।"
+        "en": "You have stepped up onto the temple’s plinth. Look up: three crowns rise from one body, a tall spire over the sanctum, a dome over the hall, and a third spire of plain stone. The temple you see was built in 1780 by Ahilyabai Holkar. Who was she? A queen of the Holkar house of Indore, who governed her kingdom from Maheshwar on the Narmada for nearly thirty years, and who spent her wealth on pilgrims: ghats, wells, rest houses and temples, all across India. A few years later she raised a temple for worship at Somnath too. Here she gave Vishwanath a home again, beside the old site, and the worship has gone on in it ever since. Half a century later came a second gift. Maharaja Ranjit Singh, the Sikh ruler of Punjab, gave gold, and in the 1830s the spire over the sanctum and the dome in the middle, between the two spires, were covered with it; that is why many call this the Golden Temple of Kashi. Look closely: of the three crowns, only two are gold. The temple trust itself notes that the third is still bare stone. Before you is the sanctum’s doorway, framed in silver. Take a breath, and step inside with me.",
+        "hi": "आप मंदिर के चबूतरे पर चढ़ आए हैं। ऊपर देखिए: एक ही देह से तीन मुकुट उठते हैं, गर्भगृह के ऊपर ऊँचा शिखर, मंडप के ऊपर गुंबद, और सादे पत्थर का एक तीसरा शिखर। जो मंदिर आप देख रहे हैं, उसे सन सत्रह सौ अस्सी में अहिल्याबाई होलकर ने बनवाया। वे कौन थीं? इंदौर के होलकर घराने की रानी, जिन्होंने नर्मदा किनारे महेश्वर से लगभग तीस वर्ष राज्य चलाया, और अपना धन तीर्थयात्रियों पर लगाया: घाट, कुएँ, धर्मशालाएँ और मंदिर, पूरे भारत में। कुछ ही वर्ष बाद उन्होंने सोमनाथ में भी पूजा के लिए एक मंदिर बनवाया। यहाँ उन्होंने पुराने स्थान के पास विश्वनाथ को फिर से घर दिया, और तब से इसी में पूजा चली आ रही है। आधी सदी बाद दूसरा दान आया। पंजाब के सिख शासक महाराजा रणजीत सिंह ने सोना दिया, और अठारह सौ तीस के दशक में गर्भगृह के ऊपर का शिखर और दोनों शिखरों के बीच का गुंबद उससे मढ़े गए; इसीलिए बहुत लोग इसे काशी का स्वर्ण मंदिर कहते हैं। ध्यान से देखिए: तीन मुकुटों में से केवल दो सोने के हैं। मंदिर न्यास स्वयं बताता है कि तीसरा आज भी पत्थर का ही है। सामने गर्भगृह का द्वार है, चाँदी से मढ़ा हुआ। एक गहरी साँस लीजिए, और मेरे साथ भीतर चलिए।"
       },
       "didYouKnow": {
         "en": "In 1785 a Naubatkhana, a drum house for temple music, was built in front of the temple, the trust records. Since 1983 the temple has been run by a trust under the Uttar Pradesh government.",
@@ -118,13 +187,37 @@
       ]
     },
     {
+      "id": "kashi-shayan",
+      "at": {
+        "feature": "mandapa"
+      },
+      "kind": "ritual",
+      "title": {
+        "en": "When Baba Goes to Rest",
+        "hi": "जब बाबा विश्राम करते हैं"
+      },
+      "text": {
+        "en": "Sit a while here in the Sabha Mandap, under the golden dome, close to the sanctum. Five times a day aarti is offered to Baba Vishwanath, and the temple trust keeps the hours: the Mangala Aarti before dawn, between three and four; the midday Bhog Aarti; the Saptarishi Aarti in the evening, from seven; the Shringar and Bhog Aarti at nine. And last of all, at half past ten at night, the Shayan Aarti. Shayan means sleep. This is the aarti that puts the Lord to rest, offered with the care one would give a beloved elder at the end of the day: a bed of flowers is made ready, sandalwood paste is offered, and the lamps are waved one last time as the hymns grow soft. At eleven the doors close. For a few short hours the city that never sleeps lets its Lord sleep, until the bells of the Mangala Aarti wake him again before dawn. Devotees call it the gentlest darshan of the day, and say it brings peace of mind and a restful night to those who stand before him then. The aarti you hear in the sanctum is sung for this hour: Jai Hari Hara. Har Har Mahadev.",
+        "hi": "यहाँ सभा मंडप में, सुनहरे गुंबद के नीचे, गर्भगृह के पास कुछ देर बैठिए। बाबा विश्वनाथ की दिन में पाँच बार आरती होती है, और मंदिर न्यास उसका समय रखता है: भोर से पहले, तीन से चार बजे के बीच मंगला आरती; दोपहर की भोग आरती; शाम सात बजे से सप्तर्षि आरती; रात नौ बजे शृंगार और भोग आरती। और सबसे अंत में, रात साढ़े दस बजे, शयन आरती। शयन का अर्थ है नींद। यह वह आरती है जिसमें प्रभु को विश्राम कराया जाता है, उसी स्नेह से जैसे दिन के अंत में किसी प्रिय बुज़ुर्ग की सेवा की जाती है: फूलों की शय्या सजाई जाती है, चंदन अर्पित होता है, और भजन धीमे होते जाते हैं जब अंतिम बार दीप घुमाए जाते हैं। ग्यारह बजे द्वार बंद हो जाते हैं। कुछ घंटों के लिए, कभी न सोने वाली यह नगरी अपने प्रभु को सोने देती है, जब तक भोर से पहले मंगला आरती की घंटियाँ उन्हें फिर नहीं जगातीं। भक्त इसे दिन का सबसे कोमल दर्शन कहते हैं, और मानते हैं कि उस घड़ी उनके सामने खड़े होने वालों को मन की शांति और रात की सुखद नींद मिलती है। गर्भगृह में जो आरती आप सुनते हैं, वह इसी घड़ी के लिए गाई जाती है: जय हरि हरा। हर हर महादेव।"
+      },
+      "didYouKnow": {
+        "en": "The trust's timings: Shringar and Bhog Aarti at 9 PM, Shayan Aarti at 10:30 PM; the temple closes at 11.",
+        "hi": "न्यास के अनुसार समय: रात नौ बजे शृंगार व भोग आरती, साढ़े दस बजे शयन आरती; मंदिर ग्यारह बजे बंद होता है।"
+      },
+      "sources": [
+        "https://shrikashivishwanath.org/general/rituals",
+        "https://staybanaras.co.in/aarti-in-varanasi",
+        "https://www.templestiming.in/kashi-vishwanath-temple-timings/"
+      ]
+    },
+    {
       "id": "kashi-garbhagriha",
       "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
       "kind": "ritual",
       "title": { "en": "Darshan of Shri Vishwanath", "hi": "श्री विश्वनाथ के दर्शन" },
       "text": {
-        "en": "You are in the sanctum of Shri Vishwanath, the Lord of the Universe. The walls around you are sheathed in gold. Look down: the Jyotirlinga is a short, smooth black stone set low in a square silver basin sunk into the floor, wet with water and milk, covered with bel leaves and flowers. This is the Lord who never leaves Kashi. Every evening the Saptarishi aarti is offered here by seven priests, one for each of the seven great sages, who, tradition says, come every evening to worship him themselves. And remember the vessel of Ganga water filled at the river’s edge? It will travel south to Rameshwaram, and when it is poured over Ramanathaswamy, by tradition, the Kashi yatra is complete. North and south, one pilgrimage. Fold your hands. Adi Shankaracharya sings of this place in the Dwadasha Jyotirlinga Stotram: ‘Sanandam anandavane vasantam anandakandam hatapapavrindam, Varanasinatham anathanatham Shri Vishvanatham sharanam prapadye.’ ‘He who dwells in joy in the Forest of Bliss, the root of all bliss, destroyer of the heaps of sin, Lord of Varanasi, protector of those who have no protector: in Shri Vishwanath I take refuge.’ Kashi Vishwanath is the ninth Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the damaru and the bells sound, and let the lamps be raised. Har Har Mahadev.",
-        "hi": "आप श्री विश्वनाथ, विश्व के स्वामी, के गर्भगृह में हैं। चारों ओर की दीवारें सोने से मढ़ी हैं। नीचे देखिए: ज्योतिर्लिंग एक छोटी, चिकनी काली शिला है, फ़र्श में धँसे चाँदी के एक चौकोर कुंड में नीचे स्थापित, जल और दूध से भीगी, बेलपत्र और फूलों से ढकी। ये वही प्रभु हैं जो काशी को कभी नहीं छोड़ते। हर शाम यहाँ सात पुजारी सप्तर्षि आरती करते हैं, सात महान ऋषियों में से हर एक के लिए एक, और परंपरा कहती है कि स्वयं सप्तर्षि हर शाम उनकी पूजा करने आते हैं। और नदी के किनारे भरा गया वह गंगाजल का पात्र याद है? वह दक्षिण में रामेश्वरम तक जाएगा, और जब उससे रामनाथस्वामी का अभिषेक होगा, तब परंपरा से काशी यात्रा पूर्ण होगी। उत्तर और दक्षिण, एक ही यात्रा। हाथ जोड़िए। आदि शंकराचार्य द्वादश ज्योतिर्लिंग स्तोत्र में इस स्थान का गान करते हैं: ‘सानन्दमानन्दवने वसन्तमानन्दकन्दं हतपापवृन्दम्। वाराणसीनाथमनाथनाथं श्रीविश्वनाथं शरणं प्रपद्ये॥’ ‘जो आनंदवन में आनंद से निवास करते हैं, जो आनंद के मूल हैं, पापों के समूह का नाश करने वाले हैं, वाराणसी के स्वामी, अनाथों के नाथ: उन श्री विश्वनाथ की मैं शरण लेता हूँ।’ काशी विश्वनाथ स्तोत्र के नौवें ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। डमरू और घंटियाँ बजें, और दीप उठें। हर हर महादेव।"
+        "en": "You are in the sanctum of Shri Vishwanath, the Lord of the Universe. The walls around you are sheathed in gold. That is a recent gift: in February 2022 a devotee from the south of India, who asked not to be named, gave about sixty kilograms of gold, and some thirty-seven kilograms of it now cover these inner walls. Look down: the Jyotirlinga is a short, smooth black stone set low in a square silver basin, wet with water and milk, covered with bel leaves and flowers. This is the Lord who never leaves Kashi. Every evening the Saptarishi aarti is offered here by seven priests, one for each of the seven great sages, who, tradition says, come every evening to worship him themselves. And the day here ends with the Shayan Aarti, when Baba is laid to rest: its story is told in the Sabha Mandap beside you. The aarti you hear now is sung for that hour, ‘Jai Hari Hara’. And remember the vessel of Ganga water filled at the river’s edge? It will travel south to Rameshwaram, and when it is poured over Ramanathaswamy, by tradition, the Kashi yatra is complete. North and south, one pilgrimage. Fold your hands. Adi Shankaracharya sings of this place in the Dwadasha Jyotirlinga Stotram: ‘Sanandam anandavane vasantam anandakandam hatapapavrindam, Varanasinatham anathanatham Shri Vishvanatham sharanam prapadye.’ ‘He who dwells in joy in the Forest of Bliss, the root of all bliss, destroyer of the heaps of sin, Lord of Varanasi, protector of those who have no protector: in Shri Vishwanath I take refuge.’ Kashi Vishwanath is the ninth Jyotirlinga of the Stotram. Pilgrims may visit the twelve Jyotirlingas in any order their journey allows; by tradition, the yatra begins at Somnath, the first, and is held complete with darshan at Grishneshwar, the twelfth, near Ellora. Let the damaru and the bells sound, and let the lamps be raised. Har Har Mahadev.",
+        "hi": "आप श्री विश्वनाथ, विश्व के स्वामी, के गर्भगृह में हैं। चारों ओर की दीवारें सोने से मढ़ी हैं। यह हाल का दान है: फ़रवरी सन दो हज़ार बाईस में दक्षिण भारत के एक भक्त ने, जो अपना नाम नहीं बताना चाहते थे, लगभग साठ किलो सोना दिया, और उसमें से लगभग सैंतीस किलो अब इन भीतरी दीवारों पर मढ़ा है। नीचे देखिए: ज्योतिर्लिंग एक छोटी, चिकनी काली शिला है, चाँदी के एक चौकोर कुंड में नीचे स्थापित, जल और दूध से भीगी, बेलपत्र और फूलों से ढकी। ये वही प्रभु हैं जो काशी को कभी नहीं छोड़ते। हर शाम यहाँ सात पुजारी सप्तर्षि आरती करते हैं, सात महान ऋषियों में से हर एक के लिए एक, और परंपरा कहती है कि स्वयं सप्तर्षि हर शाम उनकी पूजा करने आते हैं। और यहाँ दिन का समापन शयन आरती से होता है, जब बाबा को विश्राम कराया जाता है: उसकी कथा पास के सभा मंडप में सुनाई जाती है। जो आरती आप अभी सुन रहे हैं, वह इसी घड़ी की है: ‘जय हरि हरा’। और नदी के किनारे भरा गया वह गंगाजल का पात्र याद है? वह दक्षिण में रामेश्वरम तक जाएगा, और जब उससे रामनाथस्वामी का अभिषेक होगा, तब परंपरा से काशी यात्रा पूर्ण होगी। उत्तर और दक्षिण, एक ही यात्रा। हाथ जोड़िए। आदि शंकराचार्य द्वादश ज्योतिर्लिंग स्तोत्र में इस स्थान का गान करते हैं: ‘सानन्दमानन्दवने वसन्तमानन्दकन्दं हतपापवृन्दम्। वाराणसीनाथमनाथनाथं श्रीविश्वनाथं शरणं प्रपद्ये॥’ ‘जो आनंदवन में आनंद से निवास करते हैं, जो आनंद के मूल हैं, पापों के समूह का नाश करने वाले हैं, वाराणसी के स्वामी, अनाथों के नाथ: उन श्री विश्वनाथ की मैं शरण लेता हूँ।’ काशी विश्वनाथ स्तोत्र के नौवें ज्योतिर्लिंग हैं। तीर्थयात्री अपनी यात्रा की सुविधा से बारह ज्योतिर्लिंगों के दर्शन किसी भी क्रम में कर सकते हैं; परंपरा से यात्रा प्रथम ज्योतिर्लिंग सोमनाथ से आरंभ होती है, और एलोरा के पास बारहवें ज्योतिर्लिंग घृष्णेश्वर के दर्शन से पूर्ण मानी जाती है। डमरू और घंटियाँ बजें, और दीप उठें। हर हर महादेव।"
       },
       "didYouKnow": {
         "en": "The day begins with the Mangala Aarti between 3 and 4 in the morning; devotees holding passes enter between 2:30 and 3.",
@@ -133,7 +226,8 @@
       "sources": [
         "https://sanskritdocuments.org/doc_shiva/dvAdashaJyotistotra.html",
         "https://shrikashivishwanath.org/frontend/home/poojaList",
-        "https://varanasitemples.in/shiva-temples/vishweshwar-vishwanath-temple/"
+        "https://varanasitemples.in/shiva-temples/vishweshwar-vishwanath-temple/",
+        "https://gulfnews.com/world/asia/india/india-kashi-vishwanath-temple-gets-60-kg-gold-from-anonymous-donor-1.86108563"
       ]
     }
   ],
@@ -157,9 +251,37 @@
     },
     "audio": [
       {
+        "url": "audio/aarti/kashi-shayan-aarti.mp3",
+        "title": "जय हरि हरा ॐ जय हरि हरा | Kashi Vishwanath Shayan Aarti | हर हर महादेव",
+        "by": "Tathastuindia",
+        "creditUrl": "https://www.youtube.com/watch?v=HAqXzA5x9So",
+        "license": "Not openly licensed (YouTube upload by Tathastuindia, youtube.com/channel/UCJPPCX6-xv8DhaqJiMwFZEQ)",
+        "permission": "Used at the site owner's choice, credited on screen while it plays and in CREDITS.md",
+        "notes": "Hosted copy of the YouTube audio (6:43, 192 kb/s MP3)"
+      },
+      {
         "url": "https://shrikashivishwanath.org/online/live_darshan",
         "license": "All rights reserved (Shri Kashi Vishwanath Temple Trust) - needs permission",
         "notes": "The trust's official live darshan (embedded YouTube stream). No reuse licence found."
+      }
+    ],
+    "places": [
+      {
+        "id": "ganga-aarti",
+        "name": { "en": "Ganga Aarti", "hi": "गंगा आरती" },
+        "zones": ["ganga"],
+        "schedule": [{ "name": { "en": "Ganga Aarti on the ghats", "hi": "घाटों पर गंगा आरती" }, "time": "every evening, after sunset" }],
+        "audio": [
+          {
+            "url": "audio/aarti/kashi-ganga-aarti.mp3",
+            "title": "Shree Shiva Tandav Stotra, Shree Ganga Aarti Varanasi, Daily Ganga Aarati Banaras, Har Har Mahadev",
+            "by": "Shree Ganga Aarti",
+            "creditUrl": "https://www.youtube.com/watch?v=Sx0FSVPQ3bE",
+            "license": "Not openly licensed (YouTube upload by Shree Ganga Aarti, youtube.com/@shreegangaarti)",
+            "permission": "Used at the site owner's choice, credited on screen while it plays and in CREDITS.md",
+            "notes": "Hosted copy of the YouTube audio (6:51, 192 kb/s MP3); heard all over the ghat, the Ganga Dwar and the stair down to them"
+          }
+        ]
       }
     ],
     "youtube": [

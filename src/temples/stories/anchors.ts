@@ -140,6 +140,10 @@ export const STOPS: Record<string, Record<string, Anchor>> = {
     gyanvapi: [17.6, 0.45, 3.4, 3], // beside the Nandi, south of the well
     temple: [-3, 0.6, 4.4, 2.5], // the east verandah, off the door's axis
     garbhagriha: [1.35, 0.6, 1.35, 1.5], // a corner of the cell, beside the basin
+    'kashi-shayan': [-6.65, 0.6, 0, 2.5], // the Sabha Mandap under the gold dome, beside the sanctum
+    'kashi-ahilya': [10.8, 0, 112.5, 3], // before Ahilyabai's statue on the terrace beyond the chowk
+    'kashi-ganga-aarti': [-9, -12.17, 158.5, 4], // the ghat's first landing, above the aarti chowkis and those watching
+    'kashi-bhairav': [-19.15, 0, -23.3, 2.2], // before the Kala Bhairava shrine in the west colonnade
   },
   vaidyanath: {
     // +z east (Singh Dwar, the approach lane), +x north; origin = the sanctum's centre; plinth/sanctum floor 0.45

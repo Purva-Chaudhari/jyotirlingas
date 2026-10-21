@@ -8,6 +8,9 @@ import { buildDham, CHOWK, DHAM_TREES, PLAZA } from './dham';
 import { buildCrowd, CrowdSpots } from './crowd';
 import { GHAT, WATER_O, ghatY, bankAt, bank } from './riverfront';
 import { kashiNav } from './nav';
+import { buildAhilya } from './ahilya';
+import { buildGangaAarti } from './aarti';
+import { buildVip } from './vip';
 
 /**
  * Shri Kashi Vishwanath, Varanasi: Ahilyabai Holkar's temple (1780) with Ranjit Singh's gilded
@@ -49,18 +52,62 @@ const site: SiteDef = {
     const t = buildTemple(root, K, P, flames, O);
     const parisar = buildParisar(root, K, P, flames, O).group;
     const { water, group: dham, river } = buildDham(root, K, P, flames, sunDir, O);
-    O.flush(root);
+    buildVip(parisar, dham, river, K, P); // Gate No. 4 (Sugam Darshan) and its lane, security at the gates, the escalators
+    pending.push(buildAhilya(dham, K, P)); // Ahilyabai Holkar's statue on the terrace beyond the chowk
 
     // ---- pilgrims (one BatchedMesh + one blob mesh; no colliders, no shadows), as on any morning
     const C = new CrowdSpots(41);
+    buildGangaAarti(river, K, P, flames, O, C); // the aarti priests on the ghat's lower landing, and those watching
+    O.flush(root);
     const solidAt = (x: number, z: number, y = 0.2) => P.solids.some((b) => x > b.min.x - 0.35 && x < b.max.x + 0.35 && z > b.min.z - 0.35 && z < b.max.z + 0.35 && y + 0.3 > b.min.y && y < b.max.y);
     const onJagati = (x: number, z: number) => x > TEMPLE.x0 - 3.4 && x < TEMPLE.x1 + 3.4 && Math.abs(z) < TEMPLE.z1 + 3.4;
     const busy = (x: number, z: number) => solidAt(x, z) || onJagati(x, z);
-    // the darshan queue in the southern rail lane, two abreast, heading for the temple steps
-    C.queue(new THREE.Vector3(-4.0, 0, 21), new THREE.Vector3(-4.0, 0, 8.6), 0.62, 2);
+    // the darshan queue in its lanes along the temple's east and west faces: out along the outer lane, back along
+    // the inner one to the steps (two abreast)
+    for (const s of [1, -1]) {
+      C.queue(new THREE.Vector3(s > 0 ? -2.9 : -1.7, 0, s * 8.3), new THREE.Vector3(-12.4, 0, s * 8.3), 0.62, 2);
+      C.queue(new THREE.Vector3(-12.4, 0, s * 7.0), new THREE.Vector3(s > 0 ? -2.6 : -1.4, 0, s * 7.0), 0.62, 2);
+    }
+    // the west gate's line (the Dhundhiraj route) in its lane across the west court to the jagati's west steps
+    C.queue(new THREE.Vector3(0, 0, -11.8), new THREE.Vector3(0, 0, -8.4), 0.7, 1);
+    C.queue(new THREE.Vector3(0, 0, -18.6), new THREE.Vector3(0, 0, -14.6), 0.7, 1);
+    // the Sugam Darshan line from Gate No. 4: along the lane by the Gyanvapi, and inside round the mandap
+    C.queue(new THREE.Vector3(35.2, 0, 15.5), new THREE.Vector3(35.2, 0, 6.5), 0.7, 1);
+    C.queue(new THREE.Vector3(24.8, 0, 5.2), new THREE.Vector3(24.8, 0, 6.6), 0.7, 1);
+    C.queue(new THREE.Vector3(23.6, 0, 7.0), new THREE.Vector3(17.4, 0, 7.0), 0.7, 1);
+    C.queue(new THREE.Vector3(13.2, 0, 7.0), new THREE.Vector3(6.6, 0, 7.0), 0.7, 1);
+    // the lines at the garbhagriha's four doors, as the trust runs them: each entry route has its own door
+    {
+      const J = TEMPLE.floor;
+      const line = (pts: [number, number, number][]) => {
+        for (let i = 0; i < pts.length; i++) {
+          const [x, y, z] = pts[i], [nx, , nz] = pts[Math.min(i + 1, pts.length - 1)];
+          const ry = i < pts.length - 1 ? Math.atan2(nx - x, nz - z) : Math.atan2(-x, -z); // the head of the line faces the linga
+          C.add(x, y, z, ry);
+          const h = (i * 7 + C.list.length) % 10;
+          C.list[C.list.length - 1].queue = h < 4 ? 'namaste' : h < 7 ? 'thali' : 'stand';
+        }
+      };
+      // east door (the Ganga Dwar route): on from the court's southern lane, up the steps, under the verandah
+      line([[-2.4, 0, 6.6], [-2.75, J, 5.9], [-2.85, J, 5.1], [-2.3, J, 4.4], [-1.6, J, 3.9], [-0.9, J, 3.5]]);
+      // north door (from the Gyanvapi side): single file in its railed lane along the jagati's north strip
+      line([[4.4, J, 4.6], [4.4, J, 4.0], [4.4, J, 3.4], [4.4, J, 2.8], [4.4, J, 2.2], [4.4, J, 1.6], [4.35, J, 1.0], [4.05, J, 0.45], [3.6, J, 0.15]]);
+      // south door: through the Sabha Mandap
+      line([[-6.0, J, 0.25], [-5.4, J, 0.2], [-4.8, J, 0.15], [-4.2, J, 0.1], [-3.6, J, 0.05]]);
+      // west door: the Sugam Darshan line, on up the west steps
+      line([[-0.4, J, -5.4], [-0.4, J, -4.8], [-0.4, J, -4.2], [-0.4, J, -3.6]]);
+      // in the garbhagriha: two priests sitting on the carpets by the basin, devotees bowing over its rim
+      for (const z of [-0.5, 0.7]) C.add(-1.5, J, z, Math.PI / 2, true, 'kanwariya');
+      for (const [x, z, pose] of [[-0.85, 1.4, 'namaste'], [-0.85, -1.4, 'thali'], [-1.25, 1.55, 'stand']] as const) {
+        C.add(x, J, z, Math.atan2(-x, -z));
+        C.list[C.list.length - 1].pose = pose;
+      }
+    }
     // round the jagati: pilgrims circling the temple, standing before the walls, sitting at the edge
-    C.scatter(TEMPLE.x0 - 7, TEMPLE.x1 + 1, -11, -6.6, 0, 46, Math.PI / 2, 0.15, busy);
-    C.scatter(TEMPLE.x0 - 7, -6, 6.6, 11, 0, 30, -Math.PI / 2, 0.15, busy);
+    // (clear of the queue lanes along the east and west faces)
+    const lanes = (x: number, z: number) => busy(x, z) || (x > -13.4 && x < -0.6 && Math.abs(z) > 6.1 && Math.abs(z) < 9.4);
+    C.scatter(TEMPLE.x0 - 7, TEMPLE.x1 + 1, -12.5, -6.6, 0, 46, Math.PI / 2, 0.15, lanes);
+    C.scatter(TEMPLE.x0 - 7, -6, 6.6, 12.5, 0, 30, -Math.PI / 2, 0.15, lanes);
     C.scatter(TEMPLE.x0 - 8, TEMPLE.x0 - 3.6, -6, 6, 0, 18, Math.PI / 2, 0.2, busy);
     // the court at large (north toward Gyanvapi, south among the shrines)
     C.scatter(PARISAR.x0 + 7, PARISAR.x1 - 7, PARISAR.z0 + 7, PARISAR.z1 - 7, 0, 90, Math.PI, 0.1, busy);
@@ -87,11 +134,14 @@ const site: SiteDef = {
       kanwariyaShare: 0.12,
       lodDistance: 14,
       clearPaths: [
-        [[5, 21], [4, 7], [0, 7], [0, 0]], // the court → the east door → the linga
+        [[5, 21], [4.5, 10]], // the court toward the east door (the last steps are kept clear only close by: nearPaths)
         [[0, 42], [0, 30], [0, 21], [5, 21]], // the spawn in the chowk, through the Parisar's east gate
         [[0, 169], [0, 150], [0, 100], [0, 30]], // the axis from the water up the ghat, through the Ganga Dwar and the chowk
         [[14, 16]], [[-12, -20]], // the usual NE / SW viewpoints across the court
       ],
+      // the last steps to the east door and the linga, walked beside the door queues and past the people inside
+      nearPaths: [[[4.5, 10], [4, 7], [0, 7], [0, 0]]],
+      nearRadius: 0.8,
     });
     // Camera-driven culling (also holds for fixed viewpoints): the river front and its mirror only
     // render near the river; inside the garbhagriha the Dham, the city and the trees are not drawn.
@@ -107,6 +157,7 @@ const site: SiteDef = {
     probe.renderOrder = -1000;
     let lastSanctum: boolean | null = null, lastRiver: boolean | null = null, lastNear: boolean | null = null, lastBelow: boolean | null = null;
     const sanctumSmall: THREE.Object3D[] = [];
+    const fwd = new THREE.Vector3();
     t.group.traverse((o) => {
       const m = o as THREE.Mesh;
       if (m.isMesh && m.name === 'garbhagriha' && m.material !== K.goldIn && m.material !== K.goldPlain && m.material !== K.goldCeil) sanctumSmall.push(m);
@@ -115,7 +166,10 @@ const site: SiteDef = {
       if ((cam as THREE.OrthographicCamera).isOrthographicCamera) return; // shadow passes
       const p = cam.position;
       const inSanctum = Math.abs(p.x) < 2.1 && Math.abs(p.z) < 2.1 && p.y > 0.6 && p.y < 4.3;
-      const nearRiver = p.z > 95 && !inSanctum;
+      // (the river front shows from the chowk's eastern gateway, and down the axis from the court and the chowk
+      // whenever one faces east: otherwise the Ganga Dwar and the river pop in at the gateway)
+      cam.getWorldDirection(fwd);
+      const nearRiver = !inSanctum && (p.z > 85 || p.y > 18 || (p.z > 0 && Math.abs(p.x) < 45 && fwd.z > 0.15)); // (or seen from high above)
       if (inSanctum !== lastSanctum) {
         lastSanctum = inSanctum;
         dham.visible = !inSanctum;

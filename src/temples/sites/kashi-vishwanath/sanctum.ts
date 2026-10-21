@@ -16,12 +16,17 @@ import { lingamGeo, type Offerings } from './shivling';
  *    a hanging silver jaladhari, a silver chhatra, brass lamps, red carpets where the priests sit.
  */
 
-export const BASIN = { hx: 0.82, hz: 0.72, depth: 0.5, rim: 0.08 };
+/** half-sizes inside the walls; the floor `depth` below the marble; the coping `rim` above it */
+export const BASIN = { hx: 0.82, hz: 0.72, depth: 0.15, rim: 0.32 };
+
+const redInlay = new THREE.MeshStandardMaterial({ color: 0x8a2a22, roughness: 0.45 });
 
 export function buildSanctum(g: THREE.Group, K: KM, P: Physics, flames: Flames, O: Offerings, F: number, gh: number, D: number, GC: number) {
   const S = new Merger(P, 'garbhagriha');
   const { hx, hz, depth, rim } = BASIN;
   const bot = F - depth;
+  // the milky water stands high in the basin, lapping at the jaladhari's rim
+  const W = bot + 0.06;
 
   // ---------- gold sheathing ----------
   const gp = 0.03;
@@ -102,27 +107,53 @@ export function buildSanctum(g: THREE.Group, K: KM, P: Physics, flames: Flames, 
   }
 
   // ---------- the silver basin (jalahari) ----------
-  const rw = 0.13; // rim coping width
-  for (const [x0, x1, z0, z1] of [
+  // a polished silver box standing a hand's breadth and more above the marble floor: plain outer walls on a
+  // moulded plinth, a broad flat coping with a rope moulding, repoussé inside, square posts at the corners
+  // carrying onion knobs
+  const rw = 0.1; // wall thickness
+  const top = F + rim; // the coping's top
+  const walls: [number, number, number, number][] = [
     [-hx - rw, hx + rw, hz, hz + rw], [-hx - rw, hx + rw, -hz - rw, -hz], [-hx - rw, -hx, -hz, hz], [hx, hx + rw, -hz, hz],
-  ]) S.span(K.basinSilver, x0, F - 0.06, z0, x1, F + rim, z1);
-  // rope moulding on the rim's top inner edge
-  for (const [x0, x1, z0, z1] of [[-hx, hx, hz - 0.02, hz + 0.02], [-hx, hx, -hz - 0.02, -hz + 0.02], [-hx - 0.02, -hx + 0.02, -hz, hz], [hx - 0.02, hx + 0.02, -hz, hz]]) {
-    S.span(K.silverBright, x0, F + rim, z0, x1, F + rim + 0.025, z1);
+  ];
+  for (const [x0, x1, z0, z1] of walls) S.span(K.silverBright, x0, F - 0.02, z0, x1, top - 0.035, z1);
+  // plinth moulding at the foot, the coping (overhanging outside) and the rope on its inner edge
+  const o = 0.025;
+  for (const [x0, x1, z0, z1] of [
+    [-hx - rw - o, hx + rw + o, hz + rw - 0.01, hz + rw + o], [-hx - rw - o, hx + rw + o, -hz - rw - o, -hz - rw + 0.01],
+    [-hx - rw - o, -hx - rw + 0.01, -hz - rw, hz + rw], [hx + rw - 0.01, hx + rw + o, -hz - rw, hz + rw],
+  ]) S.span(K.silverBright, x0, F, z0, x1, F + 0.045, z1);
+  for (const [x0, x1, z0, z1] of [
+    [-hx - rw - o, hx + rw + o, hz - 0.01, hz + rw + o], [-hx - rw - o, hx + rw + o, -hz - rw - o, -hz + 0.01],
+    [-hx - rw - o, -hx + 0.01, -hz, hz], [hx - 0.01, hx + rw + o, -hz, hz],
+  ]) S.span(K.silverBright, x0, top - 0.035, z0, x1, top, z1);
+  for (const [x0, x1, z0, z1] of [[-hx, hx, hz - 0.02, hz + 0.01], [-hx, hx, -hz - 0.01, -hz + 0.02], [-hx - 0.01, -hx + 0.02, -hz, hz], [hx - 0.02, hx + 0.01, -hz, hz]]) {
+    S.span(K.silverBright, x0, top, z0, x1, top + 0.02, z1);
   }
-  // inner walls (repoussé) and the floor of the basin
-  S.span(K.basinSilver, -hx, bot, hz - 0.03, hx, F - 0.06, hz);
-  S.span(K.basinSilver, -hx, bot, -hz, hx, F - 0.06, -hz + 0.03);
-  S.span(K.basinSilver, -hx, bot, -hz, -hx + 0.03, F - 0.06, hz);
-  S.span(K.basinSilver, hx - 0.03, bot, -hz, hx, F - 0.06, hz);
+  // inner walls (repoussé), from the basin floor up to the coping
+  const sk = 0.012;
+  S.span(K.basinSilver, -hx, bot, hz - sk, hx, top - 0.035, hz);
+  S.span(K.basinSilver, -hx, bot, -hz, hx, top - 0.035, -hz + sk);
+  S.span(K.basinSilver, -hx, bot, -hz, -hx + sk, top - 0.035, hz);
+  S.span(K.basinSilver, hx - sk, bot, -hz, hx, top - 0.035, hz);
   // wet white marble floor under the milk
   S.span(K.whiteMarble, -hx, bot - 0.04, -hz, hx, bot, hz);
-  // corner posts with onion knobs
+  // square corner posts, a little taller than the coping, each with a moulded cap and an onion knob
   const knob = lathe([[0, 0], [0.06, 0], [0.06, 0.04], [0.04, 0.06], [0.075, 0.12], [0.06, 0.17], [0.025, 0.21], [0.03, 0.23], [0, 0.26]], 20, 12, 0.06);
+  const pw = 0.15, ptop = top + 0.08;
   for (const [x, z] of [[-hx - rw / 2, -hz - rw / 2], [hx + rw / 2, -hz - rw / 2], [-hx - rw / 2, hz + rw / 2], [hx + rw / 2, hz + rw / 2]]) {
-    S.place(K.silverBright, knob, x, F + rim, z);
+    S.box(K.silverBright, pw, ptop - F, pw, x, F, z);
+    S.box(K.silverBright, pw + 0.03, 0.03, pw + 0.03, x, ptop - 0.03, z);
+    S.box(K.silverBright, pw + 0.03, 0.05, pw + 0.03, x, F, z);
+    S.place(K.silverBright, knob, x, ptop, z, 0, 0.95);
   }
-  P.solid(-hx - rw, F - 0.5, -hz - rw, hx + rw, F + 0.7, hz + rw);
+  P.solid(-hx - rw - o, F - 0.5, -hz - rw - o, hx + rw + o, F + 0.7, hz + rw + o);
+  // a thin red stone band inlaid in the marble floor, framing the basin
+  for (const [x0, x1, z0, z1] of [[-1.42, 1.42, 1.3, 1.36], [-1.42, 1.42, -1.36, -1.3], [-1.42, -1.36, -1.3, 1.3], [1.36, 1.42, -1.3, 1.3]]) {
+    const band = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0).rotateX(-Math.PI / 2), redInlay);
+    band.position.set((x0 + x1) / 2, F + 0.003, (z0 + z1) / 2);
+    band.receiveShadow = true;
+    g.add(band);
+  }
 
   // ---------- gold pitha, pranala and the Jyotirlinga ----------
   const lx = 0.08, lz = 0.12; // the lingam sits a little off-centre, toward the east (front) door
@@ -137,20 +168,37 @@ export function buildSanctum(g: THREE.Group, K: KM, P: Physics, flames: Flames, 
   const pb = 0.035; // gold pitha sits on the marble base
   S.place(K.whiteMarble, lathe([[0, 0], [0.5, 0], [0.5, 0.03], [0.48, 0.04], [0, 0.04]], 64), lx, bot, lz);
   S.place(K.goldPlain, pitha, lx, bot + pb, lz);
-  S.place(K.whiteMarble, lathe([[0.222, 0.098], [0.222, 0.12], [0.205, 0.136], [0.165, 0.136], [0.148, 0.124], [0.148, 0.1]], 64), lx, bot + pb, lz);
-  // flat gold pranala plate with a groove, toward the north (+x)
-  // broad flat gold pranala with raised ridges along its channel
-  S.span(K.goldPlain, lx + 0.3, bot, lz - 0.13, hx - 0.03, bot + pb + 0.05, lz + 0.13);
-  for (const v of [-0.1, -0.035, 0.035, 0.1]) S.span(K.goldPlain, lx + 0.32, bot + pb + 0.05, lz + v - 0.012, hx - 0.05, bot + pb + 0.068, lz + v + 0.012);
+  // a raised gold collar round the lingam's foot
+  S.place(K.goldPlain, lathe([[0.222, 0.098], [0.222, 0.12], [0.205, 0.136], [0.165, 0.136], [0.148, 0.124], [0.148, 0.1]], 64), lx, bot + pb, lz);
+  // the gold pranala: the yoni's long spout, tapering to a point toward the north (+x), with a channel down it
+  {
+    const out = new THREE.Shape();
+    out.moveTo(0.18, -0.24);
+    out.quadraticCurveTo(0.5, -0.17, 0.69, 0);
+    out.quadraticCurveTo(0.5, 0.17, 0.18, 0.24);
+    out.lineTo(0.18, -0.24);
+    const slot = new THREE.Path();
+    slot.moveTo(0.36, -0.03);
+    slot.lineTo(0.62, -0.006);
+    slot.lineTo(0.62, 0.006);
+    slot.lineTo(0.36, 0.03);
+    slot.lineTo(0.36, -0.03);
+    const spout = (sh: THREE.Shape, h: number) =>
+      new THREE.ExtrudeGeometry(sh, { depth: h, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.012, bevelSegments: 3, curveSegments: 24 }).rotateX(-Math.PI / 2);
+    const rimmed = out.clone();
+    rimmed.holes.push(slot);
+    S.place(K.goldPlain, spout(rimmed, 0.075), lx, bot + pb, lz);
+    S.place(K.goldPlain, spout(out, 0.03), lx, bot + pb, lz); // the channel's floor
+  }
   const L = lingamGeo(0.142, 0.33, 0.035, 64);
   S.place(K.lingam, L, lx, bot + pb + 0.1, lz);
   const lTop = bot + pb + 0.1 + 0.33;
   // milk film clinging to the pitha, and the pooled milky water
   // a thin trickle of milk running off the pitha toward the pranala
-  S.span(K.milk, lx + 0.22, bot + pb + 0.1, lz - 0.03, lx + 0.4, bot + pb + 0.104, lz + 0.03);
-  // the basin floor flooded with milk and water (a 2 cm film, glossy and milky white)
-  const pool = new THREE.Mesh(new THREE.PlaneGeometry(hx * 2 - 0.06, hz * 2 - 0.06).rotateX(-Math.PI / 2), K.milkFilm);
-  pool.position.set(0, bot + 0.02, 0);
+  S.span(K.milk, lx + 0.38, bot + pb + 0.042, lz - 0.015, lx + 0.64, bot + pb + 0.046, lz + 0.015);
+  // the basin filled with milk and water, pale and creamy, up to the jaladhari's rim
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(hx * 2 - 0.02, hz * 2 - 0.02).rotateX(-Math.PI / 2), K.milkFilm);
+  pool.position.set(0, W, 0);
   pool.renderOrder = 2;
   g.add(pool);
   // the hanging jaladhari: a silver kalash on three chains, a thin milky stream onto the lingam's crown
@@ -199,21 +247,19 @@ export function buildSanctum(g: THREE.Group, K: KM, P: Physics, flames: Flames, 
   }
   O.add('rose', lx, lTop + 0.012, lz, 1.1);
   for (let i = 0; i < 6; i++) O.add('jasmine', lx + 0.03 * Math.cos(i), lTop + 0.004, lz + 0.03 * Math.sin(i), 1.2, undefined, i, 1.2);
-  // a few flowers at the lingam's foot only, so the pitha's rings show; offerings heaped in the
-  // north-west corner of the basin, petals and bel floating on the milk
+  // a few flowers at the lingam's foot only, so the pitha's rings show; petals and bel floating on the milk
   for (let i = 0; i < 7; i++) {
     const a = 2.2 + i * 0.32;
     O.add(i % 3 ? 'marigold' : 'mogra', lx + Math.cos(a) * 0.3, bot + pb + 0.11, lz + Math.sin(a) * 0.3, 1);
   }
-  O.heap(-hx + 0.22, bot + 0.025, -hz + 0.2, 0.13, 0.08, 14);
-  O.scatter(-hx + 0.05, hx - 0.05, -hz + 0.05, hz - 0.05, bot + 0.022, 20, 0.3);
-  for (let i = 0; i < 70; i++) {
-    const a = Math.random() * Math.PI * 2, r = 0.52 + Math.random() * 0.15;
-    O.add('rice', lx + Math.cos(a) * r, bot + 0.023, lz + Math.sin(a) * r * 0.8, 1);
+  O.scatter(-hx + 0.05, hx - 0.05, -hz + 0.05, hz - 0.05, W + 0.002, 14, 0.3);
+  // a yellow cloth folded over the coping at the north-west corner, where the priest wipes the lingam
+  {
+    const cloth = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.03, 0.2), new THREE.MeshStandardMaterial({ color: 0xd8b85a, roughness: 0.95 }));
+    cloth.position.set(-hx + 0.12, top + 0.03, -hz - rw / 2 + 0.02);
+    cloth.rotation.y = 0.3;
+    g.add(cloth);
   }
-  // garlands draped on the rim
-  O.strand(new THREE.Vector3(-hx - 0.06, F + rim + 0.03, hz + 0.07), new THREE.Vector3(hx + 0.06, F + rim + 0.03, hz + 0.07), 0.12, 1);
-  O.strand(new THREE.Vector3(-hx - 0.06, F + rim + 0.03, -hz - 0.07), new THREE.Vector3(hx + 0.06, F + rim + 0.03, -hz - 0.07), 0.1, 1);
 
   // ---------- around the basin ----------
   // red patterned carpets where the priests sit (north-west and south-west), puja vessels
@@ -246,12 +292,26 @@ export function buildSanctum(g: THREE.Group, K: KM, P: Physics, flames: Flames, 
 
   // brass lamp stands in the corners (the lamps flicker), hanging brass lamp chains
   const stand = lathe([[0, 0], [0.16, 0], [0.12, 0.05], [0.03, 0.1], [0.03, 0.85], [0.06, 0.88], [0.14, 0.92], [0.12, 0.96], [0, 0.95]], 16);
-  for (const [x, z] of [[-1.6, -1.6], [1.6, -1.6], [-1.6, 1.6], [1.6, 1.6]]) {
+  for (const [x, z] of [[1.6, -1.6], [-1.6, 1.6], [1.6, 1.6]]) {
     S.place(K.brass, stand, x, F, z);
     for (let k = 0; k < 5; k++) {
       const a = (k / 5) * Math.PI * 2;
       flames.points.push(new THREE.Vector3(x + Math.cos(a) * 0.1, F + 0.99, z + Math.sin(a) * 0.1));
     }
+  }
+  // the akhand deep in the north-west corner: a silver lamp on a slender stand under a domed silver hood,
+  // its single flame never let go out
+  {
+    const ax = -1.6, az = -1.6;
+    S.place(K.silverBright, lathe([[0, 0], [0.14, 0], [0.14, 0.015], [0.1, 0.03], [0.03, 0.05], [0.02, 0.06], [0, 0.06]], 32), ax, F, az); // dish
+    S.place(K.silverBright, lathe([[0.018, 0], [0.018, 0.5], [0.03, 0.52], [0.02, 0.56], [0, 0.56]], 16), ax, F + 0.05, az); // stem
+    S.place(K.brass, lathe([[0, 0], [0.04, 0], [0.09, 0.04], [0.1, 0.06], [0.085, 0.06], [0, 0.04]], 32), ax, F + 0.61, az); // oil bowl
+    // the hood on a bent rod rising from behind the stand
+    S.box(K.silverBright, 0.016, 0.42, 0.016, ax - 0.13, F + 0.45, az - 0.13);
+    const hood = lathe([[0, 0.17], [0.05, 0.165], [0.14, 0.12], [0.2, 0.05], [0.22, 0], [0.21, -0.01], [0.13, 0.08], [0.04, 0.12], [0, 0.125]], 48, 24, 0.03);
+    S.place(K.silverBright, hood, ax, F + 0.87, az);
+    S.place(K.silverBright, lathe([[0, 0], [0.03, 0], [0.035, 0.04], [0.015, 0.09], [0, 0.11]], 16), ax, F + 0.87 + 0.17, az); // finial
+    flames.points.push(new THREE.Vector3(ax + 0.06, F + 0.69, az));
   }
   S.flush(g, false);
   for (const [x, z] of [[-1.2, 0.6], [1.2, -0.6]]) {

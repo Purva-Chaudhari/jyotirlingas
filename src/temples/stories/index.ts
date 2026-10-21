@@ -13,7 +13,7 @@ import { StoryMarkers } from './markers';
 import { Guide, type GuideTarget } from './guide';
 import { leadAlong, orderGoals, type PathGoal } from './path';
 import { Progress, speedLabel } from './progress';
-import type { AartiAudio, AartiYouTube, Bi, Lang, StoryStop, TempleStory } from './types';
+import type { AartiAudio, AartiPlace, AartiYouTube, Bi, Lang, StoryStop, TempleStory } from './types';
 import { detectTouch } from '../engine/profile';
 
 /** every src/temples/stories/<id>.json, each its own small lazy chunk */
@@ -49,9 +49,9 @@ const bi = (v: string | Bi | undefined, lang: Lang) => (typeof v === 'string' ? 
  * Temples whose sound is tuned so nothing clashes or stutters: while the recorded (YouTube) aarti is heard, the
  * tanpura drone fades out and stories wait for a tap instead of starting over it; a story you do start silences
  * the aarti for its length; a short walk away keeps the video playing (silently) so it never re-buffers; the
- * synthesized aarti skips beats after a slow frame instead of bunching them. (Mahakal first; others later.)
+ * synthesized aarti skips beats after a slow frame instead of bunching them. (Mahakal first, then Kashi; others later.)
  */
-const CALM_AUDIO = new Set(['mahakaleshwar']);
+const CALM_AUDIO = new Set(['mahakaleshwar', 'kashi-vishwanath']);
 
 /** one schedule entry, whatever shape the content uses ("4:00 AM Bhasma Aarti", {name, time}...) */
 function scheduleLine(list: unknown[] | undefined, lang: Lang): string {
@@ -94,6 +94,10 @@ export class StorySystem {
   private aarti: AartiPlayer | null = null;
   /** the recorded aarti's element, made now so the first tap can unlock it for iOS (see unlock.ts) */
   private aartiEl = new Audio();
+  /** the other recorded aartis (aarti.places: e.g. the Ganga Aarti on the ghat), each with its own element */
+  private places: { def: AartiPlace; file: AartiAudio | null; el: HTMLAudioElement; player: AartiPlayer | null }[] = [];
+  /** the place whose aarti is heard now (null: the darshan aarti, or none) */
+  private placeOn: (typeof this.places)[number] | null = null;
   /** the temple's real aarti on YouTube; null before the darshan spot, and after it failed */
   private yt: YouTubeAarti | null = null;
   /** why YouTube was given up on this visit ('' = not given up): the synthesized aarti plays instead */
@@ -131,7 +135,7 @@ export class StorySystem {
         const t = prog.peek(site.id);
         return { heard: !!t?.heard.includes(id), read: !!t?.read.includes(id) };
       },
-      speaking: (on) => { this.speaking = on; this.aarti?.setDuck(on); this.yt?.setDuck(on); },
+      speaking: (on) => { this.speaking = on; this.aarti?.setDuck(on); this.yt?.setDuck(on); for (const pl of this.places) pl.player?.setDuck(on); },
       // a breath between one story ending and a waiting one starting
       ended: () => (this.quietUntil = performance.now() + 1500),
     });
@@ -179,6 +183,9 @@ export class StorySystem {
       this.hud.setTotals(t);
     });
     for (const l of this.stops) this.card.prefetch(l.stop);
+    for (const def of story?.aarti?.places ?? []) {
+      this.places.push({ def, file: pickAudio(def.audio, import.meta.env.BASE_URL), el: new Audio(), player: null });
+    }
 
     world.frameHooks.push((dt, t) => this.frame(dt, t));
     window.addEventListener('keydown', (e) => this.key(e));
@@ -190,6 +197,7 @@ export class StorySystem {
       // and lets the narration and the recorded aarti start by themselves later (iOS Safari)
       this.card.unlock();
       unlockMedia(this.aartiEl);
+      for (const pl of this.places) unlockMedia(pl.el);
     };
     // (iOS counts a tap's touchend/click as the gesture, not its pointerdown)
     for (const ev of ['pointerdown', 'touchend', 'click', 'keydown']) window.addEventListener(ev, wake, { passive: true });
@@ -236,7 +244,10 @@ export class StorySystem {
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
     switch (e.code) {
       case 'KeyN': {
-        if (this.card.open) return this.card.close();
+        // as the touch Story button: a story waiting where you stand (e.g. in the sanctum, with the one you
+        // walked in with held for the aarti) is played, not the open card closed
+        const waiting = this.queued?.inside && this.queued.stop.id !== this.card.current?.id;
+        if (this.card.open && !waiting) return this.card.close();
         return this.openHere();
       }
       case 'KeyK': return this.card.toggle();
@@ -315,7 +326,7 @@ export class StorySystem {
   private busy() {
     if (performance.now() < this.quietUntil) return true;
     // the recorded aarti is playing here: a story waits for a tap rather than talking over it
-    if (this.calm && (this.yt?.audible || this.aarti?.audible)) return true;
+    if (this.calm && (this.yt?.audible || this.aarti?.audible || this.places.some((pl) => pl.player?.audible))) return true;
     const cur = this.stops.find((s) => s.stop.id === this.card.current?.id);
     return this.card.open && this.card.playing && !!cur?.inside;
   }
@@ -413,7 +424,6 @@ export class StorySystem {
     if (d && this.audioFile() && ctx) {
       // the recording: only inside the sanctum, right by the Jyotirlinga; it stops as soon as you step out
       proximity = d.zones.includes(this.world.zone) ? 1 : 0;
-      this.holdForAarti(proximity > 0);
     } else if (d) {
       const [sx, sy, sz] = d.source;
       // floors and ceilings muffle: count height difference triple
@@ -425,11 +435,32 @@ export class StorySystem {
     }
     if (!this.aarti && !this.yt && proximity > 0) this.startAarti(ctx, out);
     this.yt?.update(proximity, dt, this.master());
+    // the other places' recordings (aarti.places: the Ganga Aarti on the ghat): heard alike all through their
+    // zones (the sound follows the listener), each pausing where it is when you leave and picking up there
+    let place: (typeof this.places)[number] | null = null;
+    if (ctx && out) {
+      for (const pl of this.places) {
+        if (!pl.file) continue;
+        const here = pl.def.zones.includes(this.world.zone) ? 1 : 0;
+        if (here && !pl.player) {
+          pl.player = new AartiPlayer(ctx, out, pl.file, this.calm, pl.el);
+          pl.player.setDuck(this.speaking);
+        }
+        if (!pl.player) continue;
+        pl.player.setSource(this.p.x, this.p.y, this.p.z);
+        pl.player.update(here, dt);
+        if (here) place = pl;
+      }
+    }
+    // a recording (the sanctum's, or a place's) comes first: a story being told as you walk in waits for it
+    this.holdForAarti((!!d && !!this.audioFile() && !!ctx && proximity > 0) || !!place);
+    if (place !== this.placeOn) {
+      this.placeOn = place;
+      this.updateChipText();
+    }
     // the drone is in its own key: it gives way to a recorded aarti while that is heard
-    if (this.calm) this.sound.setDroneShare(this.yt?.isPlaying || this.aarti?.usingFile ? 1 - 0.95 * proximity : 1);
-    if (this.aarti && ctx) {
-      const src = d?.source ?? [this.p.x, this.p.y, this.p.z];
-      this.aarti.setSource(src[0], src[1], src[2]);
+    if (this.calm) this.sound.setDroneShare(place ? 0.05 : this.yt?.isPlaying || this.aarti?.usingFile ? 1 - 0.95 * proximity : 1);
+    if (ctx && (this.aarti || place)) {
       // the listener is the camera
       const l = ctx.listener, fwd = cam.getWorldDirection(new THREE.Vector3()), now = ctx.currentTime;
       if (l.positionX) {
@@ -437,10 +468,14 @@ export class StorySystem {
         l.forwardX.setValueAtTime(fwd.x, now); l.forwardY.setValueAtTime(fwd.y, now); l.forwardZ.setValueAtTime(fwd.z, now);
         l.upX.setValueAtTime(0, now); l.upY.setValueAtTime(1, now); l.upZ.setValueAtTime(0, now);
       }
+    }
+    if (this.aarti && ctx) {
+      const src = d?.source ?? [this.p.x, this.p.y, this.p.z];
+      this.aarti.setSource(src[0], src[1], src[2]);
       this.aarti.update(proximity, dt);
     }
-    if (!this.aarti && !this.yt) return;
-    const on = proximity > 0.05;
+    if (!this.aarti && !this.yt && !this.places.some((pl) => pl.player)) return;
+    const on = proximity > 0.05 || !!place;
     if (on !== this.chipOn) {
       this.chipOn = on;
       this.chip.show(on, this.progress.prefs.lyrics);
@@ -517,8 +552,15 @@ export class StorySystem {
   }
 
   private updateChipText() {
-    if (!this.aarti && !this.yt) return;
     const lang = this.progress.prefs.lang;
+    const pf = this.placeOn?.file;
+    if (pf) {
+      // a place's recording (the Ganga Aarti on the ghat): its own title and credit while it plays
+      const credit = { text: `Audio: “${pf.title ?? ''}”${pf.by ? ` by ${pf.by}` : ''}${pf.creditUrl && /youtube\.com|youtu\.be/.test(pf.creditUrl) ? ' on YouTube' : ''}`, url: pf.creditUrl };
+      this.chip.set((pf.title ?? bi(this.placeOn!.def.name, lang)).split(/ [–-] /)[0], scheduleLine(this.placeOn!.def.schedule, lang), '', null, pf.by, credit);
+      return;
+    }
+    if (!this.aarti && !this.yt) return;
     const a = this.story?.aarti;
     if (this.yt) {
       const v = this.yt.current;
@@ -543,6 +585,6 @@ export class StorySystem {
 
   /** dev/testing handle */
   debug() {
-    return { stops: this.stops.map((l) => ({ id: l.stop.id, inside: l.inside, anchor: l.anchor, marker: l.marker })), aarti: this.aarti?.level ?? 0, duck: this.aarti?.duckLevel ?? 1, usingFile: this.aarti?.usingFile ?? false, synth: !!this.aarti, recording: this.aarti?.recording ?? null, yt: this.yt?.debug() ?? null, ytFailed: this.ytFailed };
+    return { stops: this.stops.map((l) => ({ id: l.stop.id, inside: l.inside, anchor: l.anchor, marker: l.marker })), aarti: this.aarti?.level ?? 0, duck: this.aarti?.duckLevel ?? 1, usingFile: this.aarti?.usingFile ?? false, synth: !!this.aarti, recording: this.aarti?.recording ?? null, yt: this.yt?.debug() ?? null, ytFailed: this.ytFailed, places: this.places.map((pl) => ({ id: pl.def.id, on: pl === this.placeOn, recording: pl.player?.recording ?? null, audible: pl.player?.audible ?? false })) };
   }
 }

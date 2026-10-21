@@ -3,7 +3,7 @@
  * others are "coming soon" on the landing page and their addresses lead back there. Dev tools can still open
  * any temple with ?temple=<id>&preview=1.
  */
-export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath', 'somnath']);
+export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath', 'somnath', 'kashi-vishwanath']);
 
 /** every temple's address (/<id>): the open ones enter, the rest lead back to the landing page */
 export const ALL_TEMPLES: readonly string[] = [
@@ -37,6 +37,13 @@ export const TEMPLE_FILES: Readonly<Record<string, readonly string[]>> = {
     'assets/hdri/syferfontein_18d_clear_puresky.hdr',
     'assets/models/digvijay_dwar.glb', 'assets/models/somnath_torana.glb', 'assets/models/somnath_deity.glb', 'assets/models/sardar_patel.glb',
     ...scan('sandstone_blocks_08', 'rectangular_paving'),
+  ],
+  'kashi-vishwanath': [
+    'assets/hdri/kloofendal_38d_partly_cloudy_puresky_2k.hdr',
+    'assets/models/neem.glb',
+    'assets/models/neem_lod.glb',
+    ...scan('large_sandstone_blocks_01', 'large_floor_tiles_02', 'stone_tile_wall', 'beige_wall_002', 'plastered_wall_02', 'marble_01'),
+    'assets/models/ahilyabai.glb',
   ],
 };
 
@@ -85,6 +92,20 @@ export const TEMPLE_INTRO: Readonly<Record<string, { hi: string; en: string; pla
       'The new temple was consecrated on 11 May 1951, in the presence of President Rajendra Prasad.',
       'Its 150-foot shikhara carries a 10-tonne kalash and a 27-foot flagpole.',
       'The Baan Stambh on the sea wall says that from this shore to the South Pole, no land breaks the path over the sea.',
+    ],
+  },
+  'kashi-vishwanath': {
+    hi: 'श्री काशी विश्वनाथ',
+    en: 'Kashi Vishwanath Jyotirlinga',
+    place: 'Varanasi · on the west bank of the Ganga',
+    facts: [
+      'Kashi, today’s Varanasi, is counted among the oldest living cities in the world.',
+      'Kashi is called Avimukta, “never forsaken”: Shiva is said never to leave it.',
+      'The present temple was built in 1780 by Ahilyabai Holkar, queen of Indore.',
+      'Maharaja Ranjit Singh gave the gold that covers the temple’s spires, which is why it is called the Golden Temple of Varanasi.',
+      'Kashi is one of India’s seven sacred cities, and is said to grant moksha to those who die here.',
+      'The Shri Kashi Vishwanath Dham, opened on 13 December 2021, links the temple straight to the Ganga ghats.',
+      'Every evening, the Ganga Aarti is offered with great brass lamps on the ghats of Varanasi.',
     ],
   },
 };

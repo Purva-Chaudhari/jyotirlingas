@@ -40,7 +40,7 @@ export function tent(B: Merger, K: KM, P: Physics, x: number, y: number, z: numb
  * is drawn double-sided in the colour pass but the AO pre-pass renders with its own override
  * material, so from under a DoubleSide canopy the AO saw straight through it (the "ghost veil").
  */
-function twoSided(geo: THREE.BufferGeometry) {
+export function twoSided(geo: THREE.BufferGeometry) {
   const a = geo.index ? geo.toNonIndexed() : geo.clone();
   a.deleteAttribute('uv');
   a.computeVertexNormals();

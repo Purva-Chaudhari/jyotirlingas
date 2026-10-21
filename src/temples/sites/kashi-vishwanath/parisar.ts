@@ -2,9 +2,11 @@ import * as THREE from 'three';
 import { columnGeometry, garland, type Flames, type Physics } from '../../engine/kit';
 import type { KM } from './mats';
 import { Merger, cylUV } from './merge';
-import { tent } from './tent';
+import { tent, twoSided } from './tent';
 import { shivling, type Offerings } from './shivling';
 import { nandi } from './nandi';
+import { murti, type Deity } from './murti';
+import { board } from './signs';
 import { archWallGeo, archPlateGeo, nagaraSpire, SHRINE_CLUSTER, STONE_CLUSTER, kalashGeo, chhatriGeo, lathe, tieredRoofGeo, onionDome } from './spire';
 
 /**
@@ -15,6 +17,8 @@ import { archWallGeo, archPlateGeo, nagaraSpire, SHRINE_CLUSTER, STONE_CLUSTER, 
  */
 
 export const PARISAR = { x0: -34, x1: 32, z0: -26, z1: 30, depth: 6 };
+/** the darshan queue lanes along the temple's long (east and west) faces: |z| of the middle and outer rails, far end x */
+export const QLANES = { zMid: 7.7, zOut: 8.9, xFar: -13 };
 const GATE_W = 5.0; // passage width
 export const GATE_W_PUBLIC = GATE_W;
 
@@ -179,16 +183,42 @@ export function buildParisar(root: THREE.Group, K: KM, P: Physics, flames: Flame
   // ---------- Gyanvapi mandap with the well and Nandi (north of the temple) ----------
   gyanvapi(B, K, P, g, flames, O);
 
-  // ---------- restored stone shrines in the south of the court, each with its lingam ----------
-  for (const [x, z] of [[-25.5, -13], [-25.5, 13], [-25.5, 0]]) {
+  // ---------- restored stone shrines in the south of the court: Vishnu, Avimukteshwara (a lingam) and Parvati ----------
+  for (const [x, z, deity, hi, en] of [
+    [-25.5, -13, 'vishnu', 'श्री विष्णु', 'SHRI VISHNU'],
+    [-25.5, 13, 'parvati', 'माँ पार्वती · गौरी', 'MAA PARVATI · GAURI'],
+    [-25.5, 0, undefined, 'श्री अविमुक्तेश्वर महादेव', 'SHRI AVIMUKTESHWAR'],
+  ] as const) {
     B.span(K.temple, x - 2.2, 0, z - 2.2, x + 2.2, 0.45, z + 2.2, true);
     P.floor(g, x - 2.2, x + 2.2, z - 2.2, z + 2.2, 0.45);
-    cellShrine(B, K, O, P, flames, x, z, 0.45, 1.6, 3.0, 'x');
+    cellShrine(B, K, O, P, flames, x, z, 0.45, 1.6, 3.0, 'x', K.shrineStone, 0.11, deity);
+    const nb = board([[hi, 96], [en, 76]], 1.5, 0.42);
+    nb.position.set(x + 1.6 + 0.07, 0.45 + 2.62, z);
+    nb.rotation.y = Math.PI / 2;
+    g.add(nb);
     B.span(K.shrineStone, x - 1.85, 3.45, z - 1.85, x + 1.85, 3.75, z + 1.85);
     const s = nagaraSpire(1.55, 5.4, SHRINE_CLUSTER, 4);
     B.place(K.spireStone, s.body, x, 3.75, z);
     B.place(K.spireStone, s.finials, x, 3.75, z);
     B.place(K.gilt, kalashGeo(0.5), x, 3.75 + s.topY, z);
+  }
+
+  // ---------- Kala Bhairava and Shani: small canopied shrines against the west colonnade's back wall ----------
+  for (const [x, deity, hi, en] of [[-19.15, 'bhairava', 'श्री काल भैरव', 'SHRI KAAL BHAIRAV'], [20.45, 'shani', 'श्री शनिदेव', 'SHRI SHANIDEV']] as const) {
+    const zb = z0 + 0.02, zf = zb + 1.15, w = 0.85, ph = 0.35;
+    B.span(K.temple, x - w, 0, zb, x + w, ph, zf, true);
+    P.floor(g, x - w, x + w, zb, zf, ph);
+    for (const s of [-1, 1]) {
+      B.box(K.templeCol, 0.18, 2.3, 0.18, x + s * (w - 0.12), ph, zf - 0.12, true);
+      B.box(K.temple, 0.24, 0.12, 0.24, x + s * (w - 0.12), ph, zf - 0.12);
+    }
+    B.span(K.temple, x - w - 0.1, ph + 2.3, zb, x + w + 0.1, ph + 2.48, zf + 0.12);
+    B.place(K.chunarCarved, tieredRoofGeo(0.95, 3, 0.3).geo, x, ph + 2.48, zb + 0.6, 0, [1, 1, 0.65]);
+    murti(B, K, O, P, flames, deity, x, ph, zb + 0.55, 0);
+    O.strand(new THREE.Vector3(x - w + 0.1, ph + 2.15, zf + 0.02), new THREE.Vector3(x + w - 0.1, ph + 2.15, zf + 0.02), 0.32);
+    const nb = board([[hi, 100], [en, 76]], 1.4, 0.4);
+    nb.position.set(x, ph + 2.39, zf + 0.13);
+    g.add(nb);
   }
 
   // ---------- steel queue rails from the east gate to the temple steps ----------
@@ -211,7 +241,27 @@ export function buildParisar(root: THREE.Group, K: KM, P: Physics, flames: Flame
   };
   // lanes with a 1.6 m crossing gap at z 12.4–14 so one can walk straight from the gate to the steps
   for (const x of [-1.6, 1.6]) { rail(x, 21.5, x, 14.0); rail(x, 12.4, x, 7.6); }
-  for (const x of [-6.5, 6.5]) { rail(x, 19, x, 14.0); rail(x, 12.4, x, 8.5); }
+  // the darshan queue, as in the drone photographs: two railed lanes along each long face of the temple, at the
+  // plinth's foot, the outer lane entered from the court near the door and walked away from it, the inner lane
+  // walked back to the steps; white fabric canopies on poles over them. (Clear of the walkways round the court.)
+  for (const s of [1, -1]) {
+    const zi = s * QLANES.zMid, zo = s * QLANES.zOut;
+    rail(QLANES.xFar + 1.0, zi, s > 0 ? -2.0 : -1.0, zi); // between the lanes, open at the far end for the U-turn
+    rail(QLANES.xFar, zo, s > 0 ? -2.6 : -1.4, zo); // the outer rail, open near the door to enter
+    rail(QLANES.xFar, zo, QLANES.xFar, s * 6.5); // closing the far end
+    // the canopies: white cloth on steel poles, in 3 m bays
+    const z0c = s * 6.3, z1c = s * (QLANES.zOut + 0.35);
+    for (let x = QLANES.xFar + 0.3; x <= -2.4; x += 3.0) {
+      for (const z of [z0c, z1c]) { B.box(K.steel, 0.06, 2.75, 0.06, x, 0, z); P.solid(x - 0.08, 0, z - 0.08, x + 0.08, 2.75, z + 0.08); }
+    }
+    const len = -2.4 - (QLANES.xFar + 0.3), cx = (QLANES.xFar + 0.3 - 2.4) / 2, cz = (z0c + z1c) / 2, wz = Math.abs(z1c - z0c) + 0.5;
+    const cloth = new THREE.PlaneGeometry(len + 0.6, wz, 12, 4).rotateX(-Math.PI / 2);
+    const cp = cloth.attributes.position;
+    for (let i = 0; i < cp.count; i++) { const u = cp.getZ(i) / wz; cp.setY(i, 0.22 * (1 - 4 * u * u) - 0.05 * Math.cos((cp.getX(i) / 3.0) * Math.PI * 2)); }
+    cloth.computeVertexNormals();
+    B.place(K.canvas, twoSided(cloth), cx, 2.75, cz);
+    for (const z of [cz - wz / 2, cz + wz / 2]) B.span(K.canvas, cx - len / 2 - 0.3, 2.45, z - 0.01, cx + len / 2 + 0.3, 2.72, z + 0.01); // valances
+  }
 
   // a white canopy tent by the Gyanvapi mandap (as in the photographs), clear of the sight lines to the spire
   tent(B, K, P, 21.5, 0, 14.5, 0.85);
@@ -399,18 +449,47 @@ function gyanvapi(B: Merger, K: KM, P: Physics, g: THREE.Group, flames: Flames, 
   B.span(K.temple, x0 - 0.1, h + colH, z0 - 0.1, x1 + 0.1, h + colH + 0.45, z1 + 0.1);
   B.span(K.temple, x0 - 0.8, h + colH + 0.45, z0 - 0.8, x1 + 0.8, h + colH + 0.6, z1 + 0.8);
   B.span(K.temple, x0, h + colH + 0.6, z0, x1, h + colH + 1.1, z1);
-  // the well: square stone curb behind silver grilles
-  const wx = 21.8, wz = 0, ws = 1.1;
-  B.span(K.temple, wx - ws, h, wz - ws, wx + ws, h + 0.6, wz + ws, true);
-  B.span(K.dark, wx - ws + 0.15, h + 0.55, wz - ws + 0.15, wx + ws - 0.15, h + 0.61, wz + ws - 0.15);
-  for (let i = 0; i <= 10; i++) {
-    const t = -ws + (i / 10) * ws * 2;
-    for (const [x, z] of [[wx + t, wz - ws], [wx + t, wz + ws], [wx - ws, wz + t], [wx + ws, wz + t]]) {
-      B.box(K.steel, 0.035, 1.5, 0.035, x, h + 0.6, z);
-    }
+  // the well, as in the travel films: no open curb but a white marble enclosure of carved walls pierced by jali
+  // screens, lotus-bud finials on its corner posts; inside, the well's mouth covered over by the marble floor,
+  // heaped with marigolds and strewn with rose petals, bel leaves and coins (the linga, tradition says, still in it)
+  const wx = 21.8, wz = 0, ws = 1.4, wt = 0.14, wh = 1.95;
+  B.span(K.marble, wx - ws, h, wz - ws, wx + ws, h + 0.06, wz + ws); // the covered floor
+  const side = (x0: number, z0: number, x1: number, z1: number) => {
+    B.span(K.marble, x0, h, z0, x1, h + 0.72, z1); // carved dado
+    B.span(K.marble, x0, h + 0.72, z0, x1, h + 0.8, z1); // sill
+    B.span(K.jali, x0 + (x1 - x0 > 1 ? 0.1 : 0), h + 0.8, z0 + (z1 - z0 > 1 ? 0.1 : 0), x1 - (x1 - x0 > 1 ? 0.1 : 0), h + 1.62, z1 - (z1 - z0 > 1 ? 0.1 : 0));
+    B.span(K.marble, x0, h + 1.62, z0, x1, h + wh, z1); // frieze
+  };
+  side(wx - ws, wz - ws, wx + ws, wz - ws + wt);
+  side(wx - ws, wz + ws - wt, wx + ws, wz + ws);
+  // the west side, toward Nandi, open in its middle: a doorway with a low silver rail to look in at the well
+  const dw = 0.45;
+  side(wx - ws, wz - ws + wt, wx - ws + wt, wz - dw);
+  side(wx - ws, wz + dw, wx - ws + wt, wz + ws - wt);
+  B.span(K.marble, wx - ws, h + 1.62, wz - dw, wx - ws + wt, h + wh, wz + dw); // lintel over the doorway
+  B.span(K.silverBright, wx - ws - 0.02, h + 0.55, wz - dw, wx - ws + 0.02, h + 0.6, wz + dw);
+  side(wx + ws - wt, wz - ws + wt, wx + ws, wz + ws - wt);
+  // an open coping round the top
+  for (const [a0, a1, b0, b1] of [[-ws - 0.06, ws + 0.06, -ws - 0.06, -ws + wt + 0.02], [-ws - 0.06, ws + 0.06, ws - wt - 0.02, ws + 0.06],
+    [-ws - 0.06, -ws + wt + 0.02, -ws + wt, ws - wt], [ws - wt - 0.02, ws + 0.06, -ws + wt, ws - wt]]) {
+    B.span(K.marble, wx + a0, h + wh, wz + b0, wx + a1, h + wh + 0.08, wz + b1);
   }
-  B.span(K.steel, wx - ws - 0.04, h + 2.1, wz - ws - 0.04, wx + ws + 0.04, h + 2.18, wz + ws + 0.04);
-  P.solid(wx - ws - 0.1, h, wz - ws - 0.1, wx + ws + 0.1, h + 2.2, wz + ws + 0.1);
+  const bud = lathe([[0, 0], [0.1, 0], [0.1, 0.05], [0.07, 0.08], [0.11, 0.16], [0.09, 0.24], [0.04, 0.3], [0.02, 0.34], [0, 0.36]], 16, 8, 0.12);
+  for (const [x, z] of [[wx - ws, wz - ws], [wx + ws, wz - ws], [wx - ws, wz + ws], [wx + ws, wz + ws]]) {
+    B.box(K.marble, 0.24, wh + 0.1, 0.24, x, h, z);
+    B.place(K.marble, bud, x, h + wh + 0.1, z);
+  }
+  P.solid(wx - ws - 0.15, h, wz - ws - 0.15, wx + ws + 0.15, h + wh + 0.5, wz + ws + 0.15);
+  // the offerings on the covered well: two heaps of marigold garlands, petals and bel everywhere, coins
+  O.heap(wx - 0.5, h + 0.06, wz - 0.55, 0.32, 0.14, 26);
+  O.heap(wx + 0.35, h + 0.06, wz + 0.45, 0.36, 0.12, 30);
+  O.scatter(wx - ws + 0.2, wx + ws - 0.2, wz - ws + 0.2, wz + ws - 0.2, h + 0.065, 70, 0.3);
+  const coin = new THREE.CylinderGeometry(0.012, 0.012, 0.003, 12);
+  const coinM = new THREE.MeshStandardMaterial({ color: 0xc9b37a, metalness: 1, roughness: 0.35 });
+  for (let i = 0; i < 26; i++) {
+    const a = i * 2.39996, r = 0.25 + ((i * 37) % 100) / 100;
+    B.place(coinM, coin, wx + Math.cos(a) * r, h + 0.064, wz + Math.sin(a) * r * 0.9);
+  }
   // Nandi, seated, polished dark stone, facing north (+x) as at Kashi
   nandi(g, K, O, 17.6, h, 0);
   P.solid(16.0, h, -0.85, 19.5, h + 2.2, 0.85);
@@ -422,7 +501,7 @@ function gyanvapi(B: Merger, K: KM, P: Physics, g: THREE.Group, flames: Flames, 
  * A small shrine cell (half-size `half`, walls `wallH` high on a base at y0) with its doorway on the
  * +x or +z face, and a shivling inside facing the door. Pranala to the north (+x).
  */
-export function cellShrine(B: Merger, K: KM, O: Offerings, P: Physics, flames: Flames, x: number, z: number, y0: number, half: number, wallH: number, door: 'x' | 'z', mat: THREE.Material = K.shrineStone, lingR = 0.11) {
+export function cellShrine(B: Merger, K: KM, O: Offerings, P: Physics, flames: Flames, x: number, z: number, y0: number, half: number, wallH: number, door: 'x' | 'z', mat: THREE.Material = K.shrineStone, lingR = 0.11, deity?: Deity) {
   const t = 0.32, dw = Math.min(1.0, half * 0.75);
   const yt = y0 + wallH;
   const wall = (x0: number, z0: number, x1: number, z1: number, ya = y0, yb = yt, solid = true) => B.span(mat, x + x0, ya, z + z0, x + x1, yb, z + z1, solid);
@@ -439,10 +518,14 @@ export function cellShrine(B: Merger, K: KM, O: Offerings, P: Physics, flames: F
   // carved door frame
   const [fx, fz, ry] = door === 'x' ? [x + half + 0.03, z, Math.PI / 2] : [x, z + half + 0.03, 0];
   B.place(K.temple, archWallGeo(dw + 0.5, 2.25, 0.08, dw, 1.55, 0.45, 5), fx, y0, fz, ry);
-  // the lingam, a lamp and a garland at the door
+  // the lingam (or the shrine's murti, against the back wall, facing the door), a lamp and a garland at the door
   const face = door === 'x' ? 0 : Math.PI / 2;
-  shivling(B, K, O, x - (door === 'x' ? 0.15 : 0), y0, z - (door === 'z' ? 0.15 : 0), { r: lingR, pitha: 'round', face, adorn: 0.7 });
-  P.solid(x - 0.55, y0, z - 0.55, x + 0.55, y0 + 0.8, z + 0.55);
+  if (deity) {
+    murti(B, K, O, P, flames, deity, x - (door === 'x' ? half - 0.75 : 0), y0, z - (door === 'z' ? half - 0.75 : 0), door === 'x' ? Math.PI / 2 : 0);
+  } else {
+    shivling(B, K, O, x - (door === 'x' ? 0.15 : 0), y0, z - (door === 'z' ? 0.15 : 0), { r: lingR, pitha: 'round', face, adorn: 0.7 });
+    P.solid(x - 0.55, y0, z - 0.55, x + 0.55, y0 + 0.8, z + 0.55);
+  }
   const [lx, lz] = door === 'x' ? [x + half - 0.5, z + dw / 2 + 0.15] : [x + dw / 2 + 0.15, z + half - 0.5];
   flames.points.push(new THREE.Vector3(lx, y0 + 0.08, lz));
   const a = door === 'x' ? new THREE.Vector3(x + half + 0.1, y0 + 2.15, z - dw / 2 - 0.1) : new THREE.Vector3(x - dw / 2 - 0.1, y0 + 2.15, z + half + 0.1);

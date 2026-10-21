@@ -6,6 +6,8 @@ import {
   nagaraSpire, KASHI_CLUSTER, STONE_CLUSTER, SHRINE_CLUSTER, onionDome, petalRing, kalashGeo, archWallGeo, archPlateGeo, lathe,
 } from './spire';
 import { buildSanctum } from './sanctum';
+import { murti } from './murti';
+import { board } from './signs';
 import { aoMass } from './ao';
 import { shivling, type Offerings } from './shivling';
 
@@ -390,7 +392,7 @@ export function buildTemple(root: THREE.Group, K: KM, P: Physics, flames: Flames
   B.place(K.spireStone, ss.finials, sx, SY - 0.05, 0);
   Gd.place(K.gold, kalashGeo(1.0), sx, SY - 0.05 + ss.topY, 0);
 
-  // ---------- small stone shrine to the north, with its own lingam ----------
+  // ---------- small stone shrine to the north, of Ganesha and Kartikeya ----------
   const nx = 10.6, nz = -2.0, nh = 2.1;
   B.span(K.temple, nx - 2.6, 0, nz - 2.6, nx + 2.6, 0.5, nz + 2.6, true);
   P.floor(g, nx - 2.6, nx + 2.6, nz - 2.6, nz + 2.6, 0.5);
@@ -404,7 +406,14 @@ export function buildTemple(root: THREE.Group, K: KM, P: Physics, flames: Flames
   B.place(K.spireStone, ns.body, nx, 4.35, nz);
   B.place(K.spireStone, ns.finials, nx, 4.35, nz);
   Gd.place(K.gold, kalashGeo(0.6), nx, 4.35 + ns.topY, nz);
-  shivling(B, K, O, nx, 0.5, nz - 0.3, { r: 0.1, pitha: 'square', face: Math.PI / 2, adorn: 0.7 });
+  // Ganesha and his brother Kartikeya, side by side against the back wall, facing the door (east)
+  murti(B, K, O, P, flames, 'ganesha', nx - 0.55, 0.5, nz - 0.95, 0);
+  murti(B, K, O, P, flames, 'kartikeya', nx + 0.6, 0.5, nz - 0.95, 0);
+  {
+    const nb = board([['श्री गणेश · श्री कार्तिकेय', 84], ['SHRI GANESH · SHRI KARTIKEYA', 62]], 1.7, 0.42);
+    nb.position.set(nx, 3.15, nz + nh + 0.03);
+    g.add(nb);
+  }
   flames.points.push(new THREE.Vector3(nx - 0.6, 0.62, nz + 0.6));
   O.strand(new THREE.Vector3(nx - 0.6, 2.4, nz + nh + 0.05), new THREE.Vector3(nx + 0.6, 2.4, nz + nh + 0.05), 0.3);
 
