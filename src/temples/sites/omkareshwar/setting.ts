@@ -6,9 +6,11 @@ import { waterNormals } from '../../engine/materials';
 import { Batch, Instances } from './batch';
 import type { OM } from './mats';
 import { WATER_Y, JHOOLA, MAMLESHWAR, LANE, GHAT } from './layout';
+import { buildMamleshwar } from './mamleshwar';
 import { rekhaGeometry, phamsanaGeometry, rnd, reseed } from './util';
 import { boatGeometries, canopyGeometry, polesGeometry } from './boats';
 import { leafTrees } from './nature';
+import { ISLAND_MAP, ISLAND_SDF, ISLAND_BITS } from './islandmap';
 
 /**
  * Mandhata island and the Narmada: the island's hill crowded with pastel houses and the old palace,
@@ -32,8 +34,88 @@ export const bankN = (x: number) => 38 + 7 * Math.sin(x / 70 + 0.6) * smooth(60,
 /** the south bank's water line */
 export const bankS = (x: number) => 196 + 9 * Math.sin(x / 95 + 1.2) + (x > 300 ? (x - 300) * 0.1 : 0);
 
-/** Ground height (m). Hidden under the built-up core where floors and galleries stand. */
+// ---------- the island's real outline (OpenStreetMap), for the far terrain ----------
+const IM = ISLAND_MAP;
+const unb64 = (b: string) => Uint8Array.from(atob(b), (c) => c.charCodeAt(0));
+const SDF = new Int8Array(unb64(ISLAND_SDF).buffer);
+const BITS = unb64(ISLAND_BITS);
+/** signed distance (m) to the real water's edge: water positive, land negative */
+function realSdf(x: number, z: number) {
+  const fx = Math.min(IM.nx - 1.001, Math.max(0, (x - IM.x0) / IM.cell)), fz = Math.min(IM.nz - 1.001, Math.max(0, (z - IM.z0) / IM.cell));
+  const i = Math.floor(fx), j = Math.floor(fz), u = fx - i, v = fz - j, k = j * IM.nx + i;
+  const a = SDF[k], b = SDF[k + 1], c = SDF[k + IM.nx], d = SDF[k + IM.nx + 1];
+  return 2 * (a * (1 - u) * (1 - v) + b * u * (1 - v) + c * (1 - u) * v + d * u * v);
+}
+function onIsland(x: number, z: number) {
+  const i = Math.round((x - IM.x0) / IM.cell), j = Math.round((z - IM.z0) / IM.cell);
+  if (i < 0 || j < 0 || i >= IM.nx || j >= IM.nz) return false;
+  const k = j * IM.nx + i;
+  return ((BITS[k >> 3] >> (7 - (k & 7))) & 1) === 1;
+}
+/** Mandhata's rise from the water: bedded rock, then the hill to its summit plateau (~ +80) */
+function islandRise(x: number, z: number, d: number) {
+  let rise = 12.8 * smooth(6, 13, d);
+  rise = Math.floor(rise / 0.9) * 0.9 + smooth(0.55, 1.0, (rise / 0.9) % 1) * 0.9;
+  const hill = Math.max(0, d - 26) * 0.46 * (0.75 + 0.35 * Math.sin(x / 160 + 0.4)) - Math.max(0, d - 260) * 0.25;
+  const h = -22 + 7 * smooth(-3, 1.5, d) + 2.2 * smooth(3, 9, d) + rise + hill + (fbm(x / 40, z / 40) - 0.5) * 8 * smooth(10, 50, d);
+  return Math.min(h, 82 + (fbm(x / 60, z / 60) - 0.5) * 10);
+}
+/** the mainland banks: a short rocky rise, then gently up to the plateau */
+function bankRise(x: number, z: number, d: number) {
+  return -22 + 16 * smooth(-4, 10, d) + Math.max(0, d - 10) * 0.08 + Math.min(30, Math.max(0, d - 180) * 0.1) + (fbm(x / 50, z / 50) - 0.5) * 5 * smooth(10, 40, d);
+}
+function farHeight(x: number, z: number) {
+  const s = realSdf(x, z);
+  if (s > 0) return -22;
+  return onIsland(x, z) ? islandRise(x, z, -s) : bankRise(x, z, -s);
+}
+/** the southern arm in the real outline at x: its north and south banks (cached per 5 m) */
+const bandCache = new Map<number, [number, number] | null>();
+function realBand(x: number): [number, number] | null {
+  const key = Math.round(x / 5) * 5;
+  if (bandCache.has(key)) return bandCache.get(key)!;
+  let best: [number, number] | null = null, bestD = Infinity, start: number | null = null;
+  for (let z = -900; z <= 760; z += 5) {
+    const wet = realSdf(key, z) > 0;
+    if (wet && start === null) start = z;
+    if ((!wet || z === 760) && start !== null) {
+      const d = Math.abs((start + z) / 2 - 117);
+      if (d < bestD) { bestD = d; best = [start, z]; }
+      start = null;
+    }
+  }
+  bandCache.set(key, best);
+  return best;
+}
+// the detailed model holds round the temple (this box); 380 m beyond it, the real outline takes over
+const NEAR = { x0: -380, x1: 420, z0: -320, z1: 440, blend: 380 };
+
+/**
+ * Ground height (m). Round the temple, the detailed model (modelHeight); beyond, Mandhata island and the
+ * Narmada's two arms as they are mapped (subtle from the ground: from the air the island's wedge, which
+ * people liken to an Om); between, the southern arm bends smoothly from the model's bed into the real one.
+ */
 export function heightAt(x: number, z: number): number {
+  const ox = Math.max(0, NEAR.x0 - x, x - NEAR.x1), oz = Math.max(0, NEAR.z0 - z, z - NEAR.z1);
+  if (ox === 0 && oz === 0) return modelHeight(x, z);
+  const t = 1 - smooth(0, NEAR.blend, Math.hypot(ox, oz));
+  if (t <= 0) return farHeight(x, z);
+  const rb = realBand(x);
+  let hT = farHeight(x, z);
+  if (rb) {
+    const k = 1 - t, bn = THREE.MathUtils.lerp(bankN(x), rb[0], k), bs = THREE.MathUtils.lerp(bankS(x), rb[1], k);
+    const band = z >= bn && z <= bs ? -22 : z < bn ? islandRise(x, z, bn - z) : bankRise(x, z, z - bs);
+    hT = THREE.MathUtils.lerp(hT, band, smooth(0, 0.3, t));
+  }
+  // land meeting land eases over the whole blend (no step in the hill); where either is the river, the model
+  // gives way fast so the bed stays one connected channel
+  const hm = modelHeight(x, z);
+  const dry = hm > WATER_Y + 1 && hT > WATER_Y + 1;
+  return THREE.MathUtils.lerp(hT, hm, dry ? t : t ** 4);
+}
+
+/** The detailed model of the ground round the temple (heightAt blends it into the mapped island beyond). */
+function modelHeight(x: number, z: number): number {
   const zn = bankN(x), zs = bankS(x);
   let h: number;
   if (z < zn + 4) {
@@ -94,8 +176,8 @@ export function heightAt(x: number, z: number): number {
 }
 
 export const PALACE = { x: -82, z: -46, y: 14, w: 58, d: 14, h: 15 };
-/** Ekatma Dham on the summit (~1.1 km WNW of the temple) */
-export const EKATMA = { x: -1100, z: -120 };
+/** Ekatma Dham on the island's summit plateau, north-west of the temple (on Mandhata in the mapped outline) */
+export const EKATMA = { x: -950, z: -830 };
 
 /** Rock, scrub and grass by slope and height, as vertex colours under the rock scan. */
 function groundColor(x: number, z: number, h: number, slope: number, out: THREE.Color) {
@@ -313,14 +395,14 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
   // ---------- the Narmada ----------
   const water = new Water(new THREE.PlaneGeometry(6000, 6000), {
     textureWidth: 512, textureHeight: 512, waterNormals: waterNormals(), sunDirection: sunDir.clone(),
-    sunColor: 0xfff0d8, waterColor: 0x46523e, distortionScale: 1.7, fog: true, alpha: 1,
+    sunColor: 0xfff0d8, waterColor: 0x2a7472, distortionScale: 1.7, fog: true, alpha: 1,
   });
-  // the Narmada's teal-green: tint what the water mirrors, not only its body colour (photos 2021-2025)
+  // the Narmada's clear blue-green (tour and drone videos): the sky's blue mirrored, pulled a little to teal
   water.material.fragmentShader = water.material.fragmentShader.replace(
     'vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.w + distortion ) );',
-    'vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.w + distortion ) ) * vec3( 0.66, 0.74, 0.66 );')
-    // slightly turbid river: cap the mirror at ~0.55 so the water's own grey-green body shows through
-    .replace('float reflectance = rf0 + ( 1.0 - rf0 ) * pow( ( 1.0 - theta ), 5.0 );', 'float reflectance = min( 0.3, rf0 + ( 1.0 - rf0 ) * pow( ( 1.0 - theta ), 5.0 ) );');
+    'vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.w + distortion ) ) * vec3( 0.5, 0.74, 0.8 );')
+    // cap the mirror at ~0.6 so the water's own deep teal body still shows through
+    .replace('float reflectance = rf0 + ( 1.0 - rf0 ) * pow( ( 1.0 - theta ), 5.0 );', 'float reflectance = min( 0.6, rf0 + ( 1.0 - rf0 ) * pow( ( 1.0 - theta ), 5.0 ) );');
   water.rotation.x = -Math.PI / 2;
   water.position.set(0, WATER_Y, 100);
   water.material.uniforms.size.value = 2.2;
@@ -372,7 +454,8 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
     if (rnd() < 0.45) tanks.at(x + (rnd() - 0.5) * w * 0.5, base + hh, z + (rnd() - 0.5) * d * 0.5);
     occupied.push([x, z, Math.max(w, d) / 2]);
   };
-  occupied.push([PALACE.x, PALACE.z, 32], [0, -2, 40], [MAMLESHWAR.x, MAMLESHWAR.z, 18], [JHOOLA.x, 200, 8], [JHOOLA.x, 211, 9], [JHOOLA.x, 20, 6]);
+  occupied.push([PALACE.x, PALACE.z, 32], [0, -2, 40], [-38, 6, 14], // (the old fortress terrace west of the galleries)
+     [MAMLESHWAR.x, MAMLESHWAR.z, 28], [JHOOLA.x, 200, 8], [JHOOLA.x, 211, 9], [JHOOLA.x, 20, 6]);
   // island: denser near the river, thinning up the hill
   for (let i = 0; i < 2600 && houseCols.length < 400; i++) {
     const x = -320 + rnd() * 560;
@@ -396,6 +479,7 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
     const x = -420 + rnd() * 800;
     const z = bankS(x) + 12 + Math.pow(rnd(), 1.4) * 220;
     if (Math.abs(x) > 260 && rnd() < 0.6) continue;
+    if (heightAt(x, z) < WATER_Y + 1) continue; // (never in the river where it bends away east)
     const w = 6 + rnd() * 7, d = 6 + rnd() * 6;
     if (!free(x, z, Math.max(w, d) / 2)) continue;
     addHouse(x, z, w, d, (1 + Math.floor(rnd() * 3)) * 3.0 + 0.6, (rnd() - 0.5) * 0.25, -1);
@@ -415,7 +499,8 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
   for (let i = 0; i < 60000 && treeSpots.length < 6500; i++) {
     const x = -900 + rnd() * 1460, z = -360 + rnd() * 800;
     const zn = bankN(x), zs = bankS(x);
-    if (z > zn - 4 && z < zs + 6) continue;
+    const nearX = x > NEAR.x0 && x < NEAR.x1; // (beyond, the mapped outline decides: the height check below)
+    if (nearX && z > zn - 4 && z < zs + 6) continue;
     if (x > -50 && x < 45 && z > -24 && z < 30) continue;
     if (x > 28 && x < 128 && z > 10 && z < 28) continue;
     if (x > 60 && x < 200 && z > bankN(x) - 30 && z < bankN(x) + 10) continue;
@@ -424,7 +509,7 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
     const hgt = heightAt(x, z);
     if (hgt < WATER_Y + 4) continue;
     // clumps: denser where a low-frequency noise says so, and densest on the island hill above the town
-    const island = z < zn;
+    const island = nearX ? z < zn : onIsland(x, z);
     const clump = fbm(x / 45 + 11, z / 45);
     const want = island ? (hgt > 20 ? 1.0 : 0.6) * smooth(0.25, 0.5, clump) + 0.15 : 0.4 * smooth(0.38, 0.6, clump);
     if (rnd() > want) continue;
@@ -432,6 +517,23 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
     if (treeOcc.has(cell) || !free(x, z, 2.2)) continue;
     treeOcc.add(cell);
     treeSpots.push([x, hgt, z, 8 + rnd() * 8]);
+  }
+  // the rest of Mandhata, beyond the town (the mapped outline): scrub forest in clumps over the whole island,
+  // thinner than by the temple
+  for (let i = 0, n = 0; i < 90000 && n < 9000; i++) {
+    const isle = i % 3 !== 2; // two in three tries on the island, the rest on the mainland round it
+    const x = isle ? -1900 + rnd() * 2800 : -2400 + rnd() * 4600, z = isle ? -1220 + rnd() * 1000 : -2300 + rnd() * 3900;
+    if (x > -900 && x < 560 && z > -360 && z < 440) continue; // (the area above)
+    if (onIsland(x, z) !== isle) continue;
+    const hgt = heightAt(x, z);
+    if (hgt < WATER_Y + 4) continue;
+    const clump = smooth(0.3, 0.55, fbm(x / 45 + 11, z / 45));
+    if (rnd() > (isle ? 0.3 + 0.7 * clump : 0.05 + 0.45 * clump)) continue;
+    const cell = `${Math.floor(x / 3.2)},${Math.floor(z / 3.2)}`;
+    if (treeOcc.has(cell) || Math.hypot(x - EKATMA.x, z - EKATMA.z) < 44) continue;
+    treeOcc.add(cell);
+    treeSpots.push([x, hgt, z, 8 + rnd() * 8]);
+    n++;
   }
   // a ring of trees round the Ekatma Dham plaza on the summit
   for (let i = 0; i < 40; i++) {
@@ -463,27 +565,11 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
     }
   }
 
-  // ---------- Mamleshwar (Amaleshwar) on the south bank ----------
+  // ---------- Mamleshwar (Amaleshwar) on the south bank: its walled court of temples (mamleshwar.ts) ----------
   {
     const { x, z } = MAMLESHWAR;
-    const y = heightAt(x, z);
-    const stone = K.oldStone;
-    B.span(K.plaster, x - 16, x + 16, y - 6, y + 1.4, z - 14, z + 14);
-    B.span(stone, x - 5.5, x + 5.5, y + 1.4, y + 2.4, z - 9, z + 9);
-    B.span(stone, x - 4.2, x + 4.2, y + 2.4, y + 7.2, z - 7.5, z + 1.5);
-    const sp = rekhaGeometry(4.0, 14, 11);
-    sp.translate(x, y + 7.2, z - 3);
-    B.add(K.shikhara, sp);
-    // mandapa in front (facing north, to the river) with a phamsana roof
-    B.span(stone, x - 4.6, x + 4.6, y + 2.4, y + 6.0, z - 15, z - 7.5);
-    for (const p of phamsanaGeometry(5)) { p.scale(5, 3, 4.4); p.translate(x, y + 6.0, z - 11.2); B.add(stone, p); }
-    // two smaller shrines
-    for (const sx of [-1, 1]) {
-      B.span(stone, x + sx * 10 - 2, x + sx * 10 + 2, y + 1.4, y + 4.4, z - 2, z + 2);
-      const s2 = rekhaGeometry(1.8, 6, 8);
-      s2.translate(x + sx * 10, y + 4.4, z);
-      B.add(K.shikhara, s2);
-    }
+    const y = heightAt(x, z) + 1.4;
+    buildMamleshwar(B, K, x, y, z);
     // ghat steps below it to the water
     for (let i = 0; i < 26; i++) {
       const zz = bankS(x) - 3 + i * 0.6;
@@ -500,16 +586,36 @@ export function buildSetting(root: THREE.Group, K: OM, P: Physics, flames: Flame
   {
     const bx = -300, y = -1.5;
     const z0 = bankN(bx) - 14, z1 = bankS(bx) + 12;
-    B.span(K.concrete, bx - 4.2, bx + 4.2, y - 1.4, y, z0, z1);
-    B.span(K.concrete, bx - 4.3, bx - 3.9, y, y + 1.1, z0, z1);
-    B.span(K.concrete, bx + 3.9, bx + 4.3, y, y + 1.1, z0, z1);
-    for (let zz = z0 + 18; zz < z1 - 8; zz += 24) B.span(K.concrete, bx - 3, bx + 3, -24, y - 1.4, zz - 1.2, zz + 1.2);
+    // white concrete girder deck on slim round piers; yellow-and-black railings, steel wires above, saffron
+    // flags every ~12 m (tour and drone videos)
+    B.span(K.whiteConcrete, bx - 3.2, bx + 3.2, y - 1.6, y, z0, z1);
+    B.span(K.concrete, bx - 2.6, bx + 2.6, y, y + 0.05, z0, z1);
+    for (const sx of [-1, 1]) {
+      B.span(K.whiteConcrete, bx + sx * 3.1 - 0.15, bx + sx * 3.1 + 0.15, y - 0.4, y + 0.3, z0, z1);
+      B.span(K.railYellow, bx + sx * 3.0 - 0.04, bx + sx * 3.0 + 0.04, y + 0.3, y + 1.1, z0, z1);
+      B.span(K.railBlack, bx + sx * 3.0 - 0.06, bx + sx * 3.0 + 0.06, y + 1.1, y + 1.18, z0, z1);
+      for (const wy of [1.6, 2.0, 2.4]) B.span(K.steel, bx + sx * 3.0 - 0.012, bx + sx * 3.0 + 0.012, y + wy, y + wy + 0.02, z0, z1);
+      for (let zz = z0 + 3; zz < z1; zz += 12) {
+        B.span(K.steel, bx + sx * 3.0 - 0.04, bx + sx * 3.0 + 0.04, y + 0.3, y + 3.6, zz - 0.04, zz + 0.04);
+        const flag = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, -0.6, 0), new THREE.Vector3(0, -0.3, 0.9)]);
+        flag.translate(bx + sx * 3.0, y + 3.6, zz).computeVertexNormals();
+        B.add(K.saffron, flag);
+      }
+    }
+    for (let zz = z0 + 40; zz < z1 - 30; zz += 70) {
+      B.add(K.whiteConcrete, new THREE.CylinderGeometry(1.1, 1.1, y - 1.6 + 24, 16).translate(bx, (y - 1.6 - 24) / 2, zz));
+    }
   }
   {
-    const dx = 640, y0 = -24, y1 = 10;
-    B.span(K.concrete, dx - 6, dx + 6, y0, y1 - 4, -60, 340);
-    for (let zz = -50; zz < 330; zz += 14) B.span(K.concrete, dx - 7, dx + 7, y0, y1, zz - 1.5, zz + 1.5);
-    B.span(K.concrete, dx - 5, dx + 5, y1, y1 + 1.2, -60, 340);
+    // the Omkareshwar dam on its mapped line (OpenStreetMap way 144901568): a long diagonal wall across the
+    // Narmada upstream of the island's head, its spillway piers along it
+    const ax = 1390, az = -50, bx2 = 926, bz2 = 788, y0 = -24, y1 = 10;
+    const L = Math.hypot(bx2 - ax, bz2 - az), ang = Math.atan2(bz2 - az, bx2 - ax), cx = (ax + bx2) / 2, cz = (az + bz2) / 2;
+    const along = (w: number, h0: number, h1: number, d: number, at = 0) =>
+      B.add(K.concrete, new THREE.BoxGeometry(w, h1 - h0, d).translate(at, (h0 + h1) / 2, 0).rotateY(-ang).translate(cx, 0, cz));
+    along(L, y0, y1 - 4, 12);
+    along(L, y1, y1 + 1.2, 10);
+    for (let u = -L / 2 + 10; u < L / 2 - 10; u += 14) along(3, y0, y1, 14, u);
   }
 
   // ---------- boats with yellow canopies moored along the ghats, a few out on the river ----------
@@ -572,16 +678,48 @@ function buildJhoola(B: Batch, K: OM, g: THREE.Group, P: Physics) {
     post.at(x - hw, y, zz);
     post.at(x + hw, y, zz);
   }
-  // towers: two portal frames with a top beam, orange-red, standing on piers
-  const TH = 19;
+  // red steel lattice trusses along both sides of the deck (drone video: the deck reads as a red truss girder)
+  {
+    const c = document.createElement('canvas');
+    c.width = 256; c.height = 64;
+    const x2 = c.getContext('2d')!;
+    x2.strokeStyle = '#fff';
+    x2.lineWidth = 7;
+    x2.strokeRect(0, 3, 256, 58);
+    x2.beginPath();
+    for (let i = 0; i <= 256; i += 64) { x2.moveTo(i, 0); x2.lineTo(i, 64); x2.moveTo(i, 64); x2.lineTo(i + 32, 0); x2.lineTo(i + 64, 64); }
+    x2.stroke();
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    const len = z1 - z0;
+    t.repeat.set(len / 6, 1);
+    const truss = new THREE.MeshStandardMaterial({ color: 0xa8323a, metalness: 0.35, roughness: 0.55, alphaMap: t, alphaTest: 0.5, side: THREE.DoubleSide });
+    for (const sx of [-1, 1]) {
+      const pl = new THREE.Mesh(new THREE.PlaneGeometry(len, 1.6).rotateY(Math.PI / 2), truss);
+      pl.position.set(x + sx * (hw + 0.12), y - 0.1, (z0 + z1) / 2);
+      g.add(pl);
+    }
+  }
+  // a pitched red corrugated roof on red steel frames over the deck near both ends (tour video: walking the bridge)
+  for (const [ra, rb] of [[z0 + 2, towers[0] + 40], [towers[1] - 40, z1 - 2]]) {
+    for (const s of [-1, 1]) {
+      B.add(K.bridgeRoof, new THREE.BoxGeometry(hw + 0.5, 0.05, rb - ra).rotateZ(-s * 0.32).translate(x + s * (hw + 0.5) / 2, y + 2.75, (ra + rb) / 2));
+    }
+    B.span(K.bridgeRoof, x - 0.12, x + 0.12, y + 2.98, y + 3.06, ra, rb);
+    for (let zz = ra; zz <= rb; zz += 3) {
+      for (const s of [-1, 1]) B.span(K.bridgeTruss, x + s * hw - 0.04, x + s * hw + 0.04, y, y + 2.55, zz - 0.04, zz + 0.04);
+    }
+  }
+  // towers: a tall, slender cream concrete pylon pair on each bank with a top beam (drone video), standing on the rock
+  const TH = 24;
   const towerTopY = y + TH;
   for (const tz of towers) {
     const baseY = Math.min(heightAt(x, tz), WATER_Y) - 2;
     for (const s of [-1, 1]) {
-      B.span(K.bridgeRed, x + s * (hw + 0.8) - 0.4, x + s * (hw + 0.8) + 0.4, y - 0.8, towerTopY, tz - 0.5, tz + 0.5);
-      B.span(K.concrete, x + s * (hw + 0.8) - 1.0, x + s * (hw + 0.8) + 1.0, baseY, y - 0.8, tz - 1.1, tz + 1.1);
+      B.span(K.bridgeTower, x + s * (hw + 0.8) - 0.6, x + s * (hw + 0.8) + 0.6, baseY, towerTopY, tz - 1.1, tz + 1.1);
     }
-    for (const yy of [towerTopY - 0.8, y + 4.2]) B.span(K.bridgeRed, x - hw - 1.2, x + hw + 1.2, yy, yy + 0.7, tz - 0.4, tz + 0.4);
+    for (const yy of [towerTopY - 1.2, y + 4.2]) B.span(K.bridgeTower, x - hw - 1.4, x + hw + 1.4, yy, yy + 1.0, tz - 0.9, tz + 0.9);
+    B.span(K.bridgeRed, x - hw - 1.5, x + hw + 1.5, towerTopY, towerTopY + 0.35, tz - 1.0, tz + 1.0);
   }
   // main cables: catenary-like parabola between tower tops, back-stays to the anchorages on each bank
   const cableY = (z: number) => {
@@ -624,36 +762,117 @@ function buildBoats(g: THREE.Group, K: OM) {
   const canopy = new Instances(can, K.tarp);
   const poles = new Instances(frame, K.steel);
   const hullCols: THREE.Color[] = [], woodCols: THREE.Color[] = [], canCols: THREE.Color[] = [];
-  // faded paint and cloth (c17, c32): ~30 % less saturated than poster colours
-  const fade = (hex: number, l = 0) => { const c = new THREE.Color(hex), hsl = { h: 0, s: 0, l: 0 }; c.getHSL(hsl); return c.setHSL(hsl.h, hsl.s * 0.68, hsl.l + l); };
-  const HULL = [0xe9e6dc, 0x3f74a8, 0x3d8a5c, 0xe9e6dc, 0x4a8cbc, 0xd9c45a, 0xb8462e, 0x2f8a8a];
-  const CAN = [0xf2cc2a, 0xf0c010, 0xe8b820, 0x34a46a, 0x2fb0a0, 0xf2f0e6, 0xf2cc2a, 0x3a9c58];
+  // sun-faded paint and cloth: ~15 % less saturated than poster colours
+  const fade = (hex: number, l = 0) => { const c = new THREE.Color(hex), hsl = { h: 0, s: 0, l: 0 }; c.getHSL(hsl); return c.setHSL(hsl.h, hsl.s * 0.85, hsl.l + l); };
+  // bright striped hulls and single-colour flat canopies, emerald green the commonest (drone videos)
+  const HULL = [0xc8323a, 0xd6407a, 0xe9e6dc, 0x3d8fd6, 0x3d8a5c, 0xe9e6dc, 0xd9c45a, 0x2f8a8a];
+  // teal-green and lemon-yellow the commonest, some white, the odd red (drone videos; ghat photograph)
+  const CAN = [0x2aa36a, 0x2aa36a, 0x26b3a6, 0x26b3a6, 0xf0c630, 0xf0c630, 0xf0c630, 0xf2f0e6, 0x2aa36a, 0xc8402e];
+  // the fittings seen at the ghat (photograph): a printed, many-coloured canopy on some boats, a white name
+  // board on the canopy's bow edge, an orange outboard engine on the stern, orange life jackets on the benches,
+  // a saffron flag on a pole at the bow
+  const printed = new Instances(can, new THREE.MeshStandardMaterial({ color: 0xffffff, map: printedCloth(), roughness: 0.8, side: THREE.DoubleSide }));
+  const boards = BOAT_NAMES.map((n) => new Instances(new THREE.BoxGeometry(1.5, 0.3, 0.03).translate(0, 1.96, 0.3 - 2.22), new THREE.MeshStandardMaterial({ map: nameBoard(n), roughness: 0.7 })));
+  const orange = new Instances(fittingsGeometry(), new THREE.MeshStandardMaterial({ color: 0xe8601c, roughness: 0.6 }));
+  const engines = new Instances(engineGeometry(), new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.5, metalness: 0.4 }));
+  const flagGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 2.6, 0), new THREE.Vector3(0, 2.25, 0), new THREE.Vector3(0.6, 2.42, 0)]);
+  flagGeo.computeVertexNormals();
+  const flags = new Instances(flagGeo.translate(0, 0, -3.2), new THREE.MeshStandardMaterial({ color: 0xe8561c, roughness: 0.8, side: THREE.DoubleSide }));
+  const flagPoles = new Instances(new THREE.CylinderGeometry(0.018, 0.018, 1.9, 5).translate(0, 1.65, -3.2), K.steel);
   const boat = (x: number, z: number, ry: number, canopyOn = true) => {
-    const sc = 0.9 + rnd() * 0.22;
-    hulls.at(x, WATER_Y - 0.18, z, sc, sc, sc, ry);
-    woods.at(x, WATER_Y - 0.18, z, sc, sc, sc, ry);
+    const sc = 0.95 + rnd() * 0.2, y = WATER_Y - 0.18;
+    hulls.at(x, y, z, sc, sc, sc, ry);
+    woods.at(x, y, z, sc, sc, sc, ry);
     hullCols.push(fade(HULL[Math.floor(rnd() * HULL.length)], (rnd() - 0.5) * 0.06));
     woodCols.push(new THREE.Color(0x7a5a3e).offsetHSL(0, 0, (rnd() - 0.5) * 0.08));
+    orange.at(x, y, z, sc, sc, sc, ry);
+    engines.at(x, y, z, sc, sc, sc, ry);
+    if (rnd() < 0.4) { flags.at(x, y, z, sc, sc, sc, ry); flagPoles.at(x, y, z, sc, sc, sc, ry); }
     if (!canopyOn) return;
-    canopy.at(x, WATER_Y - 0.18, z, sc, sc, sc, ry);
-    poles.at(x, WATER_Y - 0.18, z, sc, sc, sc, ry);
-    canCols.push(fade(CAN[Math.floor(rnd() * CAN.length)]));
+    poles.at(x, y, z, sc, sc, sc, ry);
+    if (rnd() < 0.15) printed.at(x, y, z, sc, sc, sc, ry);
+    else { canopy.at(x, y, z, sc, sc, sc, ry); canCols.push(fade(CAN[Math.floor(rnd() * CAN.length)])); }
+    if (rnd() < 0.75) boards[Math.floor(rnd() * boards.length)].at(x, y, z, sc, sc, sc, ry);
   };
-  // moored nose-in along the temple ghat
-  for (let x = -66; x < 64; x += 2.3 + rnd() * 1.2) {
-    if (rnd() < 0.25) continue;
-    boat(x, GHAT.stepsTo + 4.2 + rnd() * 0.8, (rnd() - 0.5) * 0.2, rnd() < 0.85);
+  // moored bow-in, side by side, 2-3 deep along the temple ghat (about 50 boats; drone videos)
+  for (const [row, x0, x1] of [[0, -46, 40], [1, -44, 36], [2, -36, 26]] as const) {
+    for (let x = x0; x < x1; x += 2.05 + rnd() * 0.35) {
+      if (row === 2 && rnd() < 0.2) continue;
+      boat(x, GHAT.stepsTo + 4.2 + row * 8.2 + rnd() * 0.6, (rnd() - 0.5) * 0.12, rnd() < 0.93);
+    }
   }
-  // a second, looser row
-  for (let x = -50; x < 50; x += 5 + rnd() * 4) boat(x, GHAT.stepsTo + 13 + rnd() * 3, Math.PI / 2 + (rnd() - 0.5) * 0.5);
-  // at the Mamleshwar bank
-  for (let x = -110; x < 40; x += 3 + rnd() * 2) boat(x, bankS(x) - 8 - rnd() * 2, Math.PI + (rnd() - 0.5) * 0.3, rnd() < 0.8);
-  // out on the river
-  for (const [x, z, r] of [[-30, 95, 0.4], [40, 120, -1.2], [-90, 140, 1.4], [85, 80, 0.9], [10, 160, -0.3]] as const) boat(x, z, r);
+  // at the Mamleshwar bank: the busier ghat, 2-3 rows (60-80 boats)
+  for (const row of [0, 1, 2]) {
+    for (let x = -100 + row * 8; x < 30 - row * 10; x += 2.1 + rnd() * 0.5) {
+      if (row === 2 && rnd() < 0.35) continue;
+      boat(x, bankS(x) - 8 - row * 8.2 - rnd() * 0.6, Math.PI + (rnd() - 0.5) * 0.12, rnd() < 0.9);
+    }
+  }
+  // out on the river, under way
+  for (const [x, z, r] of [[-30, 95, 0.4], [40, 120, -1.2], [-90, 140, 1.4], [85, 80, 0.9], [10, 160, -0.3], [-60, 110, 2.1], [60, 150, 0.2], [100, 100, -0.7],
+    [-15, 75, -0.5], [25, 70, 1.1], [-120, 90, 0.8], [-45, 150, -1.6], [70, 105, 2.4], [-5, 125, 0.1], [130, 135, -0.9], [-75, 70, 1.9]] as const) boat(x, z, r);
   const set = (m: THREE.InstancedMesh | null, cols: THREE.Color[]) => { if (!m) return; cols.forEach((c, i) => m.setColorAt(i, c)); m.instanceColor!.needsUpdate = true; m.name = 'boats'; };
   set(hulls.flush(g, false), hullCols);
   set(woods.flush(g, false), woodCols);
   set(canopy.flush(g, false), canCols);
   const pm = poles.flush(g, false);
   if (pm) pm.name = 'boatpoles';
+  for (const I of [printed, orange, engines, flags, flagPoles, ...boards]) { const m = I.flush(g, false); if (m) m.name = 'boats'; }
+}
+
+/** names painted on the boats' canopy boards (ghat photograph) */
+const BOAT_NAMES = ['सागर', 'मोहित', 'लक्ष्य बोट', 'जय श्री राम', 'गंगा मैया', 'नर्मदे हर', 'ओंकार'];
+
+function nameBoard(name: string) {
+  const c = document.createElement('canvas');
+  c.width = 256; c.height = 52;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#f4f0e6'; g.fillRect(0, 0, 256, 52);
+  g.strokeStyle = '#c8202a'; g.lineWidth = 4; g.strokeRect(3, 3, 250, 46);
+  g.fillStyle = '#b8161c'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = 'bold 30px "Noto Sans Devanagari", sans-serif';
+  g.fillText(name, 128, 28);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/** a printed tarpaulin: bright blots and flowers on sky blue, magenta and green (ghat photograph) */
+function printedCloth() {
+  const N = 256, c = document.createElement('canvas');
+  c.width = c.height = N;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#7ec4e8'; g.fillRect(0, 0, N, N);
+  let s = 23;
+  const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  const cols = ['#e8407a', '#f0c630', '#3aa860', '#f4f0e6', '#e8601c', '#5a4ab0', '#d8204a'];
+  for (let k = 0; k < 90; k++) {
+    g.fillStyle = cols[Math.floor(r() * cols.length)];
+    g.beginPath(); g.ellipse(r() * N, r() * N, 6 + r() * 18, 4 + r() * 12, r() * 3, 0, Math.PI * 2); g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1 / 1.4, 1 / 1.4);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/** life jackets on the benches and the engine's cowling (orange), in the boat's frame (bow along -z) */
+function fittingsGeometry() {
+  const parts: THREE.BufferGeometry[] = [];
+  let k = 7;
+  const r = () => ((k = (k * 16807) % 2147483647) / 2147483647);
+  for (const z of [2.2, 0.6, -1.0]) for (const x of [-0.5, 0.45]) if (r() < 0.7) parts.push(new THREE.BoxGeometry(0.32, 0.12, 0.26).rotateY(r() - 0.5).translate(x, 0.58, z + (r() - 0.5) * 0.2));
+  parts.push(new THREE.BoxGeometry(0.34, 0.36, 0.42).translate(0, 0.98, 3.95)); // the cowling
+  return mergeGeometries(parts.map((q) => { q.deleteAttribute('uv'); return q.toNonIndexed(); }))!;
+}
+
+/** the outboard's dark parts: its tiller, the long tail shaft into the water and the transom bracket */
+function engineGeometry() {
+  const parts = [
+    new THREE.CylinderGeometry(0.03, 0.03, 1.1, 6).rotateX(0.5).translate(0, 0.55, 4.3), // tail shaft
+    new THREE.CylinderGeometry(0.02, 0.02, 0.8, 6).rotateX(Math.PI / 2 + 0.3).translate(0, 1.0, 3.5), // tiller
+    new THREE.BoxGeometry(0.2, 0.18, 0.12).translate(0, 0.72, 3.82), // bracket
+  ];
+  return mergeGeometries(parts.map((q) => { q.deleteAttribute('uv'); return q.toNonIndexed(); }))!;
 }

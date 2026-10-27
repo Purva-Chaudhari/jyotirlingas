@@ -119,6 +119,16 @@ export class AartiPlayer {
     this.duck.gain.setTargetAtTime(on ? low : 1, this.ctx.currentTime, DUCK_TAU);
   }
 
+  /** paused for a story (not just silenced): it carries on from the same moment when the story stops */
+  private held = false;
+  holdFor(on: boolean) {
+    if (on === this.held) return;
+    this.held = on;
+    if (!this.el || !this.usingFile) return;
+    if (on) this.el.pause();
+    else if (this.running) void this.el.play().catch(() => {});
+  }
+
   /** proximity 0..1 (0 = out of earshot): starts, fades and stops the aarti */
   update(proximity: number, dt: number) {
     this.level = proximity;
@@ -168,7 +178,7 @@ export class AartiPlayer {
         }
       }
       if (!this.fileFailed) {
-        void this.el.play().catch(() => {});
+        if (!this.held) void this.el.play().catch(() => {});
         return;
       }
     }

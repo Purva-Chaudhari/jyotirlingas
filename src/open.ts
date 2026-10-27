@@ -3,7 +3,7 @@
  * others are "coming soon" on the landing page and their addresses lead back there. Dev tools can still open
  * any temple with ?temple=<id>&preview=1.
  */
-export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath', 'somnath', 'kashi-vishwanath']);
+export const OPEN_TEMPLES: ReadonlySet<string> = new Set(['mahakaleshwar', 'kedarnath', 'somnath', 'kashi-vishwanath', 'omkareshwar']);
 
 /** every temple's address (/<id>): the open ones enter, the rest lead back to the landing page */
 export const ALL_TEMPLES: readonly string[] = [
@@ -44,6 +44,11 @@ export const TEMPLE_FILES: Readonly<Record<string, readonly string[]>> = {
     'assets/models/neem_lod.glb',
     ...scan('large_sandstone_blocks_01', 'large_floor_tiles_02', 'stone_tile_wall', 'beige_wall_002', 'plastered_wall_02', 'marble_01'),
     'assets/models/ahilyabai.glb',
+  ],
+  omkareshwar: [
+    'assets/hdri/kloofendal_48d_partly_cloudy_puresky_2k.hdr',
+    ...scan('beige_wall_002', 'large_sandstone_blocks_01', 'sandstone_blocks_08', 'dark_rock_02', 'aerial_rocks_02',
+      'large_floor_tiles_02', 'marble_01', 'painted_plaster_wall', 'bark_brown_02'),
   ],
 };
 
@@ -106,6 +111,21 @@ export const TEMPLE_INTRO: Readonly<Record<string, { hi: string; en: string; pla
       'Kashi is one of India’s seven sacred cities, and is said to grant moksha to those who die here.',
       'The Shri Kashi Vishwanath Dham, opened on 13 December 2021, links the temple straight to the Ganga ghats.',
       'Every evening, the Ganga Aarti is offered with great brass lamps on the ghats of Varanasi.',
+    ],
+  },
+  omkareshwar: {
+    hi: 'श्री ओंकारेश्वर',
+    en: 'Omkareshwar Jyotirlinga',
+    place: 'Mandhata island · in the Narmada, Madhya Pradesh',
+    facts: [
+      'The Narmada parts around the island of Mandhata, whose outline, people say, resembles the sacred syllable Om.',
+      'The Jyotirlinga is a small natural stone, set low and always surrounded by water.',
+      'The Shiva Purana tells how the Vindhya mountains shaped a linga of earth and worshipped Shiva here.',
+      'The great hall is about fourteen feet high and carried on sixty massive pillars; above it rise five storeys, each with its own shrine.',
+      'On the upper storey sits Shri Mahakaleshwar: the reverse of Ujjain, where Mahakal sits below and Omkareshwar above.',
+      'A young Adi Shankaracharya came to the Narmada here and found his guru, Govinda Bhagavatpada, in a cave on the island.',
+      '“Narmada ke kankar, utne Shankar”: as many pebbles as the Narmada holds, so many Shankars.',
+      'Every night, devotees believe, Shiva comes here to rest with Parvati, and the Shayan Aarti puts the Lord to bed.',
     ],
   },
 };

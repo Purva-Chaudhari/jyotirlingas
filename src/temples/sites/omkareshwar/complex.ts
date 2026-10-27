@@ -51,7 +51,6 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
   };
   // the ghat-level floor of the frame
   B.span(K.ghat, X0 - 0.4, X1 + 0.4, -12.4, -12, back, front + 0.35);
-  slab(-8, back, front, [STAIR.aZ1, front + 1]);
   slab(-4, back, front, [STAIR.aZ1, front + 1]);
   slab(0, back, front, [STAIR.bZ1 - 0.3, STAIR.landZ + 2.5]);
   slab(4, bandBack, front);
@@ -67,6 +66,7 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
 
   // ---------- edge beams, parapets, railings on every storey ----------
   for (const y of levels.slice(1)) {
+    if (y === -8) continue; // the east wing stands on a tall open stilt storey from the ghat to the -4 gallery
     const zFrontOnly = y > 0;
     const zb = zFrontOnly ? bandBack : back;
     // a moulded cornice band per storey, then the deep edge beam (the horizontal bands that read so strongly from the river)
@@ -90,11 +90,14 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
     pipeRail(B, K.steel, posts, X1, zb, X1, y === -4 ? LANE.z0 : front, y + 0.22, 0.95);
   }
   // walls behind the lower galleries (against the cliff) - plain pink with dark doorways
-  for (const [a, b] of [[X0, -hw - 0.3], [hw + 0.3, X1]]) B.span(K.pinkDark, a, b, -12, 0, back - 0.4, back);
+  for (const [a, b] of [[X0, -hw - 0.3], [hw + 0.3, X1]]) {
+    B.span(K.rock, a, b, -12, -4, back - 0.4, back); // the cliff, seen between the stilts
+    B.span(K.pinkDark, a, b, -4, 0, back - 0.4, back);
+  }
   for (let i = 0; i < xs.length - 1; i++) {
     const cx = (xs[i] + xs[i + 1]) / 2;
     if (Math.abs(cx) < hw + 0.5) continue;
-    for (const y of [-12, -8, -4]) B.span(K.dark, cx - 0.7, cx + 0.7, y, y + 2.4, back - 0.02, back + 0.04);
+    for (const y of [-4]) B.span(K.dark, cx - 0.7, cx + 0.7, y, y + 2.4, back - 0.02, back + 0.04);
   }
   for (const [a, b] of [[X0 - 1, -hw - 0.3], [hw + 0.3, X1 + 1]]) P.solid(a, -12, back - 3, b, 0, back);
   for (const y of [-4, 0]) {
@@ -103,15 +106,14 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
     for (const [a, b] of [[X0, -hw - 0.3], [hw + 0.3, X1]]) P.solid(a, y, front + 0.1, b, y + 1.2, front + 0.4);
   }
   // fill the band's back between storey 0 and the roof with a wall (temple forecourt side), windows
-  for (const [a, b] of [[X0, -9], [9, X1]]) B.span(K.pink, a, b, 0, 12, bandBack - 0.2, bandBack + 0.1);
-  B.span(K.pink, -9, 9, 3.6, 12, bandBack - 0.2, bandBack + 0.1);
+  B.span(K.pink, 9, X1, 0, 12, bandBack - 0.2, bandBack + 0.1);
+  B.span(K.pink, X0, 9, 3.6, 12, bandBack - 0.2, bandBack + 0.1);
   for (let i = 0; i < xs.length - 1; i++) {
     const cx = (xs[i] + xs[i + 1]) / 2;
     for (const y of [4, 8]) B.span(K.dark, cx - 1.2, cx + 1.2, y + 0.6, y + 2.8, bandBack - 0.24, bandBack + 0.14);
     if (Math.abs(cx) > 9) B.span(K.dark, cx - 0.8, cx + 0.8, 0, 2.5, bandBack - 0.24, bandBack + 0.14);
   }
-  // the forecourt opens to the river gallery through the centre bays (|x| < 9)
-  P.solid(X0, 0, bandBack - 0.25, -9, 12, bandBack + 0.15);
+  // the forecourt opens to the river gallery through the bays by the stair (x < 9)
   P.solid(9, 0, bandBack - 0.25, X1, 12, bandBack + 0.15);
 
   // ---------- the grand stair through the centre bay ----------
@@ -144,24 +146,24 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
   for (const s of [-1, 1]) P.solid(s * (hw + 0.2) - 0.5, -12, front + 0.35, s * (hw + 0.2) + 0.5, -6, front + 1.35);
 
   // ---------- phamsana roofs on the roofline ----------
-  const roofXs = [-35.25, -27.75, -20.25, 20, 26.1, 31.75];
+  const roofXs = [20, 26.1, 31.75];
   for (const x of roofXs) {
     for (const p of phamsanaGeometry(6)) { p.scale(2.4, 2.6, 2.4); p.translate(x, 12, (bandBack + front) / 2 + 0.5); B.add(K.pinkDark, p); }
     B.span(K.pink, x - 2.5, x + 2.5, 12, 12.5, (bandBack + front) / 2 - 2, (bandBack + front) / 2 + 3);
   }
-  // ~12 pyramidal roofs along the roofline in all (c32): smaller ones at the front corners and either side of the centre
-  for (const x of [-37.6, -13.1, -6.4, 6.4, 13.1, 33.2]) {
+  // smaller pyramidal roofs at the east wing's front corners and by the stair (the west wing has its own)
+  for (const x of [6.4, 13.1, 33.2]) {
     for (const p of phamsanaGeometry(5)) { p.scale(1.7, 2.0, 1.7); p.translate(x, 12, front - 1.5); B.add(K.pinkDark, p); }
   }
 
   // ---------- inner gallery details: queue rails, tube lights, sheet roofs on the forecourt edge ----------
   const tubes = new Instances(new THREE.BoxGeometry(1.2, 0.05, 0.08), K.tube);
-  for (const y of [-12, -8, -4, 0, 4, 8]) {
+  for (const y of [-12, -4, 0, 4, 8]) {
     const zb = y >= 0 ? bandBack : back;
     for (let i = 0; i < xs.length - 1; i++) {
       const cx = (xs[i] + xs[i + 1]) / 2;
       if (Math.abs(cx) < hw + 0.5) continue;
-      tubes.at(cx, y + 3.55, (zb + front) / 2);
+      tubes.at(cx, y === -12 ? -4.85 : y + 3.55, (zb + front) / 2); // (the stilt storey's under the -4 slab)
     }
     if (y === -4 || y === -12) {
       // serpentine queue rails along the gallery
@@ -194,7 +196,8 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
   const tarp = new Instances(tarpGeo, K.tarp);
   const tarpColors: THREE.Color[] = [];
   const pole = new Instances(new THREE.CylinderGeometry(0.035, 0.04, 1, 5).translate(0, 0.5, 0), K.wood);
-  const TARP = [0xffd21a, 0xffc400, 0xf6a800, 0xff8a00, 0x2fa8d8, 0xffe14a, 0xe8501e, 0x3fb04a];
+  // lemon-yellow, green and white patchwork, the odd golden-yellow or orange (drone videos)
+  const TARP = [0xe9d12f, 0x2e9b4e, 0xeeeeea, 0xe9d12f, 0x2e9b4e, 0xf2b62a, 0xeeeeea, 0xe9d12f, 0x2e9b4e, 0xe8701e];
   const stall = (x: number, z: number, w: number, d: number, h: number) => {
     tarp.at(x, GHAT.y + h, z, w, 1, d, 0);
     tarpColors.push(new THREE.Color(TARP[Math.floor(rnd() * TARP.length)]));
@@ -206,20 +209,21 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
     if (rnd() < 0.35) B.add(K.saffron, new THREE.PlaneGeometry(0.5, 0.35).translate(x - w / 2.1 + 0.26, GHAT.y + h + 0.4, z - d / 2.1));
   };
   for (let x = GHAT.x0 + 3; x < GHAT.x1 - 3; x += 3.4 + rnd() * 1.4) {
-    if (Math.abs(x) < 9) continue;
+    if (Math.abs(x) < 9 || (x > -24 && x < -8.5)) continue; // (open behind the Narmada Aarti platform)
     stall(x, front + 2.6 + rnd() * 1.2, 3 + rnd(), 2.8 + rnd() * 0.8, 2.2 + rnd() * 0.3);
   }
   const tarpMesh = tarp.flush(g, true);
   if (tarpMesh) { tarpColors.forEach((c, i) => tarpMesh.setColorAt(i, c)); tarpMesh.instanceColor!.needsUpdate = true; }
   pole.flush(g, false);
-  // two small cream nagara shrines at the foot of the galleries (as in the photographs)
+  // two small nagara shrines at the foot of the galleries; the old one in the re-entrant corner is orange-red
+  // sandstone (drone videos), the other whitewashed
   for (const [x, hwS, hS] of [[-7.2, 1.25, 6.8], [7.0, 0.95, 5.2]] as const) {
     B.span(K.oldPlain, x - hwS - 0.3, x + hwS + 0.3, GHAT.y, GHAT.y + 0.6, 26.6 - hwS - 0.3, 26.6 + hwS + 0.3);
     B.span(K.oldPlain, x - hwS, x + hwS, GHAT.y + 0.6, GHAT.y + 2.4, 26.6 - hwS, 26.6 + hwS);
     B.span(K.dark, x - 0.35, x + 0.35, GHAT.y + 0.6, GHAT.y + 1.9, 26.6 + hwS - 0.05, 26.6 + hwS + 0.02);
     const sp = rekhaGeometry(hwS * 1.02, hS - 2.4, 8);
     sp.translate(x, GHAT.y + 2.4, 26.6);
-    B.add(K.plaster, sp);
+    B.add(x < 0 ? K.shrineOrange : K.plaster, sp);
     P.solid(x - hwS - 0.3, GHAT.y, 26.6 - hwS - 0.3, x + hwS + 0.3, GHAT.y + 5, 26.6 + hwS + 0.3);
     flames.points.push(new THREE.Vector3(x, GHAT.y + 0.95, 26.6 + hwS + 0.3));
   }
@@ -257,11 +261,15 @@ export function buildComplex(root: THREE.Group, K: OM, P: Physics, flames: Flame
   P.solid(X1 + 0.45, GHAT.y, LANE.z0, SW.x0, LANE.y - 0.4, LZ1);
   P.solid(SW.x1, GHAT.y, LANE.z0, 70, LANE.y - 0.6, SW.z0);
   P.solid(70, GHAT.y, LANE.z0, 72, LANE.y - 0.6, LZ1);
-  // lamp posts along the lane
-  for (let x = 40; x < LANE.x1; x += 12) {
-    B.span(K.cable, x - 0.07, x + 0.07, LANE.y + 0.7, LANE.y + 4.2, LANE.z1 - 0.2, LANE.z1 - 0.06);
-    B.span(K.lamp, x - 0.12, x + 0.12, LANE.y + 4.1, LANE.y + 4.35, LANE.z1 - 0.3, LANE.z1 - 0.0);
+  // the covered walkway to the Jhoola pul: white pillars along the river edge, a blue-grey sheet roof (drone videos)
+  for (let x = LANE.x0 + 2; x < LANE.x1 - 2; x += 4.2) {
+    if (x > SW.x0 - 0.5 && x < SW.x1 + 0.5) continue;
+    B.span(K.whiteConcrete, x - 0.18, x + 0.18, LANE.y, LANE.y + 3.3, LZ1 - 0.6, LZ1 - 0.24);
+    P.solid(x - 0.2, LANE.y, LZ1 - 0.62, x + 0.2, LANE.y + 3.3, LZ1 - 0.22);
   }
+  B.add(K.walkRoof, new THREE.BoxGeometry(LANE.x1 - LANE.x0 - 2, 0.06, LZ1 - LANE.z0 + 0.8).rotateX(-0.06).translate((LANE.x0 + LANE.x1) / 2 - 1, LANE.y + 3.45, (LANE.z0 + LZ1) / 2));
+  B.span(K.whiteConcrete, LANE.x0 + 1, LANE.x1 - 2, LANE.y + 3.1, LANE.y + 3.35, LZ1 - 0.6, LZ1 - 0.24);
+  for (let x = 40; x < LANE.x1; x += 12) B.span(K.tube, x - 0.6, x + 0.6, LANE.y + 3.0, LANE.y + 3.05, (LANE.z0 + LZ1) / 2 - 0.04, (LANE.z0 + LZ1) / 2 + 0.04);
 
   pier.flush(g);
   posts.flush(g, false);

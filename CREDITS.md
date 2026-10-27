@@ -26,7 +26,9 @@ Garamond, Mukta, Martel, Inter and Tiro Devanagari Hindi.
 
 - **Temple surroundings** (roads, buildings, water round each temple): © [OpenStreetMap](https://www.openstreetmap.org/copyright)
   contributors, under the [ODbL 1.0](https://opendatacommons.org/licenses/odbl/). Fetched by `scripts/fetch-osm.mjs`
-  into `public/data/osm/`. Credited on every temple page (the ⓘ in the corner).
+  into `public/data/osm/`. Credited on every temple page (the ⓘ in the corner). Omkareshwar's far terrain (the
+  outline of Mandhata island and the Narmada and Kaveri round it, `src/temples/sites/omkareshwar/islandmap.ts`)
+  and its dam's line come from the same data.
 - **India outline** on the landing page: [Natural Earth](https://www.naturalearthdata.com) 1:10m, India point of
   view, public domain. Built by `scripts/build-landing-map.mjs` into `public/data/landing/india.json`, and the
   glass mask `public/landing/india-glass.webp` by `scripts/build-landing-glass.mjs`.
@@ -126,9 +128,27 @@ licensed; used at the site owner's choice. It plays all over Kashi Vishwanath's 
 them (the Ganga Aarti), and while it plays the aarti panel credits it with a link to the video (`aarti.places` in
 `src/temples/stories/kashi-vishwanath.json`). Unchanged copy of the audio (MP3, 6:51).
 
+#### Omkareshwar — `public/audio/aarti/omkareshwar-jyotirling-aarti.mp3`
+
+"[ॐकारेश्वर ज्योतिर्लिंग (आरती)- Shailendra Bharti,Deepali Somaiya Date | Omkareshwar Jyotirling Aarti](https://www.youtube.com/watch?v=hiCRMpKcbnU)"
+sung by **Shailendra Bharti** and **Deepali Somaiya Date**, from **Universal Music Bhakti**
+([youtube.com/@universalmusicbhakti](https://www.youtube.com/@universalmusicbhakti)) on YouTube. Not openly licensed;
+used at the site owner's choice. It plays at Omkareshwar's darshan spot in place of the embedded YouTube aarti, and
+while it plays the aarti panel credits it with a link to the video (`aarti.audio` in
+`src/temples/stories/omkareshwar.json`). Unchanged copy of the audio (MP3, 4:37).
+
+#### Omkareshwar, on the ghat — `public/audio/aarti/omkareshwar-narmada-aarti.mp3`
+
+"[Omkareshwar Narmada Aarti 🙏। ॐकारेश्वर नर्मदा महाआरती । #omkareshwar #narmadaaarti](https://www.youtube.com/watch?v=Jxzun-mAZlI)"
+by **A TO Z Indrajit** ([youtube.com/@atozindrajit](https://www.youtube.com/@atozindrajit)) on YouTube. Not openly
+licensed; used at the site owner's choice. It plays all over Omkareshwar's Koti Tirth ghat and its river steps (the
+Narmada Aarti), and while it plays the aarti panel credits it with a link to the video (`aarti.places` in
+`src/temples/stories/omkareshwar.json`). Unchanged copy of the audio (MP3, 8:08). The aarti platform on the ghat (its
+lantern pillars, chowkis and altar) is modelled after the same video.
+
 #### The other temples
 
-Where a temple trust publishes its aarti on its own YouTube channel (Mallikarjuna, Omkareshwar,
+Where a temple trust publishes its aarti on its own YouTube channel (Mallikarjuna,
 Vaidyanath), the darshan spot plays it through YouTube's official embedded player: never
 downloaded or rehosted, with the channel named on screen. The videos and channels are listed under
 `aarti.youtube` in each story file.

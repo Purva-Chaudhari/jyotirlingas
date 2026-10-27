@@ -53,7 +53,7 @@ export const copy = {
     paras: [
       'India’s temples are more than stone and spire. Each one carries centuries of devotion: the rituals at dawn, the songs of the aarti, the festivals that fill its lanes, and the stories passed from grandparents to grandchildren. They have always been mesmerising.',
       'The twelve Jyotirlingas, where Shiva is said to have revealed himself as an endless pillar of light, are among the most sacred of them all. This site is an invitation to know them: explore the mandirs in the metaverse, walk their courtyards, learn the story behind each one, and understand the traditions that keep them alive.',
-      'Whether you have visited a hundred times, are planning your first yatra, or are discovering Sanatana Dharma for the first time, you are welcome here. It is free and open to all. Mahakaleshwar in Ujjain is open now; the other eleven are on their way.',
+      'Whether you have visited a hundred times, are planning your first pilgrimage, or are discovering Sanatana Dharma for the first time, you are welcome here. It is free and open to all. Five are open now: Somnath, Mahakaleshwar, Omkareshwar, Kashi Vishwanath and Kedarnath; the other seven are on their way.',
     ],
     blessing: 'ॐ नमः शिवाय',
     help: 'Help it grow',

@@ -22,6 +22,47 @@
       ]
     },
     {
+      "id": "omkar-kubera",
+      "at": { "feature": "omkar-kubera" },
+      "kind": "legend",
+      "title": { "en": "Kubera and the River from Shiva’s Locks", "hi": "कुबेर और शिव की जटा से निकली नदी" },
+      "text": {
+        "en": "From the bridge, look at the island ahead. It sits between two streams of water, and the one on its far, northern side is called the Kaveri. Not the great Kaveri of the south, but a smaller river of the same name, who meets the Narmada here. How did she come to be here? Listen. Kubera, the treasurer of the gods, was a devoted worshipper of Shiva. He came to this place, set up a Shiva linga, and performed hard penance. Shiva was pleased, and made him the lord of wealth, the richest among the gods. The Matsya Purana adds that his penance here, at the meeting of the Kaveri and the Narmada, made him lord of the yakshas. And, the local story goes, so that his devotee might bathe, Shiva drew a stream from his own matted locks. That stream is the Kaveri. She flows around the Omkar hill and meets the Narmada at the sangam, a meeting the Puranas praise as famed throughout the world, and able to wash away all sins. For centuries an old temple of Kubera, called Kuber Bhandari, stood by the confluence. When the Omkareshwar dam was built, its waters rose over that shrine, and a new Kuber Bhandari temple now stands on the riverbank near Mamleshwar. There, on the night before Dhanteras, devotees keep vigil, and at dawn Kubera and Mahalakshmi are worshipped together. Walk on toward the island, and remember: even the god of wealth came here as a devotee.",
+        "hi": "पुल से आगे के द्वीप को देखिए। यह जल की दो धाराओं के बीच बसा है, और इसकी दूसरी, उत्तरी ओर बहने वाली धारा कावेरी कहलाती है। दक्षिण की महान कावेरी नहीं, बल्कि उसी नाम की एक छोटी नदी, जो यहाँ नर्मदा से मिलती है। वह यहाँ कैसे आई? सुनिए। देवताओं के कोषाध्यक्ष कुबेर शिव के अनन्य भक्त थे। वे इस स्थान पर आए, शिवलिंग की स्थापना की और कठोर तपस्या की। शिव प्रसन्न हुए और उन्हें धन का स्वामी, देवताओं में सबसे धनवान बना दिया। मत्स्य पुराण जोड़ता है कि यहाँ, कावेरी और नर्मदा के संगम पर की गई तपस्या से ही वे यक्षों के अधिपति बने। और स्थानीय कथा कहती है कि अपने भक्त के स्नान के लिए शिव ने अपनी जटा से एक धारा निकाली। वही धारा कावेरी है। वह ओंकार पर्वत की परिक्रमा करती हुई संगम पर नर्मदा से मिलती है, ऐसा संगम जिसे पुराण संसार भर में प्रसिद्ध और सब पापों को धोने वाला कहते हैं। सदियों तक संगम के पास कुबेर का एक पुराना मंदिर था, जिसे कुबेर भंडारी कहते थे। जब ओंकारेश्वर बाँध बना, तो उसका जल उस मंदिर पर चढ़ आया, और अब ममलेश्वर के पास नदी तट पर कुबेर भंडारी का नया मंदिर है। वहाँ धनतेरस से पहले की रात भक्त जागरण करते हैं, और भोर में कुबेर और महालक्ष्मी की साथ पूजा होती है। अब द्वीप की ओर बढ़िए, और याद रखिए: धन के देवता भी यहाँ एक भक्त बनकर ही आए थे।"
+      },
+      "didYouKnow": {
+        "en": "On the island’s parikrama path, at the meeting of the Kaveri and the Narmada, stands Rin Mukteshwar, the Lord who frees from debt; pilgrims offer him chickpeas, praying to be released from all their debts.",
+        "hi": "द्वीप के परिक्रमा मार्ग पर, कावेरी और नर्मदा के संगम पर, ऋणमुक्तेश्वर विराजते हैं, ऋण से मुक्त करने वाले प्रभु; तीर्थयात्री उन्हें चने अर्पित करते हैं और सभी ऋणों से मुक्ति की प्रार्थना करते हैं।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Kaveri_River_(Madhya_Pradesh)",
+        "https://www.tv9hindi.com/state/madhya-pradesh/kuber-temple-in-khandwa-omkareshwar-temple-near-kuber-stablished-omkareshwar-mahadeva-madhya-pradesh-au513-1521075.html",
+        "https://hindi.indiawaterportal.org/sabdkosh/kaveri-river-hindi-kaavaerai",
+        "https://shriomkareshwar.org/Parikrama.aspx",
+        "https://shriomkareshwar.org/Narmada.aspx"
+      ]
+    },
+    {
+      "id": "omkar-island",
+      "at": { "feature": "omkar-island" },
+      "kind": "legend",
+      "title": { "en": "An Island Shaped Like Om", "hi": "ॐ के आकार का द्वीप" },
+      "text": {
+        "en": "Turn round here, before the Mamleshwar end of the bridge, and look back at the island. Mandhata is a hill standing in the middle of the river. The Narmada runs along this side of it. On the far side her smaller arm, the Kaveri, flows round it, and beyond the island’s western tip the two meet again. People say that the island’s shape, seen from above, is like the sacred syllable written in Devanagari: ॐ, Om. You cannot see it from here, and even from the air it is a likeness the eye has to look for, in the curve of the river and the folds of the hill, not a drawing. But that is what the pilgrims hold dear: the Lord of Om dwells on Om itself, and the river traces it around him day and night. The Mandukya Upanishad begins: Om, this syllable, is all this world. And so, the pilgrims say, when you walk the parikrama path round Mandhata, you are walking round Om.",
+        "hi": "यहाँ, पुल के ममलेश्वर वाले छोर से पहले, मुड़कर द्वीप की ओर देखिए। मांधाता नदी के बीच खड़ी एक पहाड़ी है। इसके इस ओर नर्मदा बहती है। दूसरी ओर उसकी छोटी धारा, कावेरी, इसकी परिक्रमा करती है, और द्वीप के पश्चिमी सिरे के आगे दोनों फिर मिल जाती हैं। लोग कहते हैं कि ऊपर से देखने पर इस द्वीप का आकार देवनागरी में लिखे पवित्र अक्षर ॐ जैसा है। यहाँ से वह दिखाई नहीं देता, और आकाश से भी यह एक समानता है जिसे आँख को खोजना पड़ता है, नदी के मोड़ और पहाड़ी की तहों में, कोई खींचा हुआ चित्र नहीं। पर तीर्थयात्रियों को यही प्रिय है: ओंकार के स्वामी स्वयं ॐ पर विराजते हैं, और नदी दिन-रात उनके चारों ओर उसे लिखती रहती है। माण्डूक्य उपनिषद का आरंभ है: ॐ, यह अक्षर ही यह सब कुछ है। इसीलिए, तीर्थयात्री कहते हैं, जब आप मांधाता के चारों ओर परिक्रमा मार्ग पर चलते हैं, तो आप ॐ की परिक्रमा करते हैं।"
+      },
+      "didYouKnow": {
+        "en": "The island is about four kilometres long and some 2.6 square kilometres in area, and is reached by boat or by bridge.",
+        "hi": "यह द्वीप लगभग चार किलोमीटर लंबा है और इसका क्षेत्रफल लगभग 2.6 वर्ग किलोमीटर है; यहाँ नाव या पुल से पहुँचा जाता है।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Omkareshwar_Temple",
+        "https://shriomkareshwar.org/Parikrama.aspx",
+        "https://en.wikipedia.org/wiki/Mandukya_Upanishad",
+        "https://www.openstreetmap.org/way/647648110"
+      ]
+    },
+    {
       "id": "omkar-vindhya",
       "at": { "zone": "darshan", "feature": "darshan" },
       "kind": "legend",
@@ -42,7 +83,7 @@
     },
     {
       "id": "omkar-ghat",
-      "at": { "zone": "ghat", "feature": "ghat" },
+      "at": { "feature": "ghat" },
       "kind": "ritual",
       "title": { "en": "Where the River Is Worshipped", "hi": "जहाँ नदी की आरती होती है" },
       "text": {
@@ -60,13 +101,55 @@
       ]
     },
     {
+      "id": "omkar-kankar",
+      "at": { "feature": "omkar-kankar" },
+      "kind": "ritual",
+      "title": { "en": "As Many Pebbles, So Many Shankars", "hi": "नर्मदा के कंकर, उतने शंकर" },
+      "text": {
+        "en": "Bend down at the water’s edge and look at the stones in the shallows, rounded and smoothed by the current. Along this river there is an old saying: ‘Narmada ke kankar, utne Shankar.’ As many pebbles as the Narmada holds, so many Shankars. Every stone of this river, people believe, is Shiva himself; tradition says the Narmada was granted a boon that every pebble of her bed would be called Shankar. That is why, in the temple lanes and on the ghat steps, you will see stalls heaped with glossy, egg-shaped stones, cream and brown, some marked with paler bands. These are bana lingas, also called Narmadeshwar. A linga shaped by the river rather than by any hand is honoured as swayambhu, self-born, and so a Narmadeshwar linga is commonly installed for worship without the prana-pratishtha rite that a carved image needs. To be truthful, stones shaped wholly by the river are rarer now, and most you will see are cut from Narmada stone and polished by craftsmen. Many come from Bakawan, a village on the river not far from here, where boatmen’s families of the Kewat community began this work about a hundred years ago; today their lingas go to temples across India and abroad. Whether the river or a craftsman’s patient hands gave it shape, the stone is still the Narmada’s. If you take one home, carry it with reverence. On this river, even a pebble is worshipped.",
+        "hi": "पानी के किनारे झुककर उथले पानी के पत्थरों को देखिए, धारा ने इन्हें गोल और चिकना कर दिया है। इस नदी के किनारे एक पुरानी कहावत है: ‘नर्मदा के कंकर, उतने शंकर।’ नर्मदा में जितने कंकर हैं, उतने ही शंकर। लोगों का विश्वास है कि इस नदी का हर पत्थर स्वयं शिव है; परंपरा कहती है कि नर्मदा को वरदान मिला था कि उसके तल का हर कंकर शंकर कहलाएगा। इसीलिए मंदिर की गलियों में और घाट की सीढ़ियों पर आपको ऐसी दुकानें दिखेंगी जिनमें चमकदार, अंडे के आकार के पत्थरों के ढेर लगे हैं, क्रीम और भूरे रंग के, कुछ पर हल्की धारियाँ। ये बाणलिंग हैं, जिन्हें नर्मदेश्वर भी कहते हैं। जो लिंग किसी हाथ ने नहीं, नदी ने गढ़ा हो, वह स्वयंभू, यानी स्वयं प्रकट, माना जाता है, और इसीलिए नर्मदेश्वर लिंग की स्थापना आमतौर पर उस प्राण-प्रतिष्ठा के बिना की जाती है जो गढ़ी हुई मूर्ति के लिए आवश्यक होती है। सच कहें तो पूरी तरह नदी के गढ़े पत्थर अब कम मिलते हैं, और जो आप देखेंगे उनमें से अधिकतर नर्मदा के पत्थर से कारीगरों ने काटे और चमकाए हैं। इनमें से बहुत-से यहाँ से थोड़ी दूर, नदी किनारे के गाँव बकावां से आते हैं, जहाँ केवट समाज के परिवारों ने लगभग सौ साल पहले यह काम शुरू किया था; आज उनके बनाए लिंग पूरे भारत और विदेशों के मंदिरों तक जाते हैं। चाहे नदी ने आकार दिया हो या किसी कारीगर के धैर्यवान हाथों ने, पत्थर तो नर्मदा का ही है। अगर आप एक घर ले जाएँ, तो श्रद्धा से ले जाइए। इस नदी पर तो एक कंकर भी पूजा जाता है।"
+      },
+      "didYouKnow": {
+        "en": "Bana lingas are hard stones, about 7 on the Mohs scale, as hard as quartz, which is why the river can polish them for ages without wearing them away.",
+        "hi": "बाणलिंग बहुत कठोर पत्थर होते हैं, मोह्स पैमाने पर लगभग 7, यानी क्वार्ट्ज़ जितने कठोर; इसीलिए नदी युगों तक उन्हें चमकाती रहती है, पर घिसकर मिटा नहीं पाती।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Banalinga",
+        "https://en.wikipedia.org/wiki/Narmada_River",
+        "https://hindi.news18.com/news/madhya-pradesh/khargone-narmadeshwar-shivling-made-in-this-village-of-mp-devotees-come-from-country-and-abroad-to-take-it-7145403.html",
+        "https://www.naidunia.com/madhya-pradesh/khargone-shivling-is-being-made-from-narmada-stones-for-100-years-it-will-be-sent-to-ayodhya-from-here-8349043",
+        "https://esamskriti.com/e/Culture/India-Travel-ad-Yatras/What-to-see-during-OMAKARESHWAR-YATRA-1.aspx"
+      ]
+    },
+    {
+      "id": "omkar-shankara",
+      "at": { "feature": "omkar-shankara" },
+      "kind": "legend",
+      "title": { "en": "The Boy Who Held Back a River", "hi": "वह बालक जिसने नदी को थाम लिया" },
+      "text": {
+        "en": "Somewhere below the temple ahead of you is a small cave, and in it begins one of the great stories of Indian thought. More than twelve hundred years ago, a boy left his home at Kaladi, in Kerala, far in the south, determined to become a sannyasi. He walked north, a very long way, until he reached the banks of the Narmada, here at Omkareshwar. In a cave on this island sat an old sage, Govinda Bhagavatpada, deep in meditation. The boy bowed and asked to be taught, and the sage accepted him. Here Shankara studied at his guru’s feet. Then, the old biographies say, the rains came. The Narmada rose in flood and came roaring toward the cave where Govinda sat absorbed in samadhi. The young disciple did not run. He set his kamandalu, his little water pot, in the path of the flood, and the raging river was drawn into it, and the guru was safe. When his learning was complete, his guru sent him out into the world, and that boy became Adi Shankaracharya, the great teacher of Advaita, the oneness of all that is. Now lift your eyes to the top of Mandhata hill. On 21 September 2023 a statue of him was unveiled there, 108 feet tall, in bronze, standing on a lotus of stone. It shows him not as an old master but as a boy of twelve, as he is remembered here. Its name says what he taught: the Statue of Oneness.",
+        "hi": "आपके आगे के मंदिर के नीचे कहीं एक छोटी-सी गुफा है, और उसी में भारतीय चिंतन की एक महान कथा शुरू होती है। बारह सौ से भी अधिक वर्ष पहले, एक बालक सुदूर दक्षिण में, केरल के कालडी में अपना घर छोड़कर निकला, संन्यासी बनने का संकल्प लेकर। वह उत्तर की ओर बहुत दूर तक चलता रहा, जब तक कि यहाँ, ओंकारेश्वर में, नर्मदा के तट पर नहीं पहुँच गया। इस द्वीप की एक गुफा में एक वृद्ध ऋषि, गोविंद भगवत्पाद, गहरे ध्यान में बैठे थे। बालक ने प्रणाम किया और शिक्षा माँगी, और ऋषि ने उसे शिष्य बना लिया। यहीं शंकर ने अपने गुरु के चरणों में अध्ययन किया। फिर, पुराने जीवन-चरित्र बताते हैं, वर्षा आई। नर्मदा में बाढ़ आ गई और वह गरजती हुई उस गुफा की ओर बढ़ी जहाँ गोविंद समाधि में लीन बैठे थे। युवा शिष्य भागा नहीं। उसने अपना कमंडल, अपना छोटा-सा जलपात्र, बाढ़ के रास्ते में रख दिया, और उफनती नदी उसी में समा गई, और गुरु सुरक्षित रहे। जब शिक्षा पूरी हुई, तो गुरु ने उसे संसार में भेजा, और वही बालक आदि शंकराचार्य बना, अद्वैत का महान आचार्य, जो सिखाता है कि सब कुछ एक है। अब अपनी आँखें मांधाता पर्वत की चोटी की ओर उठाइए। 21 सितंबर 2023 को वहाँ उनकी एक प्रतिमा का अनावरण हुआ, 108 फ़ीट ऊँची, कांसे की, पत्थर के कमल पर खड़ी। यह उन्हें वृद्ध आचार्य के रूप में नहीं, बल्कि बारह वर्ष के बालक के रूप में दिखाती है, जैसे यहाँ उन्हें याद किया जाता है। इसका नाम वही कहता है जो उन्होंने सिखाया: एकात्मता की प्रतिमा।"
+      },
+      "didYouKnow": {
+        "en": "The statue weighs about 100 tonnes and stands on a 75-foot pedestal. Its bronze is 88% copper, 4% zinc and 8% tin, and it was made under the guidance of sculptor Bhagwan Rampure and painter Vasudev Kamath.",
+        "hi": "यह प्रतिमा लगभग 100 टन की है और 75 फ़ीट ऊँचे आधार पर खड़ी है। इसका कांसा 88% तांबा, 4% जस्ता और 8% टिन से बना है, और यह मूर्तिकार भगवान रामपुरे और चित्रकार वासुदेव कामत के मार्गदर्शन में बनी।"
+      },
+      "sources": [
+        "https://en.wikipedia.org/wiki/Govinda_Bhagavatpada",
+        "https://shriomkareshwar.org/OtherTemples.aspx",
+        "https://newsonair.gov.in/cm-shivraj-singh-chouhan-unveils-108-ft-high-statue-of-adi-shankaracharya-at-omkareshwar-mp/",
+        "https://www.ndtv.com/india-news/shivraj-chouhan-unveils-adi-shankaracharya-statue-in-madhya-pradesh-4412267",
+        "https://indianexpress.com/article/cities/bhopal/108-ft-tall-adi-shankaracharya-statue-unveiled-in-mp-8950645/"
+      ]
+    },
+    {
       "id": "omkar-temple",
-      "at": { "zone": "temple", "feature": "temple" },
+      "at": { "feature": "temple" },
       "kind": "history",
       "title": { "en": "The Hall of Sixty Pillars", "hi": "साठ स्तंभों का मंडप" },
       "text": {
-        "en": "You have climbed into the temple’s great hall, about fourteen feet high and carried on sixty massive pillars. Above you the temple rises through five storeys, each with its own shrine. Who built it, and when? The temple trust says honestly that no authentic record tells us. Notice something unusual: the old sanctum faces one way and the newer hall another, which is why the Jyotirlinga sits neither beneath the spire nor in line with the main door. The worship, though, tells a story of its own. Every day the morning puja is performed by the temple trust, the afternoon puja by priests of the Scindia family, and the evening puja by priests of the Holkar family, two old royal houses of this land, still serving the Lord each day. Near the entrance is the Govindeshwar cave. Here, tradition says, the young Shankara found his guru, Govinda Bhagavatpada, and received initiation. That young seeker became Adi Shankaracharya, and today the Statue of Oneness, one hundred and eight feet tall, shows him as a boy on Mandhata hill. Now climb with me to the upper storey. Someone you may already know is waiting there.",
-        "hi": "आप सीढ़ियाँ चढ़कर मंदिर के विशाल मंडप में आ गए हैं, जो लगभग चौदह फ़ुट ऊँचा है और साठ विशाल स्तंभों पर टिका है। आपके ऊपर मंदिर पाँच तलों में उठता है, हर तल का अपना मंदिर। इसे किसने बनाया, और कब? मंदिर ट्रस्ट सच्चाई से कहता है कि इसका कोई प्रामाणिक अभिलेख नहीं है। एक अनोखी बात देखिए: पुराना गर्भगृह एक दिशा में है और नया मंडप दूसरी दिशा में, इसीलिए ज्योतिर्लिंग न शिखर के ठीक नीचे है, न मुख्य द्वार की सीध में। पर यहाँ की पूजा अपनी एक अलग कहानी कहती है। हर दिन सुबह की पूजा मंदिर ट्रस्ट करता है, दोपहर की पूजा सिंधिया परिवार के पुजारी, और शाम की पूजा होलकर परिवार के पुजारी, इस धरती के दो पुराने राजघराने, जो आज भी हर दिन प्रभु की सेवा करते हैं। प्रवेश के पास गोविंदेश्वर गुफा है। परंपरा कहती है कि यहीं युवा शंकर को अपने गुरु गोविंद भगवत्पाद मिले, और उन्होंने दीक्षा पाई। वही युवा साधक आगे चलकर आदि शंकराचार्य बने, और आज मांधाता पहाड़ी पर एक सौ आठ फ़ुट ऊँची एकात्मता की प्रतिमा उन्हें बालक रूप में दिखाती है। अब मेरे साथ ऊपर वाले तल पर चलिए। वहाँ कोई ऐसा प्रतीक्षा कर रहा है, जिन्हें शायद आप पहले से जानते हैं।"
+        "en": "You have climbed into the temple’s great hall, about fourteen feet high and carried on sixty massive pillars. Above you the temple rises through five storeys, each with its own shrine. Who built it, and when? The temple trust says honestly that no authentic record tells us. Notice something unusual: the old sanctum faces one way and the newer hall another, which is why the Jyotirlinga sits neither beneath the spire nor in line with the main door. The worship, though, tells a story of its own. Every day the morning puja is performed by the temple trust, the afternoon puja by priests of the Scindia family, and the evening puja by priests of the Holkar family, two old royal houses of this land, still serving the Lord each day. Now climb with me to the upper storey. Someone you may already know is waiting there.",
+        "hi": "आप सीढ़ियाँ चढ़कर मंदिर के विशाल मंडप में आ गए हैं, जो लगभग चौदह फ़ुट ऊँचा है और साठ विशाल स्तंभों पर टिका है। आपके ऊपर मंदिर पाँच तलों में उठता है, हर तल का अपना मंदिर। इसे किसने बनाया, और कब? मंदिर ट्रस्ट सच्चाई से कहता है कि इसका कोई प्रामाणिक अभिलेख नहीं है। एक अनोखी बात देखिए: पुराना गर्भगृह एक दिशा में है और नया मंडप दूसरी दिशा में, इसीलिए ज्योतिर्लिंग न शिखर के ठीक नीचे है, न मुख्य द्वार की सीध में। पर यहाँ की पूजा अपनी एक अलग कहानी कहती है। हर दिन सुबह की पूजा मंदिर ट्रस्ट करता है, दोपहर की पूजा सिंधिया परिवार के पुजारी, और शाम की पूजा होलकर परिवार के पुजारी, इस धरती के दो पुराने राजघराने, जो आज भी हर दिन प्रभु की सेवा करते हैं। अब मेरे साथ ऊपर वाले तल पर चलिए। वहाँ कोई ऐसा प्रतीक्षा कर रहा है, जिन्हें शायद आप पहले से जानते हैं।"
       },
       "didYouKnow": {
         "en": "Pilgrims first visit the Panchmukhi Ganesh before the main temple; his five-faced image is believed to have emerged from the same rock as Omkareshwar.",
@@ -76,6 +159,29 @@
         "https://shriomkareshwar.org/MainTemple.aspx",
         "https://shriomkareshwar.org/OtherTemples.aspx",
         "https://shriomkareshwar.org/Parikrama.aspx"
+      ]
+    },
+    {
+      "id": "omkar-ahilya",
+      "at": { "feature": "omkar-ahilya" },
+      "kind": "history",
+      "title": { "en": "A Queen and Her Lingas of Clay", "hi": "एक रानी और मिट्टी के शिवलिंग" },
+      "text": {
+        "en": "The Shiva Purana tells how the mountain Vindhya shaped a linga out of earth and worshipped it here. That humble form of worship, the parthiv linga, a linga of clay, has never stopped on these banks, and one woman gave it new life. Ahilyabai Holkar ruled Malwa in the eighteenth century from Maheshwar, a little way down this same river. Her devotion to Shiva was such that her orders went out not over her own name but as ‘Shri Shankar Aadesh’, the command of Lord Shankar. In Maheshwar she began a daily worship of clay lingas, and at Mamleshwar, across the river from this temple, Brahmins paid by the Holkar state performed lingarchan every day. Each priest had a wooden board with about thirteen hundred tiny hollows. Into each he pressed a little linga of sacred clay, no bigger than a betel nut, and worshipped them all to the chanting of the Rudra. Then the lingas were given back to the Narmada. It is said that grains were placed inside them, so that even the creatures of the deep river would be fed. Temple memory tells of one day when the queen worshipped thirteen thousand such lingas. The custom lives on. A trust in her name still has parthiv lingas made and worshipped at Mamleshwar, and here at Omkareshwar a devotee can offer a Partheshwar puja of 1,325 clay lingas on a single board. In this age, the priests say, a linga of earth pleases Shiva most of all. Clay to clay, river to river: nothing is kept, everything is offered.",
+        "hi": "शिव पुराण बताता है कि विंध्य पर्वत ने यहाँ मिट्टी का शिवलिंग बनाकर पूजा की थी। पूजा का वह विनम्र रूप, पार्थिव लिंग, यानी मिट्टी का लिंग, इन तटों पर कभी नहीं रुका, और एक स्त्री ने उसे नया जीवन दिया। अहिल्याबाई होल्कर ने अठारहवीं सदी में इसी नदी के थोड़ा नीचे, महेश्वर से मालवा पर शासन किया। शिव के प्रति उनकी भक्ति ऐसी थी कि उनके आदेश उनके अपने नाम से नहीं, बल्कि ‘श्री शंकर आदेश’ के रूप में जारी होते थे, यानी भगवान शंकर की आज्ञा। महेश्वर में उन्होंने मिट्टी के शिवलिंगों की दैनिक पूजा शुरू की, और इस मंदिर के सामने नदी पार ममलेश्वर में होल्कर राज्य के वेतन पाने वाले ब्राह्मण प्रतिदिन लिंगार्चन करते थे। हर पुजारी के पास लकड़ी का एक पटिया होता था जिसमें लगभग तेरह सौ छोटे-छोटे खाने होते थे। हर खाने में वह पवित्र मिट्टी का एक नन्हा लिंग दबाता, सुपारी से बड़ा नहीं, और रुद्र पाठ के साथ सबकी पूजा करता। फिर वे लिंग नर्मदा को लौटा दिए जाते। कहा जाता है कि उनके भीतर अनाज रखा जाता था, ताकि गहरी नदी के जीव भी भोजन पा सकें। मंदिर की स्मृति में एक दिन की बात दर्ज है जब रानी ने ऐसे तेरह हज़ार शिवलिंगों की पूजा की। यह परंपरा आज भी जीवित है। उनके नाम का एक न्यास आज भी ममलेश्वर में पार्थिव शिवलिंग बनवाकर उनकी पूजा करवाता है, और यहाँ ओंकारेश्वर में भक्त एक ही पटिया पर 1,325 मिट्टी के शिवलिंगों की पार्थेश्वर पूजा करा सकते हैं। पुजारी कहते हैं कि इस युग में मिट्टी का लिंग शिव को सबसे प्रिय है। मिट्टी से मिट्टी, नदी से नदी: कुछ रखा नहीं जाता, सब अर्पित कर दिया जाता है।"
+      },
+      "didYouKnow": {
+        "en": "An old saying in the tradition holds that lingas of gold were worshipped in the Satya Yuga, of mercury in the Treta and of silver in the Dvapara, but in the Kali Yuga a linga of simple clay bears the greatest fruit.",
+        "hi": "परंपरा में मान्यता है कि सतयुग में सोने के, त्रेता में पारे के और द्वापर में चाँदी के शिवलिंग पूजे जाते थे, पर कलियुग में साधारण मिट्टी का पार्थिव शिवलिंग सबसे अधिक फलदायी माना गया है।"
+      },
+      "sources": [
+        "https://www.shriomkareshwar.org/PartheshwarPuja.aspx",
+        "http://omkareshwar.org/mamleshwar-jyotirlinga-in-omkareshwar/2/English",
+        "https://www.news18.com/india/13000-shivlings-worshipped-daily-at-mps-mamleshwar-temple-darshan-takes-up-to-4-hours-ws-dl-9384511.html",
+        "https://www.bhaskar.com/local/mp/khandwa/omkareshwar/news/omkareshwar-mamleshwar-temple-parthiv-shivling-puja-tradition-138764214.html",
+        "https://www.jagran.com/madhya-pradesh/bhopal-ahilyabai-immerses-her-in-the-narmada-river-every-day-after-worshiping-one-crore-shivling-of-clay-22736833.html",
+        "https://www.freepressjournal.in/indore/bank-of-narmada-echo-with-ovation-of-lord-shiva-ahilyabai",
+        "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226519.html"
       ]
     },
     {
@@ -99,7 +205,7 @@
     },
     {
       "id": "omkar-garbhagriha",
-      "at": { "zone": "garbhagriha", "feature": "garbhagriha" },
+      "at": { "feature": "garbhagriha" },
       "kind": "ritual",
       "title": { "en": "Darshan of Shri Omkareshwar", "hi": "श्री ओंकारेश्वर के दर्शन" },
       "text": {
@@ -114,6 +220,26 @@
         "https://shriomkareshwar.org/MainTemple.aspx",
         "https://shriomkareshwar.org/ShayanDaan.aspx",
         "https://shriomkareshwar.org/Rules.aspx"
+      ]
+    },
+    {
+      "id": "omkar-shayan",
+      "at": { "feature": "omkar-shayan" },
+      "kind": "ritual",
+      "title": { "en": "Where Shiva Comes Home to Rest", "hi": "जहाँ शिव विश्राम करने आते हैं" },
+      "text": {
+        "en": "Stay a little longer in the sanctum, because the most tender moment of Omkareshwar’s day comes at night. Devotees believe that Shiva roams the three worlds all day long, and every night he comes here, to this island, to rest, with Mata Parvati beside him. And so, each night, the Lord is put to bed. At about half past nine the Shayan Aarti begins, the aarti of rest, sung softly, the lamps moving slowly. Then the priests set out the night’s arrangements in the sanctum: a silver swing, a bed with fine bedding, a chamar fan, a damru, and a chaupar board with its dice. Chaupar is the old Indian game of dice and pieces, and the story goes that before they sleep, Shiva and Parvati sit down to play. For a short while after the aarti, devotees may come for shayan darshan and see it all laid out. Then the doors are closed for the night. And here is the part people love to tell: it is said that when the doors open in the morning, the dice and pieces lie scattered, as though someone had played through the night. Take it as a miracle or as a loving story, but think of what it means. Here God is not only worshipped; he is welcomed home each night, like family. Devotees may even offer a whole new set of bedding and clothes for Bholenath and Mataji. Fold your hands, and wish the Lord a peaceful night.",
+        "hi": "गर्भगृह में थोड़ी देर और ठहरिए, क्योंकि ओंकारेश्वर के दिन का सबसे कोमल क्षण रात में आता है। भक्तों का विश्वास है कि शिव दिन भर तीनों लोकों में विचरण करते हैं, और हर रात माता पार्वती के साथ विश्राम करने यहीं, इसी द्वीप पर आते हैं। इसलिए हर रात प्रभु को सुलाया जाता है। लगभग साढ़े नौ बजे शयन आरती शुरू होती है, विश्राम की आरती, धीमे स्वर में गाई जाती है, दीप धीरे-धीरे घूमते हैं। फिर पुजारी गर्भगृह में रात की सजावट करते हैं: चाँदी का झूला, सुंदर बिछौने वाली शय्या, चँवर, डमरू, और पासों के साथ चौपड़। चौपड़ पासों और गोटियों का पुराना भारतीय खेल है, और कथा कहती है कि सोने से पहले शिव और पार्वती बैठकर चौपड़ खेलते हैं। आरती के बाद थोड़ी देर भक्त शयन दर्शन के लिए आ सकते हैं और यह सब सजा हुआ देख सकते हैं। फिर रात के लिए पट बंद कर दिए जाते हैं। और अब वह बात, जिसे लोग बड़े चाव से सुनाते हैं: कहा जाता है कि सुबह जब पट खुलते हैं, तो पासे और गोटियाँ बिखरी मिलती हैं, मानो रात भर किसी ने खेला हो। इसे चमत्कार मानिए या प्रेम भरी कथा, पर सोचिए इसका अर्थ क्या है। यहाँ भगवान केवल पूजे नहीं जाते; हर रात परिवार के सदस्य की तरह उनका घर में स्वागत होता है। भक्त भोलेनाथ और माताजी के लिए बिछौने और वस्त्रों का पूरा नया सेट भी अर्पित कर सकते हैं। हाथ जोड़िए, और प्रभु को शुभ रात्रि कहिए।"
+      },
+      "didYouKnow": {
+        "en": "The temple trust’s own timetable lists it: Shayan Arti from 9:30 to 10:00 pm, then Shayan Darshan, a view of the night’s arrangements, from 10:00 to 10:30 pm.",
+        "hi": "मंदिर न्यास की समय-सारणी में भी यह दर्ज है: रात 9:30 से 10:00 बजे तक शयन आरती, फिर 10:00 से 10:30 बजे तक शयन दर्शन, यानी रात की सजावट के दर्शन।"
+      },
+      "sources": [
+        "https://shriomkareshwar.org/ShayanDaan.aspx",
+        "https://www.shriomkareshwar.org/PartheshwarPuja.aspx",
+        "https://zeenews.india.com/hindi/india/madhya-pradesh-chhattisgarh/mp/omkareshwar-jyotirlinga-mahima-where-shiva-parvati-play-chaupad-sdmp/1254593",
+        "https://www.tv9hindi.com/religion/omkareshwar-jyotirlinga-mysteries-moksha-shiva-parvati-darshan-3827811.html"
       ]
     }
   ],
@@ -137,9 +263,37 @@
     },
     "audio": [
       {
+        "url": "audio/aarti/omkareshwar-jyotirling-aarti.mp3",
+        "title": "ॐकारेश्वर ज्योतिर्लिंग (आरती) - Shailendra Bharti, Deepali Somaiya Date | Omkareshwar Jyotirling Aarti",
+        "by": "Universal Music Bhakti",
+        "creditUrl": "https://www.youtube.com/watch?v=hiCRMpKcbnU",
+        "license": "Not openly licensed (YouTube upload by Universal Music Bhakti, youtube.com/@universalmusicbhakti; sung by Shailendra Bharti and Deepali Somaiya Date)",
+        "permission": "Used at the site owner's choice, credited on screen while it plays and in CREDITS.md",
+        "notes": "Hosted copy of the YouTube audio (4:37, 132 kb/s MP3); plays in the garbhagriha in place of the embedded YouTube aarti"
+      },
+      {
         "url": "https://shriomkareshwar.org/LiveDarshan.aspx",
         "license": "All rights reserved (Shri Omkareshwar Mandir Trust) - needs permission",
         "notes": "The trust’s official live darshan. No reuse licence found; contact shriomkareshwar@gmail.com / +91 8989998686 for permission."
+      }
+    ],
+    "places": [
+      {
+        "id": "narmada-aarti",
+        "name": { "en": "Narmada Aarti", "hi": "नर्मदा आरती" },
+        "zones": ["ghat"],
+        "schedule": [{ "name": { "en": "Narmada Maha-Aarti at Koti Tirth Ghat", "hi": "कोटितीर्थ घाट पर नर्मदा महाआरती" }, "time": "every evening" }],
+        "audio": [
+          {
+            "url": "audio/aarti/omkareshwar-narmada-aarti.mp3",
+            "title": "Omkareshwar Narmada Aarti 🙏। ॐकारेश्वर नर्मदा महाआरती । #omkareshwar #narmadaaarti",
+            "by": "A TO Z Indrajit",
+            "creditUrl": "https://www.youtube.com/watch?v=Jxzun-mAZlI",
+            "license": "Not openly licensed (YouTube upload by A TO Z Indrajit, youtube.com/@atozindrajit)",
+            "permission": "Used at the site owner's choice, credited on screen while it plays and in CREDITS.md",
+            "notes": "Hosted copy of the YouTube audio (8:08, 82 kb/s MP3); heard all over the Koti Tirth ghat and its river steps"
+          }
+        ]
       }
     ],
     "youtube": [

@@ -31,7 +31,7 @@ import { quality, thin } from './profile';
  * update(t) every frame. No colliders, no shadow casting.
  */
 
-export type Kind = 'saree' | 'kurta' | 'kanwariya';
+export type Kind = 'saree' | 'kurta' | 'kanwariya' | 'pujari';
 export type Outfit = 'plains' | 'mountain' | 'south';
 export type Pose = 'stand' | 'walk' | 'namaste' | 'thali' | 'bag' | 'raised' | 'kanwar' | 'sit' | 'sitNamaste' | 'step';
 
@@ -42,7 +42,7 @@ export interface CrowdSpot {
   /** facing (radians about y; 0 = +z) */
   ry: number;
   sit?: boolean;
-  /** force a type: 'saree' (a woman) | 'kurta' (a man) | 'kanwariya' */
+  /** force a type: 'saree' (a woman) | 'kurta' (a man) | 'kanwariya' | 'pujari' (a priest: white, red angavastram) */
   kind?: Kind;
   /** force a pose ('step' sits on a ledge whose top is at y, feet 0.42 m lower) */
   pose?: Pose;
@@ -115,6 +115,8 @@ interface Spec {
   shawl: boolean;
   /** shoes (mountain) */
   shoes: boolean;
+  /** a priest at a river aarti: white kurta and dhoti, a red angavastram (colours only; the kurta-and-shawl kit) */
+  priest?: boolean;
 }
 const key = (s: Spec) => `${s.dress}|${s.female ? 'f' : 'm'}|${s.age}|${s.pose}|${s.hair}|${+s.hood}${+s.shawl}${+s.shoes}`;
 
@@ -958,7 +960,7 @@ function chooseSpec(r: Rnd, p: CrowdSpot, outfit: Outfit, kanShare: number, chil
   const kind: Kind = p.kind ?? (r() < 0.45 ? 'saree' : r() < kanShare ? 'kanwariya' : 'kurta');
   const female = kind === 'saree';
   const sitting = !!p.sit || p.pose === 'sit' || p.pose === 'sitNamaste';
-  const age: 0 | 1 | 2 = !sitting && !p.pose && r() < childShare && kind !== 'kanwariya' ? 2 : r() < elderShare ? 1 : 0;
+  const age: 0 | 1 | 2 = !sitting && !p.pose && r() < childShare && kind !== 'kanwariya' && kind !== 'pujari' ? 2 : r() < elderShare ? 1 : 0;
   let pose: Pose;
   if (p.pose) pose = p.pose;
   else if (sitting) pose = r() < 0.65 ? 'sit' : 'sitNamaste';
@@ -974,6 +976,8 @@ function chooseSpec(r: Rnd, p: CrowdSpot, outfit: Outfit, kanShare: number, chil
   if (age === 2) {
     dress = female ? (south || r() < 0.4 ? 'girl' : 'salwar') : 'boy';
     if (female) hair = 'braid';
+  } else if (kind === 'pujari') {
+    return { dress: 'kurta', female: false, age, pose, hair: 'short', hood: false, shawl: true, shoes: false, priest: true };
   } else if (kind === 'kanwariya') {
     if (mtn) { dress = 'sadhu'; shawl = true; hair = r() < 0.6 ? 'jata' : 'bald'; }
     else if (south) { dress = r() < 0.6 ? 'veshtiShirt' : 'veshtiBare'; }
@@ -1022,6 +1026,7 @@ function palette(r: Rnd, sp: Spec, outfit: Outfit, wet: boolean): [number, numbe
     case 'veshtiBare': a = pick(r, VESHTI); c = r() < 0.5 ? 0xf6f2e6 : pick(r, SAFFRON); dd = pick(r, [0xd4a017, 0xb81d24, 0x1b5e20]); break;
   }
   if (sp.shawl) c = pick(r, SHAWL);
+  if (sp.priest) { a = pick(r, [0xf6f3ec, 0xf3f0e8, 0xf8f5ee]); b = pick(r, [0xf6f2e6, 0xf2ecdc]); c = pick(r, [0xa8161c, 0xb81d24, 0x9a1b1b]); }
   if (sp.hair === 'cap') c = pick(r, CAP);
   if (south && sp.dress.startsWith('veshti') && r() < 0.18) { a = pick(r, AYYAPPA); b = a; } // Ayyappa devotees
   const col = (h: number, jit = 0.06) => { const x = new THREE.Color(h); x.offsetHSL((r() - 0.5) * 0.015, (r() - 0.5) * 0.08, (r() - 0.5) * jit); return x.getHex(); };

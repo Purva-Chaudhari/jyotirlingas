@@ -49,9 +49,16 @@ const bi = (v: string | Bi | undefined, lang: Lang) => (typeof v === 'string' ? 
  * Temples whose sound is tuned so nothing clashes or stutters: while the recorded (YouTube) aarti is heard, the
  * tanpura drone fades out and stories wait for a tap instead of starting over it; a story you do start silences
  * the aarti for its length; a short walk away keeps the video playing (silently) so it never re-buffers; the
- * synthesized aarti skips beats after a slow frame instead of bunching them. (Mahakal first, then Kashi; others later.)
+ * synthesized aarti skips beats after a slow frame instead of bunching them. (Mahakal first, then Kashi and Omkareshwar; others later.)
  */
-const CALM_AUDIO = new Set(['mahakaleshwar', 'kashi-vishwanath']);
+const CALM_AUDIO = new Set(['mahakaleshwar', 'kashi-vishwanath', 'omkareshwar']);
+
+/**
+ * Temples where a story speaks only at its own spot: walk away and it pauses (picking up from the same word if you
+ * come back). An aarti (the sanctum's, and the Narmada Aarti all over the ghat) plays everywhere else in its place;
+ * at a story spot inside it the aarti pauses while the story is told, and carries on from the same moment after.
+ */
+const SPOT_STORIES = new Set(['omkareshwar']);
 
 /** one schedule entry, whatever shape the content uses ("4:00 AM Bhasma Aarti", {name, time}...) */
 function scheduleLine(list: unknown[] | undefined, lang: Lang): string {
@@ -135,7 +142,7 @@ export class StorySystem {
         const t = prog.peek(site.id);
         return { heard: !!t?.heard.includes(id), read: !!t?.read.includes(id) };
       },
-      speaking: (on) => { this.speaking = on; this.aarti?.setDuck(on); this.yt?.setDuck(on); for (const pl of this.places) pl.player?.setDuck(on); },
+      speaking: (on) => this.setSpeaking(on),
       // a breath between one story ending and a waiting one starting
       ended: () => (this.quietUntil = performance.now() + 1500),
     });
@@ -191,6 +198,9 @@ export class StorySystem {
     window.addEventListener('keydown', (e) => this.key(e));
     // an AudioContext made before any gesture starts suspended: wake it on the first one
     const wake = () => {
+      // the soundscape (the aartis and the drone play through it) starts on the first gesture, whatever it is:
+      // walking in by Places (T) never touches the walk button that otherwise starts it
+      this.sound.start();
       void this.sound.context?.resume().catch(() => {});
       // a gesture may also unblock the YouTube aarti
       this.yt?.resume();
@@ -316,6 +326,9 @@ export class StorySystem {
 
   private openStop(l: Live, arriving: boolean) {
     if (this.queued === l) this.queued = null;
+    this.openedAt.copy(this.world.feet);
+    this.openedOff = !l.inside;
+    this.spotHeld = null;
     this.opened.add(l.stop.id);
     const heard = this.progress.peek(this.site.id)?.heard.includes(l.stop.id);
     void this.card.show(l.stop, arriving ? this.progress.prefs.autoplay && !heard : this.progress.prefs.autoplay);
@@ -326,7 +339,12 @@ export class StorySystem {
   private busy() {
     if (performance.now() < this.quietUntil) return true;
     // the recorded aarti is playing here: a story waits for a tap rather than talking over it
-    if (this.calm && (this.yt?.audible || this.aarti?.audible || this.places.some((pl) => pl.player?.audible))) return true;
+    // (temples whose stories keep to their spots: a story spot inside an aarti's place is the story's)
+    if (this.calm && !SPOT_STORIES.has(this.site.id)) {
+      if (this.yt?.audible || this.aarti?.audible || this.places.some((pl) => pl.player?.audible)) return true;
+      // ...or is about to be (a YouTube aarti takes a moment to load and fade in): the sanctum is the aarti's
+      if (this.inSanctum) return true;
+    }
     const cur = this.stops.find((s) => s.stop.id === this.card.current?.id);
     return this.card.open && this.card.playing && !!cur?.inside;
   }
@@ -345,6 +363,28 @@ export class StorySystem {
     }
   }
 
+  /** where the story being told was opened (a story you start away from any spot belongs where you started it) */
+  private openedAt = new THREE.Vector3();
+  /** the story paused because you walked away from its spot */
+  private spotHeld: string | null = null;
+  /** it was started (N) away from its own spot: it belongs where it was started */
+  private openedOff = false;
+  private keepToSpot() {
+    const cur = this.card.open ? this.stops.find((s) => s.stop.id === this.card.current?.id) : undefined;
+    if (!cur) { this.spotHeld = null; return; }
+    const f = this.world.feet, a = cur.anchor;
+    // (a little beyond the spot's own radius before it pauses: twice it for small spots, +2.5 m for big ones)
+    const atSpot = (!!a && Math.hypot(f.x - a[0], f.z - a[2]) < a[3] + Math.min(2.5, a[3]) && Math.abs(f.y - a[1]) < 3)
+      || (!!cur.stop.at?.zone && this.world.zone === cur.stop.at.zone) || (this.openedOff && f.distanceTo(this.openedAt) < 4);
+    if (!atSpot && this.card.playing) {
+      this.card.hold();
+      this.spotHeld = cur.stop.id;
+    } else if (atSpot && this.spotHeld === cur.stop.id) {
+      this.spotHeld = null;
+      this.card.resume();
+    }
+  }
+
   private frame(dt: number, t: number) {
     this.markers?.update(t);
     if (!this.active) return;
@@ -353,6 +393,7 @@ export class StorySystem {
     if ((this.acc += dt) < 0.1) return;
     this.acc = 0;
     this.card.tick();
+    if (SPOT_STORIES.has(this.site.id)) this.keepToSpot();
     // being walked to a place (engine/travel.ts): no story starts on the way; the place's own may on arrival
     if (this.world.travelling) return this.updateGuide();
     const f = this.world.feet, zone = this.world.zone;
@@ -415,15 +456,36 @@ export class StorySystem {
 
   // ------------------------------------------------------------ aarti
 
+  /** a story is being told: the aartis fall silent under it (and come back when it stops) */
+  private setSpeaking(on: boolean) {
+    this.speaking = on;
+    this.aarti?.setDuck(on);
+    if (SPOT_STORIES.has(this.site.id)) this.aarti?.holdFor(on);
+    this.yt?.setDuck(on);
+    for (const pl of this.places) {
+      pl.player?.setDuck(on);
+      if (SPOT_STORIES.has(this.site.id)) pl.player?.holdFor(on);
+    }
+  }
+
   private updateAarti(dt: number) {
+    // the narration's play/pause events can be missed (a story swapped or closed mid-load fires 'play' but no
+    // 'pause'): trust what the card is actually doing, so a stopped story never leaves an aarti silenced
+    const telling = this.card.open && this.card.playing;
+    if (telling !== this.speaking) this.setSpeaking(telling);
     const ctx = this.sound.context, out = this.sound.output;
     const d = DARSHAN[this.site.id];
     const cam = this.world.camera;
     cam.getWorldPosition(this.p);
     let proximity: number;
-    if (d && this.audioFile() && ctx) {
+    // a recording (a hosted file, or the trust's own YouTube aarti) is the sanctum's: heard only inside it
+    const recorded = !!d && ((!!this.audioFile() && !!ctx) || (!this.audioFile() && !this.ytFailed && this.ytVideos().length > 0));
+    if (d && recorded) {
       // the recording: only inside the sanctum, right by the Jyotirlinga; it stops as soon as you step out
-      proximity = d.zones.includes(this.world.zone) ? 1 : 0;
+      // (where stories keep to their spots it is heard from the sanctum door on: the darshan area round the rail)
+      const f = this.world.feet;
+      const atDoor = SPOT_STORIES.has(this.site.id) && Math.hypot(f.x - d.at[0], f.z - d.at[2]) < d.at[3] && Math.abs(f.y - d.at[1]) < 2;
+      proximity = d.zones.includes(this.world.zone) || atDoor ? 1 : 0;
     } else if (d) {
       const [sx, sy, sz] = d.source;
       // floors and ceilings muffle: count height difference triple
@@ -445,6 +507,7 @@ export class StorySystem {
         if (here && !pl.player) {
           pl.player = new AartiPlayer(ctx, out, pl.file, this.calm, pl.el);
           pl.player.setDuck(this.speaking);
+          if (SPOT_STORIES.has(this.site.id)) pl.player.holdFor(this.speaking);
         }
         if (!pl.player) continue;
         pl.player.setSource(this.p.x, this.p.y, this.p.z);
@@ -453,10 +516,17 @@ export class StorySystem {
       }
     }
     // a recording (the sanctum's, or a place's) comes first: a story being told as you walk in waits for it
-    this.holdForAarti((!!d && !!this.audioFile() && !!ctx && proximity > 0) || !!place);
+    // (where stories keep to their spots, leaving a story's spot pauses it instead: keepToSpot)
+    if (!SPOT_STORIES.has(this.site.id)) this.holdForAarti((recorded && proximity > 0) || !!place);
     if (place !== this.placeOn) {
       this.placeOn = place;
       this.updateChipText();
+    }
+    // the sanctum's YouTube player gives the panel to a place's own recording (the Narmada Aarti on the ghat):
+    // hidden while that plays, but only once the video itself has stopped (an embed may not play hidden)
+    if (this.yt) {
+      if (place) this.yt.yieldPanel();
+      this.yt.el.hidden = !!place && !this.yt.isPlaying;
     }
     // the drone is in its own key: it gives way to a recorded aarti while that is heard
     if (this.calm) this.sound.setDroneShare(place ? 0.05 : this.yt?.isPlaying || this.aarti?.usingFile ? 1 - 0.95 * proximity : 1);
@@ -516,7 +586,8 @@ export class StorySystem {
    */
   private startAarti(ctx: AudioContext | null, out: AudioNode | null) {
     const file = this.audioFile();
-    const videos = DARSHAN[this.site.id] && !this.ytFailed && !(file && ctx) ? this.ytVideos() : [];
+    // a hosted recording always wins: if the sound isn't started yet, wait for it rather than fall back to the video
+    const videos = DARSHAN[this.site.id] && !this.ytFailed && !file ? this.ytVideos() : [];
     if (videos.length) {
       const yt = (this.yt = new YouTubeAarti(videos, youtubeLive(this.story?.aarti?.youtube), {
         failed: (why) => {
@@ -536,6 +607,7 @@ export class StorySystem {
     if (!ctx || !out) return;
     this.aarti = new AartiPlayer(ctx, out, file, this.calm, this.aartiEl);
     this.aarti.setDuck(this.speaking);
+    if (SPOT_STORIES.has(this.site.id)) this.aarti.holdFor(this.speaking);
     this.updateChipText();
   }
 

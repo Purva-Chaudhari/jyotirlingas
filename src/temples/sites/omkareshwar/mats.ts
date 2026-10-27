@@ -173,7 +173,22 @@ export function omkarMaterials(M: Materials, renderer: THREE.WebGLRenderer, pend
     shikharaPlain: lift(S('sandstone_blocks_08', 2.2, 0xe8bcae, { normalScale: 1.0, grime: 0.12 })),
     /** carved grey-buff stone of the old temple (pillars, walls) */
     oldStone: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xa49c90, WB, [1.6, 1.6], { normalScale: 1.1, grime: 0.45 }),
+    /** the band of old carved red-brown reliefs round the garbhagriha walls (darshan videos) */
+    frieze: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0x8a5644, WB, [0.5, 0.45], { normalScale: 1.4, grime: 0.2 }),
+    /** the sanctum door's carved frame, coated in oxblood sindoor-and-oil paint */
+    sindoorStone: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0x8a3e30, WB, [0.5, 0.5], { normalScale: 1.2, rough: 0.55 }),
+    oldStonePink: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xf4c0a0, WB, [1.6, 1.6], { normalScale: 1.1, grime: 0.18 }),
+    oldStoneSoot: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0x7e7a74, WB, [1.6, 1.6], { normalScale: 1.1, grime: 0.5 }),
+    /** Mamleshwar's grey-buff Paramara sandstone, and its neighbour's redder stone (south-bank videos) */
+    mamStone: carvedScan(pending, aniso, 'beige_wall_002', 2.4, 0xa8a28c, WB, [1.2, 1.2], { normalScale: 1.1, grime: 0.4 }),
+    mamRed: carvedScan(pending, aniso, 'sandstone_blocks_08', 2.2, 0xb48470, WB, [1.2, 1.2], { normalScale: 1.1, grime: 0.35 }),
+    shrineOrange: S('sandstone_blocks_08', 2.2, 0xd07040, { normalScale: 1.0, grime: 0.25 }),
+    walkRoof: new THREE.MeshStandardMaterial({ color: 0x7a8a98, metalness: 0.4, roughness: 0.55, side: THREE.DoubleSide }),
+    mamRail: new THREE.MeshStandardMaterial({ color: 0xe9b9b9, roughness: 0.6 }),
+    shadeNet: new THREE.MeshStandardMaterial({ color: 0x2bb5b0, roughness: 0.9, transparent: true, opacity: 0.8, side: THREE.DoubleSide }),
     oldPlain: S('beige_wall_002', 2.4, 0xbcaf9f, { normalScale: 0.9, grime: 0.32 }),
+    /** the old fortress wall of the temple terrace: big weathered ashlar, buff-pink, water-stained (2023 river photo) */
+    fort: S('large_sandstone_blocks_01', 3.2, 0xd2b8a0, { normalScale: 1.2, grime: 0.55 }),
     /** soot-dark interior stone near the sanctum */
     darkStone: dimSky(S('large_sandstone_blocks_01', 2.6, 0x6a625a, { normalScale: 1.1, grime: 0.3 }), 0.35),
     /** the new galleries: salmon-pink sandstone */
@@ -221,12 +236,26 @@ export function omkarMaterials(M: Materials, renderer: THREE.WebGLRenderer, pend
     film,
     /** steel railings and pipes */
     steel: new THREE.MeshStandardMaterial({ color: 0xb4b8bc, metalness: 0.9, roughness: 0.35 }),
-    /** orange-red painted steel of the Jhoola pul towers */
-    bridgeRed: new THREE.MeshStandardMaterial({ color: 0xd2501e, metalness: 0.4, roughness: 0.55 }),
+    /** red painted steel of the Jhoola pul (cable caps, kerbs) */
+    bridgeRed: new THREE.MeshStandardMaterial({ color: 0xa8323a, metalness: 0.4, roughness: 0.55 }),
+    /** the Jhoola pul's cream / peach concrete pylons, its red steel frames and red corrugated roof (drone and tour videos) */
+    bridgeTower: new THREE.MeshStandardMaterial({ color: 0xe8c09a, roughness: 0.85 }),
+    /** the new downstream bridge: white concrete, yellow-and-black railings */
+    whiteConcrete: new THREE.MeshStandardMaterial({ color: 0xe6e4dc, roughness: 0.85 }),
+    railYellow: new THREE.MeshStandardMaterial({ color: 0xe8a81c, roughness: 0.6 }),
+    railBlack: new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.6 }),
+    bridgeTruss: new THREE.MeshStandardMaterial({ color: 0xa8323a, metalness: 0.35, roughness: 0.55 }),
+    bridgeRoof: new THREE.MeshStandardMaterial({ color: 0xc8402e, metalness: 0.3, roughness: 0.6, side: THREE.DoubleSide }),
     cable: new THREE.MeshStandardMaterial({ color: 0x3a3a3a, metalness: 0.8, roughness: 0.45 }),
     deck: S('large_floor_tiles_02', 2.4, 0xb8b0a4, { normalScale: 0.5 }),
     /** corrugated sheet roofs over queues */
     sheet: new THREE.MeshStandardMaterial({ color: 0xd9dcdd, metalness: 0.5, roughness: 0.45, side: THREE.DoubleSide }),
+    /** the weathered grey sheet roofs over the temple forecourt (river photographs) */
+    courtSheet: new THREE.MeshStandardMaterial({ color: 0x9da3a6, metalness: 0.45, roughness: 0.6, side: THREE.DoubleSide }),
+    /** yellow-painted collapsible steel gates in the hall (photographs) */
+    gateYellow: new THREE.MeshStandardMaterial({ color: 0xd9a21c, metalness: 0.3, roughness: 0.55 }),
+    /** blue LED strip light (the upper shrine's arch) */
+    ledBlue: new THREE.MeshStandardMaterial({ color: 0x2a5cff, emissive: 0x3a6cff, emissiveIntensity: 2.2 }),
     /** yellow / saffron tarps of the ghat stalls and boats (instanced colour) */
     tarp: new THREE.MeshStandardMaterial({ color: 0xffffff, map: clothTexture(), roughness: 0.85, side: THREE.DoubleSide }),
     boatWood: new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7 }),

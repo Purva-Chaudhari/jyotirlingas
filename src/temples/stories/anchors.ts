@@ -76,10 +76,16 @@ export const STOPS: Record<string, Record<string, Anchor>> = {
     // +z south (across the Narmada, the Jhoola Pul), the temple on Mandhata's cliff
     jhoola: [121, -4, 66, 5],
     darshan: [34, -4, 20.5, 4],
-    ghat: [0, -12, 27.5, 6],
+    ghat: [-7.5, -12, 29.6, 2.5], // on the ghat beside the aarti platform (clear of where Places sets you down)
     temple: [0, 0, 1, 3],
-    garbhagriha: [9.7, -0.45, -5.2, 2],
+    garbhagriha: [10.85, -0.45, -5.45, 0.65], // before the diya stand in the sanctum's south corner (the aarti plays elsewhere)
     upper: [0, 4.9, -8, 4],
+    'omkar-kubera': [121, -4, 110, 4], // mid-river on the Jhoola pul, looking down the Narmada
+    'omkar-island': [121, -4, 150, 4], // on the Jhoola pul towards Mamleshwar, turning to look back at the whole island
+    'omkar-kankar': [30, -12, 27, 4], // among the stalls on the ghat, where the Narmada stones are sold
+    'omkar-shankara': [-20, -4, 20, 3], // on the river gallery, the hill and the statue above
+    'omkar-ahilya': [-7.4, 0, -8.3, 3], // in the west bays of the sixty-pillar hall
+    'omkar-shayan': [5.9, 0, -5.6, 1.3], // in the queue aisle by Nandi, before the sanctum door (the aarti plays inside)
   },
   nageshwar: {
     // +x east, −z north; outside ground −1, compound 0, hall PL 0.9, sanctum floor SF −0.3; walk: gate → statue → porch → hall → stair
@@ -173,7 +179,7 @@ export const DARSHAN: Record<string, Darshan> = {
   // the Ganesh Mandapam barricade on the axis of the sanctum door (DARSHAN_SPOT), or inside the sanctum
   // after darshan the daily queue is led upstairs to Omkareshwar, directly above the sanctum
   mahakaleshwar: { at: [0, -2.55, 1.0, 3.5], zones: ['garbhagriha'], source: [0, -2.0, -5.85], then: 'mahakal-omkareshwar' },
-  omkareshwar: { at: [9.6, -0.45, -6.6, 3], zones: ['garbhagriha'], source: [12.15, 0, -7] },
+  omkareshwar: { at: [10.95, -0.45, -6.9, 3], zones: ['garbhagriha'], source: [12.3, 0, -7] },
   // the sanctum, entered down the stair from the hall; the linga a little west of the chamber's centre
   nageshwar: { at: [13.2, -0.3, 0.9, 2.2], zones: ['garbhagriha'], source: [14.35, 0.05, 0.15] },
   // darshan from the lower antarala at the sanctum door (the queue sees the hollow in the mirror), or inside

@@ -43,7 +43,7 @@ export function omkareshwarNav(): { nav: NavGraph; places: Place[] } {
     nandi: [4.9, 0, -5.6],
     'queue-e': [7.9, 0, -5.6],
     door: [8.2, 0, GARBHA.doorZ],
-    darshan: [9.6, GARBHA.floor, GARBHA.doorZ],
+    darshan: [10.95, GARBHA.floor, -6.9], // at the silver rail, where the stone shows over it
     garbhagriha: [9.7, GARBHA.floor, -5.3],
     // the hall's west bay, its middle, and the stair along the west wall to the first storey
     'court-w': [-2.6, 0, 2.8],

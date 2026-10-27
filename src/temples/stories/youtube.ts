@@ -255,6 +255,14 @@ export class YouTubeAarti {
     }
   }
 
+  /** another recording takes the panel (a place's own aarti, out of earshot of this one): stop now, not after the quiet wait */
+  yieldPanel() {
+    if (this.dead || !this.want || this.audible) return;
+    this.want = false;
+    this.quietFor = 0;
+    this.pause();
+  }
+
   /** after a user gesture: try again (autoplay was blocked) */
   resume() {
     if (this.dead || !this.want) return;

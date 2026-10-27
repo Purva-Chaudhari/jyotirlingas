@@ -4,7 +4,7 @@ import { worldUV } from '../../engine/materials';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Batch, Instances, eave } from './batch';
 import type { OM } from './mats';
-import { HALL, F1, SHIKHARA, GARBHA, FRAME, STAIR } from './layout';
+import { HALL, F1, SHIKHARA, GARBHA, FRAME, STAIR, COURT_X0 } from './layout';
 import { pipeRail, rekhaGeometry, rnd } from './util';
 import { nandiMesh } from './nandi';
 
@@ -116,7 +116,18 @@ function hallPillar(): THREE.BufferGeometry {
   // cross brackets
   box(1.7, 3.8, 3.92, 0.5);
   box(0.5, 3.8, 3.92, 1.7);
-  for (const [x, z] of [[0.75, 0], [-0.75, 0], [0, 0.75], [0, -0.75]]) parts.push(new THREE.BoxGeometry(0.22, 0.28, 0.22).translate(x, 3.66, z));
+  // under each bracket arm a squat kichaka (dwarf) figure holds it up on raised hands (photographs of the capitals)
+  for (let k = 0; k < 4; k++) {
+    const a = (k * Math.PI) / 2;
+    const fig = [
+      new THREE.BoxGeometry(0.24, 0.2, 0.2).translate(0, 3.58, 0.7), // body and folded legs
+      new THREE.SphereGeometry(0.08, 8, 6).translate(0, 3.72, 0.8), // head, leaning out
+      new THREE.BoxGeometry(0.05, 0.16, 0.05).translate(-0.1, 3.72, 0.72), // raised arms
+      new THREE.BoxGeometry(0.05, 0.16, 0.05).translate(0.1, 3.72, 0.72),
+      new THREE.BoxGeometry(0.2, 0.08, 0.22).translate(0, 3.49, 0.68), // seat
+    ];
+    for (const f of fig) parts.push(f.rotateY(a));
+  }
   const g = mergeGeometries(parts.map((x) => { const n = x.index ? x.toNonIndexed() : x; for (const k of Object.keys(n.attributes)) if (k !== 'position' && k !== 'normal') n.deleteAttribute(k); return n; }), false)!;
   g.computeVertexNormals();
   return worldUV(g);
@@ -134,13 +145,13 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   // ---------- floors ----------
   B.span(K.hallFloor, x0, x1, -0.5, 0, z0, z1);
   // the forecourt strip between the hall and the galleries
-  B.span(K.ghat, FRAME.xs[0], FRAME.xs[FRAME.xs.length - 1], -0.5, 0, z1, FRAME.back);
+  B.span(K.ghat, COURT_X0, FRAME.xs[FRAME.xs.length - 1], -0.5, 0, z1, FRAME.back);
   P.floor(g, x0, x1, z0, z1, 0);
-  for (const [a, b] of [[FRAME.xs[0], -STAIR.hw - 0.3], [STAIR.hw + 0.3, FRAME.xs[FRAME.xs.length - 1]]]) P.floor(g, a, b, z1, FRAME.back + 0.1, 0);
+  for (const [a, b] of [[COURT_X0, -STAIR.hw - 0.3], [STAIR.hw + 0.3, FRAME.xs[FRAME.xs.length - 1]]]) P.floor(g, a, b, z1, FRAME.back + 0.1, 0);
   // the forecourt's north edge beyond the temple: houses and walls
-  P.solid(FRAME.xs[0] - 1, 0, z1 - 2.5, x0, 8, z1);
+  P.solid(COURT_X0 - 1, 0, z1 - 2.5, x0, 8, z1);
   P.solid(EX, 0, z1 - 2.5, FRAME.xs[FRAME.xs.length - 1] + 1, 8, z1);
-  B.span(K.oldPlain, FRAME.xs[0], x0, 0, 7.5, z1 - 2.5, z1);
+  B.span(K.oldPlain, COURT_X0, x0, 0, 7.5, z1 - 2.5, z1);
   B.span(K.oldPlain, EX, FRAME.xs[FRAME.xs.length - 1], 0, 6.5, z1 - 2.5, z1);
   for (const x of [-34, -27, -20, 18, 25, 31]) B.span(K.dark, x - 0.8, x + 0.8, 0, 2.4, z1 - 0.02, z1 + 0.03);
 
@@ -148,9 +159,13 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   const xsP = [-11.0, -8.6, -6.2, -3.8, -1.4, 1.4, 3.8, 6.2];
   const zsP = [0.8, -1.8, -4.4, -7.0, -9.6, -12.2, -14.8];
   const pillarGeo = hallPillar();
+  // the stone grades from pinkish-orange sandstone in the bays open to the court (front and west), to grey in
+  // the inner bays, to soot-darkened in the last rows before the garbhagriha door (darshan videos)
+  const pilPink = new Instances(pillarGeo, K.oldStonePink);
   const pil = new Instances(pillarGeo, K.oldStone);
+  const pilSoot = new Instances(pillarGeo, K.oldStoneSoot);
   const pillarAt = (x: number, z: number, y = 0) => {
-    pil.at(x, y, z);
+    (z > -2 || x < -6 ? pilPink : x > 3 && Math.abs(z - GARBHA.doorZ) < 3 ? pilSoot : pil).at(x, y, z);
     P.solid(x - 0.52, y, z - 0.52, x + 0.52, y + h, z + 0.52);
   };
   for (const x of xsP) for (const z of zsP) pillarAt(x, z);
@@ -224,9 +239,25 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
     const nandi = nandiMesh(K.whiteStone);
     nandi.scale.setScalar(0.42);
     nandi.rotation.y = -Math.PI / 2; // local -z → +x (towards the sanctum door)
-    nandi.position.set(5.0, 0.55, GARBHA.doorZ);
+    nandi.position.set(5.0, 0.32, GARBHA.doorZ);
     g.add(nandi);
-    B.span(K.marble, 4.3, 5.7, 0, 0.55, GARBHA.doorZ - 0.45, GARBHA.doorZ + 0.45);
+    // white marble, on a low black plinth, garlanded in marigold; a brass railing with wheel motifs and spear
+    // finials on the queue side (darshan videos; photograph of the Omkareshwar Nandi)
+    B.span(K.blackStone, 4.3, 5.7, 0, 0.26, GARBHA.doorZ - 0.45, GARBHA.doorZ + 0.45);
+    B.span(K.blackStone, 4.25, 5.75, 0.26, 0.32, GARBHA.doorZ - 0.5, GARBHA.doorZ + 0.5);
+    for (const [x, y, r, t] of [[5.33, 0.7, 0.12, 0.6], [5.3, 0.6, 0.17, 0.95]] as const) {
+      B.add(K.marigold, new THREE.TorusGeometry(r, 0.03, 6, 20).rotateY(Math.PI / 2).rotateZ(t).translate(x, y, GARBHA.doorZ));
+    }
+    {
+      const zr = GARBHA.doorZ + 0.47, y0r = 0.32, hr = 0.6;
+      for (const y of [y0r + 0.08, y0r + hr]) B.span(K.brass, 4.3, 5.7, y - 0.02, y + 0.02, zr - 0.02, zr + 0.02);
+      for (let k = 0; k <= 5; k++) {
+        const x = 4.3 + (1.4 * k) / 5;
+        B.span(K.brass, x - 0.018, x + 0.018, y0r, y0r + hr + 0.06, zr - 0.018, zr + 0.018);
+        B.add(K.brass, new THREE.ConeGeometry(0.03, 0.1, 4).translate(x, y0r + hr + 0.11, zr));
+        if (k < 5) B.add(K.brass, new THREE.TorusGeometry(0.1, 0.012, 4, 16).translate(x + 0.14, y0r + 0.34, zr));
+      }
+    }
     P.solid(4.3, 0, GARBHA.doorZ - 0.5, 5.7, 1.4, GARBHA.doorZ + 0.5);
   }
 
@@ -234,6 +265,60 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   for (const x of [-0.85, 0.85]) {
     pipeRail(B, K.steel, posts, x, 1.6, x, -4.7, 0, 1.0);
     P.solid(x - 0.06, 0, -4.7, x + 0.06, 1.0, 1.6);
+  }
+
+  // the aisle's queue is a stainless "tunnel": a gabled portal frame every 1.6 m, joined by pipes (darshan videos)
+  {
+    const zA = 1.6, zB = -4.7, n = Math.round((zA - zB) / 1.6);
+    const rod = (ax: number, ay: number, az: number, bx: number, by: number, bz: number) => {
+      const a = new THREE.Vector3(ax, ay, az), b = new THREE.Vector3(bx, by, bz);
+      const geo = new THREE.CylinderGeometry(0.022, 0.022, a.distanceTo(b), 6).translate(0, a.distanceTo(b) / 2, 0);
+      geo.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize()));
+      B.add(K.steel, geo.translate(ax, ay, az));
+    };
+    for (let i = 0; i <= n; i++) {
+      const z = zA + ((zB - zA) * i) / n;
+      for (const s of [-1, 1]) {
+        rod(s * 0.85, 1.0, z, s * 0.85, 2.1, z);
+        rod(s * 0.85, 2.1, z, 0, 2.6, z);
+      }
+    }
+    for (const [x, y] of [[-0.85, 2.1], [0.85, 2.1], [0, 2.6]]) rod(x, y, zA, x, y, zB);
+  }
+  {
+    // pink steel lattice above head height in the bays facing the court, and in the porch's side bays
+    // with folded yellow collapsible gates below (photographs of the hall front)
+    const lat = document.createElement('canvas');
+    lat.width = lat.height = 128;
+    const c = lat.getContext('2d')!;
+    c.fillStyle = '#000';
+    c.fillRect(0, 0, 128, 128);
+    c.strokeStyle = '#fff';
+    c.lineWidth = 9;
+    for (let k = -128; k <= 256; k += 32) {
+      c.beginPath(); c.moveTo(k, 0); c.lineTo(k + 128, 128); c.stroke();
+      c.beginPath(); c.moveTo(k, 128); c.lineTo(k + 128, 0); c.stroke();
+    }
+    const alpha = new THREE.CanvasTexture(lat);
+    alpha.wrapS = alpha.wrapT = THREE.RepeatWrapping;
+    alpha.repeat.set(4, 4);
+    const latMat = new THREE.MeshStandardMaterial({ color: 0xe3a39a, roughness: 0.6, metalness: 0.2, alphaMap: alpha, alphaTest: 0.5, side: THREE.DoubleSide });
+    const lattice = (xa: number, xb: number, z: number, ya: number, yb: number) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(xb - xa - 1.0, yb - ya), latMat);
+      m.position.set((xa + xb) / 2, (ya + yb) / 2, z);
+      (m.material as THREE.MeshStandardMaterial).alphaMap!.repeat.set((xb - xa - 1.0) / 0.5, (yb - ya) / 0.5);
+      g.add(m);
+      B.span(K.mamRail, xa + 0.5, xb - 0.5, yb - 0.05, yb, z - 0.03, z + 0.03);
+      B.span(K.mamRail, xa + 0.5, xb - 0.5, ya, ya + 0.05, z - 0.03, z + 0.03);
+    };
+    for (const [xa, xb] of [[-11.0, -8.6], [-8.6, -6.2], [-6.2, -3.8], [3.8, 6.2]]) lattice(xa, xb, 0.8, 2.4, 3.6);
+    for (const [xa, xb] of [[-8.6, -6.2], [3.8, 6.2]]) {
+      lattice(xa, xb, 3.0, 2.3, 3.6);
+      // a collapsible gate pulled across below: yellow flat bars with the X links
+      for (let x = xa + 0.55; x < xb - 0.5; x += 0.12) B.span(K.gateYellow, x - 0.012, x + 0.012, 0.05, 2.25, 2.98, 3.02);
+      for (const y of [0.1, 1.15, 2.2]) B.span(K.gateYellow, xa + 0.5, xb - 0.5, y - 0.02, y + 0.02, 2.97, 3.03);
+      P.solid(xa + 0.5, 0, 2.9, xb - 0.5, 2.3, 3.1);
+    }
   }
 
   // queue rails down the aisle to the garbhagriha door (stopping short of the Nandi)
@@ -244,7 +329,7 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
 
   // ---------- hanging bells and lights in the hall ----------
   const bell = new Instances(new THREE.LatheGeometry([[0, 0], [0.12, 0.01], [0.13, 0.08], [0.09, 0.2], [0.04, 0.26], [0, 0.27]].map(([a, b]) => new THREE.Vector2(a, b - 0.27)), 14), K.brass);
-  for (const [x, z] of [[0, 2.0], [0, -3.0], [7.4, GARBHA.doorZ], [-5, -6], [-5, 1]]) {
+  for (const [x, z] of [[0, 2.0], [0, -3.0], [-5, -6], [-5, 1], [4.6, GARBHA.doorZ], [5.4, GARBHA.doorZ]]) { // (the row before the door: sanctum.ts)
     bell.at(x, 3.1, z, 1.3);
     B.span(K.brass, x - 0.01, x + 0.01, 3.1, h - 0.3, z - 0.01, z + 0.01);
   }
@@ -277,6 +362,35 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   // Mahakaleshwar: a lingam on a square pitha on the room's axis
   B.span(K.blackStone, -0.55, 0.55, F1, F1 + 0.32, -12.55, -11.45);
   B.lathe(K.lingam, [[0, 0], [0.17, 0], [0.17, 0.25], [0.12, 0.38], [0, 0.42]], 0, F1 + 0.32, -12, 24);
+  // dressed in red cloth, under a blue LED-outlined arch (darshan videos)
+  B.lathe(K.redCloth, [[0, 0], [0.185, 0], [0.19, 0.12], [0.18, 0.24], [0.13, 0.27], [0, 0.27]], 0, F1 + 0.32, -12, 24);
+  B.add(K.ledBlue, new THREE.TorusGeometry(0.7, 0.018, 6, 40, Math.PI).translate(0, F1 + 0.9, -12.7));
+  for (const x of [-0.7, 0.7]) B.span(K.ledBlue, x - 0.018, x + 0.018, F1, F1 + 0.9, -12.718, -12.682);
+  {
+    const sign = (lines: string[], bg: string, fg: string, w: number, h: number) => {
+      const cv = document.createElement('canvas');
+      cv.width = 512; cv.height = Math.round((512 * h) / w);
+      const c = cv.getContext('2d')!;
+      c.fillStyle = bg; c.fillRect(0, 0, cv.width, cv.height);
+      c.fillStyle = fg; c.textAlign = 'center'; c.textBaseline = 'middle';
+      let px = Math.round(cv.height / (lines.length + 0.6));
+      const font = () => `bold ${px}px "Noto Sans Devanagari", sans-serif`;
+      c.font = font();
+      while (px > 8 && Math.max(...lines.map((t) => c.measureText(t).width)) > cv.width * 0.92) { px--; c.font = font(); }
+      lines.forEach((t, i) => c.fillText(t, cv.width / 2, (cv.height * (i + 0.5)) / lines.length));
+      const tex = new THREE.CanvasTexture(cv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      return new THREE.MeshStandardMaterial({ map: tex, roughness: 0.7 });
+    };
+    // over the shrine room's door from the terrace: the white board and the trust's blue strip
+    const board = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.5), sign(['श्री महाकालेश्वर मंदिर'], '#f4f2ec', '#c4161c', 2.2, 0.5));
+    board.rotation.y = -Math.PI / 2;
+    board.position.set(roomX0 - 0.03, F1 + 2.75, -7.5);
+    const strip = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.2), sign(['श्री ओंकारेश्वर मंदिर ट्रस्ट, ओंकारेश्वर'], '#1f4fa8', '#ffffff', 2.2, 0.2));
+    strip.rotation.y = -Math.PI / 2;
+    strip.position.set(roomX0 - 0.03, F1 + 3.15, -7.5);
+    g.add(board, strip);
+  }
   B.span(K.blackStone, 0.55, 0.95, F1 + 0.22, F1 + 0.3, -12.08, -11.92);
   P.solid(-0.7, F1, -12.7, 0.7, F1 + 1, -11.3);
   flames.points.push(new THREE.Vector3(-0.75, F1 + 0.85, -11.4), new THREE.Vector3(0.75, F1 + 0.85, -11.4));
@@ -309,13 +423,30 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   // ---------- the open pavilion on the first-floor roof, facing the river (c02, c09) ----------
   {
     const py = 8.9, ph = 2.6;
-    const pv = new Instances(pillarGeo, K.oldPlain);
-    for (const x of [-3.4, -1.15, 1.15, 3.4]) for (const z of [-0.25, 2.0]) pv.at(x, py, z, 0.3, ph / 3.92, 0.3);
+    // today painted salmon pink like the galleries: a colonnade of six with a balustrade on its roof, a smaller
+    // second tier, domed kiosks at its corners and a big silver trishul on the front
+    const pv = new Instances(pillarGeo, K.pink);
+    for (const x of [-5.0, -3.0, -1.0, 1.0, 3.0, 5.0]) for (const z of [-0.25, 2.0]) pv.at(x, py, z, 0.3, ph / 3.92, 0.3);
+    const p2 = py + ph + 0.3, ph2 = 2.0;
+    for (const x of [-2.0, -0.7, 0.7, 2.0]) for (const z of [0.1, 1.6]) pv.at(x, p2, z, 0.24, ph2 / 3.92, 0.24);
     pv.flush(g);
-    B.span(K.oldPlain, -4.0, 4.0, py + ph, py + ph + 0.3, -0.6, 2.6);
-    eave(B, K.oldPlain, 0, 1.0, 8.0, 3.2, py + ph + 0.25, 0.5, 0.3);
-    B.lathe(K.oldPlain, [[0, 0], [1.5, 0], [1.5, 0.15], [1.45, 0.3], [1.3, 0.75], [0.95, 1.15], [0.45, 1.4], [0.12, 1.55], [0.1, 1.85], [0, 1.9]], 0, py + ph + 0.3, 1.0, 20);
-    for (const x of [-3.4, 3.4]) B.lathe(K.oldPlain, [[0, 0], [0.45, 0], [0.42, 0.3], [0.2, 0.55], [0.05, 0.75], [0, 0.78]], x, py + ph + 0.3, 1.0, 12);
+    B.span(K.pink, -5.6, 5.6, py + ph, p2, -0.6, 2.6);
+    eave(B, K.pinkDark, 0, 1.0, 11.2, 3.2, py + ph + 0.25, 0.45, 0.28);
+    for (let x = -5.4; x < 5.4; x += 0.36) B.span(K.pinkCarved, x, x + 0.12, p2, p2 + 0.6, 2.4, 2.52);
+    B.span(K.pink, -5.6, 5.6, p2 + 0.6, p2 + 0.72, 2.32, 2.6);
+    B.span(K.pink, -2.5, 2.5, p2 + ph2, p2 + ph2 + 0.25, -0.2, 1.9);
+    eave(B, K.pinkDark, 0, 0.85, 5.0, 2.1, p2 + ph2 + 0.22, 0.35, 0.22);
+    const dome: [number, number][] = [[0, 0], [1.0, 0], [1.0, 0.15], [0.95, 0.3], [0.85, 0.6], [0.6, 0.9], [0.3, 1.05], [0.08, 1.15], [0.06, 1.4], [0, 1.45]];
+    B.lathe(K.pink, dome, 0, p2 + ph2 + 0.25, 0.85, 20);
+    for (const x of [-5.0, 5.0]) {
+      for (const [dx, dz] of [[-0.45, -0.45], [0.45, -0.45], [-0.45, 0.45], [0.45, 0.45]]) B.span(K.pink, x + dx - 0.07, x + dx + 0.07, p2, p2 + 1.2, 1.0 + dz - 0.07, 1.0 + dz + 0.07);
+      B.span(K.pink, x - 0.65, x + 0.65, p2 + 1.2, p2 + 1.35, 0.35, 1.65);
+      B.lathe(K.pinkDark, dome.map(([r, y]) => [r * 0.62, y * 0.62] as [number, number]), x, p2 + 1.35, 1.0, 14);
+    }
+    // the trishul, on a pole before the upper tier
+    B.span(K.silverRep, -0.035, 0.035, p2, p2 + 2.7, 2.15, 2.22);
+    B.span(K.silverRep, -0.42, 0.42, p2 + 2.0, p2 + 2.07, 2.15, 2.22);
+    for (const x of [-0.42, 0, 0.42]) B.add(K.silverRep, new THREE.ConeGeometry(0.06, x === 0 ? 0.9 : 0.6, 4).translate(x, p2 + 2.07 + (x === 0 ? 0.45 : 0.3) + (x === 0 ? 0.6 : 0), 2.18));
   }
 
   // ---------- second floor (Siddhnath) and the spire base platform ----------
@@ -387,6 +518,8 @@ export function buildTemple(root: THREE.Group, K: OM, P: Physics, flames: Flames
   void rekhaGeometry;
   posts.flush(g, false);
   pil.flush(g);
+  pilPink.flush(g);
+  pilSoot.flush(g);
   B.flush(g);
   return { group: g, flag };
 }
